@@ -21,7 +21,7 @@
             --paper: #F5F5F3; 
             --ink: #0A0A0A;
             --ink-light: #5A5A5A;
-            --ink-muted: #737373;
+            --ink-muted: #666666; /* Contrast improved for accessibility */
             
             --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
             --font-narrative: 'Fraunces', serif;
@@ -67,11 +67,19 @@
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
+        /* Accessibility Focus Ring */
+        :focus-visible {
+            outline: 2px solid var(--violet);
+            outline-offset: 4px;
+        }
+
         /* ==========================================================================
            3. TYPOGRAPHY SYSTEM
            ========================================================================== */
         .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.85; }
-        .micro-data { font-family: var(--font-tech); font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.15em; line-height: 1.6; color: var(--ink-muted); display: block; }
+        
+        /* Font size bumped from 0.5rem to 0.75rem for legibility */
+        .micro-data { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; line-height: 1.6; color: var(--ink-muted); display: block; }
         .micro-data.accent { color: var(--violet); margin-bottom: var(--space-md); }
         .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.1; }
 
@@ -119,14 +127,9 @@
         .hd-main { grid-column: 3 / 12; }
         .txt-block { grid-column: 3 / 10; } 
         .txt-wide { grid-column: 3 / 12; }
+        .txt-center-narrow { grid-column: 4 / 10; text-align: center; }
         
-        /* NEW: Centered narrow column for punchy statements */
-        .txt-center-narrow { 
-            grid-column: 4 / 10; 
-            text-align: center; 
-        }
-        
-        /* Changed 12 to 13 so it spans 10 columns, perfectly fitting two 5-column spans */
+        /* Fixed math: spans from column 3 up to 13 to hold 10 columns total */
         .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; }
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
@@ -170,13 +173,14 @@
         .hamburger.is-active span:nth-child(2) { opacity: 0; }
         .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+        /* Fixed invisible trap with visibility properties */
         .bento-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
             background: rgba(245, 245, 243, 0.98); backdrop-filter: blur(20px);
             z-index: 1500; padding: calc(var(--header-height) + 2dvh) 5vw 5vw 5vw;
-            opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out-expo); overflow-y: auto;
+            opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
         }
-        .bento-nav.is-open { opacity: 1; pointer-events: auto; }
+        .bento-nav.is-open { opacity: 1; visibility: visible; }
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); height: 100%; max-height: 80dvh; }
         .bento-item {
             background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
@@ -219,6 +223,17 @@
             .txt-block, .txt-wide, .txt-center-narrow, .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
         }
+
+        /* Reduced Motion Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto !important;
+            }
+            .reveal {
+                transform: none !important;
+                transition: opacity 1s ease !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -227,10 +242,10 @@
 
     <header id="mainHeader">
         <a href="#cover" class="header-logo tech-title">
-            <svg viewBox="0 0 100 100" fill="currentColor"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></svg>
+            <svg aria-hidden="true" viewBox="0 0 100 100" fill="currentColor"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></svg>
             LEVY
         </a>
-        <button class="hamburger" id="navToggle" aria-label="Toggle Navigation"><div class="hamburger-box"><span></span><span></span><span></span></div></button>
+        <button class="hamburger" id="navToggle" aria-expanded="false" aria-label="Toggle Navigation"><div class="hamburger-box"><span></span><span></span><span></span></div></button>
     </header>
 
     <nav class="bento-nav" id="bentoNav">
@@ -409,15 +424,28 @@
             };
 
             navToggle.addEventListener('click', () => {
+                const isOpen = bentoNav.classList.toggle('is-open');
                 navToggle.classList.toggle('is-active');
-                bentoNav.classList.toggle('is-open');
-                document.body.style.overflow = bentoNav.classList.contains('is-open') ? 'hidden' : '';
+                
+                // Screen reader context
+                navToggle.setAttribute('aria-expanded', isOpen);
+                
+                document.body.style.overflow = isOpen ? 'hidden' : '';
             });
 
             window.addEventListener('scroll', evaluateDarkOverlay);
+            
+            // Respect prefers-reduced-motion for the IntersectionObserver as well
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("is-visible"));
-            }, { threshold: 0.1 });
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                    }
+                });
+            }, { threshold: prefersReducedMotion ? 0 : 0.1 }); // Fire immediately if reduced motion
+            
             document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
         });
     </script>
