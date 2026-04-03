@@ -27,9 +27,9 @@
             --font-narrative: 'Fraunces', serif;
             
             /* Structural */
-            --sidebar-width: 240px;
-            --hairline: rgba(247, 247, 246, 0.15); /* Light hairlines for dark mode */
-            --hairline-dark: rgba(10, 10, 10, 0.15);
+            --sidebar-width: 260px;
+            --hairline-light: rgba(247, 247, 246, 0.15); 
+            --hairline-dark: rgba(10, 10, 10, 0.12);
             --ma: 15vh; /* Negative space */
         }
 
@@ -39,15 +39,27 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
-            background-color: var(--midnight);
-            color: var(--paper);
+            /* Levy is primarily a lightmode brand */
+            background-color: var(--paper);
+            color: var(--ink);
             font-family: var(--font-tech);
             font-weight: 300;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            display: flex;
         }
         ::selection { background: var(--violet); color: var(--paper); }
+
+        /* Tactile Texture: Film Grain Overlay */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.06;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+        }
 
         /* ==========================================================================
            TYPOGRAPHY SYSTEM
@@ -78,7 +90,7 @@
             font-weight: 300;
         }
 
-        .display-huge { font-size: clamp(4rem, 8vw, 8rem); line-height: 0.9; letter-spacing: -0.02em; }
+        .display-huge { font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.02em; }
         .display-large { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -0.01em; }
         .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.2; }
         .body-large { font-size: 1.25rem; line-height: 1.6; max-width: 65ch; }
@@ -92,7 +104,7 @@
             font-style: italic;
             font-size: clamp(1.5rem, 3vw, 2.5rem);
             line-height: 1.3;
-            color: var(--paper);
+            color: var(--ink);
             border-left: 4px solid var(--violet);
             padding-left: 2rem;
             margin: 4rem 0;
@@ -122,8 +134,8 @@
             top: 0; left: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            background-color: var(--midnight);
-            border-right: 1px solid var(--hairline);
+            background-color: var(--paper);
+            border-right: 1px solid var(--hairline-dark);
             padding: 3rem 2rem;
             display: flex;
             flex-direction: column;
@@ -131,7 +143,7 @@
             z-index: 1000;
             transition: transform 0.3s ease;
         }
-        .logo-mark { width: 40px; height: 40px; margin-bottom: 3rem; color: var(--paper); }
+        .logo-mark { width: 40px; height: 40px; margin-bottom: 3rem; color: var(--ink); }
         .nav-menu { list-style: none; }
         .nav-menu li { margin-bottom: 1rem; }
         .nav-menu a {
@@ -142,7 +154,7 @@
             letter-spacing: 0.1em;
             transition: color 0.3s;
         }
-        .nav-menu a:hover, .nav-menu a.active { color: var(--paper); }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--ink); }
         .nav-menu a.active { border-bottom: 1px solid var(--violet); padding-bottom: 2px; }
 
         .mobile-toggle {
@@ -171,32 +183,43 @@
         section {
             padding: var(--ma) 5vw;
             min-height: 100vh;
-            border-bottom: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline-dark);
             display: flex;
             flex-direction: column;
             justify-content: center;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
+            position: relative;
         }
         section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* Dark Mode "Covers" & Emphasis */
+        .dark-section {
+            background: linear-gradient(145deg, var(--midnight) 0%, var(--violet) 50%, var(--magenta) 100%);
+            color: var(--paper);
+            border-bottom: none;
+        }
+        .dark-section blockquote { color: var(--paper); }
+        .dark-section .hairline-top { border-top-color: var(--hairline-light); }
+        .dark-section .hairline-bottom { border-bottom-color: var(--hairline-light); }
+
         /* Helpers */
-        .hairline-top { border-top: 1px solid var(--hairline); padding-top: 2rem; margin-top: 2rem; }
-        .hairline-bottom { border-bottom: 1px solid var(--hairline); padding-bottom: 2rem; margin-bottom: 2rem; }
+        .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: 2rem; margin-top: 2rem; }
+        .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: 2rem; margin-bottom: 2rem; }
         
         /* Section 01: Cover */
-        #cover { text-align: center; align-items: center; justify-content: center; border-bottom: none; }
+        #cover { text-align: center; align-items: center; justify-content: center; }
         .cover-logo { width: 120px; height: 120px; margin-bottom: 4rem; color: var(--paper); }
-        .cover-footer { position: absolute; bottom: 3rem; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+        .cover-footer { position: absolute; bottom: 3rem; font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(247, 247, 246, 0.6); text-transform: uppercase; }
 
         /* Section 04: Brand World */
         .typographic-list { list-style: none; }
         .typographic-list li {
-            border-bottom: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline-light);
             padding: 1.5rem 0;
             font-size: 1.1rem;
         }
@@ -209,12 +232,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--hairline);
+            border: 1px solid var(--hairline-dark);
             height: 100%;
         }
         .logo-box.dark { background: var(--midnight); color: var(--paper); }
         .incorrect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .incorrect-item { position: relative; background: var(--paper); color: var(--ink); padding: 3rem; text-align: center; }
+        .incorrect-item { position: relative; background: var(--paper); border: 1px solid var(--hairline-dark); color: var(--ink); padding: 3rem; text-align: center; }
         .incorrect-label { margin-top: 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid var(--hairline-dark); padding-top: 0.5rem;}
         .red-x { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
         .red-x::before, .red-x::after {
@@ -224,32 +247,32 @@
         .red-x::after { transform: rotate(-45deg); }
 
         /* Section 06: Color */
-        .color-card { border: 1px solid var(--hairline); height: 100%; display: flex; flex-direction: column;}
-        .color-swatch { height: 250px; width: 100%; position: relative; }
-        .color-details { padding: 1.5rem; background: var(--midnight); border-top: 1px solid var(--hairline); flex-grow: 1;}
+        .color-card { border: 1px solid var(--hairline-dark); height: 100%; display: flex; flex-direction: column;}
+        .color-swatch { height: 250px; width: 100%; position: relative; border-bottom: 1px solid var(--hairline-dark); }
+        .color-details { padding: 1.5rem; background: var(--paper); flex-grow: 1;}
         .color-name { font-size: 1.2rem; margin-bottom: 1rem; }
         .color-data { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between;}
-        .hex-code { cursor: pointer; color: var(--paper); font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(255,255,255,0.1); transition: background 0.2s; }
-        .hex-code:hover { background: var(--violet); }
-        .pairing-swatch { display: inline-block; width: 30px; height: 30px; border: 1px solid var(--hairline); margin-right: -10px; border-radius: 50%; }
+        .hex-code { cursor: pointer; color: var(--ink); font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: background 0.2s, color 0.2s; }
+        .hex-code:hover { background: var(--violet); color: var(--paper); }
+        .pairing-swatch { display: inline-block; width: 30px; height: 30px; border: 1px solid var(--hairline-dark); margin-right: -10px; border-radius: 50%; }
 
         /* Section 07: Typography */
-        .type-specimen { padding: 3rem 0; border-bottom: 1px solid var(--hairline); }
-        .hierarchy-block { background: var(--paper); color: var(--ink); padding: 4rem; margin-top: 2rem; }
+        .type-specimen { padding: 3rem 0; border-bottom: 1px solid var(--hairline-dark); }
+        .hierarchy-block { background: rgba(0,0,0,0.02); border: 1px solid var(--hairline-dark); color: var(--ink); padding: 4rem; margin-top: 2rem; }
 
         /* Section 08: Voice & Tone */
         .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
-        .do-box, .dont-box { padding: 2rem; border-top: 4px solid var(--violet); background: rgba(247,247,246,0.02); }
+        .do-box, .dont-box { padding: 2rem; border-top: 4px solid var(--violet); background: rgba(0,0,0,0.02); }
         .dont-box { border-top-color: var(--muted); opacity: 0.6; }
         .do-dont-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; display: block; }
         
         /* Section 09: Brand in Use */
         .naming-table { width: 100%; text-align: left; border-collapse: collapse; margin-top: 2rem; }
-        .naming-table th, .naming-table td { padding: 1.5rem 0; border-bottom: 1px solid var(--hairline); }
+        .naming-table th, .naming-table td { padding: 1.5rem 0; border-bottom: 1px solid var(--hairline-dark); }
         .naming-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: normal; }
         
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
-        .mockup { border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
+        .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
         /* Business Card Mockup */
         .mockup-card { background: var(--paper); color: var(--ink); aspect-ratio: 1.75/1; width: 100%; padding: 2rem; display: flex; flex-direction: column; justify-content: center; }
         /* Social Mockup */
@@ -259,7 +282,7 @@
 
         /* Section 10: Downloads */
         .download-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-        .download-card { border: 1px solid var(--hairline); padding: 2rem; display: flex; flex-direction: column; align-items: flex-start; }
+        .download-card { border: 1px solid var(--hairline-dark); padding: 2rem; display: flex; flex-direction: column; align-items: flex-start; }
         .download-btn { margin-top: auto; padding: 0.75rem 1.5rem; background: var(--violet); color: var(--paper); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; transition: background 0.3s; width: 100%; text-align: center; border: none; cursor: pointer; }
         .download-btn:hover { background: var(--magenta); }
 
@@ -276,8 +299,8 @@
 
         @media (max-width: 768px) {
             .mobile-toggle { display: block; }
-            #sidebar { transform: translateX(-100%); }
-            #sidebar.nav-open { transform: translateX(0); }
+            #sidebar { transform: translateX(-100%); border-right: none; }
+            #sidebar.nav-open { transform: translateX(0); box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
             main { margin-left: 0; width: 100%; }
             .incorrect-grid { grid-template-columns: 1fr; }
             .download-grid { grid-template-columns: 1fr; }
@@ -319,7 +342,7 @@
 
     <main>
         
-        <section id="cover">
+        <section id="cover" class="dark-section">
             <div class="cover-logo">
                 <svg viewBox="0 0 100 100" fill="currentColor">
                     <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
@@ -404,35 +427,35 @@
             </div>
         </section>
 
-        <section id="world">
+        <section id="world" class="dark-section">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">04. Brand World</span>
+                    <span class="section-label" style="color: var(--paper); opacity: 0.5;">04. Brand World</span>
                 </div>
                 <div class="col-8">
                     <h2 class="narrative display-large">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
                     <div class="grid-12 hairline-top">
                         <div class="col-6">
-                            <p class="body-medium">
+                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
                                 It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
                             </p>
                         </div>
                         <div class="col-6">
-                            <p class="body-medium">
+                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
                                 The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
                             </p>
                         </div>
                     </div>
 
                     <div class="hairline-top">
-                        <span class="section-label" style="color: var(--muted);">Brand Archetype</span>
+                        <span class="section-label" style="color: rgba(247,247,246,0.5);">Brand Archetype</span>
                         <h3 class="tech-lead display-medium">MAGICIAN-SAGE</h3>
-                        <p class="body-large" style="margin-top: 1rem;">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
+                        <p class="body-large" style="margin-top: 1rem; color: rgba(247,247,246,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
                     <div class="hairline-top">
-                        <span class="section-label" style="color: var(--magenta);">What Levy Never Does</span>
+                        <span class="section-label" style="color: var(--paper);">What Levy Never Does</span>
                         <ul class="typographic-list">
                             <li>Operates as a political organization or takes partisan positions</li>
                             <li>Tries to convince people to be ambitious — they already are</li>
@@ -835,7 +858,7 @@
                                     <div class="tech-lead" style="font-size: 3rem; margin-top: 2rem; line-height: 1;">SYSTEMS<br>LEVERAGE</div>
                                     <div class="narrative" style="font-size: 1.5rem; margin-top: 1rem; color: var(--paper);">Mapping the Institutional Gap</div>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--hairline); padding-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--hairline-light); padding-top: 1rem;">
                                     <svg viewBox="0 0 100 100" fill="currentColor" width="40">
                                         <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
                                         <polygon points="45,90 90,90 67.5,67.5" />
