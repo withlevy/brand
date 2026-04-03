@@ -21,7 +21,7 @@
             --paper: #F7F7F6;
             --ink: #0A0A0A;
             --ink-light: #5A5A5A;
-            --ink-muted: #888888;
+            --ink-muted: #737373; /* Darkened slightly for better mobile contrast */
             
             /* Typography */
             --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
@@ -32,12 +32,14 @@
             --hairline-light: rgba(247, 247, 246, 0.12); 
             --hairline-dark: rgba(10, 10, 10, 0.12);
             
-            /* Fluid Spacing (Ma) */
+            /* Fluid Spacing */
             --space-xs: clamp(0.5rem, 1vw, 1rem);
             --space-sm: clamp(1rem, 2vw, 2rem);
-            --space-md: clamp(2rem, 4vw, 4rem);
-            --space-lg: clamp(4rem, 8vw, 8rem);
-            --space-xl: clamp(8rem, 15vh, 15rem);
+            --space-md: clamp(1.5rem, 4vw, 4rem);
+            --space-lg: clamp(3rem, 8vw, 8rem);
+            --space-xl: clamp(6rem, 15vh, 15rem);
+            
+            --ma: 15vh; /* Desktop intentional void */
             
             /* Motion */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -64,7 +66,6 @@
 
         ::selection { background: var(--violet); color: var(--paper); }
 
-        /* Tactile Film Grain Overlay */
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9999; opacity: 0.05;
@@ -75,16 +76,15 @@
            3. TYPOGRAPHY SYSTEM
            ========================================================================== */
         
-        /* Massive Axis-Aligned Headlines */
         .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: -0.025em; 
             line-height: 0.85;
+            overflow-wrap: break-word; /* Prevents mobile overflow on massive type */
         }
         
-        /* Structural Section Labels (Left Side) */
         .tech-subhead {
             font-family: var(--font-tech);
             font-weight: 300;
@@ -94,17 +94,15 @@
             font-size: 0.65rem;
         }
 
-        /* Asymmetric Micro-Metadata (Right Side Marginalia) */
         .micro-data {
             font-family: var(--font-tech);
             font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
             line-height: 1.6;
-            color: var(--ink-light);
+            color: var(--ink-muted);
         }
         
-        /* The Narrative Accent (Strictly 10% of UI) */
         .narrative { 
             font-family: var(--font-narrative); 
             font-weight: 200;
@@ -112,12 +110,12 @@
             line-height: 1.1;
         }
 
-        /* Scales */
-        .display-huge { font-size: clamp(3rem, 8vw, 8rem); letter-spacing: -0.03em; }
-        .display-large { font-size: clamp(2rem, 5vw, 5rem); letter-spacing: -0.02em; }
-        .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
+        /* Mobile-optimized Fluid Typography */
+        .display-huge { font-size: clamp(2.25rem, 11vw, 8rem); letter-spacing: -0.03em; }
+        .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; }
+        .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
+        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
         blockquote {
@@ -125,13 +123,12 @@
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             font-weight: 200;
             font-style: italic;
-            font-size: clamp(1.5rem, 3.5vw, 3rem);
+            font-size: clamp(1.5rem, 4vw, 3rem);
             line-height: 1.15;
             color: var(--ink);
             border-left: 2px solid var(--violet);
             padding-left: var(--space-md);
             margin: var(--space-lg) 0;
-            max-width: 22ch;
         }
 
         /* ==========================================================================
@@ -142,18 +139,19 @@
         .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
         
         /* The Three-Zone Editorial Grid */
-        .col-left { grid-column: 1 / 4; }    /* Cols 1, 2, 3: Critical Section Labels */
-        .col-center { grid-column: 4 / 10; } /* Cols 4, 5, 6, 7, 8, 9: Core Body Content */
-        .col-right { grid-column: 10 / 13; text-align: right; } /* Cols 10, 11, 12: Non-Critical Marginalia */
+        .col-left { grid-column: 1 / 4; } 
+        .col-center { grid-column: 4 / 10; } 
+        .col-right { grid-column: 10 / 13; text-align: right; } 
         
-        /* Internal standard columns for nested grids */
+        /* Internal standard columns */
+        .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-12 { grid-column: span 12; }
         
         .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md); margin-top: var(--space-md); }
         .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: var(--space-md); margin-bottom: var(--space-md); }
 
-        section { padding: var(--space-xl) 0; min-height: 100vh; border-bottom: 1px solid var(--hairline-dark); display: flex; flex-direction: column; justify-content: center; }
+        section { padding: var(--ma) 0; min-height: 100vh; border-bottom: 1px solid var(--hairline-dark); display: flex; flex-direction: column; justify-content: center; }
 
         /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); will-change: opacity, transform; }
@@ -185,7 +183,9 @@
         .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; transition: color 0.4s ease; }
         .header-logo svg { width: 24px; height: 24px; }
 
-        .hamburger { background: none; border: none; cursor: pointer; width: 32px; height: 18px; position: relative; z-index: 2100; }
+        /* Touch-optimized hamburger */
+        .hamburger { background: none; border: none; cursor: pointer; width: 44px; height: 44px; position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
+        .hamburger-box { width: 32px; height: 18px; position: relative; }
         .hamburger span {
             display: block; position: absolute; height: 1.5px; width: 100%; background: var(--ink); border-radius: 1px;
             transition: transform 0.4s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo), background-color 0.4s ease; transform-origin: center;
@@ -212,7 +212,7 @@
         .bento-item {
             background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
             text-decoration: none; color: var(--ink); display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden; opacity: 0; transform: translateY(20px);
+            position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); min-height: 180px;
             transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo), border-color 0.4s ease;
         }
         
@@ -239,12 +239,9 @@
         .bento-item.wide { grid-column: span 2; }
 
         /* ==========================================================================
-           6. EDITORIAL POSTER LOCKUPS & MARGINALIA
+           6. EDITORIAL POSTER LOCKUPS 
            ========================================================================== */
-        
-        .poster-lockup {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; align-items: end; margin: var(--space-lg) 0;
-        }
+        .poster-lockup { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; align-items: end; margin: var(--space-lg) 0; }
         .poster-left { text-align: right; display: flex; flex-direction: column; gap: 0; }
         .poster-right { text-align: left; display: flex; flex-direction: column; gap: 0; }
         
@@ -255,16 +252,13 @@
 
         .qr-placeholder {
             width: 40px; height: 40px;
-            background: 
-                linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink)),
-                linear-gradient(-45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink));
+            background: linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink)), linear-gradient(-45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink));
             background-size: 8px 8px; border: 2px solid var(--ink); padding: 2px; display: inline-block; margin: 0.5rem 0;
         }
 
         /* ==========================================================================
            7. COMPONENT DETAILS
            ========================================================================== */
-        
         .constraint-list { list-style: none; }
         .constraint-list li { border-bottom: 1px solid var(--hairline-light); padding: 1.5rem 0; font-size: 1.15rem; color: rgba(247,247,246,0.8); font-weight: 300;}
         
@@ -276,7 +270,9 @@
         .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 4/3; }
         .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
         .color-details { padding: var(--space-sm); background: var(--paper); }
-        .hex-tag { display: inline-block; cursor: pointer; font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
+        
+        /* Touch optimized hex tag */
+        .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; min-height: 32px; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-top: var(--space-md); }
@@ -288,29 +284,42 @@
         .dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; }
         .dl-card { border: 1px solid var(--hairline-dark); padding: var(--space-md); display: flex; flex-direction: column; transition: border-color 0.3s; }
         .dl-card:hover { border-color: var(--violet); }
-        .dl-btn { margin-top: var(--space-md); padding: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
+        /* Touch optimized download button */
+        .dl-btn { margin-top: var(--space-md); padding: 1rem; min-height: 44px; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
         /* ==========================================================================
-           8. RESPONSIVE ARCHITECTURE
+           8. MOBILE OPTIMIZATION (RUTHLESS)
            ========================================================================== */
         @media (max-width: 1024px) {
-            .grid-12, .bento-grid { display: flex; flex-direction: column; }
-            /* Reset the 3-zone grid to span full width on smaller screens */
-            .col-left, .col-center, .col-right { grid-column: span 12; text-align: left; }
-            .col-right { margin-top: 2rem; opacity: 0.8; }
+            .grid-12, .bento-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
+            
+            /* Collapse Grid to Single Column */
+            .col-left, .col-center { grid-column: span 12; width: 100%; }
+            
+            /* Ruthless Optimization: Hide Marginalia entirely on smaller screens */
+            .col-right, .hide-mobile { display: none !important; }
+            
+            .bento-item { min-height: auto; padding: var(--space-md); }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
-            .bento-grid { max-height: none; }
+            .bento-grid { max-height: none; grid-template-columns: 1fr 1fr; }
+            
             .dl-grid { grid-template-columns: 1fr 1fr; }
             .mockup-grid { grid-template-columns: 1fr; }
-            .poster-lockup { display: flex; flex-direction: column; align-items: flex-start; }
-            .poster-left { text-align: left; }
-            .poster-right { align-items: flex-start; }
+            
+            /* Stack poster lockup correctly on mobile */
+            .poster-lockup { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+            .poster-left, .poster-right { text-align: left; }
         }
+        
         @media (max-width: 768px) {
+            :root { 
+                --ma: 10vh; /* Reduce extreme vertical space on mobile */
+                --header-height: 70px; 
+            }
+            .bento-grid { grid-template-columns: 1fr; }
             .do-dont-pair { grid-template-columns: 1fr; gap: 1rem; }
             .dl-grid { grid-template-columns: 1fr; }
-            .display-huge { font-size: 3.5rem; }
         }
     </style>
 </head>
@@ -327,7 +336,9 @@
             LEVY
         </a>
         <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
-            <span></span><span></span><span></span>
+            <div class="hamburger-box">
+                <span></span><span></span><span></span>
+            </div>
         </button>
     </header>
 
@@ -371,7 +382,7 @@
         <section id="cover" style="padding-top: 15vh; justify-content: space-between;">
             <div class="container">
                 
-                <div class="grid-12 reveal">
+                <div class="grid-12 reveal hide-mobile">
                     <div class="col-12" style="text-align: right;">
                         <div class="micro-data">LEVY : STRATEGIC DESIGN<br>STUDIO - RESEARCH - NETWORK</div>
                     </div>
@@ -381,7 +392,7 @@
                     <div class="col-center col-4" style="text-align: center;">
                         <div class="narrative" style="font-size: 1.1rem; letter-spacing: 0.05em; color: var(--ink);">www.withlevy.com<br>Washington, DC<br>DC20002</div>
                     </div>
-                    <div class="col-right col-4" style="text-align: right;">
+                    <div class="col-right col-4 hide-mobile" style="text-align: right;">
                         <div class="micro-data" style="margin-bottom: 1.5rem;">METROPOLITAN<br>POLITICAL ECONOMY</div>
                         <div class="micro-data" style="margin-bottom: 1.5rem;">INTER STATE<br>COALITION BUILDING</div>
                         <div class="micro-data" style="margin-bottom: 1.5rem;">STRATEGIC & HUMAN CENTERED<br>DESIGN</div>
@@ -412,7 +423,7 @@
                     </div>
                 </div>
 
-                <div class="grid-12 reveal" style="margin-top: 8vh; margin-bottom: 5vh;">
+                <div class="grid-12 reveal hide-mobile" style="margin-top: 8vh; margin-bottom: 5vh;">
                     <div class="col-8"></div>
                     <div class="col-4" style="text-align: right;">
                         <div class="micro-data">LEARN MORE<br>ABOUT THE LEVY NETWORK</div>
@@ -558,7 +569,6 @@
                 </div>
                 
                 <div class="col-center" style="grid-column: 4 / 11;">
-                    
                     <h2 class="tech-title display-medium hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">PRIMARY LOCKUP</h2>
                     <div class="grid-12 reveal delay-2">
                         <div class="col-6">
