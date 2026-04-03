@@ -18,8 +18,8 @@
             --midnight: #0f0c29;
             --violet: #6441a5;
             --magenta: #8a2387;
-            --paper: #F7F7F6;
-            --ink: #0A0A0A;
+            --paper: #F7F7F6; /* Primary Light Background */
+            --ink: #0A0A0A;   /* Primary Dark Text */
             --ink-light: #5A5A5A;
             --ink-muted: #888888;
             
@@ -33,6 +33,7 @@
             --hairline-dark: rgba(10, 10, 10, 0.12);
             
             /* Fluid Spacing (Ma) */
+            --space-xs: clamp(0.5rem, 1vw, 1rem);
             --space-sm: clamp(1rem, 2vw, 2rem);
             --space-md: clamp(2rem, 4vw, 4rem);
             --space-lg: clamp(4rem, 8vw, 8rem);
@@ -63,6 +64,7 @@
 
         ::selection { background: var(--violet); color: var(--paper); }
 
+        /* Tactile Film Grain Overlay */
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9999; opacity: 0.05;
@@ -73,7 +75,7 @@
            3. TYPOGRAPHY SYSTEM (RUTHLESS DISCIPLINE)
            ========================================================================== */
         
-        /* The Technical Swiss Lead (90% of UI) */
+        /* Massive Axis-Aligned Headlines */
         .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
@@ -82,7 +84,7 @@
             line-height: 0.85;
         }
         
-        /* The Technical Label/Subhead */
+        /* Structural Section Labels */
         .tech-subhead {
             font-family: var(--font-tech);
             font-weight: 300;
@@ -91,18 +93,28 @@
             line-height: 1.2;
             font-size: 0.65rem;
         }
+
+        /* Asymmetric Micro-Metadata */
+        .micro-data {
+            font-family: var(--font-tech);
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            line-height: 1.6;
+            color: var(--ink-light);
+        }
         
         /* The Narrative Accent (Strictly 10% of UI) */
         .narrative { 
             font-family: var(--font-narrative); 
             font-weight: 200;
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
-            line-height: 1.05;
+            line-height: 1.1;
         }
 
-        /* Scales - Helvetica carries the weight */
-        .display-huge { font-size: clamp(4rem, 10vw, 10rem); letter-spacing: -0.03em; }
-        .display-large { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -0.02em; }
+        /* Scales */
+        .display-huge { font-size: clamp(3rem, 8vw, 8rem); letter-spacing: -0.03em; }
+        .display-large { font-size: clamp(2rem, 5vw, 5rem); letter-spacing: -0.02em; }
         .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
         
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
@@ -125,20 +137,11 @@
         /* ==========================================================================
            4. LAYOUT & ARCHITECTURE
            ========================================================================== */
-        .container {
-            width: 100%;
-            max-width: 2400px;
-            margin: 0 auto;
-            padding: 0 5vw;
-        }
-
-        .grid-12 {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2vw;
-            width: 100%;
-        }
+        .container { width: 100%; max-width: 2400px; margin: 0 auto; padding: 0 5vw; }
         
+        .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; }
+        .col-2 { grid-column: span 2; }
+        .col-3 { grid-column: span 3; }
         .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-8 { grid-column: span 8; }
@@ -147,32 +150,16 @@
         .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md); margin-top: var(--space-md); }
         .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: var(--space-md); margin-bottom: var(--space-md); }
 
-        section {
-            padding: var(--space-xl) 0;
-            min-height: 100vh;
-            border-bottom: 1px solid var(--hairline-dark);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        section { padding: var(--space-xl) 0; min-height: 100vh; border-bottom: 1px solid var(--hairline-dark); display: flex; flex-direction: column; justify-content: center; }
 
         /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
-            will-change: opacity, transform;
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); will-change: opacity, transform; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
 
         /* Dark Mode */
-        .dark-section {
-            background: linear-gradient(150deg, var(--midnight) 0%, var(--violet) 55%, var(--magenta) 100%);
-            color: var(--paper);
-            border-bottom: none;
-        }
+        .dark-section { background: linear-gradient(150deg, var(--midnight) 0%, var(--violet) 55%, var(--magenta) 100%); color: var(--paper); border-bottom: none; }
         .dark-section blockquote { color: var(--paper); border-left-color: var(--magenta); }
         .dark-section .hairline-top { border-top-color: var(--hairline-light); }
         .dark-section .hairline-bottom { border-bottom-color: var(--hairline-light); }
@@ -183,16 +170,10 @@
            5. HEADER & BENTO NAVIGATION
            ========================================================================== */
         header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            height: var(--header-height);
-            background: rgba(247, 247, 246, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--hairline-dark);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5vw;
-            z-index: 2000;
-            transition: background 0.4s ease, border-color 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
+            background: rgba(247, 247, 246, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--hairline-dark); display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5vw; z-index: 2000; transition: background 0.4s ease, border-color 0.4s ease;
         }
         
         header.on-dark { background: rgba(15, 12, 41, 0.85); border-bottom-color: var(--hairline-light); }
@@ -201,15 +182,10 @@
         .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; transition: color 0.4s ease; }
         .header-logo svg { width: 24px; height: 24px; }
 
-        .hamburger {
-            background: none; border: none; cursor: pointer;
-            width: 32px; height: 18px; position: relative; z-index: 2100;
-        }
+        .hamburger { background: none; border: none; cursor: pointer; width: 32px; height: 18px; position: relative; z-index: 2100; }
         .hamburger span {
-            display: block; position: absolute; height: 1.5px; width: 100%;
-            background: var(--ink); border-radius: 1px;
-            transition: transform 0.4s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo), background-color 0.4s ease;
-            transform-origin: center;
+            display: block; position: absolute; height: 1.5px; width: 100%; background: var(--ink); border-radius: 1px;
+            transition: transform 0.4s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo), background-color 0.4s ease; transform-origin: center;
         }
         .hamburger span:nth-child(1) { top: 0; }
         .hamburger span:nth-child(2) { top: 8px; }
@@ -224,17 +200,15 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: rgba(247, 247, 246, 0.98); backdrop-filter: blur(20px);
             z-index: 1500; padding: calc(var(--header-height) + 2vh) 5vw 5vw 5vw;
-            opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out-expo);
-            overflow-y: auto;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out-expo); overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; pointer-events: auto; }
 
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; height: 100%; max-height: 80vh; }
 
         .bento-item {
-            background: var(--paper); border: 1px solid var(--hairline-dark);
-            padding: var(--space-md); text-decoration: none; color: var(--ink);
-            display: flex; flex-direction: column; justify-content: space-between;
+            background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
+            text-decoration: none; color: var(--ink); display: flex; flex-direction: column; justify-content: space-between;
             position: relative; overflow: hidden; opacity: 0; transform: translateY(20px);
             transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo), border-color 0.4s ease;
         }
@@ -260,11 +234,58 @@
         .bento-item.large::after { background: var(--violet); }
         .bento-item.large:hover { border-color: var(--magenta); }
         .bento-item.wide { grid-column: span 2; }
-        
-        .bento-item .tech-subhead { opacity: 0.5; margin-bottom: 2rem; }
 
         /* ==========================================================================
-           6. COMPONENT DETAILS
+           6. EDITORIAL POSTER LOCKUPS
+           ========================================================================== */
+        
+        .poster-lockup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2vw;
+            align-items: end;
+            margin: var(--space-lg) 0;
+        }
+        
+        .poster-left {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .poster-right {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .logo-glow {
+            display: inline-block;
+            width: 0.8em;
+            height: 0.8em;
+            color: var(--ink);
+            filter: drop-shadow(0 0 25px rgba(100, 65, 165, 0.9)); /* High-intensity Violet Glow */
+            margin-left: 0.2em;
+            transform: translateY(0.1em);
+        }
+
+        /* Fake QR Code using gradients for styling */
+        .qr-placeholder {
+            width: 40px; height: 40px;
+            background: 
+                linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink)),
+                linear-gradient(-45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink));
+            background-size: 8px 8px;
+            border: 2px solid var(--ink);
+            padding: 2px;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        /* ==========================================================================
+           7. COMPONENT DETAILS
            ========================================================================== */
         
         .constraint-list { list-style: none; }
@@ -275,28 +296,25 @@
         .rule-do { border-top-color: var(--violet); }
         .rule-dont { border-top-color: var(--hairline-dark); opacity: 0.5; }
 
-        /* Colors */
         .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 3/4; }
         .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
         .color-details { padding: var(--space-sm); background: var(--paper); }
         .hex-tag { display: inline-block; cursor: pointer; font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
-        /* Mockups */
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: var(--space-md); }
         .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-lg); }
-        
         .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; max-width: 400px; padding: 2rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
         .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; max-width: 350px; padding: 3rem; display: flex; align-items: center; text-align: center; }
         .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; max-width: 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
 
-        /* Downloads */
         .dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; }
         .dl-card { border: 1px solid var(--hairline-dark); padding: var(--space-md); display: flex; flex-direction: column; transition: border-color 0.3s; }
         .dl-card:hover { border-color: var(--violet); }
         .dl-btn { margin-top: var(--space-md); padding: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
+        /* Responsive Architecture */
         @media (max-width: 1024px) {
             .grid-12, .bento-grid { display: flex; flex-direction: column; }
             .col-offset-4 { margin-top: var(--space-md); }
@@ -304,6 +322,9 @@
             .bento-grid { max-height: none; }
             .dl-grid { grid-template-columns: 1fr 1fr; }
             .mockup-grid { grid-template-columns: 1fr; }
+            .poster-lockup { display: flex; flex-direction: column; align-items: flex-start; }
+            .poster-left { text-align: left; }
+            .poster-right { align-items: flex-start; }
         }
         @media (max-width: 768px) {
             .do-dont-pair { grid-template-columns: 1fr; gap: 1rem; }
@@ -366,23 +387,66 @@
 
     <main>
         
-        <section id="cover" class="dark-section" style="align-items: center; text-align: center;">
-            <div class="container reveal">
-                <svg viewBox="0 0 100 100" fill="currentColor" style="width: 100px; height: 100px; margin-bottom: 3rem;">
-                    <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                    <polygon points="45,90 90,90 67.5,67.5" />
-                </svg>
-                <h1 class="tech-title display-huge">STOP THINKING <br>SMALL.</h1>
-                <div class="tech-subhead" style="position: absolute; bottom: var(--space-md); left: 50%; transform: translateX(-50%); width: 100%; opacity: 0.5;">
-                    LEVY: A STRATEGIC DESIGN COMPANY
+        <section id="cover" style="padding-top: 15vh; justify-content: space-between;">
+            <div class="container">
+                
+                <div class="grid-12 reveal">
+                    <div class="col-12" style="text-align: right;">
+                        <div class="micro-data">LEVY : STRATEGIC DESIGN<br>STUDIO - RESEARCH - NETWORK</div>
+                    </div>
                 </div>
+
+                <div class="grid-12 reveal delay-1" style="margin-top: 8vh;">
+                    <div class="col-offset-4 col-4" style="text-align: center;">
+                        <div class="narrative" style="font-size: 1.1rem; letter-spacing: 0.05em; color: var(--ink);">www.withlevy.com<br>Washington, DC<br>DC20002</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="micro-data" style="margin-bottom: 1.5rem;">METROPOLITAN<br>POLITICAL ECONOMY</div>
+                        <div class="micro-data" style="margin-bottom: 1.5rem;">INTER STATE<br>COALITION BUILDING</div>
+                        <div class="micro-data" style="margin-bottom: 1.5rem;">STRATEGIC & HUMAN CENTERED<br>DESIGN</div>
+                        <div class="micro-data">CREATING REAL OUTCOMES<br>FOR REAL PEOPLE</div>
+                    </div>
+                </div>
+
+                <div class="poster-lockup reveal delay-2">
+                    <div class="poster-left tech-title display-huge">
+                        <div>THE</div>
+                        <div>BRAND :</div>
+                    </div>
+                    <div class="poster-right tech-title display-huge">
+                        <div style="display: flex; align-items: center;">
+                            LEVY
+                            <svg class="logo-glow" viewBox="0 0 100 100" fill="currentColor">
+                                <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
+                                <polygon points="45,90 90,90 67.5,67.5" />
+                            </svg>
+                        </div>
+                        <div>SYSTEM</div>
+                    </div>
+                </div>
+
+                <div class="grid-12 reveal" style="margin-top: 8vh;">
+                    <div class="col-12" style="text-align: center;">
+                        <div class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--ink);">A community of builders strengthening<br>the American Project.</div>
+                    </div>
+                </div>
+
+                <div class="grid-12 reveal" style="margin-top: 8vh; margin-bottom: 5vh;">
+                    <div class="col-8"></div>
+                    <div class="col-4">
+                        <div class="micro-data">LEARN MORE<br>ABOUT THE LEVY NETWORK</div>
+                        <div class="qr-placeholder"></div>
+                        <div class="micro-data">SCAN HERE<br>HTTPS://WITHLEVY.COM/BRAND</div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <section id="insight">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">02 // THE INSIGHT</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">02 // THE INSIGHT</span>
                 </div>
                 <div class="col-8 reveal delay-1">
                     <h2 class="tech-title display-large">SOMETHING HAS<br>GONE WRONG.</h2>
@@ -407,38 +471,38 @@
         <section id="positioning">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">03 // POSITIONING</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">03 // POSITIONING</span>
                 </div>
                 <div class="col-8">
                     
                     <div class="hairline-bottom reveal delay-1">
-                        <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE NAME</span>
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE NAME</span>
                         <p class="body-large">
                             To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point in a system. You get more out than you put in — not through luck, but through understanding how the system works. The name is the idea. The idea is the work.
                         </p>
                     </div>
 
                     <div class="hairline-bottom reveal">
-                        <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE EMOTIONAL CONCEPT</span>
-                        <p class="body-large">
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE EMOTIONAL CONCEPT</span>
+                        <h3 class="narrative display-medium" style="color: var(--ink);">
                             Actualization. Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the right conditions and the right partners to prove it.
-                        </p>
+                        </h3>
                     </div>
 
                     <div class="hairline-bottom reveal">
-                        <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE CORE THESIS</span>
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE CORE THESIS</span>
                         <h2 class="tech-title display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     </div>
 
                     <div class="grid-12 reveal">
                         <div class="col-6">
-                            <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE MISSION</span>
+                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE MISSION</span>
                             <p class="body-medium">
                                 To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
                             </p>
                         </div>
                         <div class="col-6">
-                            <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">WHO IT'S FOR</span>
+                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">WHO IT'S FOR</span>
                             <p class="body-medium">
                                 The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
                             </p>
@@ -456,32 +520,32 @@
         <section id="world" class="dark-section">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: rgba(255,255,255,0.5);">04 // BRAND WORLD</span>
+                    <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-md);">04 // BRAND WORLD</span>
                 </div>
                 <div class="col-8">
                     <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em;">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
                     <div class="grid-12 hairline-top reveal delay-2">
                         <div class="col-6">
-                            <p class="body-medium">
+                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
                                 It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
                             </p>
                         </div>
                         <div class="col-6">
-                            <p class="body-medium">
+                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
                                 The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
                             </p>
                         </div>
                     </div>
 
                     <div class="hairline-top reveal">
-                        <span class="tech-subhead" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: 1rem;">BRAND ARCHETYPE</span>
+                        <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: 1rem;">BRAND ARCHETYPE</span>
                         <h3 class="tech-title display-medium">MAGICIAN-SAGE</h3>
                         <p class="body-large" style="margin-top: 1rem; color: rgba(247,247,246,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
                     <div class="hairline-top reveal">
-                        <span class="tech-subhead" style="color: var(--paper); display: block; margin-bottom: 1rem;">WHAT LEVY NEVER DOES</span>
+                        <span class="micro-data" style="color: var(--paper); display: block; margin-bottom: 1rem;">WHAT LEVY NEVER DOES</span>
                         <ul class="constraint-list" style="font-family: var(--font-tech);">
                             <li>Operates as a political organization or takes partisan positions</li>
                             <li>Tries to convince people to be ambitious — they already are</li>
@@ -500,7 +564,7 @@
         <section id="visuals">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">05 // VISUAL IDENTITY</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">05 // VISUAL IDENTITY</span>
                 </div>
                 <div class="col-8">
                     
@@ -533,7 +597,7 @@
                                 <div class="color-details">
                                     <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">VIOLET / PRIMARY</div>
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="tech-subhead" style="color: var(--ink-muted);">HEX</span> 
+                                        <span class="micro-data" style="color: var(--ink-muted);">HEX</span> 
                                         <span class="hex-tag">#6441A5</span>
                                     </div>
                                 </div>
@@ -545,7 +609,7 @@
                                 <div class="color-details">
                                     <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">MIDNIGHT / BG</div>
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="tech-subhead" style="color: var(--ink-muted);">HEX</span> 
+                                        <span class="micro-data" style="color: var(--ink-muted);">HEX</span> 
                                         <span class="hex-tag">#0F0C29</span>
                                     </div>
                                 </div>
@@ -556,9 +620,9 @@
                     <h2 class="tech-title display-medium hairline-top hairline-bottom reveal">TYPOGRAPHY SYSTEM</h2>
                     
                     <div class="reveal" style="margin-bottom: 4rem;">
-                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
+                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
                         <p class="body-medium" style="margin-bottom: 2rem;">
-                            Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height. Body copy is Light. Structural labels are wide-tracked.
+                            Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height. Body copy is Light. Structural labels use micro-tracking.
                         </p>
                         
                         <div style="border: 1px solid var(--hairline-dark); padding: var(--space-md); background: rgba(0,0,0,0.02);">
@@ -575,18 +639,18 @@
                     </div>
 
                     <div class="reveal">
-                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">02 // THE ACCENT: FRAUNCES (10%)</span>
+                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">02 // THE ACCENT: FRAUNCES (10%)</span>
                         <p class="body-medium" style="margin-bottom: 2rem;">
-                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used strictly for standalone conceptual anchors, inline italic accents (like <span class="narrative">Rework</span>), or pull quotes. It emulates Sumi ink bleeding into paper fibers.
+                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used strictly for standalone conceptual anchors, inline italic accents, or pull quotes. It emulates Sumi ink bleeding into paper fibers.
                         </p>
                         
                         <div style="border: 1px solid var(--hairline-dark); padding: var(--space-md); background: rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 2rem;">
                             <div>
-                                <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">INLINE ACCENT</span>
+                                <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">INLINE ACCENT</span>
                                 <div class="tech-title" style="font-size: 3rem; text-transform: capitalize;">Capital <span class="narrative" style="font-style: italic;">Rework</span></div>
                             </div>
                             <div style="border-top: 1px solid var(--hairline-dark); padding-top: 2rem;">
-                                <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">CONCEPTUAL ANCHOR</span>
+                                <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">CONCEPTUAL ANCHOR</span>
                                 <div class="narrative" style="font-size: 3rem; text-transform: uppercase; letter-spacing: 0.05em;">OUTCOME</div>
                             </div>
                         </div>
@@ -599,7 +663,7 @@
         <section id="voice">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">06 // VOICE & TONE</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">06 // VOICE & TONE</span>
                 </div>
                 <div class="col-8">
                     
@@ -609,22 +673,22 @@
 
                     <div class="grid-12 hairline-bottom reveal">
                         <div class="col-6">
-                            <span class="tech-subhead" style="color: var(--magenta); display: block; margin-bottom: 1rem;">NEVER USE</span>
+                            <span class="micro-data" style="color: var(--magenta); display: block; margin-bottom: 1rem;">NEVER USE</span>
                             <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.</p>
                         </div>
                         <div class="col-6">
-                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">ALWAYS USE</span>
+                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: 1rem;">ALWAYS USE</span>
                             <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.</p>
                         </div>
                     </div>
 
                     <div class="do-dont-pair reveal">
                         <div class="rule-box rule-do">
-                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">DO</span>
+                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: 1rem;">DO</span>
                             <p class="body-medium">"Levy helps you name the gap. Then helps you close it."</p>
                         </div>
                         <div class="rule-box rule-dont">
-                            <span class="tech-subhead" style="display: block; margin-bottom: 1rem;">DON'T</span>
+                            <span class="micro-data" style="display: block; margin-bottom: 1rem;">DON'T</span>
                             <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
                         </div>
                     </div>
@@ -636,12 +700,12 @@
         <section id="in-use">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">07 // BRAND IN USE</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">07 // BRAND IN USE</span>
                 </div>
                 <div class="col-8">
                     
                     <div class="hairline-bottom reveal delay-1">
-                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">NAMING CONVENTIONS</span>
+                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">NAMING CONVENTIONS</span>
                         <div class="grid-12" style="border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
                             <div class="col-6 body-medium">Casual / owned channels</div>
                             <div class="col-6 tech-title" style="font-size: 1.2rem;">LEVY</div>
@@ -656,7 +720,7 @@
                         </div>
                     </div>
 
-                    <span class="tech-subhead reveal" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">APPLICATIONS</span>
+                    <span class="micro-data reveal" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">APPLICATIONS</span>
                     <div class="mockup-grid reveal">
                         
                         <div class="mockup">
@@ -666,7 +730,7 @@
                                     <polygon points="45,90 90,90 67.5,67.5" />
                                 </svg>
                                 <div class="tech-title" style="font-size: 1.1rem; margin-top: auto;">BRENDAN</div>
-                                <div class="tech-subhead" style="color: var(--ink-muted);">STRATEGIC DESIGN</div>
+                                <div class="micro-data" style="color: var(--ink-muted);">STRATEGIC DESIGN</div>
                                 <div class="tech-title" style="font-size: 0.65rem; color: var(--ink-muted); margin-top: 2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                             </div>
                         </div>
@@ -683,7 +747,7 @@
                         <div class="mockup col-12">
                             <div class="artifact-report">
                                 <div>
-                                    <div class="tech-subhead" style="color: rgba(247,247,246,0.6);">INSTITUTE REPORT // 2026</div>
+                                    <div class="micro-data" style="color: rgba(247,247,246,0.6);">INSTITUTE REPORT // 2026</div>
                                     <div class="tech-title" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-top: 2rem; color: var(--paper);">SYSTEMS<br>LEVERAGE</div>
                                     <div class="narrative" style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-top: 1.5rem; color: var(--paper); opacity: 0.9;">Mapping the Institutional Gap</div>
                                 </div>
@@ -706,28 +770,28 @@
         <section id="downloads" style="min-height: auto; padding-bottom: var(--space-xl);">
             <div class="container grid-12">
                 <div class="col-4 reveal">
-                    <span class="tech-subhead" style="color: var(--violet);">08 // ASSETS</span>
+                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">08 // ASSETS</span>
                 </div>
                 <div class="col-8">
                     <div class="dl-grid reveal delay-1">
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">LOGOS</div>
-                            <div class="tech-subhead" style="color: var(--ink-muted);">SVG, PNG, EPS</div>
+                            <div class="micro-data" style="color: var(--ink-muted);">SVG, PNG, EPS</div>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">COLORS</div>
-                            <div class="tech-subhead" style="color: var(--ink-muted);">ASE, HEX Ref</div>
+                            <div class="micro-data" style="color: var(--ink-muted);">ASE, HEX Ref</div>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">FONTS</div>
-                            <div class="tech-subhead" style="color: var(--ink-muted);">Web & OTF</div>
+                            <div class="micro-data" style="color: var(--ink-muted);">Web & OTF</div>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">GUIDE</div>
-                            <div class="tech-subhead" style="color: var(--ink-muted);">PDF Document</div>
+                            <div class="micro-data" style="color: var(--ink-muted);">PDF Document</div>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                     </div>
@@ -770,17 +834,21 @@
 
             /* --- HEADER SCROLL FX --- */
             const header = document.getElementById('mainHeader');
-            const darkSection = document.getElementById('cover'); 
+            const darkSection = document.getElementById('world'); 
 
             window.addEventListener('scroll', () => {
-                const darkBottom = darkSection.offsetTop + darkSection.offsetHeight;
-                if (window.scrollY < darkBottom - 90) {
+                const darkTop = darkSection.offsetTop;
+                const darkBottom = darkTop + darkSection.offsetHeight;
+                
+                // If header is within the dark section bounds, invert it
+                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
                     header.classList.add('on-dark');
                 } else {
                     header.classList.remove('on-dark');
                 }
             });
-            if (window.scrollY < darkSection.offsetHeight - 90) header.classList.add('on-dark');
+            // Initial check
+            if (window.scrollY > darkSection.offsetTop - 90 && window.scrollY < darkSection.offsetTop + darkSection.offsetHeight - 90) header.classList.add('on-dark');
 
             /* --- SCROLL REVEAL --- */
             const revealElements = document.querySelectorAll(".reveal");
