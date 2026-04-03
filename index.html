@@ -34,16 +34,16 @@
             --hairline-dark: rgba(10, 10, 10, 0.15);
             --hairline-light: rgba(245, 245, 243, 0.15);
             
-            /* Fluid Spacing */
+            /* Unified Fluid Spacing Engine */
             --space-xs: clamp(0.5rem, 1vw, 1rem);
-            --space-sm: clamp(1rem, 2vw, 2rem);
-            --space-md: clamp(1.5rem, 4vw, 4rem);
-            --space-lg: clamp(4rem, 8vw, 8rem);
-            --space-xl: clamp(8rem, 15dvh, 15rem);
-            --space-xxl: clamp(12rem, 25dvh, 25rem);
+            --space-sm: clamp(1rem, 2vw, 1.5rem);
+            --space-md: clamp(1.5rem, 3vw, 3rem);
+            --space-lg: clamp(3rem, 5vw, 5rem);
+            --space-xl: clamp(5rem, 8vw, 8rem);
+            --space-xxl: clamp(7rem, 12vw, 14rem);
             
-            /* Clamped Aggressive Ma */
-            --ma: clamp(120px, 20dvh, 250px); 
+            /* Section padding */
+            --ma: clamp(80px, 15vw, 200px); 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -75,9 +75,8 @@
         }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM (STRICTLY FLUSH-LEFT, ROMAN)
+           3. TYPOGRAPHY SYSTEM
            ========================================================================== */
-        
         .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
@@ -104,7 +103,9 @@
             letter-spacing: 0.15em;
             line-height: 1.6;
             color: var(--ink-muted);
+            display: block;
         }
+        .micro-data.accent { color: var(--violet); margin-bottom: var(--space-md); }
         
         .narrative { 
             font-family: var(--font-narrative); 
@@ -114,9 +115,10 @@
             line-height: 1.1;
         }
 
-        .display-huge { font-size: clamp(2.25rem, 11vw, 8rem); letter-spacing: -0.03em; text-wrap: balance; }
-        .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; text-wrap: balance; }
-        .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; text-wrap: balance; }
+        .display-massive { font-size: clamp(3rem, 11vw, 12rem); font-weight: 700; letter-spacing: -0.04em; text-wrap: balance; line-height: 0.85; }
+        .display-huge { font-size: clamp(2.25rem, 8vw, 8rem); letter-spacing: -0.03em; text-wrap: balance; }
+        .display-large { font-size: clamp(1.8rem, 5vw, 5rem); letter-spacing: -0.02em; text-wrap: balance; }
+        .display-medium { font-size: clamp(1.4rem, 3.5vw, 2.5rem); letter-spacing: -0.01em; text-wrap: balance; }
         
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
@@ -125,88 +127,84 @@
             font-family: var(--font-narrative);
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             font-weight: 300;
-            font-style: normal;
-            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-size: clamp(1.5rem, 3vw, 3rem);
             line-height: 1.15;
             color: var(--ink);
             border-left: 2px solid var(--violet);
             padding-left: var(--space-md);
-            margin: var(--space-xl) 0;
+            margin: var(--space-xl) 0 0 0;
             text-wrap: pretty;
         }
 
         /* ==========================================================================
-           4. CASCADING ARCHITECTURE & EXACT GRID MATH
+           4. CASCADING GRID ARCHITECTURE (12 -> 8 -> 4)
            ========================================================================== */
-        .container { width: 100%; max-width: 2400px; margin: 0 auto; padding: 0 5vw; }
+        section { padding: var(--ma) 0; }
         
-        .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
+        .grid-12 { 
+            display: grid; 
+            grid-template-columns: repeat(12, 1fr); 
+            column-gap: 2vw; 
+            row-gap: var(--space-xxl);
+            width: 100%; 
+            max-width: 2400px; 
+            margin: 0 auto; 
+            padding: 0 5vw; 
+            align-items: start;
+        }
         
+        /* Master Columns */
         .col-left { grid-column: 1 / 3; }        
         
+        /* The Rhythm Engine: Handles all vertical spacing via row-gap */
         .col-center { 
-            grid-column: 3 / 11; /* Spans 8 Master Columns */
+            grid-column: 3 / 13; 
             display: grid;
             grid-template-columns: subgrid; 
+            row-gap: var(--space-xxl);
+            align-content: start;
         }     
-        
-        .col-center > * { grid-column: 1 / -1; }
-        
-        /* Single text column: Constrained to 4 Master Columns */
-        .col-center > .indent-body { grid-column: 2 / 6; }
 
-        /* Double text column: Spans 7 Master Columns (3 cols + 1 gap + 3 cols) */
-        .col-center > .indent-double { 
-            grid-column: 2 / 9; 
-            display: grid;
-            grid-template-columns: subgrid; 
-        }
-        
-        .split-left { grid-column: 1 / 4; } /* Spans exactly 3 columns */
-        .split-right { grid-column: 5 / 8; } /* Spans exactly 3 columns, forcing 1 column empty gap */
-
-        /* Specific Layout Override for Brand World Section */
-        .world-grid-override {
-            grid-column: 4 / 13;
-            display: grid;
-            grid-template-columns: subgrid;
-        }
-        .world-split {
+        .col-full {
             grid-column: 1 / -1;
             display: grid;
             grid-template-columns: subgrid;
+            row-gap: var(--space-xxl);
         }
-        .world-split-left { grid-column: 1 / 5; } /* 4 cols wide */
-        .world-split-right { grid-column: 6 / 10; } /* 4 cols wide, 1 col gap */
+        
+        /* Sub-grid indentations */
+        .indent-body { grid-column: 2 / 7; } /* Spans 5 columns */
+        .indent-wide { grid-column: 2 / 10; } /* Spans 8 columns */
+        
+        .indent-double { 
+            grid-column: 2 / 10; 
+            display: grid;
+            grid-template-columns: subgrid; 
+        }
+        
+        .split-left { grid-column: auto / span 4; } 
+        .split-right { grid-column: auto / span 4; } 
 
-        /* Thesis Breakout Layout */
         .thesis-breakout {
             grid-column: 1 / -1;
             text-align: center;
-            margin-bottom: var(--space-xxl);
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .do-dont-pair { 
-            grid-column: 2 / 8;
+            grid-column: 2 / 9;
             display: grid; 
             grid-template-columns: subgrid; 
-            margin-bottom: var(--space-xl); 
         }
-        .rule-do { grid-column: 1 / 4; padding: var(--space-lg); border-top: 4px solid var(--violet); background: rgba(0,0,0,0.02); }
-        .rule-dont { grid-column: 4 / 7; padding: var(--space-lg); border-top: 4px solid var(--ink-muted); opacity: 0.6; background: rgba(0,0,0,0.02); }
+        .rule-do { grid-column: auto / span 3; padding: var(--space-lg); border-top: 4px solid var(--violet); background: rgba(0,0,0,0.02); }
+        .rule-dont { grid-column: auto / span 3; padding: var(--space-lg); border-top: 4px solid var(--ink-muted); opacity: 0.6; background: rgba(0,0,0,0.02); }
 
-        section { padding: var(--ma) 0; display: flex; flex-direction: column; justify-content: center; }
-
+        /* Animation Hooks */
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); will-change: opacity, transform; }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
 
-        /* The Data Field (Dark Mode) */
+        /* Dark Mode Theme */
         .dark-section { background: linear-gradient(150deg, var(--midnight) 0%, var(--violet) 55%, var(--magenta) 100%); color: var(--paper); }
         .dark-section blockquote { color: var(--paper); border-left-color: var(--magenta); }
         .dark-section .tech-subhead, .dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
@@ -225,7 +223,7 @@
         header.on-dark { background: rgba(15, 12, 41, 0.85); }
         header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
 
-        .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; transition: color 0.4s ease; }
+        .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; font-size: 1.5rem; line-height: 1; }
         .header-logo svg { width: 24px; height: 24px; }
 
         .hamburger { background: none; border: none; cursor: pointer; width: 44px; height: 44px; position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
@@ -252,7 +250,6 @@
         .bento-nav.is-open { opacity: 1; pointer-events: auto; }
 
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; height: 100%; max-height: 80dvh; }
-
         .bento-item {
             background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
             text-decoration: none; color: var(--ink); display: flex; flex-direction: column; justify-content: space-between;
@@ -261,14 +258,10 @@
         }
         
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
-        .bento-item:nth-child(1) { transition-delay: 0.1s; }
-        .bento-item:nth-child(2) { transition-delay: 0.15s; }
-        .bento-item:nth-child(3) { transition-delay: 0.2s; }
-        .bento-item:nth-child(4) { transition-delay: 0.25s; }
-        .bento-item:nth-child(5) { transition-delay: 0.3s; }
-        .bento-item:nth-child(6) { transition-delay: 0.35s; }
-        .bento-item:nth-child(7) { transition-delay: 0.4s; }
-        .bento-item:nth-child(8) { transition-delay: 0.45s; }
+        .bento-item:nth-child(1) { transition-delay: 0.1s; } .bento-item:nth-child(2) { transition-delay: 0.15s; }
+        .bento-item:nth-child(3) { transition-delay: 0.2s; } .bento-item:nth-child(4) { transition-delay: 0.25s; }
+        .bento-item:nth-child(5) { transition-delay: 0.3s; } .bento-item:nth-child(6) { transition-delay: 0.35s; }
+        .bento-item:nth-child(7) { transition-delay: 0.4s; } .bento-item:nth-child(8) { transition-delay: 0.45s; }
 
         .bento-item::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0;
@@ -286,11 +279,21 @@
         /* ==========================================================================
            6. COMPONENT DETAILS & CLUSTERS
            ========================================================================== */
-        .spec-cluster { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: var(--space-lg); }
+        .spec-cluster { display: flex; flex-direction: column; gap: 0.25rem; }
+        .spec-row { display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;}
         
-        .poster-lockup { display: grid; grid-template-columns: 1fr 3fr; align-items: end; margin: var(--space-xl) 0; gap: 4vw; border-bottom: 1px solid var(--hairline-dark); padding-bottom: var(--space-md);}
+        .poster-lockup { 
+            grid-column: 1 / -1; 
+            display: grid; 
+            grid-template-columns: subgrid; 
+            align-items: end; 
+            border-bottom: 1px solid var(--hairline-dark); 
+            padding-bottom: var(--space-md);
+        }
+        .poster-lockup .spec-cluster { grid-column: 1 / 4; }
+        .poster-lockup .tech-title { grid-column: 4 / -1; }
         
-        .constraint-list { list-style: none; }
+        .constraint-list { list-style: none; grid-column: 2 / 10; }
         .constraint-list li { border-bottom: 1px solid var(--hairline-dark); padding: var(--space-md) 0; font-size: 1.15rem; font-weight: 300;}
         .dark-section .constraint-list li { border-bottom-color: var(--hairline-light); color: rgba(245,245,243,0.8); }
 
@@ -301,53 +304,68 @@
         .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; min-height: 44px; min-width: 44px; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
-        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; margin-top: var(--space-lg); }
-        .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-xl); }
-        .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
-        .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; padding: 4rem; display: flex; align-items: center; text-align: left; }
-        .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
+        .mockup-grid { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
+        .mockup { grid-column: auto / span 4; border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-lg); }
+        .mockup.wide { grid-column: 1 / -1; }
+        
+        /* Fluid Artifact Paddings */
+        .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
+        .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; padding: clamp(2rem, 5vw, 4rem); display: flex; align-items: center; text-align: left; }
+        .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; padding: clamp(2rem, 5vw, 3rem); display: flex; flex-direction: column; justify-content: space-between; position: relative;}
 
-        .dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; margin-top: var(--space-lg); }
-        .dl-card { border: 1px solid var(--hairline-dark); padding: var(--space-lg); display: flex; flex-direction: column; transition: border-color 0.3s; }
+        .dl-grid { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
+        .dl-card { grid-column: auto / span 2; border: 1px solid var(--hairline-dark); padding: var(--space-lg); display: flex; flex-direction: column; transition: border-color 0.3s; }
         .dl-card:hover { border-color: var(--violet); }
         .dl-btn { margin-top: var(--space-lg); padding: 1.25rem; min-height: 44px; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
+        /* Block Helpers */
+        .block-bordered { border-top: 1px solid var(--hairline-dark); border-bottom: 1px solid var(--hairline-dark); padding: var(--space-lg) 0; }
+        .block-bordered-top { border-top: 1px solid var(--hairline-dark); padding-top: var(--space-lg); }
+        .p-body-stack > p { margin-top: var(--space-md); }
+        .p-body-stack > p:first-child { margin-top: 0; }
+
         /* ==========================================================================
-           7. RESPONSIVE CHOREOGRAPHY
+           7. RESPONSIVE CHOREOGRAPHY (8 & 4 Column Breakpoints)
            ========================================================================== */
         @media (max-width: 1024px) {
-            .grid-12 { display: flex; flex-direction: column; gap: var(--space-md); }
+            /* 8 Column Engine */
+            .grid-12 { grid-template-columns: repeat(8, 1fr); }
             
-            .col-center { display: flex; flex-direction: column; width: 100%; gap: var(--space-lg);}
-            .col-center > .indent-body { margin-left: 5vw; margin-right: 5vw; } 
-            .col-center > .indent-double { display: flex; flex-direction: column; gap: var(--space-md); margin-left: 5vw; margin-right: 5vw;}
+            .col-left { grid-column: 1 / -1; } 
+            .col-center { grid-column: 1 / -1; }
             
-            .world-grid-override { display: flex; flex-direction: column; gap: var(--space-lg); padding: 0 5vw; }
-            .world-split { display: flex; flex-direction: column; gap: var(--space-md); }
+            .indent-body { grid-column: 2 / 8; }
+            .indent-wide { grid-column: 1 / -1; }
+            
+            .split-left { grid-column: auto / span 4; }
+            .split-right { grid-column: auto / span 4; }
+
+            .do-dont-pair { grid-column: 1 / -1; }
+            .rule-do, .rule-dont { grid-column: auto / span 4; }
 
             .bento-item { min-height: auto; padding: var(--space-md); }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
             .bento-grid { max-height: none; grid-template-columns: 1fr 1fr; }
             
-            .dl-grid { grid-template-columns: 1fr 1fr; }
+            .dl-card { grid-column: auto / span 4; }
         }
         
         @media (max-width: 768px) {
-            :root { 
-                --header-height: 70px; 
-            }
-            .bento-grid { grid-template-columns: 1fr; }
-            .do-dont-pair, .mockup-grid { display: flex; flex-direction: column; gap: var(--space-md); }
-            .dl-grid { grid-template-columns: 1fr; }
+            /* 4 Column Engine */
+            :root { --header-height: 70px; }
+            .grid-12 { grid-template-columns: repeat(4, 1fr); row-gap: var(--space-xl); }
             
-            .col-center > .indent-body, .col-center > .indent-double { margin-left: 0; margin-right: 0; }
-            .world-grid-override { padding: 0; }
+            .indent-body { grid-column: 1 / -1; }
+            .indent-double { display: flex; flex-direction: column; gap: var(--space-xl); }
+            .split-left, .split-right { grid-column: 1 / -1; }
+            
+            .do-dont-pair { display: flex; flex-direction: column; gap: var(--space-md); }
             
             .poster-lockup { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: var(--space-md); }
-            .display-huge { font-size: 3.5rem; text-wrap: wrap; }
-            
-            .thesis-breakout h2 { font-size: 15vw !important; padding: 0 5vw; }
+            .mockup { grid-column: 1 / -1; }
+            .dl-card { grid-column: 1 / -1; }
+            .bento-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -356,7 +374,7 @@
     <div class="noise"></div>
 
     <header id="mainHeader">
-        <a href="#cover" class="header-logo tech-title" style="font-size: 1.5rem; line-height: 1;">
+        <a href="#cover" class="header-logo tech-title">
             <svg viewBox="0 0 100 100" fill="currentColor">
                 <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
                 <polygon points="45,90 90,90 67.5,67.5" />
@@ -371,7 +389,7 @@
     </header>
 
     <nav class="bento-nav" id="bentoNav">
-        <div class="container" style="height: 100%;">
+        <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
             <div class="bento-grid">
                 <a href="#insight" class="bento-item large nav-link">
                     <span class="tech-subhead" style="color: rgba(255,255,255,0.5);">01 // THE PROBLEM</span>
@@ -411,51 +429,50 @@
 
     <main>
         
-        <section id="cover" style="padding-top: var(--space-xl); justify-content: space-between;">
-            <div class="container">
+        <section id="cover" style="padding-top: var(--space-xxl);">
+            <div class="grid-12">
 
                 <div class="poster-lockup reveal delay-1">
                     <div class="spec-cluster">
-                        <div class="micro-data">LEVY STRATEGIC DESIGN</div>
-                        <div class="micro-data">WASHINGTON, DISTRICT OF COLUMBIA</div>
-                        <div class="micro-data">DC20002</div>
-                        <div class="micro-data" style="margin-top: 1rem;">BRAND SYSTEM OVERVIEW</div>
-                        <div class="micro-data">VER. 2.0 / 2026</div>
+                        <span class="micro-data">LEVY STRATEGIC DESIGN</span>
+                        <span class="micro-data">WASHINGTON, DISTRICT OF COLUMBIA</span>
+                        <span class="micro-data">DC20002</span>
+                        <span class="micro-data" style="margin-top: 1rem;">BRAND SYSTEM OVERVIEW</span>
+                        <span class="micro-data">VER. 2.0 / 2026</span>
                     </div>
                     
-                    <div class="tech-title display-huge" style="line-height: 0.85;">
-                        PROJECT : <br>LEVY SYSTEM
-                    </div>
+                    <h1 class="tech-title display-huge">PROJECT : <br>LEVY SYSTEM</h1>
                 </div>
 
-                <div class="reveal delay-2" style="margin-top: var(--space-lg); max-width: 600px;">
-                    <div class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--ink);">A community of builders strengthening the American Project.</div>
+                <div class="col-center reveal delay-2">
+                    <h2 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--ink); max-width: 600px;">
+                        A community of builders strengthening the American Project.
+                    </h2>
                 </div>
 
             </div>
         </section>
 
         <section id="insight">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">01 // THE INSIGHT</span>
+                    <span class="micro-data accent">01 // THE INSIGHT</span>
                 </div>
                 
                 <div class="col-center">
-                    <h2 class="tech-title display-large reveal delay-1" style="margin-bottom: var(--space-xl);">SOMETHING HAS<br>GONE WRONG.</h2>
+                    <h2 class="tech-title display-large reveal delay-1">SOMETHING HAS<br>GONE WRONG.</h2>
                     
-                    <div class="indent-body">
-                        <p class="body-large reveal">
+                    <div class="indent-body reveal p-body-stack">
+                        <p class="body-large">
                             The people who should be producing the most consequential results — founders building real companies, public servants who know what's possible, institutional leaders who understand what their organizations could do — are systematically producing less than they're capable of. Not because they aren't smart enough. Not because they aren't working hard enough. Because the knowledge, the networks, and the conditions that would let them operate at full capacity don't exist in the same place at the same time.
                         </p>
-                        <p class="body-large reveal" style="margin-top: var(--space-md);">
+                        <p class="body-large">
                             Most people building today never learn what the most consequential builders in history understood: governments, public institutions, and private organizations create leverage together in ways that aren't visible from the outside. Find the right points in that system. Apply force there. Get more out than you put in.
                         </p>
-                        <p class="body-large reveal" style="margin-top: var(--space-md);">
+                        <p class="body-large">
                             Nobody teaches this. The knowledge lives in silos. The networks don't cross sectors.
                         </p>
-
-                        <blockquote class="reveal delay-1">
+                        <blockquote>
                             "Those aren't two separate arguments. They're the same one."
                         </blockquote>
                     </div>
@@ -464,98 +481,88 @@
         </section>
 
         <section id="positioning">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">02 // POSITIONING</span>
+                    <span class="micro-data accent">02 // POSITIONING</span>
                 </div>
                 
                 <div class="col-center">
                     
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE NAME</span>
-                            <p class="body-large">
-                                To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point in a system. You get more out than you put in — not through luck, but through understanding how the system works. The name is the idea. The idea is the work.
-                            </p>
-                        </div>
+                    <div class="indent-body reveal">
+                        <span class="micro-data" style="margin-bottom: var(--space-sm);">THE NAME</span>
+                        <p class="body-large">
+                            To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point in a system. You get more out than you put in — not through luck, but through understanding how the system works. The name is the idea. The idea is the work.
+                        </p>
                     </div>
 
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-md); display: block;">THE EMOTIONAL CONCEPT</span>
-                            <h3 class="narrative display-medium" style="color: var(--ink);">
-                                Actualization. Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the right conditions and the right partners to prove it.
-                            </h3>
-                        </div>
+                    <div class="indent-wide reveal">
+                        <span class="micro-data" style="margin-bottom: var(--space-md);">THE EMOTIONAL CONCEPT</span>
+                        <h3 class="narrative display-medium" style="color: var(--ink);">
+                            Actualization. Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the right conditions and the right partners to prove it.
+                        </h3>
                     </div>
+
                 </div>
                 
                 <div class="reveal thesis-breakout">
-                    <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-md); display: block;">THE CORE THESIS</span>
-                    <h2 class="tech-title" style="font-size: 11.5vw; font-weight: 700; line-height: 0.85; letter-spacing: -0.04em; margin: 0;">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
+                    <span class="micro-data" style="margin-bottom: var(--space-md);">THE CORE THESIS</span>
+                    <h2 class="tech-title display-massive">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                 </div>
 
                 <div class="col-center">
-                    <div class="reveal" style="margin-bottom: var(--space-xl);">
-                        <div class="indent-body">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE MISSION</span>
-                            <p class="body-medium">
-                                To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
-                            </p>
-                        </div>
+                    <div class="indent-body reveal">
+                        <span class="micro-data" style="margin-bottom: var(--space-sm);">THE MISSION</span>
+                        <p class="body-medium">
+                            To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
+                        </p>
                     </div>
                     
-                    <div class="reveal">
-                        <div class="indent-body">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">WHO IT'S FOR</span>
-                            <p class="body-medium">
-                                The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
-                            </p>
-                            <blockquote class="reveal" style="margin-left: 0;">
-                                "Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales."
-                            </blockquote>
-                        </div>
+                    <div class="indent-body reveal">
+                        <span class="micro-data" style="margin-bottom: var(--space-sm);">WHO IT'S FOR</span>
+                        <p class="body-medium">
+                            The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
+                        </p>
+                        <blockquote style="margin-left: 0; padding-left: var(--space-md);">
+                            "Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales."
+                        </blockquote>
                     </div>
-
                 </div>
             </div>
         </section>
 
         <section id="aesthetic">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">03 // VISUAL STRATEGY</span>
+                    <span class="micro-data accent">03 // VISUAL STRATEGY</span>
                 </div>
                 
                 <div class="col-center">
-                    <h2 class="tech-title display-large reveal delay-1" style="margin-bottom: var(--space-xl);">BUREAUCRACY<br>AND AURA.</h2>
+                    <h2 class="tech-title display-large reveal delay-1">BUREAUCRACY<br>AND AURA.</h2>
                     
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body">
-                            <p class="body-large">
-                                The Levy visual system is built on a deliberate tension. It merges the cold, absolute utility of an aerospace engineering manual with the ethereal, emotional gravity of a boundless data field. It is designed to be unapologetic, strictly functional, and deeply human.
-                            </p>
-                        </div>
+                    <div class="indent-body reveal">
+                        <p class="body-large">
+                            The Levy visual system is built on a deliberate tension. It merges the cold, absolute utility of an aerospace engineering manual with the ethereal, emotional gravity of a boundless data field. It is designed to be unapologetic, strictly functional, and deeply human.
+                        </p>
                     </div>
 
-                    <div class="reveal indent-double" style="margin-bottom: var(--space-xxl); border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md);">
+                    <div class="indent-double reveal block-bordered-top">
                         <div class="split-left">
-                            <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">THE ARCHITECTURE OF AUTHORITY</span>
+                            <span class="micro-data" style="margin-bottom: var(--space-md);">THE ARCHITECTURE OF AUTHORITY</span>
                             <p class="body-medium">
                                 The layout logic relies on strict, mathematically sound grids. We utilize flush-left, ragged-right typography and eradicate artificial embellishment. By removing borders, frills, and decorative artifacts, the grid becomes an unyielding framework for communication. The typographic scale is massive and heavy, contrasted immediately by microscopic, monospaced data clusters—treating public communication like an internal laboratory document.
                             </p>
                         </div>
                         <div class="split-right">
-                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">THE DATA FIELD</span>
+                            <span class="micro-data accent">THE DATA FIELD</span>
                             <p class="body-medium">
                                 When the grid breaks, it yields to the Data Field—a boundless gradient of midnight, violet, and magenta. It represents the synthesis of blue and red, a non-partisan Washington D.C. purple. It is the Roman Republican ideal visualized. By keeping the structural elements brutally clinical, the appearance of the Data Field carries immense emotional and narrative weight.
                             </p>
                         </div>
                     </div>
 
-                    <div class="reveal indent-body" style="border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md);">
-                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">STRICT TYPOGRAPHIC RULES</span>
-                        <ul class="constraint-list" style="font-family: var(--font-tech);">
+                    <div class="indent-wide reveal block-bordered-top">
+                        <span class="micro-data" style="margin-bottom: var(--space-md);">STRICT TYPOGRAPHIC RULES</span>
+                        <ul class="constraint-list">
                             <li>Maintain rigorous flush-left, ragged-right text alignment.</li>
                             <li>Cluster micro-data tightly; use upper-case and wide tracking.</li>
                             <li>Never use italics. Treat all typography as an upright, absolute statement of fact.</li>
@@ -568,36 +575,38 @@
         </section>
 
         <section id="world" class="dark-section">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block;">04 // BRAND WORLD</span>
+                    <span class="micro-data" style="color: rgba(255,255,255,0.5);">04 // BRAND WORLD</span>
                 </div>
                 
-                <div class="world-grid-override">
-                    <h2 class="tech-title display-large reveal delay-1" style="grid-column: 1 / -1; text-transform: none; letter-spacing: -0.01em; margin-bottom: var(--space-xl);">The brand lives at the intersection of civic conviction and strategic precision.</h2>
+                <div class="col-full">
+                    <h2 class="tech-title display-large reveal delay-1" style="text-transform: none;">
+                        The brand lives at the intersection of civic conviction and strategic precision.
+                    </h2>
                     
-                    <div class="world-split reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="world-split-left">
+                    <div class="indent-double reveal">
+                        <div class="split-left">
                             <p class="body-medium">
                                 It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
                             </p>
                         </div>
-                        <div class="world-split-right">
+                        <div class="split-right">
                             <p class="body-medium">
                                 The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
                             </p>
                         </div>
                     </div>
 
-                    <div class="reveal" style="grid-column: 1 / -1; margin-bottom: var(--space-xxl);">
-                        <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-sm);">BRAND ARCHETYPE</span>
+                    <div class="reveal indent-body">
+                        <span class="micro-data" style="color: rgba(255,255,255,0.5); margin-bottom: var(--space-sm);">BRAND ARCHETYPE</span>
                         <h3 class="tech-title display-medium">MAGICIAN-SAGE</h3>
                         <p class="body-large" style="margin-top: var(--space-md); color: rgba(245,245,243,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
-                    <div class="reveal" style="grid-column: 1 / -1;">
-                        <span class="micro-data" style="color: var(--paper); display: block; margin-bottom: var(--space-md);">WHAT LEVY NEVER DOES</span>
-                        <ul class="constraint-list" style="font-family: var(--font-tech);">
+                    <div class="indent-wide reveal block-bordered-top" style="border-color: var(--hairline-light);">
+                        <span class="micro-data" style="color: var(--paper); margin-bottom: var(--space-md);">WHAT LEVY NEVER DOES</span>
+                        <ul class="constraint-list">
                             <li>Operates as a political organization or takes partisan positions</li>
                             <li>Tries to convince people to be ambitious — they already are</li>
                             <li>Flatters. Performs urgency. Explains what the reader already knows</li>
@@ -612,15 +621,15 @@
         </section>
 
         <section id="visuals">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">05 // VISUAL IDENTITY</span>
+                    <span class="micro-data accent">05 // VISUAL IDENTITY</span>
                 </div>
                 
                 <div class="col-center">
                     
-                    <div style="margin-bottom: var(--space-xxl);">
-                        <h2 class="tech-title display-medium reveal delay-1" style="margin-bottom: var(--space-lg);">PRIMARY LOCKUP</h2>
+                    <div class="col-full">
+                        <h2 class="tech-title display-medium reveal delay-1">PRIMARY LOCKUP</h2>
                         <div class="indent-double reveal delay-2">
                             <div class="split-left" style="background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-xl); display: flex; justify-content: center;">
                                 <svg viewBox="0 0 300 100" fill="var(--ink)" width="100%">
@@ -637,10 +646,10 @@
                         </div>
                     </div>
 
-                    <div style="margin-bottom: var(--space-xxl);">
-                        <h2 class="tech-title display-medium reveal" style="margin-bottom: var(--space-md);">SYSTEM PALETTE</h2>
-                        <div class="indent-body">
-                            <p class="body-medium reveal" style="margin-bottom: var(--space-lg);">Violet is the load-bearing color of the entire system. Everything defers to it. It is used with authority, not decoration.</p>
+                    <div class="col-full">
+                        <h2 class="tech-title display-medium reveal">SYSTEM PALETTE</h2>
+                        <div class="indent-body reveal">
+                            <p class="body-medium">Violet is the load-bearing color of the entire system. Everything defers to it. It is used with authority, not decoration.</p>
                         </div>
                         
                         <div class="indent-double reveal">
@@ -649,7 +658,7 @@
                                 <div class="color-details">
                                     <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">VIOLET / PRIMARY</div>
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="micro-data" style="color: var(--ink-muted);">HEX</span> 
+                                        <span class="micro-data">HEX</span> 
                                         <span class="hex-tag">#6441A5</span>
                                     </div>
                                 </div>
@@ -659,7 +668,7 @@
                                 <div class="color-details">
                                     <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">MIDNIGHT / BG</div>
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="micro-data" style="color: var(--ink-muted);">HEX</span> 
+                                        <span class="micro-data">HEX</span> 
                                         <span class="hex-tag">#0F0C29</span>
                                     </div>
                                 </div>
@@ -667,22 +676,22 @@
                         </div>
                     </div>
 
-                    <div>
-                        <h2 class="tech-title display-medium reveal" style="margin-bottom: var(--space-xl);">TYPOGRAPHY SYSTEM</h2>
+                    <div class="col-full">
+                        <h2 class="tech-title display-medium reveal">TYPOGRAPHY SYSTEM</h2>
                         
-                        <div class="reveal" style="margin-bottom: var(--space-xl);">
+                        <div class="col-full reveal">
                             <div class="indent-body">
-                                <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-sm);">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
-                                <p class="body-medium" style="margin-bottom: var(--space-lg);">
+                                <span class="micro-data" style="margin-bottom: var(--space-sm);">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
+                                <p class="body-medium">
                                     Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height. Body copy is Light. Structural labels use micro-tracking.
                                 </p>
                             </div>
                             
-                            <div class="indent-body" style="border-top: 1px solid var(--hairline-dark); border-bottom: 1px solid var(--hairline-dark); padding: var(--space-lg) 0;">
+                            <div class="indent-body block-bordered">
                                 <div class="spec-cluster">
-                                    <div class="micro-data">WASHINGTON</div>
-                                    <div class="micro-data">DISTRICT OF COLUMBIA</div>
-                                    <div class="micro-data">DECEMBER 18TH, 2026</div>
+                                    <span class="micro-data">WASHINGTON</span>
+                                    <span class="micro-data">DISTRICT OF COLUMBIA</span>
+                                    <span class="micro-data">DECEMBER 18TH, 2026</span>
                                 </div>
                                 <div class="tech-title" style="font-size: clamp(2.5rem, 5vw, 4.5rem); margin-top: var(--space-lg);">
                                     CAPITAL SALON // 001
@@ -693,21 +702,21 @@
                             </div>
                         </div>
 
-                        <div class="reveal">
+                        <div class="col-full reveal">
                             <div class="indent-body">
-                                <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-sm);">02 // THE ACCENT: FRAUNCES (10%)</span>
-                                <p class="body-medium" style="margin-bottom: var(--space-lg);">
+                                <span class="micro-data" style="margin-bottom: var(--space-sm);">02 // THE ACCENT: FRAUNCES (10%)</span>
+                                <p class="body-medium">
                                     Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used strictly for standalone conceptual anchors or Roman pull quotes. It emulates Sumi ink bleeding into paper fibers.
                                 </p>
                             </div>
                             
-                            <div class="indent-double" style="border-top: 1px solid var(--hairline-dark); border-bottom: 1px solid var(--hairline-dark); padding: var(--space-lg) 0;">
+                            <div class="indent-double block-bordered">
                                 <div class="split-left">
-                                    <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">INLINE ACCENT</span>
+                                    <span class="micro-data" style="margin-bottom: var(--space-md);">INLINE ACCENT</span>
                                     <div class="tech-title" style="font-size: 3rem; text-transform: capitalize;">Capital <span class="narrative">Rework</span></div>
                                 </div>
                                 <div class="split-right">
-                                    <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">CONCEPTUAL ANCHOR</span>
+                                    <span class="micro-data" style="margin-bottom: var(--space-md);">CONCEPTUAL ANCHOR</span>
                                     <div class="narrative" style="font-size: 3rem; text-transform: uppercase; letter-spacing: 0.05em;">OUTCOME</div>
                                 </div>
                             </div>
@@ -719,39 +728,37 @@
         </section>
 
         <section id="voice">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">06 // VOICE & TONE</span>
+                    <span class="micro-data accent">06 // VOICE & TONE</span>
                 </div>
                 
                 <div class="col-center">
                     
-                    <div class="reveal delay-1" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body">
-                            <p class="body-large">
-                                Direct. Clear. Confident. Speaks to people who are already serious and already working. Never performs urgency. Never flatters. Never explains what the reader already knows. Comfortable with the weight of what it's attempting. Earns its sentences.
-                            </p>
-                        </div>
+                    <div class="indent-body reveal delay-1">
+                        <p class="body-large">
+                            Direct. Clear. Confident. Speaks to people who are already serious and already working. Never performs urgency. Never flatters. Never explains what the reader already knows. Comfortable with the weight of what it's attempting. Earns its sentences.
+                        </p>
                     </div>
 
-                    <div class="reveal indent-double" style="margin-bottom: var(--space-xxl); border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md);">
+                    <div class="indent-double reveal block-bordered-top">
                         <div class="split-left">
-                            <span class="micro-data" style="color: var(--magenta); display: block; margin-bottom: var(--space-md);">NEVER USE</span>
+                            <span class="micro-data" style="color: var(--magenta); margin-bottom: var(--space-md);">NEVER USE</span>
                             <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.</p>
                         </div>
                         <div class="split-right">
-                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">ALWAYS USE</span>
+                            <span class="micro-data accent">ALWAYS USE</span>
                             <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.</p>
                         </div>
                     </div>
 
-                    <div class="reveal do-dont-pair">
+                    <div class="do-dont-pair reveal">
                         <div class="rule-do">
-                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-sm);">DO</span>
+                            <span class="micro-data accent">DO</span>
                             <p class="body-medium">"Levy helps you name the gap. Then helps you close it."</p>
                         </div>
                         <div class="rule-dont">
-                            <span class="micro-data" style="display: block; margin-bottom: var(--space-sm);">DON'T</span>
+                            <span class="micro-data" style="margin-bottom: var(--space-sm);">DON'T</span>
                             <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
                         </div>
                     </div>
@@ -761,110 +768,112 @@
         </section>
 
         <section id="in-use">
-            <div class="container grid-12">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">07 // BRAND IN USE</span>
+                    <span class="micro-data accent">07 // BRAND IN USE</span>
                 </div>
                 
                 <div class="col-center">
-                    <div class="reveal delay-1 indent-body" style="margin-bottom: var(--space-xxl);">
-                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-lg);">NAMING CONVENTIONS</span>
+                    <div class="indent-body reveal delay-1">
+                        <span class="micro-data" style="margin-bottom: var(--space-lg);">NAMING CONVENTIONS</span>
                         
-                        <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
+                        <div class="spec-row">
                             <div class="body-medium" style="flex: 1;">Casual / owned channels</div>
                             <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY</div>
                         </div>
-                        <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
+                        <div class="spec-row">
                             <div class="body-medium" style="flex: 1;">LinkedIn / external</div>
                             <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY STRATEGIC DESIGN</div>
                         </div>
-                        <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
+                        <div class="spec-row">
                             <div class="body-medium" style="flex: 1;">Formal / institutional</div>
                             <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                         </div>
                     </div>
 
-                    <span class="micro-data reveal indent-body" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-lg);">APPLICATIONS</span>
-                    
-                    <div class="mockup-grid reveal">
-                        <div class="mockup">
-                            <div class="artifact-card">
-                                <svg viewBox="0 0 100 100" fill="var(--ink)" width="30" style="margin-bottom: 1.5rem;">
-                                    <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                                    <polygon points="45,90 90,90 67.5,67.5" />
-                                </svg>
-                                <div class="tech-title" style="font-size: 1.1rem; margin-top: auto;">BRENDAN</div>
-                                <div class="spec-cluster" style="margin-top: var(--space-md); margin-bottom: 0;">
-                                    <div class="micro-data" style="color: var(--ink-muted);">STRATEGIC DESIGN</div>
-                                    <div class="tech-title" style="font-size: 0.65rem; color: var(--ink-muted); margin-top: 0.25rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="indent-wide reveal">
+                        <span class="micro-data" style="margin-bottom: var(--space-lg);">APPLICATIONS</span>
                         
-                        <div class="mockup">
-                            <div class="artifact-social">
-                                <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; width: 100%;">
-                                    <div class="spec-cluster" style="margin-bottom: 0;">
-                                        <div class="micro-data" style="color: var(--paper); opacity: 0.8;">INSTITUTIONAL ANALYSIS</div>
-                                        <div class="micro-data" style="color: var(--paper); opacity: 0.8;">Q3 2026</div>
-                                    </div>
-                                    <h3 class="tech-title" style="font-size: 2.5rem; margin: var(--space-md) 0;">STOP<br>THINKING<br>SMALL.</h3>
-                                    <div class="tech-title" style="font-size: 0.75rem; opacity: 0.8;">LEVY STRATEGIC DESIGN</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mockup" style="grid-column: 1 / -1;">
-                            <div class="artifact-report">
-                                <div>
-                                    <div class="spec-cluster">
-                                        <div class="micro-data" style="color: rgba(245,245,243,0.6);">INSTITUTE REPORT // 2026</div>
-                                        <div class="micro-data" style="color: rgba(245,245,243,0.6);">WASHINGTON D.C.</div>
-                                    </div>
-                                    <div class="tech-title" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-top: 2rem; color: var(--paper);">SYSTEMS<br>LEVERAGE</div>
-                                    <div class="narrative" style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-top: 1.5rem; color: var(--paper); opacity: 0.9;">Mapping the Institutional Gap</div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(245,245,243,0.15); padding-top: 1.5rem; position: relative; z-index: 2;">
-                                    <svg viewBox="0 0 100 100" fill="var(--paper)" width="40">
+                        <div class="mockup-grid">
+                            <div class="mockup">
+                                <div class="artifact-card">
+                                    <svg viewBox="0 0 100 100" fill="var(--ink)" width="30" style="margin-bottom: 1.5rem;">
                                         <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
                                         <polygon points="45,90 90,90 67.5,67.5" />
                                     </svg>
-                                    <div class="tech-title" style="font-size: 1rem; color: var(--paper);">LEVY</div>
+                                    <div class="tech-title" style="font-size: 1.1rem; margin-top: auto;">BRENDAN</div>
+                                    <div class="spec-cluster" style="margin-top: var(--space-md);">
+                                        <span class="micro-data" style="color: var(--ink-muted);">STRATEGIC DESIGN</span>
+                                        <span class="tech-title" style="font-size: 0.65rem; color: var(--ink-muted); margin-top: 0.25rem;">LEVY: A STRATEGIC DESIGN COMPANY</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mockup">
+                                <div class="artifact-social">
+                                    <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; width: 100%;">
+                                        <div class="spec-cluster">
+                                            <span class="micro-data" style="color: var(--paper); opacity: 0.8;">INSTITUTIONAL ANALYSIS</span>
+                                            <span class="micro-data" style="color: var(--paper); opacity: 0.8;">Q3 2026</span>
+                                        </div>
+                                        <h3 class="tech-title" style="font-size: 2.5rem; margin: var(--space-md) 0;">STOP<br>THINKING<br>SMALL.</h3>
+                                        <div class="tech-title" style="font-size: 0.75rem; opacity: 0.8;">LEVY STRATEGIC DESIGN</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mockup wide">
+                                <div class="artifact-report">
+                                    <div>
+                                        <div class="spec-cluster">
+                                            <span class="micro-data" style="color: rgba(245,245,243,0.6);">INSTITUTE REPORT // 2026</span>
+                                            <span class="micro-data" style="color: rgba(245,245,243,0.6);">WASHINGTON D.C.</span>
+                                        </div>
+                                        <div class="tech-title" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-top: 2rem; color: var(--paper);">SYSTEMS<br>LEVERAGE</div>
+                                        <div class="narrative" style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-top: 1.5rem; color: var(--paper); opacity: 0.9;">Mapping the Institutional Gap</div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(245,245,243,0.15); padding-top: 1.5rem; position: relative; z-index: 2;">
+                                        <svg viewBox="0 0 100 100" fill="var(--paper)" width="40">
+                                            <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
+                                            <polygon points="45,90 90,90 67.5,67.5" />
+                                        </svg>
+                                        <div class="tech-title" style="font-size: 1rem; color: var(--paper);">LEVY</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <section id="downloads" style="min-height: auto; padding-bottom: var(--space-xl); border-bottom: none;">
-            <div class="container grid-12">
+        <section id="downloads" style="padding-bottom: var(--space-xl);">
+            <div class="grid-12">
                 <div class="col-left reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block;">08 // ASSETS</span>
+                    <span class="micro-data accent">08 // ASSETS</span>
                 </div>
                 
                 <div class="col-center">
                     <div class="dl-grid reveal delay-1">
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">LOGOS</div>
-                            <div class="micro-data" style="color: var(--ink-muted);">SVG, PNG, EPS</div>
+                            <span class="micro-data">SVG, PNG, EPS</span>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">COLORS</div>
-                            <div class="micro-data" style="color: var(--ink-muted);">ASE, HEX Ref</div>
+                            <span class="micro-data">ASE, HEX Ref</span>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">FONTS</div>
-                            <div class="micro-data" style="color: var(--ink-muted);">Web & OTF</div>
+                            <span class="micro-data">Web & OTF</span>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">GUIDE</div>
-                            <div class="micro-data" style="color: var(--ink-muted);">PDF Document</div>
+                            <span class="micro-data">PDF Document</span>
                             <button class="dl-btn">Download Asset</button>
                         </div>
                     </div>
