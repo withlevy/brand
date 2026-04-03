@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Brand Standards & Strategic Strategy</title>
+    <title>Levy | Brand Standards</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -25,16 +25,12 @@
             --hairline: rgba(10, 10, 10, 0.12);
             --hairline-light: rgba(247, 247, 246, 0.15);
             
-            /* Typography */
-            --font-swiss: 'Inter', sans-serif;
+            /* Typography base derived from Figma */
+            --font-primary: "Helvetica Neue", Helvetica, Arial, sans-serif;
             --font-mincho: 'Fraunces', serif;
             
-            /* NASA-spec weights */
-            --weight-light: 300;
-            --weight-medium: 500;
-            
             --sidebar-width: 320px;
-            --ma: 15vh; /* Ma: Intentional void */
+            --ma: 15vh;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,14 +39,14 @@
         body {
             background-color: var(--paper);
             color: var(--ink);
-            font-family: var(--font-swiss);
-            font-weight: var(--weight-light);
-            line-height: 1.5;
+            font-family: var(--font-primary);
+            font-weight: 300; /* Helvetica Light */
+            line-height: 1.2; /* Base 1.2 line-height from Figma */
             -webkit-font-smoothing: antialiased;
             display: flex;
         }
 
-        /* TACTILE TEXTURE: Film Grain Overlay */
+        /* TEXTURE */
         .noise {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -60,28 +56,46 @@
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        /* TYPOGRAPHY SYSTEM */
+        /* EXACT FIGMA TYPOGRAPHY STYLES */
         
-        /* 1. The Lead: Technical Swiss All-Caps with Disciplined Tracking */
-        .swiss-technical {
-            font-family: var(--font-swiss);
-            font-weight: var(--weight-medium);
+        /* Figma: Title (Helvetica Neue Medium, -2.5% LS, 0.83 LH) */
+        .figma-title {
+            font-family: var(--font-primary);
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em; /* Disciplined technical tracking */
-            line-height: 1.1;
+            letter-spacing: -0.025em; /* -2.5% */
+            line-height: 0.83; /* 40/48 */
         }
         
-        /* 2. The Accent: Mincho Fraunces Ink Bleed */
-        .mincho { 
-            font-family: var(--font-mincho); 
-            font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+        /* Figma: Sub Heading (Helvetica Neue Light, 5% LS, 1.2 LH) */
+        .figma-subhead {
+            font-family: var(--font-primary);
             font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* 5% */
+            line-height: 1.2; /* 12/10 */
         }
 
-        .display-huge { font-size: clamp(3rem, 6vw, 5.5rem); }
-        .display-md { font-size: clamp(1.5rem, 3vw, 2.5rem); }
-        .body-text { font-size: 1.15rem; line-height: 1.7; max-width: 60ch; color: var(--ink-light); }
-        .label-text { font-size: 0.65rem; letter-spacing: 0.1em; opacity: 0.6; }
+        /* Figma: Fraunces Settings */
+        .figma-fraunces { 
+            font-family: var(--font-mincho); 
+            font-weight: 200;
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+            line-height: 1.0; /* 36/36 */
+            letter-spacing: 0;
+        }
+        
+        .figma-fraunces-h1 {
+            font-family: var(--font-mincho); 
+            font-weight: 150;
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 100;
+            letter-spacing: 0.05em; /* 5% */
+        }
+
+        /* SCALING UTILITIES */
+        .display-huge { font-size: clamp(4rem, 8vw, 7rem); }
+        .display-md { font-size: clamp(2rem, 4vw, 3.5rem); }
+        .body-text { font-size: 1.15rem; line-height: 1.5; max-width: 60ch; color: var(--ink-light); }
 
         /* STRUCTURE: 12-Column Grid */
         .grid-12 {
@@ -91,7 +105,7 @@
             width: 100%;
         }
 
-        /* SIDEBAR: Technical Dossier Navigation */
+        /* SIDEBAR */
         aside {
             width: var(--sidebar-width);
             height: 100vh;
@@ -110,7 +124,7 @@
         .nav-list a {
             text-decoration: none;
             color: var(--ink-light);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             transition: color 0.3s;
         }
         .nav-list a:hover { color: var(--ink); }
@@ -133,10 +147,6 @@
         .hairline-divider { border-top: 1px solid var(--hairline); padding-top: 2rem; margin-top: 2rem; }
         .atmospheric .hairline-divider { border-top-color: var(--hairline-light); }
 
-        /* SPECIMEN BLOCKS */
-        .swatch { height: 120px; border: 1px solid var(--hairline); margin-bottom: 10px; }
-        
-        /* CAPITAL SALON DOSSIER STYLE */
         .dossier-block {
             border: 1px solid var(--hairline);
             padding: 3rem;
@@ -145,6 +155,8 @@
             flex-direction: column;
             gap: 2rem;
         }
+        
+        .swatch { height: 120px; border: 1px solid var(--hairline); margin-bottom: 10px; }
 
         @media (max-width: 1024px) {
             body { flex-direction: column; }
@@ -159,15 +171,15 @@
 
     <aside>
         <div>
-            <div class="swiss-technical" style="font-size: 1.5rem; letter-spacing: 0.05em;">LEVY //</div>
-            <ul class="nav-list swiss-technical">
+            <div class="figma-title" style="font-size: 2rem;">LEVY</div>
+            <ul class="nav-list figma-subhead">
                 <li><a href="#strategy">01 // STRATEGY</a></li>
                 <li><a href="#identity">02 // IDENTITY</a></li>
                 <li><a href="#visuals">03 // VISUALS</a></li>
                 <li><a href="#standards">04 // STANDARDS</a></li>
             </ul>
         </div>
-        <div class="swiss-technical label-text">
+        <div class="figma-subhead" style="font-size: 0.65rem; opacity: 0.6;">
             A STRATEGIC DESIGN CO.<br>FOLKMARK © 2026
         </div>
     </aside>
@@ -176,8 +188,8 @@
         <section id="strategy" class="atmospheric" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 12;">
-                    <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6); margin-bottom: 1rem;">THE CORE THESIS</div>
-                    <h1 class="swiss-technical display-huge">STOP THINKING <br>SMALL.</h1>
+                    <div class="figma-subhead" style="color: rgba(247, 247, 246, 0.6); margin-bottom: 1rem; font-size: 0.8rem;">THE CORE THESIS</div>
+                    <h1 class="figma-title display-huge">STOP THINKING <br>SMALL.</h1>
                 </div>
                 <div class="col hairline-divider" style="grid-column: 5 / 13;">
                     <p class="body-text" style="color: rgba(247, 247, 246, 0.8);">
@@ -190,10 +202,10 @@
         <section id="identity">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-technical label-text">THE GAP</div>
+                    <div class="figma-subhead" style="font-size: 0.8rem;">THE GAP</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
-                    <h2 class="swiss-technical display-md">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
+                    <h2 class="figma-title display-md">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     <p class="body-text" style="margin-top: 2rem;">
                         Investing in the capacity of high-agency people to produce outcomes isn't separate from investing in democratic health. It is the investment. We build at the intersections of human, social, and political capital.
                     </p>
@@ -201,45 +213,12 @@
                 
                 <div class="col hairline-divider" style="grid-column: span 12; display: flex; gap: 6rem; margin-top: 8rem;">
                     <div>
-                        <div class="swiss-technical label-text">ARCHETYPE</div>
-                        <div class="swiss-technical" style="font-size: 1.25rem; margin-top: 1rem;">MAGICIAN-SAGE</div>
+                        <div class="figma-subhead" style="font-size: 0.7rem; opacity: 0.6;">ARCHETYPE</div>
+                        <div class="figma-title" style="font-size: 1.5rem; margin-top: 1rem;">MAGICIAN-SAGE</div>
                     </div>
                     <div>
-                        <div class="swiss-technical label-text">MISSION</div>
-                        <div class="swiss-technical" style="font-size: 1.25rem; margin-top: 1rem;">STRENGTHEN THE AMERICAN PROJECT</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="visuals" class="atmospheric">
-            <div class="grid-12">
-                <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6);">VISUAL IDENTITY</div>
-                </div>
-                <div class="col" style="grid-column: span 8;">
-                    <h2 class="swiss-technical display-md">ARCHITECTURE OF<br>INFLUENCE.</h2>
-                    <p class="body-text" style="color: rgba(247, 247, 246, 0.8); margin-top: 2rem;">
-                        Our visual system mirrors our strategic approach: rigid structural discipline paired with atmospheric depth. We lead with technical, blueprint-style typography and soften it with Japanese Ma and atmospheric gradients.
-                    </p>
-                </div>
-
-                <div class="col hairline-divider" style="grid-column: span 12; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
-                    <div>
-                        <div class="swatch" style="background: #F7F7F6; border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">WASHI PAPER</div>
-                    </div>
-                    <div>
-                        <div class="swatch" style="background: #0A0A0A; border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">SUMI INK</div>
-                    </div>
-                    <div>
-                        <div class="swatch" style="background: linear-gradient(135deg, #0f0c29, #6441a5, #8a2387); border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">ATMOSPHERE</div>
-                    </div>
-                    <div>
-                        <div class="swatch" style="background: #6441a5; box-shadow: 0 0 30px rgba(138, 35, 135, 0.6); border: none;"></div>
-                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">VIOLET GLOW</div>
+                        <div class="figma-subhead" style="font-size: 0.7rem; opacity: 0.6;">MISSION</div>
+                        <div class="figma-title" style="font-size: 1.5rem; margin-top: 1rem;">STRENGTHEN THE AMERICAN PROJECT</div>
                     </div>
                 </div>
             </div>
@@ -248,42 +227,37 @@
         <section id="standards">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-technical label-text">TYPOGRAPHY HIERARCHY</div>
+                    <div class="figma-subhead" style="font-size: 0.8rem;">TYPOGRAPHY HIERARCHY</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
                     
                     <div class="hairline-divider" style="margin-top: 0;">
-                        <div class="swiss-technical label-text">01 // THE LEAD: INTER MEDIUM ALL-CAPS</div>
+                        <div class="figma-subhead" style="font-size: 0.7rem;">01 // THE LEAD: TITLE (HELVETICA NEUE)</div>
                         <p class="body-text" style="margin-top: 1rem; margin-bottom: 2rem;">
-                            Following the formatting of event dossiers, all primary headlines must be set in Inter Medium, uppercase, with tight, technical tracking.
+                            Following the exact Figma properties, primary headlines are set in Helvetica Neue Medium, uppercase, with a dense -2.5% letter spacing and 0.83 line height.
                         </p>
                         
                         <div class="dossier-block">
-                            <div class="swiss-technical" style="font-size: 0.8rem; line-height: 2; letter-spacing: 0.05em;">
+                            <div class="figma-subhead" style="font-size: 0.9rem;">
                                 WASHINGTON<br>
                                 DISTRICT of COLUMBIA<br>
                                 DECEMBER 18th, 2025
                             </div>
-                            <div class="swiss-technical" style="font-size: 2.5rem; letter-spacing: 0.05em; border-top: 1px solid var(--hairline); padding-top: 2rem;">
+                            <div class="figma-title" style="font-size: 3.5rem; border-top: 1px solid var(--hairline); padding-top: 2rem;">
                                 CAPITAL SALON // 001
-                            </div>
-                            <div class="mincho" style="font-size: 1.25rem;">
-                                Artificial Intelligence<br>
-                                Workforce Strategy<br>
-                                Anchor Institutions
                             </div>
                         </div>
                     </div>
 
                     <div class="hairline-divider" style="margin-top: 4rem;">
-                        <div class="swiss-technical label-text">02 // THE ACCENT: FRAUNCES MINCHO</div>
+                        <div class="figma-subhead" style="font-size: 0.7rem;">02 // THE ACCENT: FRAUNCES</div>
                         
-                        <div class="mincho" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink); line-height: 1.1;">
+                        <div class="figma-fraunces" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink);">
                             Outlier Outcomes.
                         </div>
                         
                         <p class="body-text" style="margin-top: 1.5rem;">
-                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for standalone conceptual anchors. The extreme softness emulates Sumi ink bleeding into paper fibers, providing warmth without fragmenting core headlines.
+                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used for standalone conceptual anchors.
                         </p>
                     </div>
 
