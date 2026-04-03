@@ -68,7 +68,7 @@
             font-weight: var(--weight-medium);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            line-height: 1.2;
+            line-height: 1.1; /* Tighter line height for massive all-caps */
         }
         
         /* 2. The Accent: Mincho Fraunces Ink Bleed */
@@ -78,7 +78,7 @@
             font-weight: 300;
         }
 
-        .display-huge { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        .display-huge { font-size: clamp(3rem, 6vw, 5.5rem); }
         .display-md { font-size: clamp(1.5rem, 3vw, 2.5rem); }
         .body-text { font-size: 1.15rem; line-height: 1.7; max-width: 60ch; color: var(--ink-light); }
         .label-text { font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.6; }
@@ -177,7 +177,7 @@
             <div class="grid-12">
                 <div class="col" style="grid-column: span 12;">
                     <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6); margin-bottom: 1rem;">THE CORE THESIS</div>
-                    <h1 class="swiss-technical display-huge">STOP THINKING <br><span class="mincho" style="text-transform: none; letter-spacing: normal;">Small.</span></h1>
+                    <h1 class="swiss-technical display-huge">STOP THINKING <br>SMALL.</h1>
                 </div>
                 <div class="col hairline-divider" style="grid-column: 5 / 13;">
                     <p class="body-text" style="color: rgba(247, 247, 246, 0.8);">
@@ -193,7 +193,7 @@
                     <div class="swiss-technical label-text">THE GAP</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
-                    <h2 class="swiss-technical display-md">INSTITUTIONS DON'T VOTE.<br><span class="mincho" style="text-transform: none; letter-spacing: normal; color: var(--ink-light);">Humans do.</span></h2>
+                    <h2 class="swiss-technical display-md">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     <p class="body-text" style="margin-top: 2rem;">
                         Investing in the capacity of high-agency people to produce outcomes isn't separate from investing in democratic health. It is the investment. We build at the intersections of human, social, and political capital.
                     </p>
@@ -218,7 +218,7 @@
                     <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6);">VISUAL IDENTITY</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
-                    <h2 class="swiss-technical display-md">ARCHITECTURE OF<br><span class="mincho" style="text-transform: none; letter-spacing: normal;">Influence.</span></h2>
+                    <h2 class="swiss-technical display-md">ARCHITECTURE OF<br>INFLUENCE.</h2>
                     <p class="body-text" style="color: rgba(247, 247, 246, 0.8); margin-top: 2rem;">
                         Our visual system mirrors our strategic approach: rigid structural discipline paired with atmospheric depth. We lead with technical, blueprint-style typography and soften it with Japanese Ma and atmospheric gradients.
                     </p>
@@ -255,7 +255,7 @@
                     <div class="hairline-divider" style="margin-top: 0;">
                         <div class="swiss-technical label-text">01 // THE LEAD: INTER MEDIUM ALL-CAPS</div>
                         <p class="body-text" style="margin-top: 1rem; margin-bottom: 2rem;">
-                            Following the formatting of event dossiers, all primary headlines, navigation, and structural markers must be set in Inter Medium, uppercase, with generous tracking.
+                            Following the formatting of event dossiers, all primary headlines, navigation, and structural markers must be set in Inter Medium, uppercase, with generous tracking. An idea must exist as a single, unbroken block of typography.
                         </p>
                         
                         <div class="dossier-block">
@@ -277,11 +277,13 @@
 
                     <div class="hairline-divider" style="margin-top: 4rem;">
                         <div class="swiss-technical label-text">02 // THE ACCENT: FRAUNCES MINCHO</div>
-                        <div class="mincho" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink); line-height: 1;">
-                            Ink Bleed <i>Outlier</i> Outcomes.
+                        
+                        <div class="mincho" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink); line-height: 1.1;">
+                            Outlier Outcomes.
                         </div>
+                        
                         <p class="body-text" style="margin-top: 1.5rem;">
-                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for sub-topics, narrative gravity, and philosophical anchors. The extreme softness emulates Sumi ink bleeding into paper fibers, providing necessary warmth against the technical grid.
+                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for standalone sub-topics or conceptual lists. The extreme softness emulates Sumi ink bleeding into paper fibers, providing necessary warmth against the technical grid without fragmenting core headlines.
                         </p>
                     </div>
 
