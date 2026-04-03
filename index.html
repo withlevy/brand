@@ -126,7 +126,8 @@
             text-align: center; 
         }
         
-        .split-2up { grid-column: 3 / 12; display: grid; grid-template-columns: subgrid; }
+        /* Changed 12 to 13 so it spans 10 columns, perfectly fitting two 5-column spans */
+        .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; }
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
         
