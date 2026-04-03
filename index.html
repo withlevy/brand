@@ -3,89 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Brand Standards & Strategy</title>
+    <title>Levy | Brand Standards & Strategic Strategy</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- BRAND TOKENS & VARIABLES --- */
         :root {
-            /* Colors */
-            --paper: #F7F7F6;       /* Washi paper off-white */
-            --ink: #0A0A0A;         /* Sumi ink black */
-            --ink-light: #5A5A5A;   /* Muted text */
+            /* Palette: Sumi Ink and Washi Paper */
+            --paper: #F7F7F6;
+            --ink: #0A0A0A;
+            --ink-light: #5A5A5A;
             
-            /* The Atmospheric Gradient Colors */
+            /* Atmospheric Gradient (from brand assets) */
             --midnight: #0f0c29;
             --violet: #6441a5;
             --magenta: #8a2387;
             
-            /* Architecture */
+            /* Structural */
             --hairline: rgba(10, 10, 10, 0.12);
             --hairline-light: rgba(247, 247, 246, 0.15);
             
             /* Typography */
-            --font-swiss: 'Inter', -apple-system, sans-serif;
+            --font-swiss: 'Inter', sans-serif;
             --font-mincho: 'Fraunces', serif;
             
-            /* Layout */
-            --sidebar-width: 320px;
-            --ma-space: 12vh; /* Intentional negative space */
+            /* NASA-spec weights */
+            --weight-light: 300;
+            --weight-medium: 500;
+            
+            --sidebar-width: 300px;
+            --ma: 15vh; /* Ma: Intentional void */
         }
 
-        /* --- GLOBAL RESET & BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        ::selection { background: var(--violet); color: var(--paper); }
-        
-        html { scroll-behavior: smooth; font-size: 16px; }
         
         body {
             background-color: var(--paper);
             color: var(--ink);
             font-family: var(--font-swiss);
-            line-height: 1.6;
+            font-weight: var(--weight-light);
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             display: flex;
         }
 
-        /* --- TEXTURE (FILM GRAIN) --- */
-        .noise-overlay {
+        /* TACTILE TEXTURE: Film Grain Overlay */
+        .noise {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.06;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.07;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        /* --- TYPOGRAPHY UTILITIES --- */
-        /* The Mincho Hack: Max Softness, sharp optical size, slight wonk for ink-bleed tension */
+        /* TYPOGRAPHY: Fraunces Ink Bleed & Inter NASA Specs */
         .mincho { 
             font-family: var(--font-mincho); 
+            /* MAX SOFTNESS (100) for Ink Bleed effect */
             font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
             font-weight: 300;
         }
-        .swiss { font-family: var(--font-swiss); font-weight: 400; }
         
-        .display-lg { font-size: clamp(3rem, 5vw, 5.5rem); line-height: 1; letter-spacing: -0.02em; }
-        .display-md { font-size: clamp(2rem, 3vw, 3rem); line-height: 1.1; letter-spacing: -0.01em; }
-        .body-lg { font-size: 1.25rem; line-height: 1.6; color: var(--ink-light); max-width: 65ch; }
-        .body-md { font-size: 1.05rem; line-height: 1.6; color: var(--ink-light); max-width: 65ch; }
+        .swiss-medium { font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; }
         
-        .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 600;
-            color: var(--ink);
-            display: block;
-            margin-bottom: 1rem;
+        .display-huge { font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; }
+        .display-md { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; }
+        .body-text { font-size: 1.15rem; line-height: 1.6; max-width: 60ch; color: var(--ink-light); }
+
+        /* STRUCTURE: 12-Column Grid */
+        .grid-12 {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            width: 100%;
         }
 
-        /* --- SIDEBAR NAVIGATION (Swiss Structure) --- */
-        .sidebar {
+        /* SIDEBAR: NASA-influenced utility nav */
+        aside {
             width: var(--sidebar-width);
             height: 100vh;
             position: fixed;
@@ -97,213 +94,170 @@
             background: var(--paper);
             z-index: 100;
         }
-        .brand-mark {
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.04em;
-        }
-        .nav-links { list-style: none; margin-top: 40px; }
-        .nav-links li { margin-bottom: 1rem; border-top: 1px solid var(--hairline); padding-top: 1rem; }
-        .nav-links a {
+        
+        .nav-list { list-style: none; margin-top: 60px; }
+        .nav-list li { margin-bottom: 2rem; }
+        .nav-list a {
             text-decoration: none;
             color: var(--ink-light);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
+            font-weight: var(--weight-medium);
             transition: color 0.3s;
         }
-        .nav-links a:hover { color: var(--ink); }
+        .nav-list a:hover { color: var(--ink); }
 
-        /* --- MAIN CONTENT & GRID --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            width: calc(100% - var(--sidebar-width));
-        }
-
+        /* SECTIONS */
+        main { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); }
+        
         section {
-            padding: var(--ma-space) 5vw;
+            padding: var(--ma) 6vw;
             border-bottom: 1px solid var(--hairline);
-        }
-
-        .dark-section {
-            background: linear-gradient(135deg, var(--midnight) 0%, var(--violet) 50%, var(--magenta) 100%);
-            color: var(--paper);
-            border-bottom: none;
             position: relative;
         }
-        .dark-section .label { color: rgba(247, 247, 246, 0.7); }
-        .dark-section .body-lg, .dark-section .body-md { color: rgba(247, 247, 246, 0.8); }
-        .dark-section .hairline-top { border-top-color: var(--hairline-light); }
 
-        /* 12-Column Architectural Grid */
-        .grid-12 {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            align-items: start;
+        .atmospheric {
+            background: linear-gradient(145deg, var(--midnight) 0%, var(--violet) 50%, var(--magenta) 100%);
+            color: var(--paper);
+            border-bottom: none;
         }
-        .col-4 { grid-column: span 4; }
-        .col-8 { grid-column: span 8; }
-        .col-12 { grid-column: span 12; }
-        .col-offset-4 { grid-column: 5 / 13; }
 
-        .hairline-top { border-top: 1px solid var(--hairline); padding-top: 2rem; margin-top: 2rem; }
+        .hairline-divider { border-top: 1px solid var(--hairline); padding-top: 2rem; margin-top: 2rem; }
+        .atmospheric .hairline-divider { border-top-color: var(--hairline-light); }
 
-        /* --- VISUAL IDENTITY COMPONENTS --- */
-        
-        /* Color Swatches */
-        .swatch-container { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        /* SPECIMEN BLOCKS */
         .swatch {
-            width: 140px;
+            height: 120px;
             border: 1px solid var(--hairline);
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 4rem;
+            margin-bottom: 10px;
         }
-        .swatch-color { height: 80px; width: 100%; border-radius: 2px; }
-        .swatch-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        
-        /* Type Specimen */
-        .type-specimen {
-            border: 1px solid var(--hairline);
-            padding: 3rem;
-            margin-top: 2rem;
-            background: #fff;
-        }
-        
-        /* Do/Dont Verbal Lists */
-        .verbal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
-        .verbal-list { list-style: none; }
-        .verbal-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--hairline);
-            font-size: 0.9rem;
-            color: var(--ink-light);
-        }
-        .verbal-list.dont li { text-decoration: line-through; opacity: 0.5; }
+        .label-v { writing-mode: vertical-rl; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
 
-        /* Responsive */
         @media (max-width: 1024px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--hairline); padding: 20px; }
-            .main-content { margin-left: 0; width: 100%; }
-            .grid-12 { display: flex; flex-direction: column; }
-            .col-offset-4 { grid-column: span 12; }
+            aside { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--hairline); }
+            main { margin-left: 0; width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="noise-overlay"></div>
+    <div class="noise"></div>
 
-    <nav class="sidebar">
+    <aside>
         <div>
-            <div class="brand-mark swiss">Levy.</div>
-            <ul class="nav-links">
-                <li><a href="#hero">01. Strategy</a></li>
-                <li><a href="#audience">02. The Audience</a></li>
-                <li><a href="#structure">03. Architecture</a></li>
-                <li><a href="#verbal">04. Verbal Identity</a></li>
-                <li><a href="#visual">05. Visual Standards</a></li>
+            <div class="mincho" style="font-size: 2.2rem; font-weight: 400;">Levy.</div>
+            <ul class="nav-list">
+                <li><a href="#strategy">01 Strategy</a></li>
+                <li><a href="#identity">02 Identity</a></li>
+                <li><a href="#visuals">03 Visuals</a></li>
+                <li><a href="#standards">04 Standards</a></li>
             </ul>
         </div>
-        <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-light);">
-            Core Document v1.0<br>Prepared by Folkmark
+        <div class="swiss-medium" style="opacity: 0.5; font-size: 0.6rem;">
+            A Strategic Design Company<br>Folkmark © 2026
         </div>
-    </nav>
+    </aside>
 
-    <main class="main-content">
-        
-        <section id="hero" class="dark-section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+    <main>
+        <section id="strategy" class="atmospheric" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
             <div class="grid-12">
-                <div class="col-12" style="margin-bottom: 4rem;">
-                    <span class="label">The Tagline</span>
-                    <h1 class="mincho display-lg">Stop Thinking<br><i style="color: rgba(255,255,255,0.7);">Small.</i></h1>
+                <div class="col" style="grid-column: span 12;">
+                    <div class="swiss-medium">The One-Liner</div>
+                    <h1 class="mincho display-huge" style="margin: 2rem 0;">Stop Thinking<br><i>Small.</i></h1>
+                </div>
+                <div class="col hairline-divider" style="grid-column: 5 / 13;">
+                    <p class="body-text" style="color: rgba(247, 247, 246, 0.8);">
+                        Levy is where the seriously ambitious — the ones grinding behind closed doors, solving hard problems, building real results — find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="identity">
+            <div class="grid-12">
+                <div class="col" style="grid-column: span 4;">
+                    <div class="swiss-medium">The Thesis</div>
+                </div>
+                <div class="col" style="grid-column: span 8;">
+                    <h2 class="mincho display-md">Institutions don't vote.<br>Humans do.</h2>
+                    <p class="body-text" style="margin-top: 2rem;">
+                        Investing in the capacity of high-agency people to produce outcomes isn't separate from investing in democratic health. It is the investment. We build at the intersections of human, social, and political capital.
+                    </p>
                 </div>
                 
-                <div class="col-8 col-offset-4 hairline-top">
-                    <span class="label">The One-Liner</span>
-                    <p class="body-lg">
-                        Levy is where the seriously ambitious — the ones grinding behind closed doors, solving hard problems, building real results without waiting for applause — find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="mission">
-            <div class="grid-12">
-                <div class="col-4">
-                    <span class="label">The Mission & Thesis</span>
-                </div>
-                <div class="col-8">
-                    <h2 class="mincho display-md" style="margin-bottom: 2rem;">Institutions don't vote.<br>Humans do.</h2>
-                    <p class="body-md" style="margin-bottom: 1.5rem;">
-                        To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
-                    </p>
-                    <p class="body-md">
-                        The people with the highest capacity to shape civic and economic outcomes are the people most likely to show up. Investing in their capacity to produce outcomes isn't separate from investing in democratic health. It <i>is</i> the investment. 
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="audience">
-            <div class="grid-12">
-                <div class="col-4">
-                    <span class="label">The Gap</span>
-                </div>
-                <div class="col-8">
-                    <p class="body-lg" style="margin-bottom: 4rem;">
-                        The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one. The knowledge lives in silos. The networks don't cross sectors.
-                    </p>
-                </div>
-
-                <div class="col-12 hairline-top">
-                    <span class="label" style="margin-bottom: 2rem;">Who It's For: The Seriously Ambitious</span>
-                    <div class="grid-12">
-                        <div class="col-6">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Founder</h3>
-                            <p class="body-md">Scaling a company who doesn't yet know that government contracts and public institutions are powerful, underused tools. She's hitting a ceiling that is about understanding the terrain.</p>
-                        </div>
-                        <div class="col-6">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Public Servant</h3>
-                            <p class="body-md">Knows what's possible but can't find private partners who understand how to work within government constraints. He's watched promising partnerships die in procurement.</p>
-                        </div>
-                        <div class="col-6 hairline-top">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Corporate Strategist</h3>
-                            <p class="body-md">Has a significant idea but doesn't know how to use external partners, civic infrastructure, and policy pressure to make the internal case undeniable.</p>
-                        </div>
-                        <div class="col-6 hairline-top">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Department Head</h3>
-                            <p class="body-md">Inside an anchor institution who knows their organization could do something far more consequential if they could find the right partners and structure the effort.</p>
-                        </div>
+                <div class="col hairline-divider" style="grid-column: span 12; display: flex; gap: 4rem; margin-top: 8rem;">
+                    <div>
+                        <div class="swiss-medium">Archetype</div>
+                        <div class="mincho" style="font-size: 1.5rem; margin-top: 1rem;">Magician-Sage</div>
+                    </div>
+                    <div>
+                        <div class="swiss-medium">Mission</div>
+                        <div class="mincho" style="font-size: 1.5rem; margin-top: 1rem;">Strengthen the American Project</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="structure">
+        <section id="visuals" class="atmospheric">
             <div class="grid-12">
-                <div class="col-4">
-                    <span class="label">What Levy Is</span>
+                <div class="col" style="grid-column: span 4;">
+                    <div class="swiss-medium">Visual Identity</div>
                 </div>
-                <div class="col-8">
-                    <h2 class="mincho display-md" style="margin-bottom: 2rem;">To levy is to organize people and resources toward something that needs doing.</h2>
+                <div class="col" style="grid-column: span 8;">
+                    <h2 class="mincho display-md">Architecture of Influence.</h2>
+                    <p class="body-text" style="color: rgba(247, 247, 246, 0.8); margin-top: 2rem;">
+                        Our visual system mirrors our strategic approach: rigid structural discipline paired with atmospheric depth. We organize through the Swiss grid and breathe through Japanese Ma.
+                    </p>
                 </div>
 
-                <div class="col-12 hairline-top" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                <div class="col hairline-divider" style="grid-column: span 12; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
                     <div>
-                        <span class="label">01. The Network</span>
-                        <p class="body-md">The membership community. A tiered, in-person-anchored gathering of founders, public servants, and institutional strategists built to make members sharper and better connected.</p>
+                        <div class="swatch" style="background: #F7F7F6; border-color: rgba(255,255,255,0.2);"></div>
+                        <div class="swiss-medium">Washi Paper</div>
                     </div>
                     <div>
-                        <span class="label">02. The Studio</span>
-                        <p class="body-md">The portfolio and program-building arm. Designing, launching, and scaling the initiatives that demonstrate what cross-sector coalition building actually produces (e.g., The Upskilling Labs).</p>
+                        <div class="swatch" style="background: #0A0A0A; border-color: rgba(255,255,255,0.2);"></div>
+                        <div class="swiss-medium">Sumi Ink</div>
                     </div>
                     <div>
-                        <span class="label">03. The Institute</span>
-                        <p class="body-md">The research and knowledge arm. Developing frameworks and building intellectual infrastructure to help members understand how systems work and where leverage lives.</p>
+                        <div class="swatch" style="background: linear-gradient(135deg, #0f0c29, #6441a5, #8a2387); border-color: rgba(255,255,255,0.2);"></div>
+                        <div class="swiss-medium">Atmosphere</div>
+                    </div>
+                    <div>
+                        <div class="swatch" style="background: #6441a5; box-shadow: 0 0 30px rgba(138, 35, 135, 0.6); border: none;"></div>
+                        <div class="swiss-medium">Violet Glow</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="standards">
+            <div class="grid-12">
+                <div class="col" style="grid-column: span 4;">
+                    <div class="swiss-medium">Typography Standards</div>
+                </div>
+                <div class="col" style="grid-column: span 8;">
+                    <div class="hairline-divider" style="margin-top: 0;">
+                        <div class="swiss-medium">01. Fraunces (Mincho Emulation)</div>
+                        <div class="mincho" style="font-size: 4rem; margin-top: 1rem; color: var(--ink);">
+                            Ink Bleed <i>Outlier</i> Outcomes.
+                        </div>
+                        <p class="body-text" style="margin-top: 1.5rem;">
+                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for narrative gravity and philosophical anchors. The extreme softness emulates Sumi ink bleeding into paper fibers.
+                        </p>
+                    </div>
+
+                    <div class="hairline-divider" style="margin-top: 4rem;">
+                        <div class="swiss-medium">02. Inter (NASA 1976 Spec)</div>
+                        <div style="margin-top: 1rem;">
+                            <div style="font-weight: 500; font-size: 2rem; text-transform: uppercase; letter-spacing: 0.1em;">Medium / For Emphasis</div>
+                            <div style="font-weight: 300; font-size: 2rem; margin-top: 1rem;">Light / For Informational Clarity</div>
+                        </div>
+                        <p class="body-text" style="margin-top: 1.5rem;">
+                            Following the 1976 NASA Graphics Standards, we use Inter Light (300) for body and Inter Medium (500) for labels. This ensures maximum legibility and objective authority.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -311,128 +265,25 @@
 
         <section id="verbal">
             <div class="grid-12">
-                <div class="col-4">
-                    <span class="label">Verbal Identity</span>
+                <div class="col" style="grid-column: span 4;">
+                    <div class="swiss-medium">Verbal Guidelines</div>
                 </div>
-                <div class="col-8">
-                    <h3 class="mincho" style="font-size: 2rem;">Archetype: Magician-Sage</h3>
-                    <p class="body-md" style="margin-top: 1rem;">
-                        Levy doesn't oversell. Doesn't take credit. Shows up with the right knowledge, connects the right people, points at what's possible, and gets out of the way. <strong>Tone:</strong> Direct, Clear, Confident. Earns its sentences.
-                    </p>
-
-                    <div class="verbal-grid">
-                        <div>
-                            <span class="label">Always Use (Structural & Real)</span>
-                            <ul class="verbal-list">
-                                <li>Build / Outcomes / Results</li>
-                                <li>Understand / Principles</li>
-                                <li>Incentives / Actors / Systems</li>
-                                <li>Scale / Practice / Compound</li>
-                                <li>Leverage / Capital / Roots</li>
-                                <li>Conditions / Doers / Real</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <span class="label" style="color: #d32f2f;">Never Use (Cliché & Fluff)</span>
-                            <ul class="verbal-list dont">
-                                <li>Transform / Empower</li>
-                                <li>Ecosystem / Innovative</li>
-                                <li>Synergy / Inspire</li>
-                                <li>Unlock / Journey</li>
-                                <li>Playbook / Blueprint</li>
-                                <li>Changemaker / Impact</li>
-                            </ul>
-                        </div>
+                <div class="col" style="grid-column: span 8; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <div>
+                        <div class="swiss-medium" style="color: #2e7d32; border-bottom: 1px solid #2e7d32; padding-bottom: 0.5rem; margin-bottom: 1rem;">Always Use</div>
+                        <p class="body-text" style="font-size: 0.9rem;">
+                            Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="swiss-medium" style="color: #d32f2f; border-bottom: 1px solid #d32f2f; padding-bottom: 0.5rem; margin-bottom: 1rem;">Never Use</div>
+                        <p class="body-text" style="font-size: 0.9rem; text-decoration: line-through; opacity: 0.5;">
+                            Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section id="visual" class="dark-section">
-            <div class="grid-12">
-                <div class="col-4">
-                    <span class="label">Visual Standards</span>
-                </div>
-                <div class="col-8">
-                    <h2 class="mincho display-md">Swiss Structure meets Japanese Ma.</h2>
-                    <p class="body-lg" style="margin-top: 1.5rem;">
-                        The visual identity reflects the "Magician-Sage" archetype. It uses rigid, objective architectural grids (Swiss) to organize information, paired with atmospheric, textured lighting and extreme negative space (Ma) to create gravity and focus.
-                    </p>
-                </div>
-
-                <div class="col-12 hairline-top">
-                    <span class="label">I. The Signature Palette</span>
-                    <p class="body-md">Avoid standard flat blacks and whites. Use stark, high-information "Washi Paper" for utility, contrasted with deep, luminous, textured gradients for moments of immersion and scale.</p>
-                    
-                    <div class="swatch-container">
-                        <div class="swatch" style="background: var(--paper); color: var(--ink);">
-                            <div class="swatch-color" style="background: #F7F7F6; border: 1px solid var(--hairline);"></div>
-                            <div class="swatch-label">Washi Paper<br>#F7F7F6</div>
-                        </div>
-                        <div class="swatch" style="background: var(--paper); color: var(--ink);">
-                            <div class="swatch-color" style="background: #0A0A0A;"></div>
-                            <div class="swatch-label">Sumi Ink<br>#0A0A0A</div>
-                        </div>
-                        <div class="swatch" style="border-color: rgba(255,255,255,0.2);">
-                            <div class="swatch-color" style="background: linear-gradient(135deg, #0f0c29, #6441a5, #8a2387);"></div>
-                            <div class="swatch-label">Atmosphere<br>Gradient</div>
-                        </div>
-                        <div class="swatch" style="border-color: rgba(255,255,255,0.2);">
-                            <div class="swatch-color" style="background: #6441a5; box-shadow: 0 0 20px #8a2387;"></div>
-                            <div class="swatch-label">Violet Glow<br>Accent / Shadow</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 hairline-top">
-                    <span class="label">II. Typography Interplay</span>
-                    <p class="body-md" style="margin-bottom: 2rem;">
-                        A strict dichotomy. Primary titles and UI elements use clean, geometric sans-serifs (Inter/Helvetica). Brand statements, italics, and subheads use Fraunces, specifically configured to emulate the "ink-bleed" tension of Japanese Mincho typefaces.
-                    </p>
-                    
-                    <div class="grid-12">
-                        <div class="col-6">
-                            <div class="type-specimen">
-                                <span class="label">Swiss Utility (Inter)</span>
-                                <div class="swiss" style="font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); line-height: 1.1;">
-                                    Capital Rework<br>Network & Studio
-                                </div>
-                                <p class="body-md" style="margin-top: 2rem;">Used for objective data, labels, grids, and primary structural headers. Never italicized.</p>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="type-specimen">
-                                <span class="label">Mincho Emulation (Fraunces)</span>
-                                <div class="mincho" style="font-size: 3rem; color: var(--ink); line-height: 1.1;">
-                                    Outlier <i>Outcomes</i><br>Strategic Design
-                                </div>
-                                <p class="body-md" style="margin-top: 2rem;">Requires variable settings: <code>"SOFT" 100, "WONK" 1, "opsz" 144</code>. Used for narrative gravity and philosophical statements.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 hairline-top">
-                    <span class="label">III. Architecture & Materiality</span>
-                    <div class="grid-12">
-                        <div class="col-6">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The CSS Grid & Hairlines</h3>
-                            <p class="body-md">
-                                Information must be strictly contained within a visible 12-column grid. Use 1px hairlines (`rgba(10,10,10,0.12)`) to separate concepts instead of drop shadows or colored cards. This creates a "blueprint" or "worksheet" feel.
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">Film Grain & Atmosphere</h3>
-                            <p class="body-md">
-                                The brand is not purely digital; it has physical weight. Dark sections and gradients must be overlaid with a CSS SVG noise filter (`opacity: 0.05-0.08`) to create a tactile, printed-paper texture.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
     </main>
 
 </body>
