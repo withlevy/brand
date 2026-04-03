@@ -62,13 +62,13 @@
 
         /* TYPOGRAPHY SYSTEM */
         
-        /* 1. The Lead: Technical Swiss All-Caps */
+        /* 1. The Lead: Technical Swiss All-Caps with Disciplined Tracking */
         .swiss-technical {
             font-family: var(--font-swiss);
             font-weight: var(--weight-medium);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            line-height: 1.1; /* Tighter line height for massive all-caps */
+            letter-spacing: 0.05em; /* Disciplined technical tracking */
+            line-height: 1.1;
         }
         
         /* 2. The Accent: Mincho Fraunces Ink Bleed */
@@ -81,7 +81,7 @@
         .display-huge { font-size: clamp(3rem, 6vw, 5.5rem); }
         .display-md { font-size: clamp(1.5rem, 3vw, 2.5rem); }
         .body-text { font-size: 1.15rem; line-height: 1.7; max-width: 60ch; color: var(--ink-light); }
-        .label-text { font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.6; }
+        .label-text { font-size: 0.65rem; letter-spacing: 0.1em; opacity: 0.6; }
 
         /* STRUCTURE: 12-Column Grid */
         .grid-12 {
@@ -159,7 +159,7 @@
 
     <aside>
         <div>
-            <div class="swiss-technical" style="font-size: 1.5rem; letter-spacing: 0.25em;">LEVY //</div>
+            <div class="swiss-technical" style="font-size: 1.5rem; letter-spacing: 0.05em;">LEVY //</div>
             <ul class="nav-list swiss-technical">
                 <li><a href="#strategy">01 // STRATEGY</a></li>
                 <li><a href="#identity">02 // IDENTITY</a></li>
@@ -255,16 +255,16 @@
                     <div class="hairline-divider" style="margin-top: 0;">
                         <div class="swiss-technical label-text">01 // THE LEAD: INTER MEDIUM ALL-CAPS</div>
                         <p class="body-text" style="margin-top: 1rem; margin-bottom: 2rem;">
-                            Following the formatting of event dossiers, all primary headlines, navigation, and structural markers must be set in Inter Medium, uppercase, with generous tracking. An idea must exist as a single, unbroken block of typography.
+                            Following the formatting of event dossiers, all primary headlines must be set in Inter Medium, uppercase, with tight, technical tracking.
                         </p>
                         
                         <div class="dossier-block">
-                            <div class="swiss-technical" style="font-size: 0.8rem; line-height: 2;">
+                            <div class="swiss-technical" style="font-size: 0.8rem; line-height: 2; letter-spacing: 0.05em;">
                                 WASHINGTON<br>
                                 DISTRICT of COLUMBIA<br>
                                 DECEMBER 18th, 2025
                             </div>
-                            <div class="swiss-technical" style="font-size: 2.5rem; letter-spacing: 0.1em; border-top: 1px solid var(--hairline); padding-top: 2rem;">
+                            <div class="swiss-technical" style="font-size: 2.5rem; letter-spacing: 0.05em; border-top: 1px solid var(--hairline); padding-top: 2rem;">
                                 CAPITAL SALON // 001
                             </div>
                             <div class="mincho" style="font-size: 1.25rem;">
@@ -283,7 +283,7 @@
                         </div>
                         
                         <p class="body-text" style="margin-top: 1.5rem;">
-                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for standalone sub-topics or conceptual lists. The extreme softness emulates Sumi ink bleeding into paper fibers, providing necessary warmth against the technical grid without fragmenting core headlines.
+                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for standalone conceptual anchors. The extreme softness emulates Sumi ink bleeding into paper fibers, providing warmth without fragmenting core headlines.
                         </p>
                     </div>
 
