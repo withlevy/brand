@@ -39,7 +39,7 @@
             
             /* Section Rhythm Logic */
             --section-padding: var(--space-xl); 
-            --section-margin: var(--space-xxl); /* The void between plates */
+            --section-margin: var(--space-xxl); /* Kept variable if needed elsewhere, but removed from section block below */
             
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -101,7 +101,6 @@
         /* The Section is now a "Plate" with distinct external margin */
         section { 
             padding: var(--section-padding) 0; 
-            margin-bottom: var(--section-margin); 
             width: 100%;
         }
 
@@ -115,7 +114,7 @@
             width: 100%; 
             max-width: 2400px; 
             margin: 0 auto; 
-            padding: 0 5vw; 
+            padding-inline: 5vw; 
         }
         
         /* Left Labels (Cols 1-2) | Main Content (Cols 3-12) */
