@@ -38,9 +38,8 @@
             --space-lg: clamp(4rem, 8vw, 8rem);
             --space-xl: clamp(8rem, 15vh, 15rem);
             
-            /* Motion (Award-winning easing) */
+            /* Motion */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
         }
 
         /* ==========================================================================
@@ -64,7 +63,6 @@
 
         ::selection { background: var(--violet); color: var(--paper); }
 
-        /* Tactile Film Grain Overlay */
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9999; opacity: 0.05;
@@ -72,43 +70,43 @@
         }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM
+           3. TYPOGRAPHY SYSTEM (RUTHLESS DISCIPLINE)
            ========================================================================== */
         
-        /* The Technical Swiss Lead */
+        /* The Technical Swiss Lead (90% of UI) */
         .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: -0.025em; /* Exact Figma Spec */
+            letter-spacing: -0.025em; 
             line-height: 0.85;
         }
         
         /* The Technical Label/Subhead */
         .tech-subhead {
             font-family: var(--font-tech);
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             line-height: 1.2;
             font-size: 0.65rem;
         }
         
-        /* The Narrative Accent (Ink Bleed) */
+        /* The Narrative Accent (Strictly 10% of UI) */
         .narrative { 
             font-family: var(--font-narrative); 
             font-weight: 200;
-            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; /* Exact Figma Spec */
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             line-height: 1.05;
         }
 
-        /* Scales */
+        /* Scales - Helvetica carries the weight */
         .display-huge { font-size: clamp(4rem, 10vw, 10rem); letter-spacing: -0.03em; }
         .display-large { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -0.02em; }
         .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; max-width: 55ch; }
-        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; max-width: 60ch; color: var(--ink-light); }
+        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
+        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; max-width: 60ch; color: var(--ink-light); }
 
         blockquote {
             font-family: var(--font-narrative);
@@ -141,14 +139,11 @@
             width: 100%;
         }
         
-        .col-2 { grid-column: span 2; }
-        .col-3 { grid-column: span 3; }
         .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-8 { grid-column: span 8; }
         .col-12 { grid-column: span 12; }
-        .col-offset-4 { grid-column: 5 / 13; }
-
+        
         .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md); margin-top: var(--space-md); }
         .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: var(--space-md); margin-bottom: var(--space-md); }
 
@@ -161,7 +156,7 @@
             justify-content: center;
         }
 
-        /* Scroll Reveal Interactions */
+        /* Scroll Reveal */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -171,9 +166,8 @@
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
 
-        /* Dark Mode / Atmospheric Covers */
+        /* Dark Mode */
         .dark-section {
             background: linear-gradient(150deg, var(--midnight) 0%, var(--violet) 55%, var(--magenta) 100%);
             color: var(--paper);
@@ -201,20 +195,12 @@
             transition: background 0.4s ease, border-color 0.4s ease;
         }
         
-        header.on-dark {
-            background: rgba(15, 12, 41, 0.85);
-            border-bottom-color: var(--hairline-light);
-        }
+        header.on-dark { background: rgba(15, 12, 41, 0.85); border-bottom-color: var(--hairline-light); }
         header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
 
-        .header-logo {
-            display: flex; align-items: center; gap: 1rem;
-            color: var(--ink); text-decoration: none;
-            transition: color 0.4s ease;
-        }
+        .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; transition: color 0.4s ease; }
         .header-logo svg { width: 24px; height: 24px; }
 
-        /* Precision Hamburger */
         .hamburger {
             background: none; border: none; cursor: pointer;
             width: 32px; height: 18px; position: relative; z-index: 2100;
@@ -234,37 +220,26 @@
         .hamburger.is-active span:nth-child(2) { opacity: 0; }
         .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-        /* Bento Dropdown */
         .bento-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(247, 247, 246, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 1500;
-            padding: calc(var(--header-height) + 2vh) 5vw 5vw 5vw;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.5s var(--ease-out-expo);
+            background: rgba(247, 247, 246, 0.98); backdrop-filter: blur(20px);
+            z-index: 1500; padding: calc(var(--header-height) + 2vh) 5vw 5vw 5vw;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out-expo);
             overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; pointer-events: auto; }
 
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw;
-            height: 100%; max-height: 80vh;
-        }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; height: 100%; max-height: 80vh; }
 
         .bento-item {
             background: var(--paper); border: 1px solid var(--hairline-dark);
             padding: var(--space-md); text-decoration: none; color: var(--ink);
             display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden;
-            opacity: 0; transform: translateY(20px);
+            position: relative; overflow: hidden; opacity: 0; transform: translateY(20px);
             transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo), border-color 0.4s ease;
         }
         
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
-        
-        /* Staggered Nav Reveal */
         .bento-item:nth-child(1) { transition-delay: 0.05s; }
         .bento-item:nth-child(2) { transition-delay: 0.1s; }
         .bento-item:nth-child(3) { transition-delay: 0.15s; }
@@ -273,7 +248,6 @@
         .bento-item:nth-child(6) { transition-delay: 0.3s; }
         .bento-item:nth-child(7) { transition-delay: 0.35s; }
 
-        /* Hover FX */
         .bento-item::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0;
             background: rgba(100, 65, 165, 0.03); transition: height 0.4s var(--ease-out-expo); z-index: 0;
@@ -290,42 +264,39 @@
         .bento-item .tech-subhead { opacity: 0.5; margin-bottom: 2rem; }
 
         /* ==========================================================================
-           6. COMPONENT DETAILS (Mockups, Swatches, Tables)
+           6. COMPONENT DETAILS
            ========================================================================== */
         
-        /* Do/Dont Constraints */
         .constraint-list { list-style: none; }
-        .constraint-list li { border-bottom: 1px solid var(--hairline-light); padding: 1.5rem 0; font-size: 1.15rem; color: rgba(247,247,246,0.8);}
+        .constraint-list li { border-bottom: 1px solid var(--hairline-light); padding: 1.5rem 0; font-size: 1.15rem; color: rgba(247,247,246,0.8); font-weight: 300;}
         
         .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
         .rule-box { padding: var(--space-md); border-top: 2px solid; background: rgba(0,0,0,0.02); }
         .rule-do { border-top-color: var(--violet); }
         .rule-dont { border-top-color: var(--hairline-dark); opacity: 0.5; }
 
-        /* Physical Color Swatches */
+        /* Colors */
         .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 3/4; }
         .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
         .color-details { padding: var(--space-sm); background: var(--paper); }
         .hex-tag { display: inline-block; cursor: pointer; font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
-        /* Blueprint Mockups */
+        /* Mockups */
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: var(--space-md); }
         .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-lg); }
         
         .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; max-width: 400px; padding: 2rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
         .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; max-width: 350px; padding: 3rem; display: flex; align-items: center; text-align: center; }
         .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; max-width: 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
-        .artifact-report::after { content: ''; position: absolute; top: 0; left: 1rem; width: 1px; height: 100%; background: rgba(255,255,255,0.1); }
 
-        /* Downloads Grid */
+        /* Downloads */
         .dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; }
         .dl-card { border: 1px solid var(--hairline-dark); padding: var(--space-md); display: flex; flex-direction: column; transition: border-color 0.3s; }
         .dl-card:hover { border-color: var(--violet); }
-        .dl-btn { margin-top: var(--space-md); padding: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .dl-btn { margin-top: var(--space-md); padding: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
-        /* Responsive Architecture */
         @media (max-width: 1024px) {
             .grid-12, .bento-grid { display: flex; flex-direction: column; }
             .col-offset-4 { margin-top: var(--space-md); }
@@ -449,9 +420,9 @@
 
                     <div class="hairline-bottom reveal">
                         <span class="tech-subhead" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE EMOTIONAL CONCEPT</span>
-                        <h3 class="narrative display-medium">
+                        <p class="body-large">
                             Actualization. Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the right conditions and the right partners to prove it.
-                        </h3>
+                        </p>
                     </div>
 
                     <div class="hairline-bottom reveal">
@@ -488,7 +459,7 @@
                     <span class="tech-subhead" style="color: rgba(255,255,255,0.5);">04 // BRAND WORLD</span>
                 </div>
                 <div class="col-8">
-                    <h2 class="narrative display-large reveal delay-1">The brand lives at the intersection of civic conviction and strategic precision.</h2>
+                    <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em;">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
                     <div class="grid-12 hairline-top reveal delay-2">
                         <div class="col-6">
@@ -511,7 +482,7 @@
 
                     <div class="hairline-top reveal">
                         <span class="tech-subhead" style="color: var(--paper); display: block; margin-bottom: 1rem;">WHAT LEVY NEVER DOES</span>
-                        <ul class="constraint-list narrative">
+                        <ul class="constraint-list" style="font-family: var(--font-tech);">
                             <li>Operates as a political organization or takes partisan positions</li>
                             <li>Tries to convince people to be ambitious — they already are</li>
                             <li>Flatters. Performs urgency. Explains what the reader already knows</li>
@@ -585,9 +556,9 @@
                     <h2 class="tech-title display-medium hairline-top hairline-bottom reveal">TYPOGRAPHY SYSTEM</h2>
                     
                     <div class="reveal" style="margin-bottom: 4rem;">
-                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">01 // THE LEAD: HELVETICA NEUE (MEDIUM)</span>
+                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
                         <p class="body-medium" style="margin-bottom: 2rem;">
-                            Primary headlines are set in Helvetica Neue Medium, uppercase, with a dense -2.5% letter spacing and tight line height. Used for structural markers and objective data.
+                            Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height. Body copy is Light. Structural labels are wide-tracked.
                         </p>
                         
                         <div style="border: 1px solid var(--hairline-dark); padding: var(--space-md); background: rgba(0,0,0,0.02);">
@@ -597,17 +568,28 @@
                             <div class="tech-title" style="font-size: clamp(2rem, 4vw, 3.5rem); border-top: 1px solid var(--hairline-dark); padding-top: 2rem; margin-top: 2rem;">
                                 CAPITAL SALON // 001
                             </div>
+                            <div class="narrative" style="font-size: 1.25rem; margin-top: 2rem; color: var(--ink);">
+                                Artificial Intelligence<br>Workforce Strategy<br>Anchor Institutions
+                            </div>
                         </div>
                     </div>
 
                     <div class="reveal">
-                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">02 // THE ACCENT: FRAUNCES (MINCHO)</span>
-                        <div class="narrative" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-top: 1.5rem; color: var(--ink);">
-                            Outlier Outcomes.
-                        </div>
-                        <p class="body-medium" style="margin-top: 1.5rem;">
-                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used for standalone conceptual anchors and narrative gravity. Emulates Sumi ink on paper.
+                        <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">02 // THE ACCENT: FRAUNCES (10%)</span>
+                        <p class="body-medium" style="margin-bottom: 2rem;">
+                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used strictly for standalone conceptual anchors, inline italic accents (like <span class="narrative">Rework</span>), or pull quotes. It emulates Sumi ink bleeding into paper fibers.
                         </p>
+                        
+                        <div style="border: 1px solid var(--hairline-dark); padding: var(--space-md); background: rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 2rem;">
+                            <div>
+                                <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">INLINE ACCENT</span>
+                                <div class="tech-title" style="font-size: 3rem; text-transform: capitalize;">Capital <span class="narrative" style="font-style: italic;">Rework</span></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--hairline-dark); padding-top: 2rem;">
+                                <span class="tech-subhead" style="color: var(--ink-muted); display: block; margin-bottom: 0.5rem;">CONCEPTUAL ANCHOR</span>
+                                <div class="narrative" style="font-size: 3rem; text-transform: uppercase; letter-spacing: 0.05em;">OUTCOME</div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -644,17 +626,6 @@
                         <div class="rule-box rule-dont">
                             <span class="tech-subhead" style="display: block; margin-bottom: 1rem;">DON'T</span>
                             <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="do-dont-pair reveal">
-                        <div class="rule-box rule-do">
-                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">DO</span>
-                            <p class="body-medium">"Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales."</p>
-                        </div>
-                        <div class="rule-box rule-dont">
-                            <span class="tech-subhead" style="display: block; margin-bottom: 1rem;">DON'T</span>
-                            <p class="body-medium">"We believe in the power of community to create a better tomorrow."</p>
                         </div>
                     </div>
 
@@ -703,7 +674,7 @@
                         <div class="mockup">
                             <div class="artifact-social">
                                 <div>
-                                    <h3 class="narrative" style="font-size: 2.5rem;">Stop<br>Thinking<br>Small.</h3>
+                                    <h3 class="tech-title" style="font-size: 2.5rem;">STOP<br>THINKING<br>SMALL.</h3>
                                     <div class="tech-title" style="font-size: 0.75rem; margin-top: 2.5rem; opacity: 0.8;">LEVY STRATEGIC DESIGN</div>
                                 </div>
                             </div>
@@ -799,10 +770,9 @@
 
             /* --- HEADER SCROLL FX --- */
             const header = document.getElementById('mainHeader');
-            const darkSection = document.getElementById('cover'); // or any .dark-section
+            const darkSection = document.getElementById('cover'); 
 
             window.addEventListener('scroll', () => {
-                // Check if we are over the dark section to invert header colors
                 const darkBottom = darkSection.offsetTop + darkSection.offsetHeight;
                 if (window.scrollY < darkBottom - 90) {
                     header.classList.add('on-dark');
@@ -810,16 +780,15 @@
                     header.classList.remove('on-dark');
                 }
             });
-            // Initial check
             if (window.scrollY < darkSection.offsetHeight - 90) header.classList.add('on-dark');
 
-            /* --- SCROLL REVEAL (AWWWARDS STYLE) --- */
+            /* --- SCROLL REVEAL --- */
             const revealElements = document.querySelectorAll(".reveal");
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("is-visible");
-                        observer.unobserve(entry.target); // Only animate once
+                        observer.unobserve(entry.target); 
                     }
                 });
             }, {
