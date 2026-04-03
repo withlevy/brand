@@ -32,15 +32,16 @@
             --hairline-dark: rgba(10, 10, 10, 0.12);
             --hairline-light: rgba(247, 247, 246, 0.15);
             
-            /* Fluid Spacing (Aggressive Ma) */
+            /* Fluid Spacing */
             --space-xs: clamp(0.5rem, 1vw, 1rem);
             --space-sm: clamp(1rem, 2vw, 2rem);
             --space-md: clamp(1.5rem, 4vw, 4rem);
             --space-lg: clamp(4rem, 8vw, 8rem);
-            --space-xl: clamp(8rem, 15vh, 15rem);
-            --space-xxl: clamp(12rem, 25vh, 25rem); /* For massive concept breaks */
+            --space-xl: clamp(8rem, 15dvh, 15rem);
+            --space-xxl: clamp(12rem, 25dvh, 25rem);
             
-            --ma: 20vh; /* Aggressive vertical void for sections */
+            /* Clamped Aggressive Ma */
+            --ma: clamp(120px, 20dvh, 250px); 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -66,7 +67,7 @@
         ::selection { background: var(--violet); color: var(--paper); }
 
         .noise {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
             pointer-events: none; z-index: 9999; opacity: 0.05;
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
@@ -82,6 +83,7 @@
             letter-spacing: -0.025em; 
             line-height: 0.85;
             overflow-wrap: break-word;
+            text-wrap: balance; /* Orphan control */
         }
         
         .tech-subhead {
@@ -109,9 +111,9 @@
             line-height: 1.1;
         }
 
-        .display-huge { font-size: clamp(2.25rem, 11vw, 8rem); letter-spacing: -0.03em; }
-        .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; }
-        .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; }
+        .display-huge { font-size: clamp(2.25rem, 11vw, 8rem); letter-spacing: -0.03em; text-wrap: balance; }
+        .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; text-wrap: balance; }
+        .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; text-wrap: balance; }
         
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); max-width: 60ch; }
@@ -127,6 +129,7 @@
             border-left: 2px solid var(--violet);
             padding-left: var(--space-md);
             margin: var(--space-xl) 0;
+            text-wrap: pretty;
         }
 
         /* ==========================================================================
@@ -136,26 +139,25 @@
         
         .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
         
-        /* The 2-8-2 Editorial Grid 
-           Cols 1-2: Section Labels
-           Cols 3-10: Main Headings & Full-Width Assets
-           Cols 11-12: Intentional Void (Ma)
-        */
+        /* The 2-8-2 Editorial Grid */
         .col-left { grid-column: 1 / 3; }        
-        .col-center { grid-column: 3 / 11; }     
         
-        /* Mathematical Body Indent
-           Offsets body content exactly 1 grid column + 1 gap on both left and right.
-           This suspends the text directly in cols 4 through 9 (6 columns total).
-        */
-        .indent-body {
-            margin-left: calc(12.5% + 0.25vw);
-            margin-right: calc(12.5% + 0.25vw);
-        }
+        /* Subgrid for exact mathematical alignment */
+        .col-center { 
+            grid-column: 3 / 11; 
+            display: grid;
+            grid-template-columns: subgrid; 
+        }     
+        
+        /* Base content inside col-center spans all its 8 columns */
+        .col-center > * { grid-column: 1 / -1; }
+        
+        /* Suspension Indent: Spans cols 2 through 7 of the 8-col subgrid */
+        .col-center > .indent-body { grid-column: 2 / 8; }
 
-        .flex-responsive { display: flex; gap: 4vw; } /* Increased gap for flex grids */
+        .flex-responsive { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; } 
         
-        section { padding: var(--ma) 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        section { padding: var(--ma) 0; display: flex; flex-direction: column; justify-content: center; }
 
         /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); will-change: opacity, transform; }
@@ -201,30 +203,30 @@
         .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
         .bento-nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
             background: rgba(247, 247, 246, 0.98); backdrop-filter: blur(20px);
-            z-index: 1500; padding: calc(var(--header-height) + 2vh) 5vw 5vw 5vw;
+            z-index: 1500; padding: calc(var(--header-height) + 2dvh) 5vw 5vw 5vw;
             opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease-out-expo); overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; pointer-events: auto; }
 
-        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; height: 100%; max-height: 80vh; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; height: 100%; max-height: 80dvh; }
 
         .bento-item {
             background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
             text-decoration: none; color: var(--ink); display: flex; flex-direction: column; justify-content: space-between;
             position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); min-height: 180px;
-            transition: transform 0.6s var(--ease-out-expo), opacity 0.6s var(--ease-out-expo), border-color 0.4s ease;
+            transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s ease;
         }
         
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
-        .bento-item:nth-child(1) { transition-delay: 0.05s; }
-        .bento-item:nth-child(2) { transition-delay: 0.1s; }
-        .bento-item:nth-child(3) { transition-delay: 0.15s; }
-        .bento-item:nth-child(4) { transition-delay: 0.2s; }
-        .bento-item:nth-child(5) { transition-delay: 0.25s; }
-        .bento-item:nth-child(6) { transition-delay: 0.3s; }
-        .bento-item:nth-child(7) { transition-delay: 0.35s; }
+        .bento-item:nth-child(1) { transition-delay: 0.1s; }
+        .bento-item:nth-child(2) { transition-delay: 0.15s; }
+        .bento-item:nth-child(3) { transition-delay: 0.2s; }
+        .bento-item:nth-child(4) { transition-delay: 0.25s; }
+        .bento-item:nth-child(5) { transition-delay: 0.3s; }
+        .bento-item:nth-child(6) { transition-delay: 0.35s; }
+        .bento-item:nth-child(7) { transition-delay: 0.4s; }
 
         .bento-item::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0;
@@ -267,7 +269,7 @@
         .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
         .color-details { padding: var(--space-md); background: var(--paper); }
         
-        .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; min-height: 32px; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
+        .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; min-height: 44px; min-width: 44px; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; margin-top: var(--space-lg); }
@@ -283,36 +285,35 @@
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
         /* ==========================================================================
-           8. MOBILE OPTIMIZATION
+           8. RESPONSIVE CHOREOGRAPHY
            ========================================================================== */
         @media (max-width: 1024px) {
-            .grid-12, .bento-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
+            .grid-12 { display: flex; flex-direction: column; gap: var(--space-md); }
             
-            .col-left, .col-center { grid-column: span 12; width: 100%; }
-            .indent-body { margin-left: 0; margin-right: 0; }
-            .flex-responsive { flex-direction: column; gap: var(--space-lg); }
+            .col-center { display: flex; flex-direction: column; width: 100%; gap: var(--space-lg);}
+            .col-center > .indent-body { margin-left: 5vw; margin-right: 5vw; } /* Degrade subgrid to standard padding on tablet */
             
             .bento-item { min-height: auto; padding: var(--space-md); }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
             .bento-grid { max-height: none; grid-template-columns: 1fr 1fr; }
             
             .dl-grid { grid-template-columns: 1fr 1fr; }
-            .mockup-grid { grid-template-columns: 1fr; }
-            
-            .poster-lockup { flex-direction: column; align-items: flex-start; gap: 0; }
-            .poster-left { text-align: left; padding-right: 0; }
-            .poster-right { align-items: flex-start; }
         }
         
         @media (max-width: 768px) {
             :root { 
-                --ma: 15vh; 
                 --header-height: 70px; 
             }
             .bento-grid { grid-template-columns: 1fr; }
-            .do-dont-pair { grid-template-columns: 1fr; gap: var(--space-md); }
+            .flex-responsive, .do-dont-pair, .mockup-grid { grid-template-columns: 1fr; gap: var(--space-md); }
             .dl-grid { grid-template-columns: 1fr; }
-            .display-huge { font-size: 3.5rem; }
+            
+            .col-center > .indent-body { margin-left: 0; margin-right: 0; }
+            
+            .poster-lockup { flex-direction: column; align-items: flex-start; gap: 0; }
+            .poster-left { text-align: left; padding-right: 0; }
+            .poster-right { align-items: flex-start; }
+            .display-huge { font-size: 3.5rem; text-wrap: wrap; }
         }
     </style>
 </head>
@@ -457,8 +458,8 @@
                         </div>
                     </div>
 
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <span class="micro-data indent-body" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE CORE THESIS</span>
+                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE CORE THESIS</span>
                         <h2 class="tech-title display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     </div>
 
@@ -496,8 +497,8 @@
                 <div class="col-center">
                     <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em; margin-bottom: var(--space-xl);">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="flex-responsive indent-body">
+                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
+                        <div class="flex-responsive">
                             <div style="flex: 1;">
                                 <p class="body-medium">
                                     It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
@@ -511,27 +512,23 @@
                         </div>
                     </div>
 
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <span class="micro-data indent-body" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-sm);">BRAND ARCHETYPE</span>
+                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
+                        <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-sm);">BRAND ARCHETYPE</span>
                         <h3 class="tech-title display-medium">MAGICIAN-SAGE</h3>
-                        <div class="indent-body">
-                            <p class="body-large" style="margin-top: var(--space-md); color: rgba(247,247,246,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
-                        </div>
+                        <p class="body-large" style="margin-top: var(--space-md); color: rgba(247,247,246,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
-                    <div class="reveal">
-                        <span class="micro-data indent-body" style="color: var(--paper); display: block; margin-bottom: var(--space-md);">WHAT LEVY NEVER DOES</span>
-                        <div class="indent-body">
-                            <ul class="constraint-list" style="font-family: var(--font-tech);">
-                                <li>Operates as a political organization or takes partisan positions</li>
-                                <li>Tries to convince people to be ambitious — they already are</li>
-                                <li>Flatters. Performs urgency. Explains what the reader already knows</li>
-                                <li>Takes credit for what members build</li>
-                                <li>Promises specific outcomes</li>
-                                <li>Offers motivation without practical substance</li>
-                                <li>Uses vague language about impact without specifying what changes, for whom, and toward what measurable end</li>
-                            </ul>
-                        </div>
+                    <div class="reveal indent-body">
+                        <span class="micro-data" style="color: var(--paper); display: block; margin-bottom: var(--space-md);">WHAT LEVY NEVER DOES</span>
+                        <ul class="constraint-list" style="font-family: var(--font-tech);">
+                            <li>Operates as a political organization or takes partisan positions</li>
+                            <li>Tries to convince people to be ambitious — they already are</li>
+                            <li>Flatters. Performs urgency. Explains what the reader already knows</li>
+                            <li>Takes credit for what members build</li>
+                            <li>Promises specific outcomes</li>
+                            <li>Offers motivation without practical substance</li>
+                            <li>Uses vague language about impact without specifying what changes, for whom, and toward what measurable end</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -658,8 +655,8 @@
                         </div>
                     </div>
 
-                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body flex-responsive">
+                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
+                        <div class="flex-responsive">
                             <div style="flex: 1;">
                                 <span class="micro-data" style="color: var(--magenta); display: block; margin-bottom: var(--space-md);">NEVER USE</span>
                                 <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.</p>
@@ -671,16 +668,14 @@
                         </div>
                     </div>
 
-                    <div class="reveal">
-                        <div class="indent-body do-dont-pair">
-                            <div class="rule-box rule-do">
-                                <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-sm);">DO</span>
-                                <p class="body-medium">"Levy helps you name the gap. Then helps you close it."</p>
-                            </div>
-                            <div class="rule-box rule-dont">
-                                <span class="micro-data" style="display: block; margin-bottom: var(--space-sm);">DON'T</span>
-                                <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
-                            </div>
+                    <div class="reveal indent-body do-dont-pair">
+                        <div class="rule-box rule-do">
+                            <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-sm);">DO</span>
+                            <p class="body-medium">"Levy helps you name the gap. Then helps you close it."</p>
+                        </div>
+                        <div class="rule-box rule-dont">
+                            <span class="micro-data" style="display: block; margin-bottom: var(--space-sm);">DON'T</span>
+                            <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
                         </div>
                     </div>
 
@@ -695,22 +690,20 @@
                 </div>
                 
                 <div class="col-center">
-                    <div class="reveal delay-1" style="margin-bottom: var(--space-xxl);">
-                        <div class="indent-body">
-                            <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-lg);">NAMING CONVENTIONS</span>
-                            
-                            <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
-                                <div class="body-medium" style="flex: 1;">Casual / owned channels</div>
-                                <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY</div>
-                            </div>
-                            <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
-                                <div class="body-medium" style="flex: 1;">LinkedIn / external</div>
-                                <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY STRATEGIC DESIGN</div>
-                            </div>
-                            <div style="display: flex; align-items: center;">
-                                <div class="body-medium" style="flex: 1;">Formal / institutional</div>
-                                <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
-                            </div>
+                    <div class="reveal delay-1 indent-body" style="margin-bottom: var(--space-xxl);">
+                        <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-lg);">NAMING CONVENTIONS</span>
+                        
+                        <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
+                            <div class="body-medium" style="flex: 1;">Casual / owned channels</div>
+                            <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY</div>
+                        </div>
+                        <div style="display: flex; border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
+                            <div class="body-medium" style="flex: 1;">LinkedIn / external</div>
+                            <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY STRATEGIC DESIGN</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div class="body-medium" style="flex: 1;">Formal / institutional</div>
+                            <div class="tech-title" style="flex: 1; font-size: 1.2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                         </div>
                     </div>
 
@@ -801,7 +794,27 @@
             const navToggle = document.getElementById('navToggle');
             const bentoNav = document.getElementById('bentoNav');
             const navLinks = document.querySelectorAll('.nav-link');
+            const header = document.getElementById('mainHeader');
+            const darkSection = document.getElementById('world'); 
             
+            const evaluateDarkOverlay = () => {
+                // If menu is open, force light mode (remove dark class)
+                if(bentoNav.classList.contains('is-open')) {
+                    header.classList.remove('on-dark');
+                    return;
+                }
+                
+                // Otherwise calculate scroll position
+                const darkTop = darkSection.offsetTop;
+                const darkBottom = darkTop + darkSection.offsetHeight;
+                
+                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
+                    header.classList.add('on-dark');
+                } else {
+                    header.classList.remove('on-dark');
+                }
+            };
+
             const toggleMenu = () => {
                 const isOpen = bentoNav.classList.contains('is-open');
                 navToggle.classList.toggle('is-active');
@@ -815,6 +828,9 @@
                     document.body.style.overflow = '';
                     navToggle.setAttribute('aria-expanded', 'false');
                 }
+                
+                // Re-evaluate header styling based on new menu state
+                evaluateDarkOverlay();
             };
 
             navToggle.addEventListener('click', toggleMenu);
@@ -825,20 +841,8 @@
                 });
             });
 
-            const header = document.getElementById('mainHeader');
-            const darkSection = document.getElementById('world'); 
-
-            window.addEventListener('scroll', () => {
-                const darkTop = darkSection.offsetTop;
-                const darkBottom = darkTop + darkSection.offsetHeight;
-                
-                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
-                    header.classList.add('on-dark');
-                } else {
-                    header.classList.remove('on-dark');
-                }
-            });
-            if (window.scrollY > darkSection.offsetTop - 90 && window.scrollY < darkSection.offsetTop + darkSection.offsetHeight - 90) header.classList.add('on-dark');
+            window.addEventListener('scroll', evaluateDarkOverlay);
+            evaluateDarkOverlay(); // Run once on load
 
             const revealElements = document.querySelectorAll(".reveal");
             const revealObserver = new IntersectionObserver((entries, observer) => {
