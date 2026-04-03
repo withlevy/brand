@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
@@ -23,14 +23,14 @@
             --muted: #888888;
             
             /* Typography */
-            --font-tech: 'Inter', sans-serif;
+            --font-tech: "Helvetica Neue", Helvetica, Arial, sans-serif;
             --font-narrative: 'Fraunces', serif;
             
             /* Structural */
-            --sidebar-width: 260px;
             --hairline-light: rgba(247, 247, 246, 0.15); 
             --hairline-dark: rgba(10, 10, 10, 0.12);
             --ma: 15vh; /* Negative space */
+            --header-height: 80px;
         }
 
         /* ==========================================================================
@@ -44,10 +44,10 @@
             color: var(--ink);
             font-family: var(--font-tech);
             font-weight: 300;
-            line-height: 1.6;
+            line-height: 1.2;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            display: flex;
+            padding-top: var(--header-height);
         }
         ::selection { background: var(--violet); color: var(--paper); }
 
@@ -64,46 +64,45 @@
         /* ==========================================================================
            TYPOGRAPHY SYSTEM
            ========================================================================== */
-        /* Technical Swiss (Inter) */
-        .tech-lead {
+        /* Technical Swiss (Helvetica Neue) */
+        .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: -0.025em; /* Tight, dense tracking */
+            line-height: 0.85;
+        }
+        
+        .tech-subhead {
+            font-family: var(--font-tech);
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            line-height: 1.1;
-        }
-        .section-label {
-            font-family: var(--font-tech);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--violet);
+            line-height: 1.2;
             font-size: 0.75rem;
-            display: block;
-            margin-bottom: 2rem;
         }
         
         /* Narrative Ink-Bleed (Fraunces) */
         .narrative { 
             font-family: var(--font-narrative); 
-            font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-            font-weight: 300;
+            font-weight: 200;
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+            line-height: 1.0;
         }
 
-        .display-huge { font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.02em; }
-        .display-large { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -0.01em; }
-        .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.2; }
-        .body-large { font-size: 1.25rem; line-height: 1.6; max-width: 65ch; }
-        .body-medium { font-size: 1.05rem; line-height: 1.6; max-width: 65ch; }
+        .display-huge { font-size: clamp(3.5rem, 7vw, 7rem); }
+        .display-large { font-size: clamp(2.5rem, 5vw, 4rem); }
+        .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+        .body-large { font-size: 1.25rem; line-height: 1.5; max-width: 65ch; }
+        .body-medium { font-size: 1.05rem; line-height: 1.5; max-width: 65ch; color: var(--ink-light); }
         
-        /* Pull Quotes */
         blockquote {
             font-family: var(--font-narrative);
-            font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-            font-weight: 300;
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+            font-weight: 200;
             font-style: italic;
             font-size: clamp(1.5rem, 3vw, 2.5rem);
-            line-height: 1.3;
+            line-height: 1.1;
             color: var(--ink);
             border-left: 4px solid var(--violet);
             padding-left: 2rem;
@@ -126,60 +125,117 @@
         .col-12 { grid-column: span 12; }
         .col-offset-4 { grid-column: 5 / 13; }
 
+        .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: 2rem; margin-top: 2rem; }
+        .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: 2rem; margin-bottom: 2rem; }
+
         /* ==========================================================================
-           NAVIGATION (LEFT SIDEBAR)
+           HEADER & BENTO NAV
            ========================================================================== */
-        #sidebar {
+        header {
             position: fixed;
-            top: 0; left: 0;
-            width: var(--sidebar-width);
-            height: 100vh;
-            background-color: var(--paper);
-            border-right: 1px solid var(--hairline-dark);
-            padding: 3rem 2rem;
+            top: 0; left: 0; width: 100%;
+            height: var(--header-height);
+            background: rgba(247, 247, 246, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--hairline-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5vw;
+            z-index: 2000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .header-logo svg { width: 30px; height: 30px; }
+
+        /* Hamburger to X */
+        .hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 2100;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: var(--ink);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+
+        .hamburger.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.is-active span:nth-child(2) { opacity: 0; }
+        .hamburger.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* Bento Dropdown Overlay */
+        .bento-nav {
+            position: fixed;
+            top: var(--header-height);
+            left: 0; width: 100%; height: calc(100vh - var(--header-height));
+            background: var(--paper);
+            z-index: 1500;
+            padding: 5vw;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            overflow-y: auto;
+        }
+        .bento-nav.is-open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            height: 100%;
+            max-height: 800px;
+        }
+
+        .bento-item {
+            background: var(--paper);
+            border: 1px solid var(--hairline-dark);
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--ink);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            z-index: 1000;
-            transition: transform 0.3s ease;
+            transition: background 0.3s, border-color 0.3s;
         }
-        .logo-mark { width: 40px; height: 40px; margin-bottom: 3rem; color: var(--ink); }
-        .nav-menu { list-style: none; }
-        .nav-menu li { margin-bottom: 1rem; }
-        .nav-menu a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.3s;
+        .bento-item:hover {
+            background: rgba(100, 65, 165, 0.05); /* very light violet hover */
+            border-color: var(--violet);
         }
-        .nav-menu a:hover, .nav-menu a.active { color: var(--ink); }
-        .nav-menu a.active { border-bottom: 1px solid var(--violet); padding-bottom: 2px; }
-
-        .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 1rem; right: 1rem;
-            background: var(--violet);
-            border: none;
-            color: var(--paper);
-            padding: 0.5rem 1rem;
-            z-index: 2000;
-            cursor: pointer;
-            font-family: var(--font-tech);
-            text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-        }
+        .bento-item.large { grid-column: span 2; grid-row: span 2; background: var(--midnight); color: var(--paper); }
+        .bento-item.large:hover { background: var(--violet); border-color: var(--violet); }
+        .bento-item.wide { grid-column: span 2; }
+        
+        .bento-item .tech-subhead { opacity: 0.6; margin-bottom: auto; display: block; padding-bottom: 2rem;}
+        .bento-item h3 { font-size: 2rem; }
+        .bento-item.large h3 { font-size: 3.5rem; }
 
         /* ==========================================================================
            MAIN CONTENT SECTIONS
            ========================================================================== */
-        main {
-            margin-left: var(--sidebar-width);
-            width: calc(100% - var(--sidebar-width));
-        }
         section {
             padding: var(--ma) 5vw;
             min-height: 100vh;
@@ -192,10 +248,7 @@
             transition: opacity 0.8s ease, transform 0.8s ease;
             position: relative;
         }
-        section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        section.is-visible { opacity: 1; transform: translateY(0); }
 
         /* Dark Mode "Covers" & Emphasis */
         .dark-section {
@@ -206,105 +259,52 @@
         .dark-section blockquote { color: var(--paper); }
         .dark-section .hairline-top { border-top-color: var(--hairline-light); }
         .dark-section .hairline-bottom { border-bottom-color: var(--hairline-light); }
+        .dark-section .tech-subhead { color: rgba(247, 247, 246, 0.6); }
 
-        /* Helpers */
-        .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: 2rem; margin-top: 2rem; }
-        .hairline-bottom { border-bottom: 1px solid var(--hairline-dark); padding-bottom: 2rem; margin-bottom: 2rem; }
-        
         /* Section 01: Cover */
         #cover { text-align: center; align-items: center; justify-content: center; }
         .cover-logo { width: 120px; height: 120px; margin-bottom: 4rem; color: var(--paper); }
-        .cover-footer { position: absolute; bottom: 3rem; font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(247, 247, 246, 0.6); text-transform: uppercase; }
+        .cover-footer { position: absolute; bottom: 3rem; text-align: center; width: 100%; }
 
-        /* Section 04: Brand World */
+        /* Do/Dont Lists */
         .typographic-list { list-style: none; }
-        .typographic-list li {
-            border-bottom: 1px solid var(--hairline-light);
-            padding: 1.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        /* Section 05: Logo */
-        .logo-box {
-            background: var(--paper);
-            color: var(--ink);
-            padding: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--hairline-dark);
-            height: 100%;
-        }
-        .logo-box.dark { background: var(--midnight); color: var(--paper); }
-        .incorrect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .incorrect-item { position: relative; background: var(--paper); border: 1px solid var(--hairline-dark); color: var(--ink); padding: 3rem; text-align: center; }
-        .incorrect-label { margin-top: 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid var(--hairline-dark); padding-top: 0.5rem;}
-        .red-x { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        .red-x::before, .red-x::after {
-            content: ''; position: absolute; top: 50%; left: 20%; width: 60%; height: 4px; background: red;
-        }
-        .red-x::before { transform: rotate(45deg); }
-        .red-x::after { transform: rotate(-45deg); }
-
-        /* Section 06: Color */
-        .color-card { border: 1px solid var(--hairline-dark); height: 100%; display: flex; flex-direction: column;}
-        .color-swatch { height: 250px; width: 100%; position: relative; border-bottom: 1px solid var(--hairline-dark); }
-        .color-details { padding: 1.5rem; background: var(--paper); flex-grow: 1;}
-        .color-name { font-size: 1.2rem; margin-bottom: 1rem; }
-        .color-data { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between;}
-        .hex-code { cursor: pointer; color: var(--ink); font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: background 0.2s, color 0.2s; }
-        .hex-code:hover { background: var(--violet); color: var(--paper); }
-        .pairing-swatch { display: inline-block; width: 30px; height: 30px; border: 1px solid var(--hairline-dark); margin-right: -10px; border-radius: 50%; }
-
-        /* Section 07: Typography */
-        .type-specimen { padding: 3rem 0; border-bottom: 1px solid var(--hairline-dark); }
-        .hierarchy-block { background: rgba(0,0,0,0.02); border: 1px solid var(--hairline-dark); color: var(--ink); padding: 4rem; margin-top: 2rem; }
-
-        /* Section 08: Voice & Tone */
+        .typographic-list li { border-bottom: 1px solid var(--hairline-light); padding: 1.5rem 0; font-size: 1.15rem; color: rgba(247,247,246,0.8);}
+        
         .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
         .do-box, .dont-box { padding: 2rem; border-top: 4px solid var(--violet); background: rgba(0,0,0,0.02); }
         .dont-box { border-top-color: var(--muted); opacity: 0.6; }
-        .do-dont-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; display: block; }
-        
-        /* Section 09: Brand in Use */
-        .naming-table { width: 100%; text-align: left; border-collapse: collapse; margin-top: 2rem; }
-        .naming-table th, .naming-table td { padding: 1.5rem 0; border-bottom: 1px solid var(--hairline-dark); }
-        .naming-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: normal; }
-        
+
+        /* Application Mockups */
         .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
         .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
-        /* Business Card Mockup */
         .mockup-card { background: var(--paper); color: var(--ink); aspect-ratio: 1.75/1; width: 100%; padding: 2rem; display: flex; flex-direction: column; justify-content: center; }
-        /* Social Mockup */
         .mockup-social { background: var(--violet); color: var(--paper); aspect-ratio: 1/1; width: 100%; padding: 3rem; display: flex; align-items: center; text-align: center; }
-        /* Report Mockup */
         .mockup-report { background: var(--midnight); border: 2px solid var(--violet); color: var(--paper); aspect-ratio: 1/1.3; width: 80%; margin: 2rem auto; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;}
 
-        /* Section 10: Downloads */
+        /* Downloads */
         .download-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
         .download-card { border: 1px solid var(--hairline-dark); padding: 2rem; display: flex; flex-direction: column; align-items: flex-start; }
         .download-btn { margin-top: auto; padding: 0.75rem 1.5rem; background: var(--violet); color: var(--paper); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; transition: background 0.3s; width: 100%; text-align: center; border: none; cursor: pointer; }
         .download-btn:hover { background: var(--magenta); }
+        
+        /* Logos & Colors */
+        .logo-box { background: var(--paper); color: var(--ink); padding: 4rem; display: flex; align-items: center; justify-content: center; border: 1px solid var(--hairline-dark); height: 100%; }
+        .logo-box.dark { background: var(--midnight); color: var(--paper); }
+        
+        .color-card { border: 1px solid var(--hairline-dark); height: 100%; display: flex; flex-direction: column;}
+        .color-swatch { height: 250px; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
+        .color-details { padding: 1.5rem; background: var(--paper); flex-grow: 1;}
+        .hex-code { cursor: pointer; font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: background 0.2s, color 0.2s; display: inline-block; }
+        .hex-code:hover { background: var(--violet); color: var(--paper); }
 
-        /* ==========================================================================
-           RESPONSIVE
-           ========================================================================== */
+        /* Typography Hierarchy Block */
+        .dossier-block { border: 1px solid var(--hairline-dark); padding: 3rem; background: rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 2rem; }
+
         @media (max-width: 1024px) {
-            .grid-12 { display: flex; flex-direction: column; }
+            .grid-12, .bento-grid { display: flex; flex-direction: column; }
             .col-offset-4 { margin-top: 2rem; }
-            .incorrect-grid { grid-template-columns: repeat(2, 1fr); }
-            .download-grid { grid-template-columns: repeat(2, 1fr); }
+            .download-grid, .mockup-grid { grid-template-columns: 1fr; }
             .do-dont-pair { grid-template-columns: 1fr; gap: 1rem; }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-toggle { display: block; }
-            #sidebar { transform: translateX(-100%); border-right: none; }
-            #sidebar.nav-open { transform: translateX(0); box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
-            main { margin-left: 0; width: 100%; }
-            .incorrect-grid { grid-template-columns: 1fr; }
-            .download-grid { grid-template-columns: 1fr; }
-            .mockup-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -312,31 +312,51 @@
 
     <div class="noise"></div>
 
-    <button class="mobile-toggle" id="menuToggle">Menu</button>
+    <header>
+        <a href="#cover" class="header-logo tech-title" style="font-size: 1.5rem; letter-spacing: 0.05em; line-height: 1;">
+            <svg viewBox="0 0 100 100" fill="currentColor">
+                <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
+                <polygon points="45,90 90,90 67.5,67.5" />
+            </svg>
+            LEVY
+        </a>
+        <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
 
-    <nav id="sidebar">
-        <div>
-            <div class="logo-mark">
-                <svg viewBox="0 0 100 100" fill="currentColor">
-                    <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                    <polygon points="45,90 90,90 67.5,67.5" />
-                </svg>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#cover" class="active">01. Cover</a></li>
-                <li><a href="#insight">02. The Insight</a></li>
-                <li><a href="#positioning">03. Positioning</a></li>
-                <li><a href="#world">04. Brand World</a></li>
-                <li><a href="#logo">05. Logo</a></li>
-                <li><a href="#color">06. Color</a></li>
-                <li><a href="#typography">07. Typography</a></li>
-                <li><a href="#voice">08. Voice & Tone</a></li>
-                <li><a href="#in-use">09. Brand In Use</a></li>
-                <li><a href="#downloads">10. Downloads</a></li>
-            </ul>
-        </div>
-        <div class="tech-lead" style="font-size: 0.65rem; color: var(--muted);">
-            BRAND STANDARDS V1.0<br>2026
+    <nav class="bento-nav" id="bentoNav">
+        <div class="bento-grid">
+            <a href="#insight" class="bento-item large nav-link">
+                <span class="tech-subhead" style="color: rgba(255,255,255,0.6);">01 // THE PROBLEM</span>
+                <h3 class="tech-title">THE<br>INSIGHT</h3>
+            </a>
+            <a href="#positioning" class="bento-item wide nav-link">
+                <span class="tech-subhead">02 // STRATEGY</span>
+                <h3 class="tech-title">POSITIONING</h3>
+            </a>
+            <a href="#world" class="bento-item nav-link">
+                <span class="tech-subhead">03 // ATMOSPHERE</span>
+                <h3 class="tech-title">BRAND<br>WORLD</h3>
+            </a>
+            <a href="#visuals" class="bento-item wide nav-link">
+                <span class="tech-subhead">04 // SYSTEMS</span>
+                <h3 class="tech-title">VISUAL<br>IDENTITY</h3>
+            </a>
+            <a href="#voice" class="bento-item nav-link">
+                <span class="tech-subhead">05 // DICTION</span>
+                <h3 class="tech-title">VOICE &<br>TONE</h3>
+            </a>
+            <a href="#in-use" class="bento-item nav-link">
+                <span class="tech-subhead">06 // EXECUTION</span>
+                <h3 class="tech-title">BRAND<br>IN USE</h3>
+            </a>
+            <a href="#downloads" class="bento-item wide nav-link" style="background: rgba(0,0,0,0.02);">
+                <span class="tech-subhead">07 // ASSETS</span>
+                <h3 class="tech-title">DOWNLOADS</h3>
+            </a>
         </div>
     </nav>
 
@@ -349,17 +369,17 @@
                     <polygon points="45,90 90,90 67.5,67.5" />
                 </svg>
             </div>
-            <h1 class="narrative display-huge">Stop Thinking Small.</h1>
-            <div class="cover-footer">Levy: A Strategic Design Company</div>
+            <h1 class="tech-title display-huge">STOP THINKING <br>SMALL.</h1>
+            <div class="cover-footer tech-subhead">LEVY: A STRATEGIC DESIGN COMPANY</div>
         </section>
 
         <section id="insight">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">02. The Insight</span>
+                    <span class="tech-subhead" style="color: var(--violet);">02 // THE INSIGHT</span>
                 </div>
                 <div class="col-8">
-                    <h2 class="tech-lead display-large">SOMETHING HAS<br>GONE WRONG.</h2>
+                    <h2 class="tech-title display-large">SOMETHING HAS<br>GONE WRONG.</h2>
                     
                     <p class="body-large hairline-top">
                         The people who should be producing the most consequential results — founders building real companies, public servants who know what's possible, institutional leaders who understand what their organizations could do — are systematically producing less than they're capable of. Not because they aren't smart enough. Not because they aren't working hard enough. Because the knowledge, the networks, and the conditions that would let them operate at full capacity don't exist in the same place at the same time.
@@ -381,38 +401,38 @@
         <section id="positioning">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">03. Positioning</span>
+                    <span class="tech-subhead" style="color: var(--violet);">03 // POSITIONING</span>
                 </div>
                 <div class="col-8">
                     
                     <div class="hairline-bottom">
-                        <span class="section-label" style="color: var(--muted);">The Name</span>
+                        <span class="tech-subhead" style="color: var(--muted); margin-bottom: 1rem; display: block;">THE NAME</span>
                         <p class="body-large">
                             To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point in a system. You get more out than you put in — not through luck, but through understanding how the system works. The name is the idea. The idea is the work.
                         </p>
                     </div>
 
                     <div class="hairline-bottom">
-                        <span class="section-label" style="color: var(--muted);">The Emotional Concept</span>
+                        <span class="tech-subhead" style="color: var(--muted); margin-bottom: 1rem; display: block;">THE EMOTIONAL CONCEPT</span>
                         <h3 class="narrative display-medium">
                             Actualization. Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the right conditions and the right partners to prove it.
                         </h3>
                     </div>
 
                     <div class="hairline-bottom">
-                        <span class="section-label" style="color: var(--muted);">The Core Thesis</span>
-                        <h2 class="tech-lead display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
+                        <span class="tech-subhead" style="color: var(--muted); margin-bottom: 1rem; display: block;">THE CORE THESIS</span>
+                        <h2 class="tech-title display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     </div>
 
                     <div class="grid-12">
                         <div class="col-6">
-                            <span class="section-label" style="color: var(--muted);">The Mission</span>
+                            <span class="tech-subhead" style="color: var(--muted); margin-bottom: 1rem; display: block;">THE MISSION</span>
                             <p class="body-medium">
                                 To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
                             </p>
                         </div>
                         <div class="col-6">
-                            <span class="section-label" style="color: var(--muted);">Who It's For</span>
+                            <span class="tech-subhead" style="color: var(--muted); margin-bottom: 1rem; display: block;">WHO IT'S FOR</span>
                             <p class="body-medium">
                                 The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
                             </p>
@@ -430,7 +450,7 @@
         <section id="world" class="dark-section">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label" style="color: var(--paper); opacity: 0.5;">04. Brand World</span>
+                    <span class="tech-subhead" style="color: rgba(255,255,255,0.6);">04 // BRAND WORLD</span>
                 </div>
                 <div class="col-8">
                     <h2 class="narrative display-large">The brand lives at the intersection of civic conviction and strategic precision.</h2>
@@ -449,14 +469,14 @@
                     </div>
 
                     <div class="hairline-top">
-                        <span class="section-label" style="color: rgba(247,247,246,0.5);">Brand Archetype</span>
-                        <h3 class="tech-lead display-medium">MAGICIAN-SAGE</h3>
+                        <span class="tech-subhead" style="color: rgba(247,247,246,0.5); display: block; margin-bottom: 1rem;">BRAND ARCHETYPE</span>
+                        <h3 class="tech-title display-medium">MAGICIAN-SAGE</h3>
                         <p class="body-large" style="margin-top: 1rem; color: rgba(247,247,246,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
                     <div class="hairline-top">
-                        <span class="section-label" style="color: var(--paper);">What Levy Never Does</span>
-                        <ul class="typographic-list">
+                        <span class="tech-subhead" style="color: var(--paper); display: block; margin-bottom: 1rem;">WHAT LEVY NEVER DOES</span>
+                        <ul class="typographic-list narrative">
                             <li>Operates as a political organization or takes partisan positions</li>
                             <li>Tries to convince people to be ambitious — they already are</li>
                             <li>Flatters. Performs urgency. Explains what the reader already knows</li>
@@ -471,132 +491,42 @@
             </div>
         </section>
 
-        <section id="logo">
+        <section id="visuals">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">05. Logo</span>
+                    <span class="tech-subhead" style="color: var(--violet);">05 // VISUAL IDENTITY</span>
                 </div>
                 <div class="col-8">
-                    <h2 class="tech-lead display-medium hairline-bottom">PRIMARY LOCKUP</h2>
                     
+                    <h2 class="tech-title display-medium hairline-bottom">PRIMARY LOCKUP</h2>
                     <div class="grid-12">
                         <div class="col-6">
                             <div class="logo-box">
                                 <svg viewBox="0 0 300 100" fill="currentColor" width="100%">
-                                    <g transform="translate(0, -10)">
-                                        <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                                        <polygon points="45,90 90,90 67.5,67.5" />
-                                    </g>
-                                    <text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
+                                    <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g>
+                                    <text x="120" y="75" font-family="'Helvetica Neue', sans-serif" font-weight="500" font-size="64" letter-spacing="-0.025em">LEVY</text>
                                 </svg>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="logo-box dark">
                                 <svg viewBox="0 0 300 100" fill="currentColor" width="100%">
-                                    <g transform="translate(0, -10)">
-                                        <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                                        <polygon points="45,90 90,90 67.5,67.5" />
-                                    </g>
-                                    <text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
+                                    <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g>
+                                    <text x="120" y="75" font-family="'Helvetica Neue', sans-serif" font-weight="500" font-size="64" letter-spacing="-0.025em">LEVY</text>
                                 </svg>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid-12 hairline-top">
-                        <div class="col-6">
-                            <span class="section-label" style="color: var(--muted);">Wordmark Alone</span>
-                            <div class="logo-box" style="padding: 2rem;">
-                                <svg viewBox="0 0 200 80" fill="currentColor" width="100%">
-                                    <text x="10" y="60" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <span class="section-label" style="color: var(--muted);">Clear Space</span>
-                            <div class="logo-box" style="padding: 2rem; position: relative;">
-                                <div style="position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; border: 1px dashed var(--violet);"></div>
-                                <svg viewBox="0 0 300 100" fill="currentColor" width="80%">
-                                    <g transform="translate(0, -10)">
-                                        <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
-                                        <polygon points="45,90 90,90 67.5,67.5" />
-                                    </g>
-                                    <text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h2 class="tech-lead display-medium hairline-top hairline-bottom">INCORRECT USAGE</h2>
-                    <div class="incorrect-grid">
-                        <div class="incorrect-item">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="currentColor" width="100%" style="transform: scale(1.5, 0.5);">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label">Do not stretch</div>
-                        </div>
-                        <div class="incorrect-item">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="var(--magenta)" width="100%">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label">Do not recolor</div>
-                        </div>
-                        <div class="incorrect-item">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="currentColor" width="100%" style="filter: drop-shadow(4px 4px 0px var(--violet));">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label">Do not add effects</div>
-                        </div>
-                        <div class="incorrect-item" style="background: repeating-linear-gradient(45deg, #ccc, #ccc 10px, #fff 10px, #fff 20px);">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="currentColor" width="100%">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label" style="background: #fff; margin-top: 1.5rem;">Do not use on busy bg</div>
-                        </div>
-                        <div class="incorrect-item" style="background: #e0e0e0; color: #b0b0b0;">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="currentColor" width="100%">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label">Do not use low contrast</div>
-                        </div>
-                        <div class="incorrect-item">
-                            <div class="red-x"></div>
-                            <svg viewBox="0 0 300 100" fill="currentColor" width="100%" style="transform: rotate(15deg);">
-                                <g transform="translate(0, -10)"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></g><text x="120" y="75" font-family="Inter" font-weight="500" font-size="64" letter-spacing="0.05em">LEVY</text>
-                            </svg>
-                            <div class="incorrect-label">Do not rotate</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="color">
-            <div class="grid-12">
-                <div class="col-4">
-                    <span class="section-label">06. Color</span>
-                </div>
-                <div class="col-8">
-                    <p class="body-large hairline-bottom">
-                        Violet is the load-bearing color of the entire system. Everything defers to it. It is used with authority, not decoration.
-                    </p>
-
+                    <h2 class="tech-title display-medium hairline-top hairline-bottom">SYSTEM PALETTE</h2>
+                    <p class="body-medium" style="margin-bottom: 2rem;">Violet is the load-bearing color of the entire system. Everything defers to it. It is used with authority, not decoration.</p>
                     <div class="grid-12">
                         <div class="col-6">
                             <div class="color-card">
                                 <div class="color-swatch" style="background-color: var(--violet);"></div>
                                 <div class="color-details">
-                                    <div class="tech-lead color-name">Violet / Primary</div>
-                                    <div class="color-data"><span>HEX</span> <span class="hex-code">#6441a5</span></div>
-                                    <div class="color-data"><span>RGB</span> <span>100, 65, 165</span></div>
-                                    <div class="color-data"><span>CMYK</span> <span>69, 79, 0, 0</span></div>
+                                    <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">VIOLET / PRIMARY</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); display: flex; justify-content: space-between;"><span>HEX</span> <span class="hex-code">#6441a5</span></div>
                                 </div>
                             </div>
                         </div>
@@ -604,111 +534,40 @@
                             <div class="color-card">
                                 <div class="color-swatch" style="background-color: var(--midnight);"></div>
                                 <div class="color-details">
-                                    <div class="tech-lead color-name">Midnight / Background</div>
-                                    <div class="color-data"><span>HEX</span> <span class="hex-code">#0f0c29</span></div>
-                                    <div class="color-data"><span>RGB</span> <span>15, 12, 41</span></div>
-                                    <div class="color-data"><span>CMYK</span> <span>88, 86, 42, 69</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="color-card">
-                                <div class="color-swatch" style="background-color: var(--magenta); height: 150px;"></div>
-                                <div class="color-details">
-                                    <div class="tech-lead color-name" style="font-size: 0.9rem;">Magenta / Accent</div>
-                                    <div class="color-data"><span>HEX</span> <span class="hex-code">#8a2387</span></div>
-                                    <div class="color-data"><span>RGB</span> <span>138, 35, 135</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="color-card">
-                                <div class="color-swatch" style="background-color: var(--paper); height: 150px;"></div>
-                                <div class="color-details">
-                                    <div class="tech-lead color-name" style="font-size: 0.9rem;">Paper / Light</div>
-                                    <div class="color-data"><span>HEX</span> <span class="hex-code">#F7F7F6</span></div>
-                                    <div class="color-data"><span>RGB</span> <span>247, 247, 246</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="color-card">
-                                <div class="color-swatch" style="background-color: var(--ink); height: 150px;"></div>
-                                <div class="color-details">
-                                    <div class="tech-lead color-name" style="font-size: 0.9rem;">Sumi Ink / Text</div>
-                                    <div class="color-data"><span>HEX</span> <span class="hex-code">#0A0A0A</span></div>
-                                    <div class="color-data"><span>RGB</span> <span>10, 10, 10</span></div>
+                                    <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 1rem;">MIDNIGHT / BG</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); display: flex; justify-content: space-between;"><span>HEX</span> <span class="hex-code">#0f0c29</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="hairline-top">
-                        <span class="section-label" style="color: var(--muted);">Approved Pairings</span>
-                        <div style="display: flex; gap: 2rem;">
-                            <div>
-                                <div class="pairing-swatch" style="background: var(--midnight);"></div>
-                                <div class="pairing-swatch" style="background: var(--paper);"></div>
-                            </div>
-                            <div>
-                                <div class="pairing-swatch" style="background: var(--violet);"></div>
-                                <div class="pairing-swatch" style="background: var(--paper);"></div>
-                            </div>
-                            <div>
-                                <div class="pairing-swatch" style="background: var(--midnight);"></div>
-                                <div class="pairing-swatch" style="background: var(--violet);"></div>
-                            </div>
-                            <div>
-                                <div class="pairing-swatch" style="background: var(--paper);"></div>
-                                <div class="pairing-swatch" style="background: var(--ink);"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="typography">
-            <div class="grid-12">
-                <div class="col-4">
-                    <span class="section-label">07. Typography</span>
-                </div>
-                <div class="col-8">
+                    <h2 class="tech-title display-medium hairline-top hairline-bottom">TYPOGRAPHY SYSTEM</h2>
                     
-                    <div class="type-specimen" style="padding-top: 0;">
-                        <span class="section-label" style="color: var(--muted);">Inter / Google Fonts</span>
-                        <h3 class="tech-lead display-medium" style="margin-bottom: 1rem;">THE OBJECTIVE LAYER</h3>
-                        <p class="body-medium" style="margin-bottom: 2rem;">Weights: Light (300) for running body text, Medium (500) tracked for structural headers and labels. Tabular figures for data.</p>
+                    <div style="margin-bottom: 4rem;">
+                        <span class="tech-subhead" style="color: var(--muted); display: block; margin-bottom: 1rem;">01 // THE LEAD: HELVETICA NEUE (MEDIUM)</span>
+                        <p class="body-medium" style="margin-bottom: 2rem;">
+                            Following the exact Figma properties, primary headlines are set in Helvetica Neue Medium, uppercase, with a dense -2.5% letter spacing and tight line height. Used for structural markers and objective data.
+                        </p>
                         
-                        <div class="tech-lead" style="font-size: 64px; word-break: break-all; line-height: 1; margin-bottom: 1rem;">ABCDEFGHIJKLM</div>
-                        <div class="tech-lead" style="font-size: 32px; margin-bottom: 1rem;">Heading Scale (32px)</div>
-                        <div style="font-weight: 300; font-size: 16px; margin-bottom: 1rem;">Body Scale (16px) — The people who should be producing the most consequential results are systematically producing less than they're capable of.</div>
-                        <div class="tech-lead" style="font-size: 11px;">CAPTION / LABEL (11PX)</div>
-                        
-                        <div style="margin-top: 2rem; color: var(--magenta); font-size: 0.85rem;">Do not use this typeface for: Emotional concepts or pull quotes.</div>
+                        <div class="dossier-block">
+                            <div class="tech-subhead">
+                                WASHINGTON<br>
+                                DISTRICT of COLUMBIA<br>
+                                DECEMBER 18th, 2025
+                            </div>
+                            <div class="tech-title" style="font-size: 3.5rem; border-top: 1px solid var(--hairline-dark); padding-top: 2rem;">
+                                CAPITAL SALON // 001
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="type-specimen">
-                        <span class="section-label" style="color: var(--muted);">Fraunces / Google Fonts</span>
-                        <h3 class="narrative display-medium" style="margin-bottom: 1rem;">The Narrative Layer</h3>
-                        <p class="body-medium" style="margin-bottom: 2rem;">Weights: Light (300). Variable settings: SOFT 100, WONK 1, opsz 144. Creates the "ink bleed" Mincho emulation.</p>
-                        
-                        <div class="narrative" style="font-size: 64px; word-break: break-all; line-height: 1; margin-bottom: 1rem;">ABCDEFGHIJKLM</div>
-                        <div class="narrative" style="font-size: 32px; margin-bottom: 1rem;">Heading Scale (32px)</div>
-                        <div class="narrative" style="font-size: 16px; margin-bottom: 1rem;">Body Scale (16px) — The people who should be producing the most consequential results are systematically producing less than they're capable of.</div>
-                        <div class="narrative" style="font-size: 11px;">Caption / Label (11px)</div>
-                        
-                        <div style="margin-top: 2rem; color: var(--magenta); font-size: 0.85rem;">Do not use this typeface for: Technical data, tiny UI labels, or structural navigation.</div>
-                    </div>
-
-                    <div class="hierarchy-block">
-                        <span class="section-label" style="color: var(--muted);">Hierarchy Example</span>
-                        <div class="tech-lead" style="font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem;">REPORT // 2026</div>
-                        <h4 class="tech-lead" style="font-size: 2.5rem; color: var(--ink); margin-bottom: 1rem;">CAPITAL REWORK</h4>
-                        <div class="narrative" style="font-size: 1.5rem; color: var(--ink); margin-bottom: 2rem;">Anchor Institutions & Workforce Strategy</div>
-                        <p style="font-weight: 300; font-size: 1rem; color: var(--ink); line-height: 1.6; max-width: 50ch;">
-                            Governments, public institutions, and private organizations create leverage together in ways that aren't visible from the outside. Find the right points in that system. Apply force there. Get more out than you put in.
+                    <div>
+                        <span class="tech-subhead" style="color: var(--muted); display: block; margin-bottom: 1rem;">02 // THE ACCENT: FRAUNCES (MINCHO)</span>
+                        <div class="narrative" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink);">
+                            Outlier Outcomes.
+                        </div>
+                        <p class="body-medium" style="margin-top: 1.5rem;">
+                            Variables: SOFT 50, WONK 0, Ultra-Light Weight (150-200). Used for standalone conceptual anchors and narrative gravity.
                         </p>
                     </div>
 
@@ -719,7 +578,7 @@
         <section id="voice">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">08. Voice & Tone</span>
+                    <span class="tech-subhead" style="color: var(--violet);">06 // VOICE & TONE</span>
                 </div>
                 <div class="col-8">
                     
@@ -729,55 +588,33 @@
 
                     <div class="grid-12 hairline-bottom">
                         <div class="col-6">
-                            <span class="section-label" style="color: var(--magenta);">Never Use</span>
+                            <span class="tech-subhead" style="color: var(--magenta); display: block; margin-bottom: 1rem;">NEVER USE</span>
                             <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.</p>
                         </div>
                         <div class="col-6">
-                            <span class="section-label" style="color: var(--violet);">Always Use</span>
+                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">ALWAYS USE</span>
                             <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.</p>
                         </div>
                     </div>
 
                     <div class="do-dont-pair">
                         <div class="do-box">
-                            <span class="do-dont-label" style="color: var(--violet);">Do</span>
+                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">DO</span>
                             <p class="body-medium">"Levy helps you name the gap. Then helps you close it."</p>
                         </div>
                         <div class="dont-box">
-                            <span class="do-dont-label">Don't</span>
+                            <span class="tech-subhead" style="display: block; margin-bottom: 1rem;">DON'T</span>
                             <p class="body-medium">"Levy empowers you to unlock your full potential and drive meaningful change."</p>
                         </div>
                     </div>
-
+                    
                     <div class="do-dont-pair">
                         <div class="do-box">
-                            <span class="do-dont-label" style="color: var(--violet);">Do</span>
-                            <p class="body-medium">"The people Levy is built for are already doing the work — grinding behind closed doors, building real results without waiting for applause."</p>
-                        </div>
-                        <div class="dont-box">
-                            <span class="do-dont-label">Don't</span>
-                            <p class="body-medium">"Levy is for ambitious innovators who want to make an impact in their communities."</p>
-                        </div>
-                    </div>
-
-                    <div class="do-dont-pair">
-                        <div class="do-box">
-                            <span class="do-dont-label" style="color: var(--violet);">Do</span>
-                            <p class="body-medium">"Stop Thinking Small."</p>
-                        </div>
-                        <div class="dont-box">
-                            <span class="do-dont-label">Don't</span>
-                            <p class="body-medium">"Inspiring the next generation of civic leaders."</p>
-                        </div>
-                    </div>
-
-                    <div class="do-dont-pair">
-                        <div class="do-box">
-                            <span class="do-dont-label" style="color: var(--violet);">Do</span>
+                            <span class="tech-subhead" style="color: var(--violet); display: block; margin-bottom: 1rem;">DO</span>
                             <p class="body-medium">"Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales."</p>
                         </div>
                         <div class="dont-box">
-                            <span class="do-dont-label">Don't</span>
+                            <span class="tech-subhead" style="display: block; margin-bottom: 1rem;">DON'T</span>
                             <p class="body-medium">"We believe in the power of community to create a better tomorrow."</p>
                         </div>
                     </div>
@@ -789,48 +626,27 @@
         <section id="in-use">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">09. Brand In Use</span>
+                    <span class="tech-subhead" style="color: var(--violet);">07 // BRAND IN USE</span>
                 </div>
                 <div class="col-8">
                     
-                    <span class="section-label" style="color: var(--muted);">Naming Conventions</span>
-                    <table class="naming-table">
-                        <tr>
-                            <th>Context</th>
-                            <th>Name</th>
-                        </tr>
-                        <tr>
-                            <td class="body-medium" style="color: var(--muted);">Casual / owned channels</td>
-                            <td class="tech-lead">Levy</td>
-                        </tr>
-                        <tr>
-                            <td class="body-medium" style="color: var(--muted);">LinkedIn / external</td>
-                            <td class="tech-lead">Levy Strategic Design</td>
-                        </tr>
-                        <tr>
-                            <td class="body-medium" style="color: var(--muted);">Formal / institutional</td>
-                            <td class="tech-lead">Levy: A Strategic Design Company</td>
-                        </tr>
-                    </table>
-
-                    <div class="hairline-top">
-                        <span class="section-label" style="color: var(--muted);">The Three Arms</span>
+                    <div class="hairline-bottom">
+                        <span class="tech-subhead" style="color: var(--muted); display: block; margin-bottom: 1rem;">NAMING CONVENTIONS</span>
+                        <div class="grid-12" style="border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <div class="col-6 body-medium">Casual / owned channels</div>
+                            <div class="col-6 tech-title" style="font-size: 1.2rem;">LEVY</div>
+                        </div>
+                        <div class="grid-12" style="border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <div class="col-6 body-medium">LinkedIn / external</div>
+                            <div class="col-6 tech-title" style="font-size: 1.2rem;">LEVY STRATEGIC DESIGN</div>
+                        </div>
                         <div class="grid-12">
-                            <div class="col-4">
-                                <h4 class="tech-lead" style="margin-bottom: 1rem;">The Levy Network</h4>
-                                <p class="body-medium" style="font-size: 0.9rem;">Membership community. Tiered. In-person-anchored. Monthly convenings in Washington, D.C. + structured digital layer. Expanding to competitive congressional districts and swing state metros.</p>
-                            </div>
-                            <div class="col-4">
-                                <h4 class="tech-lead" style="margin-bottom: 1rem;">The Levy Studio</h4>
-                                <p class="body-medium" style="font-size: 0.9rem;">Portfolio and program-building arm. Designs and scales initiatives, organizations, and operating systems that demonstrate cross-sector coalition building. Each project an accessible onramp. Each one proof of concept.</p>
-                            </div>
-                            <div class="col-4">
-                                <h4 class="tech-lead" style="margin-bottom: 1rem;">The Levy Institute</h4>
-                                <p class="body-medium" style="font-size: 0.9rem;">Research and knowledge arm. Develops frameworks, publishes findings, builds the intellectual infrastructure that helps members understand how systems work and where leverage lives.</p>
-                            </div>
+                            <div class="col-6 body-medium">Formal / institutional</div>
+                            <div class="col-6 tech-title" style="font-size: 1.2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                         </div>
                     </div>
 
+                    <span class="tech-subhead" style="color: var(--muted); display: block; margin-bottom: 1rem;">APPLICATIONS</span>
                     <div class="mockup-grid">
                         <div class="mockup">
                             <div class="mockup-card">
@@ -838,24 +654,24 @@
                                     <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
                                     <polygon points="45,90 90,90 67.5,67.5" />
                                 </svg>
-                                <div class="tech-lead" style="font-size: 0.8rem; margin-top: auto;">BRENDAN</div>
-                                <div class="body-medium" style="font-size: 0.7rem; color: var(--muted);">STRATEGIC DESIGN</div>
-                                <div class="tech-lead" style="font-size: 0.6rem; color: var(--muted); margin-top: 1rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
+                                <div class="tech-title" style="font-size: 1rem; margin-top: auto;">BRENDAN</div>
+                                <div class="tech-subhead" style="color: var(--muted);">STRATEGIC DESIGN</div>
+                                <div class="tech-title" style="font-size: 0.7rem; color: var(--muted); margin-top: 1.5rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                             </div>
                         </div>
                         <div class="mockup">
                             <div class="mockup-social">
                                 <div>
-                                    <h3 class="narrative" style="font-size: 2.5rem; line-height: 1;">Stop<br>Thinking<br>Small.</h3>
-                                    <div class="tech-lead" style="font-size: 0.6rem; margin-top: 2rem; opacity: 0.8;">LEVY STRATEGIC DESIGN</div>
+                                    <h3 class="narrative" style="font-size: 2.5rem;">Stop<br>Thinking<br>Small.</h3>
+                                    <div class="tech-title" style="font-size: 0.8rem; margin-top: 2rem; opacity: 0.8;">LEVY STRATEGIC DESIGN</div>
                                 </div>
                             </div>
                         </div>
                         <div class="mockup col-12">
                             <div class="mockup-report">
                                 <div>
-                                    <div class="tech-lead" style="font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);">INSTITUTE REPORT // 2026</div>
-                                    <div class="tech-lead" style="font-size: 3rem; margin-top: 2rem; line-height: 1;">SYSTEMS<br>LEVERAGE</div>
+                                    <div class="tech-subhead" style="color: var(--muted);">INSTITUTE REPORT // 2026</div>
+                                    <div class="tech-title" style="font-size: 3rem; margin-top: 2rem;">SYSTEMS<br>LEVERAGE</div>
                                     <div class="narrative" style="font-size: 1.5rem; margin-top: 1rem; color: var(--paper);">Mapping the Institutional Gap</div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--hairline-light); padding-top: 1rem;">
@@ -863,7 +679,7 @@
                                         <rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" />
                                         <polygon points="45,90 90,90 67.5,67.5" />
                                     </svg>
-                                    <div class="tech-lead" style="font-size: 0.6rem;">LEVY</div>
+                                    <div class="tech-title" style="font-size: 1rem;">LEVY</div>
                                 </div>
                             </div>
                         </div>
@@ -876,28 +692,28 @@
         <section id="downloads" style="min-height: auto; padding-bottom: 10vh;">
             <div class="grid-12">
                 <div class="col-4">
-                    <span class="section-label">10. Downloads</span>
+                    <span class="tech-subhead" style="color: var(--violet);">08 // DOWNLOADS</span>
                 </div>
                 <div class="col-8">
                     <div class="download-grid">
                         <div class="download-card">
-                            <div class="tech-lead" style="margin-bottom: 0.5rem;">Logo Files</div>
-                            <div class="body-medium" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem;">SVG, PNG, EPS</div>
+                            <div class="tech-title" style="margin-bottom: 0.5rem; font-size: 1.2rem;">LOGOS</div>
+                            <div class="body-medium" style="font-size: 0.8rem; margin-bottom: 2rem;">SVG, PNG, EPS</div>
                             <button class="download-btn">Download</button>
                         </div>
                         <div class="download-card">
-                            <div class="tech-lead" style="margin-bottom: 0.5rem;">Color Swatches</div>
-                            <div class="body-medium" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem;">ASE, HEX Ref</div>
+                            <div class="tech-title" style="margin-bottom: 0.5rem; font-size: 1.2rem;">COLORS</div>
+                            <div class="body-medium" style="font-size: 0.8rem; margin-bottom: 2rem;">ASE, HEX Ref</div>
                             <button class="download-btn">Download</button>
                         </div>
                         <div class="download-card">
-                            <div class="tech-lead" style="margin-bottom: 0.5rem;">Typography</div>
-                            <div class="body-medium" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem;">Google Fonts Links</div>
+                            <div class="tech-title" style="margin-bottom: 0.5rem; font-size: 1.2rem;">FONTS</div>
+                            <div class="body-medium" style="font-size: 0.8rem; margin-bottom: 2rem;">Google Fonts Links</div>
                             <button class="download-btn">Download</button>
                         </div>
                         <div class="download-card">
-                            <div class="tech-lead" style="margin-bottom: 0.5rem;">Brand Guide</div>
-                            <div class="body-medium" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem;">Full PDF Document</div>
+                            <div class="tech-title" style="margin-bottom: 0.5rem; font-size: 1.2rem;">GUIDE</div>
+                            <div class="body-medium" style="font-size: 0.8rem; margin-bottom: 2rem;">Full PDF Document</div>
                             <button class="download-btn">Download</button>
                         </div>
                     </div>
@@ -910,35 +726,39 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // Intersection Observer for Section Fade-in & Scrollspy
+            // Bento Nav Logic
+            const navToggle = document.getElementById('navToggle');
+            const bentoNav = document.getElementById('bentoNav');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navToggle.addEventListener('click', () => {
+                navToggle.classList.toggle('is-active');
+                bentoNav.classList.toggle('is-open');
+                
+                // Toggle body scroll
+                if(bentoNav.classList.contains('is-open')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Close nav when clicking a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navToggle.classList.remove('is-active');
+                    bentoNav.classList.remove('is-open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Intersection Observer for Section Fade-in
             const sections = document.querySelectorAll("section");
-            const navLinks = document.querySelectorAll(".nav-menu a");
-
-            const observerOptions = {
-                root: null,
-                rootMargin: "-20% 0px -60% 0px",
-                threshold: 0
-            };
-
             const fadeObserverOptions = {
                 root: null,
                 rootMargin: "0px 0px -15% 0px",
                 threshold: 0.1
             };
-
-            const scrollSpyObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute("id");
-                        navLinks.forEach(link => {
-                            link.classList.remove("active");
-                            if (link.getAttribute("href") === `#${id}`) {
-                                link.classList.add("active");
-                            }
-                        });
-                    }
-                });
-            }, observerOptions);
 
             const fadeObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -950,7 +770,6 @@
             }, fadeObserverOptions);
 
             sections.forEach(sec => {
-                scrollSpyObserver.observe(sec);
                 fadeObserver.observe(sec);
             });
 
@@ -970,28 +789,6 @@
                     }
                 });
             });
-
-            // Mobile Menu Toggle
-            const toggleBtn = document.getElementById('menuToggle');
-            const sidebar = document.getElementById('sidebar');
-            
-            toggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('nav-open');
-                if(sidebar.classList.contains('nav-open')) {
-                    toggleBtn.innerText = 'CLOSE';
-                } else {
-                    toggleBtn.innerText = 'MENU';
-                }
-            });
-
-            // Close mobile menu on link click
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    sidebar.classList.remove('nav-open');
-                    toggleBtn.innerText = 'MENU';
-                });
-            });
-
         });
     </script>
 </body>
