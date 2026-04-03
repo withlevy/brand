@@ -16,7 +16,7 @@
             --ink: #0A0A0A;
             --ink-light: #5A5A5A;
             
-            /* Atmospheric Gradient (from brand assets) */
+            /* Atmospheric Gradient */
             --midnight: #0f0c29;
             --violet: #6441a5;
             --magenta: #8a2387;
@@ -33,11 +33,12 @@
             --weight-light: 300;
             --weight-medium: 500;
             
-            --sidebar-width: 300px;
+            --sidebar-width: 320px;
             --ma: 15vh; /* Ma: Intentional void */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--violet); color: var(--paper); }
         
         body {
             background-color: var(--paper);
@@ -59,19 +60,28 @@
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        /* TYPOGRAPHY: Fraunces Ink Bleed & Inter NASA Specs */
+        /* TYPOGRAPHY SYSTEM */
+        
+        /* 1. The Lead: Technical Swiss All-Caps */
+        .swiss-technical {
+            font-family: var(--font-swiss);
+            font-weight: var(--weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            line-height: 1.2;
+        }
+        
+        /* 2. The Accent: Mincho Fraunces Ink Bleed */
         .mincho { 
             font-family: var(--font-mincho); 
-            /* MAX SOFTNESS (100) for Ink Bleed effect */
             font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
             font-weight: 300;
         }
-        
-        .swiss-medium { font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; }
-        
-        .display-huge { font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; }
-        .display-md { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; }
-        .body-text { font-size: 1.15rem; line-height: 1.6; max-width: 60ch; color: var(--ink-light); }
+
+        .display-huge { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        .display-md { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+        .body-text { font-size: 1.15rem; line-height: 1.7; max-width: 60ch; color: var(--ink-light); }
+        .label-text { font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.6; }
 
         /* STRUCTURE: 12-Column Grid */
         .grid-12 {
@@ -81,7 +91,7 @@
             width: 100%;
         }
 
-        /* SIDEBAR: NASA-influenced utility nav */
+        /* SIDEBAR: Technical Dossier Navigation */
         aside {
             width: var(--sidebar-width);
             height: 100vh;
@@ -95,15 +105,12 @@
             z-index: 100;
         }
         
-        .nav-list { list-style: none; margin-top: 60px; }
-        .nav-list li { margin-bottom: 2rem; }
+        .nav-list { list-style: none; margin-top: 60px; border-top: 1px solid var(--hairline); padding-top: 2rem; }
+        .nav-list li { margin-bottom: 1.5rem; }
         .nav-list a {
             text-decoration: none;
             color: var(--ink-light);
             font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: var(--weight-medium);
             transition: color 0.3s;
         }
         .nav-list a:hover { color: var(--ink); }
@@ -127,12 +134,17 @@
         .atmospheric .hairline-divider { border-top-color: var(--hairline-light); }
 
         /* SPECIMEN BLOCKS */
-        .swatch {
-            height: 120px;
+        .swatch { height: 120px; border: 1px solid var(--hairline); margin-bottom: 10px; }
+        
+        /* CAPITAL SALON DOSSIER STYLE */
+        .dossier-block {
             border: 1px solid var(--hairline);
-            margin-bottom: 10px;
+            padding: 3rem;
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
-        .label-v { writing-mode: vertical-rl; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
 
         @media (max-width: 1024px) {
             body { flex-direction: column; }
@@ -147,16 +159,16 @@
 
     <aside>
         <div>
-            <div class="mincho" style="font-size: 2.2rem; font-weight: 400;">Levy.</div>
-            <ul class="nav-list">
-                <li><a href="#strategy">01 Strategy</a></li>
-                <li><a href="#identity">02 Identity</a></li>
-                <li><a href="#visuals">03 Visuals</a></li>
-                <li><a href="#standards">04 Standards</a></li>
+            <div class="swiss-technical" style="font-size: 1.5rem; letter-spacing: 0.25em;">LEVY //</div>
+            <ul class="nav-list swiss-technical">
+                <li><a href="#strategy">01 // STRATEGY</a></li>
+                <li><a href="#identity">02 // IDENTITY</a></li>
+                <li><a href="#visuals">03 // VISUALS</a></li>
+                <li><a href="#standards">04 // STANDARDS</a></li>
             </ul>
         </div>
-        <div class="swiss-medium" style="opacity: 0.5; font-size: 0.6rem;">
-            A Strategic Design Company<br>Folkmark © 2026
+        <div class="swiss-technical label-text">
+            A STRATEGIC DESIGN CO.<br>FOLKMARK © 2026
         </div>
     </aside>
 
@@ -164,8 +176,8 @@
         <section id="strategy" class="atmospheric" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 12;">
-                    <div class="swiss-medium">The One-Liner</div>
-                    <h1 class="mincho display-huge" style="margin: 2rem 0;">Stop Thinking<br><i>Small.</i></h1>
+                    <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6); margin-bottom: 1rem;">THE CORE THESIS</div>
+                    <h1 class="swiss-technical display-huge">STOP THINKING <br><span class="mincho" style="text-transform: none; letter-spacing: normal;">Small.</span></h1>
                 </div>
                 <div class="col hairline-divider" style="grid-column: 5 / 13;">
                     <p class="body-text" style="color: rgba(247, 247, 246, 0.8);">
@@ -178,23 +190,23 @@
         <section id="identity">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-medium">The Thesis</div>
+                    <div class="swiss-technical label-text">THE GAP</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
-                    <h2 class="mincho display-md">Institutions don't vote.<br>Humans do.</h2>
+                    <h2 class="swiss-technical display-md">INSTITUTIONS DON'T VOTE.<br><span class="mincho" style="text-transform: none; letter-spacing: normal; color: var(--ink-light);">Humans do.</span></h2>
                     <p class="body-text" style="margin-top: 2rem;">
                         Investing in the capacity of high-agency people to produce outcomes isn't separate from investing in democratic health. It is the investment. We build at the intersections of human, social, and political capital.
                     </p>
                 </div>
                 
-                <div class="col hairline-divider" style="grid-column: span 12; display: flex; gap: 4rem; margin-top: 8rem;">
+                <div class="col hairline-divider" style="grid-column: span 12; display: flex; gap: 6rem; margin-top: 8rem;">
                     <div>
-                        <div class="swiss-medium">Archetype</div>
-                        <div class="mincho" style="font-size: 1.5rem; margin-top: 1rem;">Magician-Sage</div>
+                        <div class="swiss-technical label-text">ARCHETYPE</div>
+                        <div class="swiss-technical" style="font-size: 1.25rem; margin-top: 1rem;">MAGICIAN-SAGE</div>
                     </div>
                     <div>
-                        <div class="swiss-medium">Mission</div>
-                        <div class="mincho" style="font-size: 1.5rem; margin-top: 1rem;">Strengthen the American Project</div>
+                        <div class="swiss-technical label-text">MISSION</div>
+                        <div class="swiss-technical" style="font-size: 1.25rem; margin-top: 1rem;">STRENGTHEN THE AMERICAN PROJECT</div>
                     </div>
                 </div>
             </div>
@@ -203,31 +215,31 @@
         <section id="visuals" class="atmospheric">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-medium">Visual Identity</div>
+                    <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.6);">VISUAL IDENTITY</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
-                    <h2 class="mincho display-md">Architecture of Influence.</h2>
+                    <h2 class="swiss-technical display-md">ARCHITECTURE OF<br><span class="mincho" style="text-transform: none; letter-spacing: normal;">Influence.</span></h2>
                     <p class="body-text" style="color: rgba(247, 247, 246, 0.8); margin-top: 2rem;">
-                        Our visual system mirrors our strategic approach: rigid structural discipline paired with atmospheric depth. We organize through the Swiss grid and breathe through Japanese Ma.
+                        Our visual system mirrors our strategic approach: rigid structural discipline paired with atmospheric depth. We lead with technical, blueprint-style typography and soften it with Japanese Ma and atmospheric gradients.
                     </p>
                 </div>
 
                 <div class="col hairline-divider" style="grid-column: span 12; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
                     <div>
                         <div class="swatch" style="background: #F7F7F6; border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-medium">Washi Paper</div>
+                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">WASHI PAPER</div>
                     </div>
                     <div>
                         <div class="swatch" style="background: #0A0A0A; border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-medium">Sumi Ink</div>
+                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">SUMI INK</div>
                     </div>
                     <div>
                         <div class="swatch" style="background: linear-gradient(135deg, #0f0c29, #6441a5, #8a2387); border-color: rgba(255,255,255,0.2);"></div>
-                        <div class="swiss-medium">Atmosphere</div>
+                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">ATMOSPHERE</div>
                     </div>
                     <div>
                         <div class="swatch" style="background: #6441a5; box-shadow: 0 0 30px rgba(138, 35, 135, 0.6); border: none;"></div>
-                        <div class="swiss-medium">Violet Glow</div>
+                        <div class="swiss-technical label-text" style="color: rgba(247, 247, 246, 0.8);">VIOLET GLOW</div>
                     </div>
                 </div>
             </div>
@@ -236,54 +248,47 @@
         <section id="standards">
             <div class="grid-12">
                 <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-medium">Typography Standards</div>
+                    <div class="swiss-technical label-text">TYPOGRAPHY HIERARCHY</div>
                 </div>
                 <div class="col" style="grid-column: span 8;">
+                    
                     <div class="hairline-divider" style="margin-top: 0;">
-                        <div class="swiss-medium">01. Fraunces (Mincho Emulation)</div>
-                        <div class="mincho" style="font-size: 4rem; margin-top: 1rem; color: var(--ink);">
-                            Ink Bleed <i>Outlier</i> Outcomes.
-                        </div>
-                        <p class="body-text" style="margin-top: 1.5rem;">
-                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for narrative gravity and philosophical anchors. The extreme softness emulates Sumi ink bleeding into paper fibers.
+                        <div class="swiss-technical label-text">01 // THE LEAD: INTER MEDIUM ALL-CAPS</div>
+                        <p class="body-text" style="margin-top: 1rem; margin-bottom: 2rem;">
+                            Following the formatting of event dossiers, all primary headlines, navigation, and structural markers must be set in Inter Medium, uppercase, with generous tracking.
                         </p>
+                        
+                        <div class="dossier-block">
+                            <div class="swiss-technical" style="font-size: 0.8rem; line-height: 2;">
+                                WASHINGTON<br>
+                                DISTRICT of COLUMBIA<br>
+                                DECEMBER 18th, 2025
+                            </div>
+                            <div class="swiss-technical" style="font-size: 2.5rem; letter-spacing: 0.1em; border-top: 1px solid var(--hairline); padding-top: 2rem;">
+                                CAPITAL SALON // 001
+                            </div>
+                            <div class="mincho" style="font-size: 1.25rem;">
+                                Artificial Intelligence<br>
+                                Workforce Strategy<br>
+                                Anchor Institutions
+                            </div>
+                        </div>
                     </div>
 
                     <div class="hairline-divider" style="margin-top: 4rem;">
-                        <div class="swiss-medium">02. Inter (NASA 1976 Spec)</div>
-                        <div style="margin-top: 1rem;">
-                            <div style="font-weight: 500; font-size: 2rem; text-transform: uppercase; letter-spacing: 0.1em;">Medium / For Emphasis</div>
-                            <div style="font-weight: 300; font-size: 2rem; margin-top: 1rem;">Light / For Informational Clarity</div>
+                        <div class="swiss-technical label-text">02 // THE ACCENT: FRAUNCES MINCHO</div>
+                        <div class="mincho" style="font-size: 3.5rem; margin-top: 1.5rem; color: var(--ink); line-height: 1;">
+                            Ink Bleed <i>Outlier</i> Outcomes.
                         </div>
                         <p class="body-text" style="margin-top: 1.5rem;">
-                            Following the 1976 NASA Graphics Standards, we use Inter Light (300) for body and Inter Medium (500) for labels. This ensures maximum legibility and objective authority.
+                            Variables: SOFT 100, WONK 1, OPSZ 144. Used for sub-topics, narrative gravity, and philosophical anchors. The extreme softness emulates Sumi ink bleeding into paper fibers, providing necessary warmth against the technical grid.
                         </p>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <section id="verbal">
-            <div class="grid-12">
-                <div class="col" style="grid-column: span 4;">
-                    <div class="swiss-medium">Verbal Guidelines</div>
-                </div>
-                <div class="col" style="grid-column: span 8; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-                    <div>
-                        <div class="swiss-medium" style="color: #2e7d32; border-bottom: 1px solid #2e7d32; padding-bottom: 0.5rem; margin-bottom: 1rem;">Always Use</div>
-                        <p class="body-text" style="font-size: 0.9rem;">
-                            Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.
-                        </p>
-                    </div>
-                    <div>
-                        <div class="swiss-medium" style="color: #d32f2f; border-bottom: 1px solid #d32f2f; padding-bottom: 0.5rem; margin-bottom: 1rem;">Never Use</div>
-                        <p class="body-text" style="font-size: 0.9rem; text-decoration: line-through; opacity: 0.5;">
-                            Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker. Serious. Ambitious.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
 </body>
