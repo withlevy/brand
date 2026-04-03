@@ -109,7 +109,7 @@
         .narrative { 
             font-family: var(--font-narrative); 
             font-weight: 200;
-            font-style: normal; /* Enforcing upright Roman */
+            font-style: normal; 
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             line-height: 1.1;
         }
@@ -118,14 +118,15 @@
         .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; text-wrap: balance; }
         .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; text-wrap: balance; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
-        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); max-width: 60ch; }
+        /* Max-widths removed to allow full 3-column span */
+        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
+        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
         blockquote {
             font-family: var(--font-narrative);
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             font-weight: 300;
-            font-style: normal; /* Enforcing upright Roman */
+            font-style: normal; 
             font-size: clamp(1.5rem, 4vw, 3rem);
             line-height: 1.15;
             color: var(--ink);
@@ -153,7 +154,8 @@
         .col-center > * { grid-column: 1 / -1; }
         .col-center > .indent-body { grid-column: 2 / 8; }
 
-        .flex-responsive { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; } 
+        /* Gap set to 2vw to mathematically align the two halves to the 12-column master grid */
+        .flex-responsive { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; } 
         
         section { padding: var(--ma) 0; display: flex; flex-direction: column; justify-content: center; }
 
@@ -250,7 +252,7 @@
         .constraint-list li { border-bottom: 1px solid var(--hairline-dark); padding: var(--space-md) 0; font-size: 1.15rem; font-weight: 300;}
         .dark-section .constraint-list li { border-bottom-color: var(--hairline-light); color: rgba(245,245,243,0.8); }
 
-        .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; margin-bottom: var(--space-xl); }
+        .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-bottom: var(--space-xl); }
         .rule-box { padding: var(--space-lg); border-top: 4px solid; background: rgba(0,0,0,0.02); flex: 1;}
         .rule-do { border-top-color: var(--violet); }
         .rule-dont { border-top-color: var(--ink-muted); opacity: 0.6; }
@@ -262,7 +264,7 @@
         .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; min-height: 44px; min-width: 44px; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
-        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; margin-top: var(--space-lg); }
+        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-top: var(--space-lg); }
         .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-xl); }
         .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
         .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; padding: 4rem; display: flex; align-items: center; text-align: left; }
@@ -443,8 +445,10 @@
                         </div>
                     </div>
 
-                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
-                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE CORE THESIS</span>
+                    <div class="reveal" style="margin-bottom: var(--space-xxl);">
+                        <div class="indent-body">
+                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE CORE THESIS</span>
+                        </div>
                         <h2 class="tech-title display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     </div>
 
@@ -494,7 +498,7 @@
                         <div style="flex: 1;">
                             <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">THE ARCHITECTURE OF AUTHORITY</span>
                             <p class="body-medium">
-                                The layout logic relies on strict, mathematically sound grids. We utilize flush-left, ragged-right typography and eradicate artificial embellishment. By removing borders, frills, and decorative artifacts, the grid becomes an unyielding framework for communication. The typographic scale is massive and heavy, contrasted immediately by microscopic, monospaced data clusters—treating public communication like an internal laboratory document.
+                                The layout logic relies on strict, mathematically sound grids[cite: 808]. We utilize flush-left, ragged-right typography and eradicate artificial embellishment[cite: 460, 987]. By removing borders, frills, and decorative artifacts, the grid becomes an unyielding framework for communication[cite: 987, 988]. The typographic scale is massive and heavy, contrasted immediately by microscopic, monospaced data clusters—treating public communication like an internal laboratory document.
                             </p>
                         </div>
                         <div style="flex: 1;">
@@ -508,10 +512,10 @@
                     <div class="reveal indent-body" style="border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md);">
                         <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-md);">STRICT TYPOGRAPHIC RULES</span>
                         <ul class="constraint-list" style="font-family: var(--font-tech);">
-                            <li>Maintain rigorous flush-left, ragged-right text alignment.</li>
+                            <li>Maintain rigorous flush-left, ragged-right text alignment[cite: 460].</li>
                             <li>Cluster micro-data tightly; use upper-case and wide tracking.</li>
                             <li>Never use italics. Treat all typography as an upright, absolute statement of fact.</li>
-                            <li>Eradicate borders and boxes; use only hairline rules for separation.</li>
+                            <li>Eradicate borders and boxes; use only hairline rules for separation[cite: 987].</li>
                         </ul>
                     </div>
 
@@ -628,7 +632,7 @@
                             <div class="indent-body">
                                 <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: var(--space-sm);">01 // THE ARCHITECTURE: HELVETICA NEUE (90%)</span>
                                 <p class="body-medium" style="margin-bottom: var(--space-lg);">
-                                    Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height. Body copy is Light. Structural labels use micro-tracking.
+                                    Helvetica Neue controls the layout. Primary headlines are set in Medium, uppercase, with a dense -2.5% letter spacing and tight 0.85 line height[cite: 458]. Body copy is Light[cite: 458]. Structural labels use micro-tracking.
                                 </p>
                             </div>
                             
