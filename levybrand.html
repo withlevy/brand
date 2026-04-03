@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levy | Brand Guidelines</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f4;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --accent-color: #000000;
+            --card-bg: #ffffff;
+            --border-color: #dddddd;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--card-bg);
+            height: 100vh;
+            position: fixed;
+            border-right: 1px solid var(--border-color);
+            padding: 40px 30px;
+            overflow-y: auto;
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 60px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .tagline {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Data Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Verbal Identity Table */
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .list-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .list-box.always {
+            border-top: 4px solid #28a745;
+        }
+
+        .list-box.never {
+            border-top: 4px solid #dc3545;
+        }
+
+        .list-box h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            list-style-position: inside;
+            color: var(--text-muted);
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="brand-logo">Levy</div>
+        <div class="brand-subtitle">Brand Guidelines</div>
+        <ul class="nav-links">
+            <li><a href="#overview">1. Overview & Mission</a></li>
+            <li><a href="#problem">2. The Problem & Audience</a></li>
+            <li><a href="#structure">3. Company Structure</a></li>
+            <li><a href="#identity">4. Verbal Identity</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        
+        <section id="overview">
+            <h1>A Strategic Design Company</h1>
+            <div class="tagline">"Stop Thinking Small." </div>
+            
+            <h2>The Mission</h2>
+            <p>To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization, but as a builder.</p>
+            
+            <h2>The Thesis</h2>
+            <p>Institutions don't vote. Humans do. Investing in the capacity of high-capacity individuals to produce outcomes is the investment in democratic health. Our framework relies on the community capitals framework—human, social, cultural, financial, built, and political. Levy builds at the intersections of those capitals.</p>
+        </section>
+
+        <section id="problem">
+            <h2>The Problem & The Audience</h2>
+            <p>The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one. The knowledge lives in silos, and networks don't cross sectors.</p>
+            
+            <h3>Who It's For</h3>
+            <p>The seriously ambitious. Not people performing ambition or founders LARPing as builders. Four kinds of people recognize Levy immediately:</p>
+            <div class="grid">
+                <div class="card">
+                    <h4>The Founder</h4>
+                    <p>Scaling a company who doesn't yet know that government contracts and public institutions are powerful, underused tools.</p>
+                </div>
+                <div class="card">
+                    <h4>The Public Servant</h4>
+                    <p>Knows what's possible but can't find private partners who understand how to work within government constraints.</p>
+                </div>
+                <div class="card">
+                    <h4>The Corporate Strategist</h4>
+                    <p>Has a significant idea but doesn't know how to use external partners and policy pressure to make the internal case undeniable.</p>
+                </div>
+                <div class="card">
+                    <h4>The Department Head</h4>
+                    <p>Inside an anchor institution who knows their organization could do something far more consequential with the right partners.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="structure">
+            <h2>What Levy Is</h2>
+            <p>To levy is to organize people and resources and direct them toward something that needs doing. Levy helps you do this through three integrated expressions:</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4>The Levy Network</h4>
+                    <p>The membership community. A tiered, in-person-anchored gathering built around monthly convenings and a structured digital layer.</p>
+                </div>
+                <div class="card">
+                    <h4>The Levy Studio</h4>
+                    <p>The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building produces.</p>
+                </div>
+                <div class="card">
+                    <h4>The Levy Institute</h4>
+                    <p>The research and knowledge arm. Developing frameworks and building the intellectual infrastructure to help members understand where leverage lives.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="identity">
+            <h2>Verbal Identity & Archetype</h2>
+            <p><strong>Brand Archetype: Magician-Sage.</strong> Levy doesn't oversell, take credit, or flatter. It shows up with the right knowledge, connects the right people, points at what's possible, and gets out of the way.</p>
+            <p><strong>Tone:</strong> Direct. Clear. Confident. Comfortable with the weight of what it's attempting. Earns its sentences.</p>
+
+            <div class="do-dont-grid">
+                <div class="list-box always">
+                    <h4>Always Use</h4>
+                    <ul>
+                        <li>Build </li>
+                        <li>Outcomes </li>
+                        <li>Understand </li>
+                        <li>Principles </li>
+                        <li>Incentives </li>
+                        <li>Actors </li>
+                        <li>Systems </li>
+                        <li>Scale / Results </li>
+                        <li>Practice / Compound </li>
+                        <li>Leverage / Capital </li>
+                        <li>Roots / Conditions </li>
+                        <li>Doers / Real </li>
+                    </ul>
+                </div>
+                <div class="list-box never">
+                    <h4>Never Use</h4>
+                    <ul>
+                        <li>Transform / Empower </li>
+                        <li>Ecosystem / Innovative </li>
+                        <li>Synergy / Inspire </li>
+                        <li>Unlock / Journey </li>
+                        <li>Playbook / Blueprint </li>
+                        <li>Citizens / Change </li>
+                        <li>Civic engagement </li>
+                        <li>Impact / Innovator </li>
+                        <li>Changemaker </li>
+                        <li>Serious / Ambitious </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 40px;">Naming Conventions</h3>
+            <p>Casual / owned channels: <strong>Levy</strong> <br>
+            LinkedIn / external channels: <strong>Levy Strategic Design</strong> <br>
+            Formal / institutional: <strong>Levy: A Strategic Design Company</strong> </p>
+        </section>
+
+    </main>
+
+</body>
+</html>
