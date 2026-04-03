@@ -3,299 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Brand Guidelines</title>
+    <title>Levy | Brand Standards & Strategy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- BRAND TOKENS & VARIABLES --- */
         :root {
-            --bg-color: #f4f4f4;
-            --text-main: #111111;
-            --text-muted: #555555;
-            --accent-color: #000000;
-            --card-bg: #ffffff;
-            --border-color: #dddddd;
-            --sidebar-width: 280px;
+            /* Colors */
+            --paper: #F7F7F6;       /* Washi paper off-white */
+            --ink: #0A0A0A;         /* Sumi ink black */
+            --ink-light: #5A5A5A;   /* Muted text */
+            
+            /* The Atmospheric Gradient Colors */
+            --midnight: #0f0c29;
+            --violet: #6441a5;
+            --magenta: #8a2387;
+            
+            /* Architecture */
+            --hairline: rgba(10, 10, 10, 0.12);
+            --hairline-light: rgba(247, 247, 246, 0.15);
+            
+            /* Typography */
+            --font-swiss: 'Inter', -apple-system, sans-serif;
+            --font-mincho: 'Fraunces', serif;
+            
+            /* Layout */
+            --sidebar-width: 320px;
+            --ma-space: 12vh; /* Intentional negative space */
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* --- GLOBAL RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--violet); color: var(--paper); }
+        
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-swiss);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             display: flex;
         }
 
-        /* Sidebar Navigation */
+        /* --- TEXTURE (FILM GRAIN) --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.06;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        /* --- TYPOGRAPHY UTILITIES --- */
+        /* The Mincho Hack: Max Softness, sharp optical size, slight wonk for ink-bleed tension */
+        .mincho { 
+            font-family: var(--font-mincho); 
+            font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+            font-weight: 300;
+        }
+        .swiss { font-family: var(--font-swiss); font-weight: 400; }
+        
+        .display-lg { font-size: clamp(3rem, 5vw, 5.5rem); line-height: 1; letter-spacing: -0.02em; }
+        .display-md { font-size: clamp(2rem, 3vw, 3rem); line-height: 1.1; letter-spacing: -0.01em; }
+        .body-lg { font-size: 1.25rem; line-height: 1.6; color: var(--ink-light); max-width: 65ch; }
+        .body-md { font-size: 1.05rem; line-height: 1.6; color: var(--ink-light); max-width: 65ch; }
+        
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* --- SIDEBAR NAVIGATION (Swiss Structure) --- */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--card-bg);
             height: 100vh;
             position: fixed;
-            border-right: 1px solid var(--border-color);
-            padding: 40px 30px;
-            overflow-y: auto;
+            border-right: 1px solid var(--hairline);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--paper);
+            z-index: 100;
         }
-
-        .brand-logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 5px;
+        .brand-mark {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.04em;
         }
-
-        .brand-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-links {
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-bottom: 15px;
-        }
-
+        .nav-links { list-style: none; margin-top: 40px; }
+        .nav-links li { margin-bottom: 1rem; border-top: 1px solid var(--hairline); padding-top: 1rem; }
         .nav-links a {
             text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: color 0.2s ease;
+            color: var(--ink-light);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
         }
+        .nav-links a:hover { color: var(--ink); }
 
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Main Content */
+        /* --- MAIN CONTENT & GRID --- */
         .main-content {
             margin-left: var(--sidebar-width);
-            padding: 60px;
-            max-width: 1000px;
-            width: 100%;
+            width: calc(100% - var(--sidebar-width));
         }
 
         section {
-            margin-bottom: 80px;
+            padding: var(--ma-space) 5vw;
+            border-bottom: 1px solid var(--hairline);
         }
 
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            line-height: 1.1;
+        .dark-section {
+            background: linear-gradient(135deg, var(--midnight) 0%, var(--violet) 50%, var(--magenta) 100%);
+            color: var(--paper);
+            border-bottom: none;
+            position: relative;
         }
+        .dark-section .label { color: rgba(247, 247, 246, 0.7); }
+        .dark-section .body-lg, .dark-section .body-md { color: rgba(247, 247, 246, 0.8); }
+        .dark-section .hairline-top { border-top-color: var(--hairline-light); }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-        }
-
-        .tagline {
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--accent-color);
-            margin-bottom: 40px;
-            font-style: italic;
-        }
-
-        /* Data Cards */
-        .grid {
+        /* 12-Column Architectural Grid */
+        .grid-12 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            align-items: start;
         }
+        .col-4 { grid-column: span 4; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+        .col-offset-4 { grid-column: 5 / 13; }
 
-        .card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-left: 4px solid var(--accent-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        .hairline-top { border-top: 1px solid var(--hairline); padding-top: 2rem; margin-top: 2rem; }
+
+        /* --- VISUAL IDENTITY COMPONENTS --- */
+        
+        /* Color Swatches */
+        .swatch-container { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .swatch {
+            width: 140px;
+            border: 1px solid var(--hairline);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
         }
-
-        .card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .swatch-color { height: 80px; width: 100%; border-radius: 2px; }
+        .swatch-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        /* Type Specimen */
+        .type-specimen {
+            border: 1px solid var(--hairline);
+            padding: 3rem;
+            margin-top: 2rem;
+            background: #fff;
         }
-
-        /* Verbal Identity Table */
-        .do-dont-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
+        
+        /* Do/Dont Verbal Lists */
+        .verbal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
+        .verbal-list { list-style: none; }
+        .verbal-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--hairline);
+            font-size: 0.9rem;
+            color: var(--ink-light);
         }
+        .verbal-list.dont li { text-decoration: line-through; opacity: 0.5; }
 
-        .list-box {
-            background: var(--card-bg);
-            padding: 30px;
-            border: 1px solid var(--border-color);
-        }
-
-        .list-box.always {
-            border-top: 4px solid #28a745;
-        }
-
-        .list-box.never {
-            border-top: 4px solid #dc3545;
-        }
-
-        .list-box h4 {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        ul {
-            list-style-position: inside;
-            color: var(--text-muted);
-        }
-
-        ul li {
-            margin-bottom: 8px;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--hairline); padding: 20px; }
+            .main-content { margin-left: 0; width: 100%; }
+            .grid-12 { display: flex; flex-direction: column; }
+            .col-offset-4 { grid-column: span 12; }
         }
     </style>
 </head>
 <body>
 
+    <div class="noise-overlay"></div>
+
     <nav class="sidebar">
-        <div class="brand-logo">Levy</div>
-        <div class="brand-subtitle">Brand Guidelines</div>
-        <ul class="nav-links">
-            <li><a href="#overview">1. Overview & Mission</a></li>
-            <li><a href="#problem">2. The Problem & Audience</a></li>
-            <li><a href="#structure">3. Company Structure</a></li>
-            <li><a href="#identity">4. Verbal Identity</a></li>
-        </ul>
+        <div>
+            <div class="brand-mark swiss">Levy.</div>
+            <ul class="nav-links">
+                <li><a href="#hero">01. Strategy</a></li>
+                <li><a href="#audience">02. The Audience</a></li>
+                <li><a href="#structure">03. Architecture</a></li>
+                <li><a href="#verbal">04. Verbal Identity</a></li>
+                <li><a href="#visual">05. Visual Standards</a></li>
+            </ul>
+        </div>
+        <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-light);">
+            Core Document v1.0<br>Prepared by Folkmark
+        </div>
     </nav>
 
     <main class="main-content">
         
-        <section id="overview">
-            <h1>A Strategic Design Company</h1>
-            <div class="tagline">"Stop Thinking Small." </div>
-            
-            <h2>The Mission</h2>
-            <p>To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization, but as a builder.</p>
-            
-            <h2>The Thesis</h2>
-            <p>Institutions don't vote. Humans do. Investing in the capacity of high-capacity individuals to produce outcomes is the investment in democratic health. Our framework relies on the community capitals framework—human, social, cultural, financial, built, and political. Levy builds at the intersections of those capitals.</p>
+        <section id="hero" class="dark-section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+            <div class="grid-12">
+                <div class="col-12" style="margin-bottom: 4rem;">
+                    <span class="label">The Tagline</span>
+                    <h1 class="mincho display-lg">Stop Thinking<br><i style="color: rgba(255,255,255,0.7);">Small.</i></h1>
+                </div>
+                
+                <div class="col-8 col-offset-4 hairline-top">
+                    <span class="label">The One-Liner</span>
+                    <p class="body-lg">
+                        Levy is where the seriously ambitious — the ones grinding behind closed doors, solving hard problems, building real results without waiting for applause — find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.
+                    </p>
+                </div>
+            </div>
         </section>
 
-        <section id="problem">
-            <h2>The Problem & The Audience</h2>
-            <p>The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one. The knowledge lives in silos, and networks don't cross sectors.</p>
-            
-            <h3>Who It's For</h3>
-            <p>The seriously ambitious. Not people performing ambition or founders LARPing as builders. Four kinds of people recognize Levy immediately:</p>
-            <div class="grid">
-                <div class="card">
-                    <h4>The Founder</h4>
-                    <p>Scaling a company who doesn't yet know that government contracts and public institutions are powerful, underused tools.</p>
+        <section id="mission">
+            <div class="grid-12">
+                <div class="col-4">
+                    <span class="label">The Mission & Thesis</span>
                 </div>
-                <div class="card">
-                    <h4>The Public Servant</h4>
-                    <p>Knows what's possible but can't find private partners who understand how to work within government constraints.</p>
+                <div class="col-8">
+                    <h2 class="mincho display-md" style="margin-bottom: 2rem;">Institutions don't vote.<br>Humans do.</h2>
+                    <p class="body-md" style="margin-bottom: 1.5rem;">
+                        To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
+                    </p>
+                    <p class="body-md">
+                        The people with the highest capacity to shape civic and economic outcomes are the people most likely to show up. Investing in their capacity to produce outcomes isn't separate from investing in democratic health. It <i>is</i> the investment. 
+                    </p>
                 </div>
-                <div class="card">
-                    <h4>The Corporate Strategist</h4>
-                    <p>Has a significant idea but doesn't know how to use external partners and policy pressure to make the internal case undeniable.</p>
+            </div>
+        </section>
+
+        <section id="audience">
+            <div class="grid-12">
+                <div class="col-4">
+                    <span class="label">The Gap</span>
                 </div>
-                <div class="card">
-                    <h4>The Department Head</h4>
-                    <p>Inside an anchor institution who knows their organization could do something far more consequential with the right partners.</p>
+                <div class="col-8">
+                    <p class="body-lg" style="margin-bottom: 4rem;">
+                        The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one. The knowledge lives in silos. The networks don't cross sectors.
+                    </p>
+                </div>
+
+                <div class="col-12 hairline-top">
+                    <span class="label" style="margin-bottom: 2rem;">Who It's For: The Seriously Ambitious</span>
+                    <div class="grid-12">
+                        <div class="col-6">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Founder</h3>
+                            <p class="body-md">Scaling a company who doesn't yet know that government contracts and public institutions are powerful, underused tools. She's hitting a ceiling that is about understanding the terrain.</p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Public Servant</h3>
+                            <p class="body-md">Knows what's possible but can't find private partners who understand how to work within government constraints. He's watched promising partnerships die in procurement.</p>
+                        </div>
+                        <div class="col-6 hairline-top">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Corporate Strategist</h3>
+                            <p class="body-md">Has a significant idea but doesn't know how to use external partners, civic infrastructure, and policy pressure to make the internal case undeniable.</p>
+                        </div>
+                        <div class="col-6 hairline-top">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The Department Head</h3>
+                            <p class="body-md">Inside an anchor institution who knows their organization could do something far more consequential if they could find the right partners and structure the effort.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="structure">
-            <h2>What Levy Is</h2>
-            <p>To levy is to organize people and resources and direct them toward something that needs doing. Levy helps you do this through three integrated expressions:</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <h4>The Levy Network</h4>
-                    <p>The membership community. A tiered, in-person-anchored gathering built around monthly convenings and a structured digital layer.</p>
+            <div class="grid-12">
+                <div class="col-4">
+                    <span class="label">What Levy Is</span>
                 </div>
-                <div class="card">
-                    <h4>The Levy Studio</h4>
-                    <p>The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building produces.</p>
+                <div class="col-8">
+                    <h2 class="mincho display-md" style="margin-bottom: 2rem;">To levy is to organize people and resources toward something that needs doing.</h2>
                 </div>
-                <div class="card">
-                    <h4>The Levy Institute</h4>
-                    <p>The research and knowledge arm. Developing frameworks and building the intellectual infrastructure to help members understand where leverage lives.</p>
+
+                <div class="col-12 hairline-top" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                    <div>
+                        <span class="label">01. The Network</span>
+                        <p class="body-md">The membership community. A tiered, in-person-anchored gathering of founders, public servants, and institutional strategists built to make members sharper and better connected.</p>
+                    </div>
+                    <div>
+                        <span class="label">02. The Studio</span>
+                        <p class="body-md">The portfolio and program-building arm. Designing, launching, and scaling the initiatives that demonstrate what cross-sector coalition building actually produces (e.g., The Upskilling Labs).</p>
+                    </div>
+                    <div>
+                        <span class="label">03. The Institute</span>
+                        <p class="body-md">The research and knowledge arm. Developing frameworks and building intellectual infrastructure to help members understand how systems work and where leverage lives.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="identity">
-            <h2>Verbal Identity & Archetype</h2>
-            <p><strong>Brand Archetype: Magician-Sage.</strong> Levy doesn't oversell, take credit, or flatter. It shows up with the right knowledge, connects the right people, points at what's possible, and gets out of the way.</p>
-            <p><strong>Tone:</strong> Direct. Clear. Confident. Comfortable with the weight of what it's attempting. Earns its sentences.</p>
-
-            <div class="do-dont-grid">
-                <div class="list-box always">
-                    <h4>Always Use</h4>
-                    <ul>
-                        <li>Build </li>
-                        <li>Outcomes </li>
-                        <li>Understand </li>
-                        <li>Principles </li>
-                        <li>Incentives </li>
-                        <li>Actors </li>
-                        <li>Systems </li>
-                        <li>Scale / Results </li>
-                        <li>Practice / Compound </li>
-                        <li>Leverage / Capital </li>
-                        <li>Roots / Conditions </li>
-                        <li>Doers / Real </li>
-                    </ul>
+        <section id="verbal">
+            <div class="grid-12">
+                <div class="col-4">
+                    <span class="label">Verbal Identity</span>
                 </div>
-                <div class="list-box never">
-                    <h4>Never Use</h4>
-                    <ul>
-                        <li>Transform / Empower </li>
-                        <li>Ecosystem / Innovative </li>
-                        <li>Synergy / Inspire </li>
-                        <li>Unlock / Journey </li>
-                        <li>Playbook / Blueprint </li>
-                        <li>Citizens / Change </li>
-                        <li>Civic engagement </li>
-                        <li>Impact / Innovator </li>
-                        <li>Changemaker </li>
-                        <li>Serious / Ambitious </li>
-                    </ul>
+                <div class="col-8">
+                    <h3 class="mincho" style="font-size: 2rem;">Archetype: Magician-Sage</h3>
+                    <p class="body-md" style="margin-top: 1rem;">
+                        Levy doesn't oversell. Doesn't take credit. Shows up with the right knowledge, connects the right people, points at what's possible, and gets out of the way. <strong>Tone:</strong> Direct, Clear, Confident. Earns its sentences.
+                    </p>
+
+                    <div class="verbal-grid">
+                        <div>
+                            <span class="label">Always Use (Structural & Real)</span>
+                            <ul class="verbal-list">
+                                <li>Build / Outcomes / Results</li>
+                                <li>Understand / Principles</li>
+                                <li>Incentives / Actors / Systems</li>
+                                <li>Scale / Practice / Compound</li>
+                                <li>Leverage / Capital / Roots</li>
+                                <li>Conditions / Doers / Real</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="label" style="color: #d32f2f;">Never Use (Cliché & Fluff)</span>
+                            <ul class="verbal-list dont">
+                                <li>Transform / Empower</li>
+                                <li>Ecosystem / Innovative</li>
+                                <li>Synergy / Inspire</li>
+                                <li>Unlock / Journey</li>
+                                <li>Playbook / Blueprint</li>
+                                <li>Changemaker / Impact</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <h3 style="margin-top: 40px;">Naming Conventions</h3>
-            <p>Casual / owned channels: <strong>Levy</strong> <br>
-            LinkedIn / external channels: <strong>Levy Strategic Design</strong> <br>
-            Formal / institutional: <strong>Levy: A Strategic Design Company</strong> </p>
+        </section>
+
+        <section id="visual" class="dark-section">
+            <div class="grid-12">
+                <div class="col-4">
+                    <span class="label">Visual Standards</span>
+                </div>
+                <div class="col-8">
+                    <h2 class="mincho display-md">Swiss Structure meets Japanese Ma.</h2>
+                    <p class="body-lg" style="margin-top: 1.5rem;">
+                        The visual identity reflects the "Magician-Sage" archetype. It uses rigid, objective architectural grids (Swiss) to organize information, paired with atmospheric, textured lighting and extreme negative space (Ma) to create gravity and focus.
+                    </p>
+                </div>
+
+                <div class="col-12 hairline-top">
+                    <span class="label">I. The Signature Palette</span>
+                    <p class="body-md">Avoid standard flat blacks and whites. Use stark, high-information "Washi Paper" for utility, contrasted with deep, luminous, textured gradients for moments of immersion and scale.</p>
+                    
+                    <div class="swatch-container">
+                        <div class="swatch" style="background: var(--paper); color: var(--ink);">
+                            <div class="swatch-color" style="background: #F7F7F6; border: 1px solid var(--hairline);"></div>
+                            <div class="swatch-label">Washi Paper<br>#F7F7F6</div>
+                        </div>
+                        <div class="swatch" style="background: var(--paper); color: var(--ink);">
+                            <div class="swatch-color" style="background: #0A0A0A;"></div>
+                            <div class="swatch-label">Sumi Ink<br>#0A0A0A</div>
+                        </div>
+                        <div class="swatch" style="border-color: rgba(255,255,255,0.2);">
+                            <div class="swatch-color" style="background: linear-gradient(135deg, #0f0c29, #6441a5, #8a2387);"></div>
+                            <div class="swatch-label">Atmosphere<br>Gradient</div>
+                        </div>
+                        <div class="swatch" style="border-color: rgba(255,255,255,0.2);">
+                            <div class="swatch-color" style="background: #6441a5; box-shadow: 0 0 20px #8a2387;"></div>
+                            <div class="swatch-label">Violet Glow<br>Accent / Shadow</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 hairline-top">
+                    <span class="label">II. Typography Interplay</span>
+                    <p class="body-md" style="margin-bottom: 2rem;">
+                        A strict dichotomy. Primary titles and UI elements use clean, geometric sans-serifs (Inter/Helvetica). Brand statements, italics, and subheads use Fraunces, specifically configured to emulate the "ink-bleed" tension of Japanese Mincho typefaces.
+                    </p>
+                    
+                    <div class="grid-12">
+                        <div class="col-6">
+                            <div class="type-specimen">
+                                <span class="label">Swiss Utility (Inter)</span>
+                                <div class="swiss" style="font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); line-height: 1.1;">
+                                    Capital Rework<br>Network & Studio
+                                </div>
+                                <p class="body-md" style="margin-top: 2rem;">Used for objective data, labels, grids, and primary structural headers. Never italicized.</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="type-specimen">
+                                <span class="label">Mincho Emulation (Fraunces)</span>
+                                <div class="mincho" style="font-size: 3rem; color: var(--ink); line-height: 1.1;">
+                                    Outlier <i>Outcomes</i><br>Strategic Design
+                                </div>
+                                <p class="body-md" style="margin-top: 2rem;">Requires variable settings: <code>"SOFT" 100, "WONK" 1, "opsz" 144</code>. Used for narrative gravity and philosophical statements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 hairline-top">
+                    <span class="label">III. Architecture & Materiality</span>
+                    <div class="grid-12">
+                        <div class="col-6">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">The CSS Grid & Hairlines</h3>
+                            <p class="body-md">
+                                Information must be strictly contained within a visible 12-column grid. Use 1px hairlines (`rgba(10,10,10,0.12)`) to separate concepts instead of drop shadows or colored cards. This creates a "blueprint" or "worksheet" feel.
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="mincho" style="font-size: 1.5rem; margin-bottom: 1rem;">Film Grain & Atmosphere</h3>
+                            <p class="body-md">
+                                The brand is not purely digital; it has physical weight. Dark sections and gradients must be overlaid with a CSS SVG noise filter (`opacity: 0.05-0.08`) to create a tactile, printed-paper texture.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
     </main>
