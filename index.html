@@ -18,8 +18,8 @@
             --midnight: #0f0c29;
             --violet: #6441a5;
             --magenta: #8a2387;
-            --paper: #F7F7F6; 
-            --ink: #0A0A0A;   
+            --paper: #F7F7F6;
+            --ink: #0A0A0A;
             --ink-light: #5A5A5A;
             --ink-muted: #888888;
             
@@ -72,7 +72,7 @@
         }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM (RUTHLESS DISCIPLINE)
+           3. TYPOGRAPHY SYSTEM
            ========================================================================== */
         
         /* Massive Axis-Aligned Headlines */
@@ -84,7 +84,7 @@
             line-height: 0.85;
         }
         
-        /* Structural Section Labels */
+        /* Structural Section Labels (Left Side) */
         .tech-subhead {
             font-family: var(--font-tech);
             font-weight: 300;
@@ -94,7 +94,7 @@
             font-size: 0.65rem;
         }
 
-        /* Asymmetric Micro-Metadata */
+        /* Asymmetric Micro-Metadata (Right Side Marginalia) */
         .micro-data {
             font-family: var(--font-tech);
             font-size: 0.5rem;
@@ -117,7 +117,7 @@
         .display-large { font-size: clamp(2rem, 5vw, 5rem); letter-spacing: -0.02em; }
         .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
+        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
         blockquote {
@@ -131,24 +131,22 @@
             border-left: 2px solid var(--violet);
             padding-left: var(--space-md);
             margin: var(--space-lg) 0;
+            max-width: 22ch;
         }
 
         /* ==========================================================================
-           4. LAYOUT & ARCHITECTURE
+           4. LAYOUT & ARCHITECTURE: THREE-ZONE GRID
            ========================================================================== */
         .container { width: 100%; max-width: 2400px; margin: 0 auto; padding: 0 5vw; }
         
-        /* Generic Grid */
         .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
         
-        /* Specialized Section Grid (Marginalia on Right) */
-        .section-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
+        /* The Three-Zone Editorial Grid */
+        .col-left { grid-column: 1 / 4; }    /* Cols 1, 2, 3: Critical Section Labels */
+        .col-center { grid-column: 4 / 10; } /* Cols 4, 5, 6, 7, 8, 9: Core Body Content */
+        .col-right { grid-column: 10 / 13; text-align: right; } /* Cols 10, 11, 12: Non-Critical Marginalia */
         
-        .col-main { grid-column: 4 / 10; grid-row: 1; }       /* Center 6 cols */
-        .col-main-wide { grid-column: 2 / 10; grid-row: 1; }  /* Center-Left 8 cols */
-        .col-margin { grid-column: 10 / 13; grid-row: 1; }    /* Far Right 3 cols */
-        
-        /* Legacy utilities for internal grids */
+        /* Internal standard columns for nested grids */
         .col-6 { grid-column: span 6; }
         .col-12 { grid-column: span 12; }
         
@@ -241,10 +239,12 @@
         .bento-item.wide { grid-column: span 2; }
 
         /* ==========================================================================
-           6. EDITORIAL POSTER LOCKUPS
+           6. EDITORIAL POSTER LOCKUPS & MARGINALIA
            ========================================================================== */
         
-        .poster-lockup { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; align-items: end; margin: var(--space-lg) 0; }
+        .poster-lockup {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; align-items: end; margin: var(--space-lg) 0;
+        }
         .poster-left { text-align: right; display: flex; flex-direction: column; gap: 0; }
         .poster-right { text-align: left; display: flex; flex-direction: column; gap: 0; }
         
@@ -295,10 +295,10 @@
            8. RESPONSIVE ARCHITECTURE
            ========================================================================== */
         @media (max-width: 1024px) {
-            .grid-12, .section-grid, .bento-grid { display: flex; flex-direction: column; }
-            /* Reset columns for mobile stacking */
-            .col-margin, .col-main, .col-main-wide { grid-column: span 12; grid-row: auto; }
-            .col-main, .col-main-wide { margin-top: 1rem; }
+            .grid-12, .bento-grid { display: flex; flex-direction: column; }
+            /* Reset the 3-zone grid to span full width on smaller screens */
+            .col-left, .col-center, .col-right { grid-column: span 12; text-align: left; }
+            .col-right { margin-top: 2rem; opacity: 0.8; }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
             .bento-grid { max-height: none; }
             .dl-grid { grid-template-columns: 1fr 1fr; }
@@ -372,16 +372,16 @@
             <div class="container">
                 
                 <div class="grid-12 reveal">
-                    <div style="grid-column: 10 / 13;">
+                    <div class="col-12" style="text-align: right;">
                         <div class="micro-data">LEVY : STRATEGIC DESIGN<br>STUDIO - RESEARCH - NETWORK</div>
                     </div>
                 </div>
 
                 <div class="grid-12 reveal delay-1" style="margin-top: 8vh;">
-                    <div style="grid-column: 4 / 7; text-align: center;">
+                    <div class="col-center col-4" style="text-align: center;">
                         <div class="narrative" style="font-size: 1.1rem; letter-spacing: 0.05em; color: var(--ink);">www.withlevy.com<br>Washington, DC<br>DC20002</div>
                     </div>
-                    <div style="grid-column: 7 / 10;">
+                    <div class="col-right col-4" style="text-align: right;">
                         <div class="micro-data" style="margin-bottom: 1.5rem;">METROPOLITAN<br>POLITICAL ECONOMY</div>
                         <div class="micro-data" style="margin-bottom: 1.5rem;">INTER STATE<br>COALITION BUILDING</div>
                         <div class="micro-data" style="margin-bottom: 1.5rem;">STRATEGIC & HUMAN CENTERED<br>DESIGN</div>
@@ -413,7 +413,8 @@
                 </div>
 
                 <div class="grid-12 reveal" style="margin-top: 8vh; margin-bottom: 5vh;">
-                    <div style="grid-column: 10 / 13;">
+                    <div class="col-8"></div>
+                    <div class="col-4" style="text-align: right;">
                         <div class="micro-data">LEARN MORE<br>ABOUT THE LEVY NETWORK</div>
                         <div class="qr-placeholder"></div>
                         <div class="micro-data">SCAN HERE<br>HTTPS://WITHLEVY.COM/BRAND</div>
@@ -424,11 +425,12 @@
         </section>
 
         <section id="insight">
-            <div class="container section-grid">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">02 // THE INSIGHT</span>
                 </div>
-                <div class="col-main reveal delay-1">
+                
+                <div class="col-center reveal delay-1">
                     <h2 class="tech-title display-large">SOMETHING HAS<br>GONE WRONG.</h2>
                     
                     <p class="body-large hairline-top">
@@ -445,16 +447,21 @@
                         "Those aren't two separate arguments. They're the same one."
                     </blockquote>
                 </div>
+
+                <div class="col-right reveal delay-2">
+                    <div class="micro-data">STRATEGIC CONTEXT</div>
+                    <div class="micro-data" style="margin-top: 0.5rem; color: var(--ink-muted);">THE STRUCTURAL GAP IN AMERICAN INNOVATION</div>
+                </div>
             </div>
         </section>
 
         <section id="positioning">
-            <div class="container section-grid">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">03 // POSITIONING</span>
                 </div>
-                <div class="col-main">
-                    
+                
+                <div class="col-center">
                     <div class="hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">
                         <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE NAME</span>
                         <p class="body-large">
@@ -491,17 +498,22 @@
                     <blockquote class="reveal">
                         "Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales."
                     </blockquote>
+                </div>
 
+                <div class="col-right reveal delay-2">
+                    <div class="micro-data">BRAND FOUNDATION</div>
+                    <div class="micro-data" style="margin-top: 0.5rem; color: var(--ink-muted);">EMOTIONAL & LOGICAL ANCHORS</div>
                 </div>
             </div>
         </section>
 
         <section id="world" class="dark-section">
-            <div class="container section-grid">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block;">04 // BRAND WORLD</span>
                 </div>
-                <div class="col-main">
+                
+                <div class="col-center">
                     <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em;">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
                     <div class="hairline-top reveal delay-2">
@@ -531,19 +543,22 @@
                             <li>Uses vague language about impact without specifying what changes, for whom, and toward what measurable end</li>
                         </ul>
                     </div>
+                </div>
 
+                <div class="col-right reveal delay-2">
+                    <div class="micro-data" style="color: rgba(255,255,255,0.5);">AESTHETIC TERRITORY</div>
                 </div>
             </div>
         </section>
 
         <section id="visuals">
-            
-            <div class="container section-grid" style="margin-bottom: var(--space-xl);">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">05 // VISUAL IDENTITY</span>
                 </div>
                 
-                <div class="col-main-wide">
+                <div class="col-center" style="grid-column: 4 / 11;">
+                    
                     <h2 class="tech-title display-medium hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">PRIMARY LOCKUP</h2>
                     <div class="grid-12 reveal delay-2">
                         <div class="col-6">
@@ -593,11 +608,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="container section-grid">
-                <div class="col-margin reveal"></div>
-                <div class="col-main">
+                <div class="col-right reveal delay-2" style="grid-column: 11 / 13;">
+                    <div class="micro-data">SYSTEM COMPONENTS</div>
+                    <div class="micro-data" style="margin-top: 0.5rem; color: var(--ink-muted);">LOGO & COLOR</div>
+                </div>
+
+                <div class="col-center" style="grid-column: 4 / 10;">
                     <h2 class="tech-title display-medium hairline-top hairline-bottom reveal">TYPOGRAPHY SYSTEM</h2>
                     
                     <div class="reveal" style="margin-bottom: 4rem;">
@@ -638,16 +655,22 @@
                     </div>
 
                 </div>
+
+                <div class="col-right reveal delay-2" style="grid-column: 10 / 13; margin-top: 10vh;">
+                    <div class="micro-data">TYPOGRAPHIC HIERARCHY</div>
+                    <div class="micro-data" style="margin-top: 0.5rem; color: var(--ink-muted);">90/10 RULE</div>
+                </div>
+
             </div>
         </section>
 
         <section id="voice">
-            <div class="container section-grid">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">06 // VOICE & TONE</span>
                 </div>
                 
-                <div class="col-main-wide">
+                <div class="col-center" style="grid-column: 4 / 11;">
                     <p class="body-large hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0; max-width: 60ch;">
                         Direct. Clear. Confident. Speaks to people who are already serious and already working. Never performs urgency. Never flatters. Never explains what the reader already knows. Comfortable with the weight of what it's attempting. Earns its sentences.
                     </p>
@@ -675,16 +698,20 @@
                     </div>
 
                 </div>
+
+                <div class="col-right reveal delay-2" style="grid-column: 11 / 13;">
+                    <div class="micro-data">DICTION & RHYTHM</div>
+                </div>
             </div>
         </section>
 
         <section id="in-use">
-            <div class="container section-grid" style="margin-bottom: var(--space-xl);">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">07 // BRAND IN USE</span>
                 </div>
                 
-                <div class="col-main">
+                <div class="col-center">
                     <div class="hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">
                         <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">NAMING CONVENTIONS</span>
                         <div class="grid-12" style="border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
@@ -701,11 +728,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="container section-grid">
-                <div class="col-margin reveal"></div>
-                <div class="col-main-wide">
+                <div class="col-right reveal delay-2">
+                    <div class="micro-data">EXECUTION & SCALE</div>
+                </div>
+
+                <div class="col-center" style="grid-column: 4 / 11;">
                     <span class="micro-data reveal" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">APPLICATIONS</span>
                     <div class="mockup-grid reveal">
                         
@@ -753,11 +781,12 @@
         </section>
 
         <section id="downloads" style="min-height: auto; padding-bottom: var(--space-xl);">
-            <div class="container section-grid">
-                <div class="col-margin reveal">
+            <div class="container grid-12">
+                <div class="col-left reveal">
                     <span class="micro-data" style="color: var(--violet); display: block;">08 // ASSETS</span>
                 </div>
-                <div class="col-main-wide">
+                
+                <div class="col-center" style="grid-column: 4 / 11;">
                     <div class="dl-grid reveal delay-1">
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">LOGOS</div>
@@ -780,6 +809,10 @@
                             <button class="dl-btn">Download Asset</button>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-right reveal delay-2" style="grid-column: 11 / 13;">
+                    <div class="micro-data">VERSION 1.0</div>
                 </div>
             </div>
         </section>
