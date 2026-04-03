@@ -120,6 +120,12 @@
         .txt-block { grid-column: 3 / 10; } 
         .txt-wide { grid-column: 3 / 12; }
         
+        /* NEW: Centered narrow column for punchy statements */
+        .txt-center-narrow { 
+            grid-column: 4 / 10; 
+            text-align: center; 
+        }
+        
         .split-2up { grid-column: 3 / 12; display: grid; grid-template-columns: subgrid; }
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
@@ -202,13 +208,14 @@
             .lbl { grid-column: 1 / -1; margin-bottom: -2vw;} 
             .hd-main { grid-column: 1 / -1; }
             .txt-block, .txt-wide { grid-column: 2 / 8; }
+            .txt-center-narrow { grid-column: 2 / 8; }
             .split-2up { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr 1fr; }
         }
         
         @media (max-width: 768px) {
             .layout-grid { grid-template-columns: repeat(4, 1fr); }
-            .txt-block, .txt-wide, .split-l, .split-r { grid-column: 1 / -1; }
+            .txt-block, .txt-wide, .txt-center-narrow, .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -240,10 +247,11 @@
 
     <main>
         <section id="cover" class="layout-grid" style="padding-top: calc(var(--space-xxl) * 1.5);">
-            <div class="lbl reveal"><span class="micro-data">BRAND STRATEGY</span><span class="micro-data">CORE DOCUMENT</span></div>
-            <h1 class="hd-main tech-title display-huge reveal">STOP THINKING SMALL.</h1>
-            <div class="txt-block reveal p-group">
-                <h2 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Levy is where the seriously ambitious find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.</h2>
+            <div class="lbl reveal"><span class="micro-data">LEVY STRATEGIC DESIGN</span><span class="micro-data">CORE DOCUMENT</span></div>
+            <h1 class="hd-main tech-title display-huge reveal">LEVY BRAND MANUAL.</h1>
+            <div class="txt-block reveal p-group" style="margin-top: var(--space-sm);">
+                <h2 class="tech-title" style="font-size: clamp(1rem, 1.5vw, 1.25rem); color: var(--violet);">STOP THINKING SMALL.</h2>
+                <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Levy is where the seriously ambitious find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.</h3>
             </div>
         </section>
 
@@ -260,8 +268,12 @@
 
         <section id="thesis" class="layout-grid">
             <div class="lbl reveal"><span class="micro-data accent">02 // THE THESIS</span></div>
-            <div class="txt-wide reveal"><h3 class="narrative display-medium">Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales.</h3></div>
+            
             <div class="full-bleed reveal" style="text-align: center;"><h2 class="tech-title display-massive">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2></div>
+            
+            <div class="txt-center-narrow reveal" style="margin-top: var(--space-md);">
+                <h3 class="narrative display-medium">Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales.</h3>
+            </div>
             
             <div class="split-2up reveal" style="margin-top: var(--space-xl);">
                 <div class="split-l p-group">
@@ -386,7 +398,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const navToggle = document.getElementById('navToggle');
             const bentoNav = document.getElementById('bentoNav');
-            const darkSection = document.getElementById('audience'); // Updated ID
+            const darkSection = document.getElementById('audience');
 
             const evaluateDarkOverlay = () => {
                 const darkTop = darkSection.offsetTop;
