@@ -18,8 +18,8 @@
             --midnight: #0f0c29;
             --violet: #6441a5;
             --magenta: #8a2387;
-            --paper: #F7F7F6; /* Primary Light Background */
-            --ink: #0A0A0A;   /* Primary Dark Text */
+            --paper: #F7F7F6;
+            --ink: #0A0A0A;
             --ink-light: #5A5A5A;
             --ink-muted: #888888;
             
@@ -64,7 +64,6 @@
 
         ::selection { background: var(--violet); color: var(--paper); }
 
-        /* Tactile Film Grain Overlay */
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9999; opacity: 0.05;
@@ -72,10 +71,9 @@
         }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM (RUTHLESS DISCIPLINE)
+           3. TYPOGRAPHY SYSTEM
            ========================================================================== */
         
-        /* Massive Axis-Aligned Headlines */
         .tech-title {
             font-family: var(--font-tech);
             font-weight: 500;
@@ -84,7 +82,6 @@
             line-height: 0.85;
         }
         
-        /* Structural Section Labels */
         .tech-subhead {
             font-family: var(--font-tech);
             font-weight: 300;
@@ -94,7 +91,6 @@
             font-size: 0.65rem;
         }
 
-        /* Asymmetric Micro-Metadata */
         .micro-data {
             font-family: var(--font-tech);
             font-size: 0.5rem;
@@ -104,7 +100,6 @@
             color: var(--ink-light);
         }
         
-        /* The Narrative Accent (Strictly 10% of UI) */
         .narrative { 
             font-family: var(--font-narrative); 
             font-weight: 200;
@@ -117,8 +112,9 @@
         .display-large { font-size: clamp(2rem, 5vw, 5rem); letter-spacing: -0.02em; }
         .display-medium { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; max-width: 55ch; }
-        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; max-width: 60ch; color: var(--ink-light); }
+        /* Removed max-width ch limits here, as the CSS Grid will naturally frame the line length */
+        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
+        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
         blockquote {
             font-family: var(--font-narrative);
@@ -131,7 +127,6 @@
             border-left: 2px solid var(--violet);
             padding-left: var(--space-md);
             margin: var(--space-lg) 0;
-            max-width: 22ch;
         }
 
         /* ==========================================================================
@@ -139,12 +134,15 @@
            ========================================================================== */
         .container { width: 100%; max-width: 2400px; margin: 0 auto; padding: 0 5vw; }
         
-        .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; }
-        .col-2 { grid-column: span 2; }
-        .col-3 { grid-column: span 3; }
-        .col-4 { grid-column: span 4; }
+        .grid-12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; width: 100%; align-items: start; }
+        
+        /* New Architectural Grid Classes */
+        .col-label { grid-column: 1 / 4; } /* Spans columns 1, 2, 3 (Left Marginalia) */
+        .col-center-6 { grid-column: 4 / 10; } /* Spans columns 4,5,6,7,8,9 (Perfect center 50%) */
+        .col-center-8 { grid-column: 3 / 11; } /* Spans columns 3 through 10 (Wider center for images/grids) */
+        
+        /* Legacy utilities for internal grids */
         .col-6 { grid-column: span 6; }
-        .col-8 { grid-column: span 8; }
         .col-12 { grid-column: span 12; }
         
         .hairline-top { border-top: 1px solid var(--hairline-dark); padding-top: var(--space-md); margin-top: var(--space-md); }
@@ -163,7 +161,7 @@
         .dark-section blockquote { color: var(--paper); border-left-color: var(--magenta); }
         .dark-section .hairline-top { border-top-color: var(--hairline-light); }
         .dark-section .hairline-bottom { border-bottom-color: var(--hairline-light); }
-        .dark-section .tech-subhead { color: rgba(247, 247, 246, 0.6); }
+        .dark-section .tech-subhead, .dark-section .micro-data { color: rgba(247, 247, 246, 0.6); }
         .dark-section .body-medium { color: rgba(247, 247, 246, 0.8); }
 
         /* ==========================================================================
@@ -240,48 +238,22 @@
            ========================================================================== */
         
         .poster-lockup {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2vw;
-            align-items: end;
-            margin: var(--space-lg) 0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; align-items: end; margin: var(--space-lg) 0;
         }
-        
-        .poster-left {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-        
-        .poster-right {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
+        .poster-left { text-align: right; display: flex; flex-direction: column; gap: 0; }
+        .poster-right { text-align: left; display: flex; flex-direction: column; gap: 0; }
         
         .logo-glow {
-            display: inline-block;
-            width: 0.8em;
-            height: 0.8em;
-            color: var(--ink);
-            filter: drop-shadow(0 0 25px rgba(100, 65, 165, 0.9)); /* High-intensity Violet Glow */
-            margin-left: 0.2em;
-            transform: translateY(0.1em);
+            display: inline-block; width: 0.8em; height: 0.8em; color: var(--ink);
+            filter: drop-shadow(0 0 25px rgba(100, 65, 165, 0.9)); margin-left: 0.2em; transform: translateY(0.1em);
         }
 
-        /* Fake QR Code using gradients for styling */
         .qr-placeholder {
             width: 40px; height: 40px;
             background: 
                 linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink)),
                 linear-gradient(-45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%, var(--ink));
-            background-size: 8px 8px;
-            border: 2px solid var(--ink);
-            padding: 2px;
-            display: inline-block;
-            margin: 0.5rem 0;
+            background-size: 8px 8px; border: 2px solid var(--ink); padding: 2px; display: inline-block; margin: 0.5rem 0;
         }
 
         /* ==========================================================================
@@ -291,22 +263,22 @@
         .constraint-list { list-style: none; }
         .constraint-list li { border-bottom: 1px solid var(--hairline-light); padding: 1.5rem 0; font-size: 1.15rem; color: rgba(247,247,246,0.8); font-weight: 300;}
         
-        .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .do-dont-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-bottom: 2rem; }
         .rule-box { padding: var(--space-md); border-top: 2px solid; background: rgba(0,0,0,0.02); }
         .rule-do { border-top-color: var(--violet); }
         .rule-dont { border-top-color: var(--hairline-dark); opacity: 0.5; }
 
-        .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 3/4; }
+        .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 4/3; }
         .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
         .color-details { padding: var(--space-sm); background: var(--paper); }
         .hex-tag { display: inline-block; cursor: pointer; font-family: monospace; padding: 0.2rem 0.4rem; background: rgba(0,0,0,0.05); transition: all 0.2s; font-size: 0.75rem;}
         .hex-tag:hover { background: var(--violet); color: var(--paper); }
 
-        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: var(--space-md); }
+        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; margin-top: var(--space-md); }
         .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: rgba(0,0,0,0.02); padding: var(--space-lg); }
-        .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; max-width: 400px; padding: 2rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
-        .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; max-width: 350px; padding: 3rem; display: flex; align-items: center; text-align: center; }
-        .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; max-width: 350px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
+        .artifact-card { background: var(--paper); box-shadow: 0 10px 30px rgba(0,0,0,0.05); aspect-ratio: 1.75/1; width: 100%; padding: 2rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--hairline-dark); }
+        .artifact-social { background: var(--violet); color: var(--paper); box-shadow: 0 15px 40px rgba(100,65,165,0.2); aspect-ratio: 1/1; width: 100%; padding: 3rem; display: flex; align-items: center; text-align: center; }
+        .artifact-report { background: var(--midnight); border: 1px solid var(--hairline-dark); color: var(--paper); box-shadow: 0 20px 50px rgba(0,0,0,0.15); aspect-ratio: 1/1.3; width: 100%; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
 
         .dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; }
         .dl-card { border: 1px solid var(--hairline-dark); padding: var(--space-md); display: flex; flex-direction: column; transition: border-color 0.3s; }
@@ -314,10 +286,14 @@
         .dl-btn { margin-top: var(--space-md); padding: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--hairline-dark); text-align: center; cursor: pointer; transition: all 0.3s; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-tech); font-weight: 500;}
         .dl-card:hover .dl-btn { background: var(--violet); color: var(--paper); border-color: var(--violet); }
 
-        /* Responsive Architecture */
+        /* ==========================================================================
+           8. RESPONSIVE ARCHITECTURE
+           ========================================================================== */
         @media (max-width: 1024px) {
             .grid-12, .bento-grid { display: flex; flex-direction: column; }
-            .col-offset-4 { margin-top: var(--space-md); }
+            /* Reset the centered columns to span full width on smaller screens */
+            .col-label, .col-center-6, .col-center-8 { grid-column: span 12; }
+            .col-center-6 { margin-top: 1rem; }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
             .bento-grid { max-height: none; }
             .dl-grid { grid-template-columns: 1fr 1fr; }
@@ -445,10 +421,10 @@
 
         <section id="insight">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">02 // THE INSIGHT</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">02 // THE INSIGHT</span>
                 </div>
-                <div class="col-8 reveal delay-1">
+                <div class="col-center-6 reveal delay-1">
                     <h2 class="tech-title display-large">SOMETHING HAS<br>GONE WRONG.</h2>
                     
                     <p class="body-large hairline-top">
@@ -470,12 +446,12 @@
 
         <section id="positioning">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">03 // POSITIONING</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">03 // POSITIONING</span>
                 </div>
-                <div class="col-8">
+                <div class="col-center-6">
                     
-                    <div class="hairline-bottom reveal delay-1">
+                    <div class="hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">
                         <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE NAME</span>
                         <p class="body-large">
                             To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point in a system. You get more out than you put in — not through luck, but through understanding how the system works. The name is the idea. The idea is the work.
@@ -494,19 +470,18 @@
                         <h2 class="tech-title display-huge">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                     </div>
 
-                    <div class="grid-12 reveal">
-                        <div class="col-6">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE MISSION</span>
-                            <p class="body-medium">
-                                To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">WHO IT'S FOR</span>
-                            <p class="body-medium">
-                                The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
-                            </p>
-                        </div>
+                    <div class="reveal hairline-bottom">
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">THE MISSION</span>
+                        <p class="body-medium">
+                            To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Not as a political organization. As a builder.
+                        </p>
+                    </div>
+                    
+                    <div class="reveal">
+                        <span class="micro-data" style="color: var(--ink-muted); margin-bottom: 1rem; display: block;">WHO IT'S FOR</span>
+                        <p class="body-medium">
+                            The seriously ambitious. Not people performing ambition — founders LARPing as builders or innovators cosplaying as changemakers. People already grinding to make a better world, solving hard problems, creating real results behind closed doors without applause and without waiting for any.
+                        </p>
                     </div>
 
                     <blockquote class="reveal">
@@ -519,23 +494,19 @@
 
         <section id="world" class="dark-section">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-md);">04 // BRAND WORLD</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block;">04 // BRAND WORLD</span>
                 </div>
-                <div class="col-8">
+                <div class="col-center-6">
                     <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em;">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
-                    <div class="grid-12 hairline-top reveal delay-2">
-                        <div class="col-6">
-                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
-                                It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <p class="body-medium" style="color: rgba(247,247,246,0.8);">
-                                The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
-                            </p>
-                        </div>
+                    <div class="hairline-top reveal delay-2">
+                        <p class="body-medium" style="margin-bottom: 1.5rem;">
+                            It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
+                        </p>
+                        <p class="body-medium">
+                            The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
+                        </p>
                     </div>
 
                     <div class="hairline-top reveal">
@@ -563,12 +534,12 @@
 
         <section id="visuals">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">05 // VISUAL IDENTITY</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">05 // VISUAL IDENTITY</span>
                 </div>
-                <div class="col-8">
-                    
-                    <h2 class="tech-title display-medium hairline-bottom reveal delay-1">PRIMARY LOCKUP</h2>
+                
+                <div class="col-center-8">
+                    <h2 class="tech-title display-medium hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">PRIMARY LOCKUP</h2>
                     <div class="grid-12 reveal delay-2">
                         <div class="col-6">
                             <div style="background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-lg); display: flex; justify-content: center;">
@@ -616,7 +587,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-center-6">
                     <h2 class="tech-title display-medium hairline-top hairline-bottom reveal">TYPOGRAPHY SYSTEM</h2>
                     
                     <div class="reveal" style="margin-bottom: 4rem;">
@@ -662,12 +635,12 @@
 
         <section id="voice">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">06 // VOICE & TONE</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">06 // VOICE & TONE</span>
                 </div>
-                <div class="col-8">
-                    
-                    <p class="body-large hairline-bottom reveal delay-1">
+                
+                <div class="col-center-8">
+                    <p class="body-large hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0; max-width: 60ch;">
                         Direct. Clear. Confident. Speaks to people who are already serious and already working. Never performs urgency. Never flatters. Never explains what the reader already knows. Comfortable with the weight of what it's attempting. Earns its sentences.
                     </p>
 
@@ -699,12 +672,12 @@
 
         <section id="in-use">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">07 // BRAND IN USE</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">07 // BRAND IN USE</span>
                 </div>
-                <div class="col-8">
-                    
-                    <div class="hairline-bottom reveal delay-1">
+                
+                <div class="col-center-6">
+                    <div class="hairline-bottom reveal delay-1" style="border-top: none; padding-top: 0; margin-top: 0;">
                         <span class="micro-data" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">NAMING CONVENTIONS</span>
                         <div class="grid-12" style="border-bottom: 1px solid var(--hairline-dark); padding-bottom: 1rem; margin-bottom: 1rem; align-items: center;">
                             <div class="col-6 body-medium">Casual / owned channels</div>
@@ -719,7 +692,9 @@
                             <div class="col-6 tech-title" style="font-size: 1.2rem;">LEVY: A STRATEGIC DESIGN COMPANY</div>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-center-8">
                     <span class="micro-data reveal" style="color: var(--ink-muted); display: block; margin-bottom: 1rem;">APPLICATIONS</span>
                     <div class="mockup-grid reveal">
                         
@@ -769,10 +744,10 @@
 
         <section id="downloads" style="min-height: auto; padding-bottom: var(--space-xl);">
             <div class="container grid-12">
-                <div class="col-4 reveal">
-                    <span class="micro-data" style="color: var(--violet); display: block; margin-bottom: var(--space-md);">08 // ASSETS</span>
+                <div class="col-label reveal">
+                    <span class="micro-data" style="color: var(--violet); display: block;">08 // ASSETS</span>
                 </div>
-                <div class="col-8">
+                <div class="col-center-8">
                     <div class="dl-grid reveal delay-1">
                         <div class="dl-card">
                             <div class="tech-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">LOGOS</div>
@@ -840,14 +815,12 @@
                 const darkTop = darkSection.offsetTop;
                 const darkBottom = darkTop + darkSection.offsetHeight;
                 
-                // If header is within the dark section bounds, invert it
                 if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
                     header.classList.add('on-dark');
                 } else {
                     header.classList.remove('on-dark');
                 }
             });
-            // Initial check
             if (window.scrollY > darkSection.offsetTop - 90 && window.scrollY < darkSection.offsetTop + darkSection.offsetHeight - 90) header.classList.add('on-dark');
 
             /* --- SCROLL REVEAL --- */
