@@ -42,6 +42,7 @@
             --space-xl: clamp(8rem, 15dvh, 15rem);
             --space-xxl: clamp(12rem, 25dvh, 25rem);
             
+            /* Clamped Aggressive Ma */
             --ma: clamp(120px, 20dvh, 250px); 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -117,7 +118,6 @@
         .display-large { font-size: clamp(1.8rem, 6vw, 5rem); letter-spacing: -0.02em; text-wrap: balance; }
         .display-medium { font-size: clamp(1.4rem, 4vw, 2.5rem); letter-spacing: -0.01em; text-wrap: balance; }
         
-        /* Removed max-width constraints so the CSS Grid dictates the text boundaries */
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
@@ -152,21 +152,44 @@
         
         .col-center > * { grid-column: 1 / -1; }
         
-        /* Single text column: Spans 4 Master Columns (Cols 2, 3, 4, 5 of the subgrid) */
+        /* Single text column: Constrained to 4 Master Columns */
         .col-center > .indent-body { grid-column: 2 / 6; }
 
-        /* Double text column: Spans 6 Master Columns (Cols 2, 3, 4, 5, 6, 7 of the subgrid) */
+        /* Double text column: Spans 7 Master Columns (3 cols + 1 gap + 3 cols) */
         .col-center > .indent-double { 
-            grid-column: 2 / 8; 
+            grid-column: 2 / 9; 
             display: grid;
-            grid-template-columns: subgrid; /* Cascades the master grid lines down again */
+            grid-template-columns: subgrid; 
         }
         
-        /* Each split perfectly spans 3 Master Columns */
-        .split-left { grid-column: 1 / 4; } 
-        .split-right { grid-column: 4 / 7; }
+        .split-left { grid-column: 1 / 4; } /* Spans exactly 3 columns */
+        .split-right { grid-column: 5 / 8; } /* Spans exactly 3 columns, forcing 1 column empty gap */
 
-        /* Do/Dont Rule Box math */
+        /* Specific Layout Override for Brand World Section */
+        .world-grid-override {
+            grid-column: 4 / 13;
+            display: grid;
+            grid-template-columns: subgrid;
+        }
+        .world-split {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: subgrid;
+        }
+        .world-split-left { grid-column: 1 / 5; } /* 4 cols wide */
+        .world-split-right { grid-column: 6 / 10; } /* 4 cols wide, 1 col gap */
+
+        /* Thesis Breakout Layout */
+        .thesis-breakout {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: var(--space-xxl);
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
         .do-dont-pair { 
             grid-column: 2 / 8;
             display: grid; 
@@ -300,6 +323,9 @@
             .col-center > .indent-body { margin-left: 5vw; margin-right: 5vw; } 
             .col-center > .indent-double { display: flex; flex-direction: column; gap: var(--space-md); margin-left: 5vw; margin-right: 5vw;}
             
+            .world-grid-override { display: flex; flex-direction: column; gap: var(--space-lg); padding: 0 5vw; }
+            .world-split { display: flex; flex-direction: column; gap: var(--space-md); }
+
             .bento-item { min-height: auto; padding: var(--space-md); }
             .bento-item.large, .bento-item.wide { grid-column: auto; grid-row: auto; }
             .bento-grid { max-height: none; grid-template-columns: 1fr 1fr; }
@@ -316,9 +342,12 @@
             .dl-grid { grid-template-columns: 1fr; }
             
             .col-center > .indent-body, .col-center > .indent-double { margin-left: 0; margin-right: 0; }
+            .world-grid-override { padding: 0; }
             
             .poster-lockup { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: var(--space-md); }
             .display-huge { font-size: 3.5rem; text-wrap: wrap; }
+            
+            .thesis-breakout h2 { font-size: 15vw !important; padding: 0 5vw; }
         }
     </style>
 </head>
@@ -461,9 +490,9 @@
                     </div>
                 </div>
                 
-                <div class="reveal" style="grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; margin-bottom: var(--space-xxl);">
-                    <span class="micro-data" style="grid-column: 3 / 11; color: var(--ink-muted); margin-bottom: var(--space-sm); display: block;">THE CORE THESIS</span>
-                    <h2 class="tech-title" style="grid-column: 1 / -1; font-size: 11.5vw; line-height: 0.85; letter-spacing: -0.04em;">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
+                <div class="reveal thesis-breakout">
+                    <span class="micro-data" style="color: var(--ink-muted); margin-bottom: var(--space-md); display: block;">THE CORE THESIS</span>
+                    <h2 class="tech-title" style="font-size: 11.5vw; font-weight: 700; line-height: 0.85; letter-spacing: -0.04em; margin: 0;">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2>
                 </div>
 
                 <div class="col-center">
@@ -544,29 +573,29 @@
                     <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block;">04 // BRAND WORLD</span>
                 </div>
                 
-                <div class="col-center">
-                    <h2 class="tech-title display-large reveal delay-1" style="text-transform: none; letter-spacing: -0.01em; margin-bottom: var(--space-xl);">The brand lives at the intersection of civic conviction and strategic precision.</h2>
+                <div class="world-grid-override">
+                    <h2 class="tech-title display-large reveal delay-1" style="grid-column: 1 / -1; text-transform: none; letter-spacing: -0.01em; margin-bottom: var(--space-xl);">The brand lives at the intersection of civic conviction and strategic precision.</h2>
                     
-                    <div class="reveal indent-double" style="margin-bottom: var(--space-xxl);">
-                        <div class="split-left">
+                    <div class="world-split reveal" style="margin-bottom: var(--space-xxl);">
+                        <div class="world-split-left">
                             <p class="body-medium">
                                 It is not warm in the way that nonprofits are warm. It is not cold in the way that consultancies are cold. It is confident in the way that people who have done hard things are confident — without performance, without apology.
                             </p>
                         </div>
-                        <div class="split-right">
+                        <div class="world-split-right">
                             <p class="body-medium">
                                 The visual language references: Swiss-grid precision. NASA-era systems thinking. The authority of a well-set page of text. The specificity of a well-made instrument.
                             </p>
                         </div>
                     </div>
 
-                    <div class="reveal indent-body" style="margin-bottom: var(--space-xxl);">
+                    <div class="reveal" style="grid-column: 1 / -1; margin-bottom: var(--space-xxl);">
                         <span class="micro-data" style="color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-sm);">BRAND ARCHETYPE</span>
                         <h3 class="tech-title display-medium">MAGICIAN-SAGE</h3>
                         <p class="body-large" style="margin-top: var(--space-md); color: rgba(245,245,243,0.8);">Shows up with the right knowledge at the right moment. Connects the right people. Points at what's possible and explains why. Then gets out of the way.</p>
                     </div>
 
-                    <div class="reveal indent-body">
+                    <div class="reveal" style="grid-column: 1 / -1;">
                         <span class="micro-data" style="color: var(--paper); display: block; margin-bottom: var(--space-md);">WHAT LEVY NEVER DOES</span>
                         <ul class="constraint-list" style="font-family: var(--font-tech);">
                             <li>Operates as a political organization or takes partisan positions</li>
