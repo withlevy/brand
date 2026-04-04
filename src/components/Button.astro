@@ -1,0 +1,30 @@
+---
+interface Props {
+    variant?: 'solid' | 'ghost';
+    href?: string;
+    label: string;
+}
+
+const { variant = 'ghost', href, label } = Astro.props;
+const classes = ['btn', variant === 'solid' ? 'btn-solid' : ''].filter(Boolean).join(' ');
+---
+
+{href ? (
+    <a href={href} class={classes}>{label}</a>
+) : (
+    <button class={classes}>{label}</button>
+)}
+
+<style>
+    .btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        height: var(--space-6); padding: 0 var(--space-4);
+        border: var(--stroke-weight) solid var(--ink); background: transparent; color: var(--ink);
+        cursor: pointer; text-decoration: none; transition: background 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
+        font-family: var(--font-tech); text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.1em; font-weight: 500;
+    }
+    .btn:hover { background: var(--ink); color: var(--paper); }
+
+    .btn-solid { background: var(--ink); color: var(--paper); }
+    .btn-solid:hover { background: transparent; color: var(--ink); }
+</style>

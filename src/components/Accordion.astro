@@ -1,0 +1,45 @@
+---
+interface Props {
+    title: string;
+    open?: boolean;
+}
+
+const { title, open = false } = Astro.props;
+---
+
+<div class:list={["accordion", { "is-open": open }]}>
+    <button class="accordion-trigger">
+        <span class="tech-title">{title}</span>
+    </button>
+    <div class="accordion-content-grid">
+        <div class="accordion-inner">
+            <slot />
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const triggers = document.querySelectorAll('.accordion-trigger');
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                this.parentElement!.classList.toggle('is-open');
+            });
+        });
+    });
+</script>
+
+<style>
+    .accordion { border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+    .accordion-trigger {
+        width: 100%; padding: var(--space-3) 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        background: none; border: none; color: var(--ink); text-align: left;
+    }
+    .accordion-trigger::after { content: '+'; font-family: var(--font-tech); font-size: var(--step-3); font-weight: 300; line-height: 1; transition: transform 0.4s var(--ease-out-expo); }
+    .accordion.is-open .accordion-trigger::after { transform: rotate(45deg); }
+
+    .accordion-content-grid { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out-expo); }
+    .accordion.is-open .accordion-content-grid { grid-template-rows: 1fr; }
+    .accordion-inner { overflow: hidden; }
+    .accordion-inner :global(p) { padding-bottom: var(--space-4); padding-right: 10%; }
+</style>

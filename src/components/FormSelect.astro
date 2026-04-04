@@ -1,0 +1,55 @@
+---
+interface Props {
+    label: string;
+    options: string[];
+}
+
+const { label, options } = Astro.props;
+---
+
+<div class="form-row">
+    <label class="form-label">{label}</label>
+    <div class="select-wrapper">
+        <select class="form-select">
+            {options.map((option) => (
+                <option>{option}</option>
+            ))}
+        </select>
+        <div class="select-arrow">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor">
+                <path d="M1 4L6 9L11 4" stroke-width="1"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-row { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
+    .form-label { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
+
+    .select-wrapper { position: relative; width: 100%; height: var(--space-6); }
+
+    .form-select {
+        appearance: none; width: 100%; height: 100%;
+        padding: 0 var(--space-6) 0 var(--space-3);
+        background: transparent; border: var(--stroke-weight) solid var(--stroke-color);
+        color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300;
+        cursor: pointer; transition: border-color 0.3s var(--ease-out-expo);
+    }
+
+    .form-select:focus { outline: none; border-color: var(--ink); }
+    .form-select:hover { border-color: var(--ink); }
+
+    .select-arrow {
+        position: absolute; top: 0; right: 0;
+        width: var(--space-6); height: 100%;
+        border-left: var(--stroke-weight) solid var(--stroke-color);
+        display: flex; align-items: center; justify-content: center;
+        pointer-events: none;
+        color: var(--ink); transition: border-color 0.3s var(--ease-out-expo);
+    }
+
+    .form-select:hover + .select-arrow,
+    .form-select:focus + .select-arrow { border-left-color: var(--ink); }
+    .select-arrow svg { width: 12px; height: 12px; }
+</style>
