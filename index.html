@@ -41,7 +41,7 @@
             --space-sm: clamp(1rem, 2vw, 1.5rem);
             --space-md: clamp(1.5rem, 3vw, 3rem);
             --space-lg: clamp(3rem, 5vw, 5rem);
-            --space-xl: clamp(5rem, 10vw, 10rem); /* Increased for highly obvious breathing room */
+            --space-xl: clamp(5rem, 10vw, 10rem); 
             --space-xxl: clamp(8rem, 14vw, 14rem);
             
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -120,8 +120,6 @@
         /* ==========================================================================
            4. PROPORTIONAL GRID ARCHITECTURE
            ========================================================================== */
-        
-        /* Bulletproof separation: Section handles padding, inner div handles grid */
         section { 
             padding: var(--space-xl) 5vw; 
             width: 100%;
@@ -158,13 +156,11 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* Solid Midnight Architecture */
         .dark-section { 
             background: var(--midnight); 
             color: var(--paper); 
         }
         
-        /* Gritty Textures & Auras */
         .gritty-filter {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0.4;
@@ -207,7 +203,6 @@
 
         .hamburger { background: none; border: none; cursor: pointer; width: 44px; height: 44px; position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
         .hamburger-box { width: 32px; height: 18px; position: relative; }
-        /* Unified Stroke on hamburger */
         .hamburger span { display: block; position: absolute; height: var(--stroke-weight); width: 100%; background: var(--ink); transition: transform 0.4s var(--ease-out-expo); transform-origin: center; }
         .hamburger span:nth-child(1) { top: 0; }
         .hamburger span:nth-child(2) { top: 8px; }
@@ -233,12 +228,13 @@
             text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
             min-height: 180px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
         }
+        .bento-item.wide { grid-column: span 2; }
         .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
         .bento-item:hover { border-color: var(--paper); }
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
         
         /* ==========================================================================
-           6. COMPONENTS (Unified Strokes)
+           6. COMPONENTS (Unified Strokes & Typography Spec)
            ========================================================================== */
         
         .artifact-card { 
@@ -247,12 +243,20 @@
             display: flex; flex-direction: column; 
         }
         
-        /* Do/Dont wrapped into uniform bordered boxes instead of top-heavy lines */
         .do-dont-wrapper { 
             background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;
             border: var(--stroke-weight) solid var(--stroke-color);
         }
         .do-dont-wrapper.dont { opacity: 0.6; }
+
+        /* Typography Specification Rows */
+        .type-row { 
+            grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; 
+            padding: var(--space-lg) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end; 
+        }
+        .type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
+        .type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: 0.5rem; }
+        .type-specimen { grid-column: 4 / 13; overflow: hidden; }
 
         /* ==========================================================================
            7. RESPONSIVE CHOREOGRAPHY
@@ -265,12 +269,15 @@
             blockquote { width: 100%; grid-column: 1 / -1; font-size: 1.5rem; }
             .split-2up { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr 1fr; }
+            .type-label { grid-column: 1 / -1; margin-bottom: var(--space-md); }
+            .type-specimen { grid-column: 1 / -1; }
         }
         
         @media (max-width: 768px) {
             .layout-grid { grid-template-columns: repeat(4, 1fr); }
             .txt-block, .txt-wide, .txt-center-narrow, .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
+            .bento-item.wide { grid-column: span 1; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -300,6 +307,7 @@
                 <a href="#expressions" class="bento-item nav-link"><span class="tech-subhead">04 // SYSTEMS</span><h3 class="tech-title display-medium">EXPRESSIONS</h3></a>
                 <a href="#archetype" class="bento-item nav-link"><span class="tech-subhead">05 // IDENTITY</span><h3 class="tech-title display-medium">BRAND ARCHETYPE</h3></a>
                 <a href="#verbal" class="bento-item nav-link"><span class="tech-subhead">06 // DICTION</span><h3 class="tech-title display-medium">VERBAL<br>IDENTITY</h3></a>
+                <a href="#typography" class="bento-item wide nav-link"><span class="tech-subhead">07 // TYPOGRAPHY</span><h3 class="tech-title display-medium">ARCHITECTURAL<br>SCALE</h3></a>
             </div>
         </div>
     </nav>
@@ -464,9 +472,101 @@
                             <p class="body-medium"><strong>Governance:</strong> Never operates as a political organization. Never flatters. Never offers motivation without substance or uses vague language about impact.</p>
                         </div>
                     </div>
-                    <div style="margin-top: var(--space-xl); text-align: right;">
-                        <span class="micro-data">PREPARED BY FOLKMARK FOR LEVY, 2026</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="typography">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">07 // TYPOGRAPHY</span></div>
+                <h2 class="hd-main tech-title display-large reveal">ARCHITECTURAL<br>SCALE</h2>
+
+                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
+                    
+                    <div class="type-row">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.DISPLAY-MASSIVE</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                        </div>
+                        <div class="type-specimen">
+                            <div class="display-massive tech-title">LEVY</div>
+                        </div>
                     </div>
+
+                    <div class="type-row">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.DISPLAY-HUGE</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                        </div>
+                        <div class="type-specimen">
+                            <div class="display-huge tech-title">SYSTEMS</div>
+                        </div>
+                    </div>
+
+                    <div class="type-row">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.DISPLAY-LARGE</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                        </div>
+                        <div class="type-specimen">
+                            <div class="display-large tech-title">ARCHITECTURE</div>
+                        </div>
+                    </div>
+
+                    <div class="type-row">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.DISPLAY-MEDIUM</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                        </div>
+                        <div class="type-specimen">
+                            <div class="display-medium tech-title">THE AMERICAN PROJECT</div>
+                        </div>
+                    </div>
+
+                    <div class="type-row" style="align-items: center;">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.NARRATIVE</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Fraunces / Soft 50 / Wonk 0</span>
+                        </div>
+                        <div class="type-specimen">
+                            <div class="narrative" style="font-size: clamp(2rem, 3vw, 2.5rem);">Actualization. Not the surprise of exceeding what you thought was possible.</div>
+                        </div>
+                    </div>
+
+                    <div class="type-row" style="align-items: start;">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.BODY-LARGE</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light / 300</span>
+                        </div>
+                        <div class="type-specimen">
+                            <p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
+                        </div>
+                    </div>
+
+                    <div class="type-row" style="align-items: start;">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.BODY-MEDIUM</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light / 300</span>
+                        </div>
+                        <div class="type-specimen">
+                            <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                        </div>
+                    </div>
+
+                    <div class="type-row" style="align-items: center;">
+                        <div class="type-label">
+                            <span class="micro-data lbl-lead">.MICRO-DATA</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tracked</span>
+                        </div>
+                        <div class="type-specimen">
+                            <span class="micro-data">07 // TYPOGRAPHY SYSTEM SPECIFICATION</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="full-bleed reveal" style="margin-top: var(--space-xl); text-align: right;">
+                    <span class="micro-data">PREPARED BY FOLKMARK FOR LEVY, 2026</span>
                 </div>
             </div>
         </section>
