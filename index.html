@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Design System & Component Library</title>
+    <title>Levy | Comprehensive Component Library</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,32 +11,28 @@
     
     <style>
         /* ==========================================================================
-           1. BRAND TOKENS & ARCHITECTURAL VARIABLES (Global Styles for Astro)
+           1. BRAND TOKENS & ARCHITECTURAL VARIABLES
            ========================================================================== */
         :root {
-            /* The Void & Paper */
             --midnight: #0f0c29;
             --paper: #F5F5F3; 
             
-            /* The Data Cloud Motif */
             --cloud-dream: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.4) 55%, rgba(138, 35, 135, 0.6) 100%);
             
-            /* Diction & Structure mapping */
             --ink: var(--midnight);
             --ink-light: rgba(15, 12, 41, 0.8);
             --ink-muted: rgba(15, 12, 41, 0.6); 
             
-            /* Unified Stroke Architecture */
             --stroke-weight: 1px;
             --stroke-color: rgba(15, 12, 41, 0.25);
-            --stroke-light: rgba(245, 245, 243, 0.15); /* For dark mode boxes */
+            --stroke-heavy: rgba(15, 12, 41, 1);
+            --stroke-light: rgba(245, 245, 243, 0.15); 
             
             --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
             --font-narrative: 'Fraunces', serif;
             
             --header-height: 90px;
             
-            /* The Spacing Scale */
             --space-xs: clamp(0.5rem, 1vw, 1rem);
             --space-sm: clamp(1rem, 2vw, 1.5rem);
             --space-md: clamp(1.5rem, 3vw, 3rem);
@@ -50,7 +46,7 @@
         /* ==========================================================================
            2. BASE & TEXTURE
            ========================================================================== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
         html { scroll-behavior: smooth; background-color: var(--paper); }
         
         body {
@@ -70,7 +66,7 @@
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        :focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
+        :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
         /* ==========================================================================
            3. TYPOGRAPHY SYSTEM
@@ -87,12 +83,19 @@
         
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
+        .body-small { font-size: 0.85rem; line-height: 1.5; color: var(--ink-muted); }
+
+        /* Inline Text Styles */
+        strong { font-weight: 500; color: var(--ink); }
+        em { font-style: italic; }
+        .text-link { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s; font-weight: 500;}
+        .text-link:hover { color: var(--ink-muted); }
 
         /* ==========================================================================
            4. PROPORTIONAL GRID ARCHITECTURE
            ========================================================================== */
-        section { padding: var(--space-xl) 5vw; width: 100%; position: relative; }
-        section:last-of-type { padding-bottom: var(--space-xxl); }
+        section { padding: var(--space-xl) 5vw; width: 100%; position: relative; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+        section:last-of-type { padding-bottom: var(--space-xxl); border-bottom: none; }
         
         .layout-grid { 
             display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 2vw; row-gap: var(--space-xl); 
@@ -105,25 +108,24 @@
         .txt-wide { grid-column: 3 / 12; }
         .txt-center-narrow { grid-column: 4 / 10; text-align: center; }
         
-        .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; }
+        .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-xl) 2vw;}
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
         
         .full-bleed { grid-column: 1 / -1; }
         .p-group { display: flex; flex-direction: column; gap: var(--space-md); }
 
+        .divider { width: 100%; height: var(--stroke-weight); background: var(--stroke-color); margin: var(--space-lg) 0; border: none; }
+
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* Dark Mode & Textures */
+        /* Dark Mode */
         .dark-section { background: var(--midnight); color: var(--paper); }
         .dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
         .dark-section .micro-data.lbl-lead { color: var(--paper); }
-
-        .gritty-filter {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: color-burn; 
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
-        }
+        .dark-section .divider { background: var(--stroke-light); }
+        .dark-section .text-link { color: var(--paper); }
 
         /* ==========================================================================
            5. HEADER & BENTO NAVIGATION
@@ -132,9 +134,10 @@
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             background: rgba(245, 245, 243, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; z-index: 2000; transition: background 0.4s ease;
+            border-bottom: var(--stroke-weight) solid transparent;
         }
         
-        header.on-dark { background: rgba(15, 12, 41, 0.9); } 
+        header.on-dark { background: rgba(15, 12, 41, 0.9); border-bottom-color: var(--stroke-light);} 
         header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
 
         .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; font-size: 1.5rem; }
@@ -162,47 +165,98 @@
         .bento-item {
             background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-md);
             text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
-            min-height: 180px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
+            min-height: 160px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
         }
-        .bento-item.wide { grid-column: span 2; }
         .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
         .bento-item:hover { border-color: var(--paper); }
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
-        
+
         /* ==========================================================================
-           6. COMPONENTS (Prepared for Astro Components)
+           6. COMPONENTS (The Atomic Library)
            ========================================================================== */
         
-        /* Color Specs */
-        .color-spec { display: flex; flex-direction: column; border: var(--stroke-weight) solid var(--stroke-color); aspect-ratio: 1/1; }
-        .color-spec .color-fill { flex-grow: 1; border-bottom: var(--stroke-weight) solid var(--stroke-color); position: relative;}
-        .color-spec .color-meta { padding: var(--space-md); display: flex; justify-content: space-between; align-items: flex-end; background: var(--paper); }
-        
-        /* Artifact Cards */
-        .artifact-card { 
-            background: var(--paper); width: 100%; padding: var(--space-lg); 
-            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; 
-        }
-
-        /* Buttons */
+        /* 6.1 Buttons & Badges */
+        .btn-group { display: flex; gap: var(--space-md); flex-wrap: wrap; }
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2rem;
+            display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem;
             border: var(--stroke-weight) solid var(--ink); background: transparent; color: var(--ink);
             cursor: pointer; text-decoration: none; transition: background 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo);
             font-family: var(--font-tech); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 500;
         }
         .btn:hover { background: var(--ink); color: var(--paper); }
-        .dark-section .btn { border-color: var(--paper); color: var(--paper); }
-        .dark-section .btn:hover { background: var(--paper); color: var(--ink); }
         
-        /* Do/Dont Boxes */
-        .do-dont-wrapper { 
-            background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;
-            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; gap: var(--space-md);
-        }
-        .do-dont-wrapper.dont { opacity: 0.5; }
+        .btn-solid { background: var(--ink); color: var(--paper); }
+        .btn-solid:hover { background: transparent; color: var(--ink); }
 
-        /* Blockquotes */
+        .badge {
+            display: inline-flex; padding: 0.3rem 0.6rem; border: var(--stroke-weight) solid var(--stroke-color);
+            background: rgba(15, 12, 41, 0.03); font-family: var(--font-tech); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* 6.2 Forms & Inputs */
+        .form-row { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: var(--space-md); width: 100%; }
+        .form-label { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink); }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%; padding: 1rem; background: transparent; border: var(--stroke-weight) solid var(--stroke-color);
+            color: var(--ink); font-family: var(--font-tech); font-size: 1rem; font-weight: 300; transition: border-color 0.3s;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--ink); }
+        .form-input::placeholder, .form-textarea::placeholder { color: var(--ink-muted); opacity: 0.5; }
+        .form-textarea { resize: vertical; min-height: 120px; }
+        
+        .form-select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="%230f0c29" stroke-width="1"/></svg>'); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+
+        /* Custom Checkbox/Radio */
+        .control-group { display: flex; gap: var(--space-md); }
+        .control-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-family: var(--font-tech); font-size: 0.9rem; }
+        .control-label input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+        .control-box { height: 20px; width: 20px; background: transparent; border: var(--stroke-weight) solid var(--stroke-color); display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s;}
+        .control-label input:checked ~ .control-box { background: var(--ink); border-color: var(--ink); }
+        .control-box::after { content: ""; display: none; width: 8px; height: 8px; background: var(--paper); }
+        .control-label input:checked ~ .control-box::after { display: block; }
+
+        /* 6.3 Media & Placeholders */
+        .media-placeholder {
+            width: 100%; background: rgba(15, 12, 41, 0.02); border: var(--stroke-weight) solid var(--stroke-color);
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+            /* Architectural crosshatch pattern */
+            background-image: repeating-linear-gradient(45deg, var(--stroke-color) 0, var(--stroke-color) 1px, transparent 1px, transparent 12px);
+        }
+        .media-placeholder::after {
+            content: 'MEDIA CONTAINER'; position: absolute; background: var(--paper); padding: 0.5rem 1rem;
+            border: var(--stroke-weight) solid var(--stroke-color); font-family: var(--font-tech); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .ratio-16-9 { aspect-ratio: 16 / 9; }
+        .ratio-4-3 { aspect-ratio: 4 / 3; }
+        .ratio-1-1 { aspect-ratio: 1 / 1; }
+        
+        .caption { font-family: var(--font-tech); font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.75rem; display: block;}
+
+        /* 6.4 Accordions / Toggles */
+        .accordion { border-top: var(--stroke-weight) solid var(--stroke-color); border-bottom: var(--stroke-weight) solid var(--stroke-color); margin-bottom: calc(var(--stroke-weight) * -1); }
+        .accordion summary { 
+            padding: var(--space-md) 0; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+        }
+        .accordion summary::-webkit-details-marker { display: none; }
+        .accordion summary::after { content: '+'; font-family: var(--font-tech); font-size: 1.5rem; font-weight: 300; transition: transform 0.3s; }
+        .accordion[open] summary::after { transform: rotate(45deg); }
+        .accordion-content { padding-bottom: var(--space-md); padding-right: 10%; }
+
+        /* 6.5 Tables */
+        .table-wrapper { width: 100%; overflow-x: auto; }
+        .system-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .system-table th, .system-table td { padding: var(--space-md); border: var(--stroke-weight) solid var(--stroke-color); }
+        .system-table th { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-muted); font-weight: normal;}
+        .system-table td { font-family: var(--font-tech); font-size: 0.95rem; font-weight: 300; }
+
+        /* 6.6 Lists */
+        .system-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
+        .system-list li { position: relative; padding-left: 1.5rem; font-family: var(--font-tech); font-size: 0.95rem; font-weight: 300; line-height: 1.5;}
+        .system-list.ul-bullets li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 4px; height: 4px; background: var(--ink); }
+        .system-list.ul-dashes li::before { content: '—'; position: absolute; left: 0; top: 0; color: var(--ink); }
+
+        /* 6.7 Structural Blockquotes */
         blockquote {
             font-family: var(--font-narrative); font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             font-weight: 300; font-size: clamp(1.75rem, 4vw, 3.5rem); line-height: 1.05; color: var(--ink);
@@ -213,40 +267,32 @@
             background: var(--cloud-dream); filter: blur(40px); opacity: 0.1; z-index: -1;
         }
 
-        /* Typography Specs */
-        .type-row { 
-            grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; 
-            padding: var(--space-lg) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end; 
+        /* 6.8 Artifact Cards */
+        .artifact-card { 
+            background: var(--paper); width: 100%; padding: var(--space-lg); 
+            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; 
         }
-        .type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
-        .type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: 0.5rem; }
-        .type-specimen { grid-column: 4 / 13; overflow: hidden; }
-
-        /* Grid Visualization Helpers */
-        .grid-visualizer { grid-column: span 1; background: rgba(15, 12, 41, 0.05); border: var(--stroke-weight) dashed var(--stroke-color); height: 60px; display: flex; align-items: center; justify-content: center; }
+        .do-dont-wrapper { 
+            background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;
+            border: var(--stroke-weight) solid var(--stroke-color);
+        }
+        .do-dont-wrapper.dont { opacity: 0.5; }
 
         /* ==========================================================================
            7. RESPONSIVE CHOREOGRAPHY
            ========================================================================= */
         @media (max-width: 1024px) {
             .layout-grid { grid-template-columns: repeat(8, 1fr); }
-            .lbl { grid-column: 1 / -1; margin-bottom: -2vw;} 
-            .hd-main { grid-column: 1 / -1; }
-            .txt-block, .txt-wide, .txt-center-narrow { grid-column: 1 / -1; }
+            .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
             blockquote { width: 100%; grid-column: 1 / -1; font-size: 1.5rem; }
-            .split-2up { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr 1fr; }
-            .type-label { grid-column: 1 / -1; margin-bottom: var(--space-md); }
-            .type-specimen { grid-column: 1 / -1; }
-            .grid-visualizer:nth-child(n+9) { display: none; } /* Hide extra cols on tablet */
         }
         
         @media (max-width: 768px) {
             .layout-grid { grid-template-columns: repeat(4, 1fr); }
-            .txt-block, .txt-wide, .txt-center-narrow, .split-l, .split-r { grid-column: 1 / -1; }
+            .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
             .bento-item.wide { grid-column: span 1; }
-            .grid-visualizer:nth-child(n+5) { display: none; } /* Hide extra cols on mobile */
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -270,11 +316,13 @@
     <nav class="bento-nav" id="bentoNav">
         <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
             <div class="bento-grid">
-                <a href="#colors" class="bento-item nav-link"><span class="tech-subhead">01 // FOUNDATION</span><h3 class="tech-title display-medium">PALETTE</h3></a>
-                <a href="#typography" class="bento-item wide nav-link"><span class="tech-subhead">02 // TYPOGRAPHY</span><h3 class="tech-title display-medium">ARCHITECTURAL SCALE</h3></a>
-                <a href="#grid" class="bento-item nav-link"><span class="tech-subhead">03 // STRUCTURE</span><h3 class="tech-title display-medium">GRID LOGIC</h3></a>
-                <a href="#components" class="bento-item wide nav-link"><span class="tech-subhead">04 // ARTIFACTS</span><h3 class="tech-title display-medium">COMPONENTS</h3></a>
-                <a href="#interactive" class="bento-item nav-link"><span class="tech-subhead">05 // ACTION</span><h3 class="tech-title display-medium">INTERACTIVE</h3></a>
+                <a href="#typography" class="bento-item"><span class="tech-subhead">01 // STYLE</span><h3 class="tech-title display-medium">TYPOGRAPHY</h3></a>
+                <a href="#buttons" class="bento-item"><span class="tech-subhead">02 // INTERACTION</span><h3 class="tech-title display-medium">BUTTONS & LINKS</h3></a>
+                <a href="#forms" class="bento-item wide"><span class="tech-subhead">03 // INPUT</span><h3 class="tech-title display-medium">FORM CONTROLS</h3></a>
+                <a href="#media" class="bento-item wide"><span class="tech-subhead">04 // IMAGERY</span><h3 class="tech-title display-medium">MEDIA & RATIOS</h3></a>
+                <a href="#accordions" class="bento-item"><span class="tech-subhead">05 // TOGGLES</span><h3 class="tech-title display-medium">ACCORDIONS</h3></a>
+                <a href="#data" class="bento-item"><span class="tech-subhead">06 // STRUCTURE</span><h3 class="tech-title display-medium">TABLES & LISTS</h3></a>
+                <a href="#artifacts" class="bento-item wide"><span class="tech-subhead">07 // CONTAINERS</span><h3 class="tech-title display-medium">SYSTEM ARTIFACTS</h3></a>
             </div>
         </div>
     </nav>
@@ -282,190 +330,256 @@
     <main>
         <section id="cover" style="padding-top: calc(var(--space-xxl) * 1.5);">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">SYSTEM LIBRARY</span><span class="micro-data">ASTRO READY</span></div>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">COMPREHENSIVE LIBRARY</span><span class="micro-data">ASTRO READY</span></div>
                 <h1 class="hd-main tech-title display-huge reveal">DESIGN SYSTEM</h1>
                 <div class="txt-block reveal p-group" style="margin-top: var(--space-sm);">
-                    <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">The architectural blueprint, component library, and structural logic for Levy. Built for translation into isolated Astro components.</h3>
-                </div>
-            </div>
-        </section>
-
-        <section id="colors">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">01 // FOUNDATION</span></div>
-                <h2 class="hd-main tech-title display-large reveal">COLOR LOGIC</h2>
-                
-                <div class="txt-block reveal p-group">
-                    <p class="body-large">Midnight is the hard architecture. Paper is the void. The Data Cloud is the human momentum happening inside the rigid bureaucratic structure.</p>
-                </div>
-
-                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
-                    <div class="color-spec" style="grid-column: span 4;">
-                        <div class="color-fill" style="background-color: var(--midnight);"></div>
-                        <div class="color-meta">
-                            <div class="tech-title">MIDNIGHT</div>
-                            <span class="micro-data" style="margin: 0;">#0F0C29</span>
-                        </div>
-                    </div>
-                    <div class="color-spec" style="grid-column: span 4;">
-                        <div class="color-fill" style="background-color: var(--paper);"></div>
-                        <div class="color-meta">
-                            <div class="tech-title">PAPER</div>
-                            <span class="micro-data" style="margin: 0;">#F5F5F3</span>
-                        </div>
-                    </div>
-                    <div class="color-spec" style="grid-column: span 4;">
-                        <div class="color-fill" style="background: var(--cloud-dream);"></div>
-                        <div class="color-meta">
-                            <div class="tech-title">DATA CLOUD</div>
-                            <span class="micro-data" style="margin: 0;">GRADIENT</span>
-                        </div>
-                    </div>
+                    <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">The atomic components and architectural blueprint for Levy. Built for translation into isolated, modular Astro components.</h3>
                 </div>
             </div>
         </section>
 
         <section id="typography">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // TYPOGRAPHY</span></div>
-                <h2 class="hd-main tech-title display-large reveal">ARCHITECTURAL<br>SCALE</h2>
-
-                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
-                    <div class="type-row">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.DISPLAY-MASSIVE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Bold</span>
-                        </div>
-                        <div class="type-specimen"><div class="display-massive tech-title">LEVY</div></div>
-                    </div>
-
-                    <div class="type-row">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.DISPLAY-HUGE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Bold</span>
-                        </div>
-                        <div class="type-specimen"><div class="display-huge tech-title">SYSTEMS</div></div>
-                    </div>
-
-                    <div class="type-row" style="align-items: center;">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.NARRATIVE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Fraunces / Soft 50</span>
-                        </div>
-                        <div class="type-specimen"><div class="narrative" style="font-size: clamp(2rem, 3vw, 2.5rem);">Actualization. Not the surprise of exceeding what you thought was possible.</div></div>
-                    </div>
-
-                    <div class="type-row" style="align-items: start;">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.BODY-LARGE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light</span>
-                        </div>
-                        <div class="type-specimen"><p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="grid" class="dark-section">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">03 // STRUCTURE</span></div>
-                <h2 class="hd-main tech-title display-large reveal">THE 12-COLUMN<br>GRID LOGIC</h2>
-
-                <div class="txt-block reveal p-group" style="margin-bottom: var(--space-lg);">
-                    <p class="body-large" style="color: rgba(245,245,243,0.8);">The layout logic relies on strict, mathematically sound grids. Content spans utilize CSS subgrid to maintain alignment across nested components.</p>
-                </div>
-
-                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-bottom: var(--space-xl);">
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">1</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">2</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">3</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">4</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">5</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">6</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">7</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">8</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">9</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">10</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">11</span></div>
-                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">12</span></div>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">01 // TYPOGRAPHY</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-large">ARCHITECTURAL SCALE</h2>
+                    <hr class="divider">
                 </div>
 
                 <div class="split-2up reveal">
                     <div class="split-l p-group">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">.SPLIT-L (SPAN 5)</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside a `.split-2up` container (which spans columns 3 to 13), the left content block spans 5 columns.</p>
+                        <span class="micro-data lbl-lead">HEADING SCALE</span>
+                        <div class="display-massive tech-title" style="margin-bottom: var(--space-md);">MASSIVE</div>
+                        <div class="display-huge tech-title" style="margin-bottom: var(--space-md);">HUGE</div>
+                        <div class="display-large tech-title" style="margin-bottom: var(--space-md);">LARGE</div>
+                        <div class="display-medium tech-title">MEDIUM</div>
                     </div>
+                    
                     <div class="split-r p-group">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">.SPLIT-R (SPAN 5)</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">The right content block also spans 5 columns, creating a perfectly balanced 2-up layout that stacks gracefully on mobile.</p>
+                        <span class="micro-data lbl-lead">READING & INLINE</span>
+                        <div class="narrative" style="margin-bottom: var(--space-md); font-size: 2rem;">Narrative display font for insight blocks.</div>
+                        <p class="body-large" style="margin-bottom: var(--space-md);"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
+                        <p class="body-medium" style="margin-bottom: var(--space-md);"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a> for cross-referencing.</p>
+                        <p class="body-small"><strong>Body Small:</strong> Used for captions, disclaimers, and metadata.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="components">
+        <section id="buttons">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // ARTIFACTS</span></div>
-                <h2 class="hd-main tech-title display-large reveal">COMPONENTS</h2>
-
-                <div class="full-bleed reveal" style="margin-top: var(--space-md); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
-                    <span class="micro-data lbl-lead">COMPONENT: BLOCKQUOTE</span>
-                    <blockquote>"Those aren't two separate arguments. They're the same one."</blockquote>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // INTERACTION</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">BUTTONS & BADGES</h2>
+                    <hr class="divider">
                 </div>
 
-                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-xl); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
-                    <span class="micro-data lbl-lead full-bleed">COMPONENT: ARTIFACT CARDS (.artifact-card)</span>
-                    <div class="artifact-card" style="grid-column: span 6;">
-                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY NETWORK</div>
-                        <p class="body-medium">The membership community — a tiered, in-person-anchored gathering of founders, public servants, and institutional strategists.</p>
+                <div class="split-2up reveal">
+                    <div class="split-l p-group" style="align-items: flex-start;">
+                        <span class="micro-data lbl-lead">PRIMARY ACTIONS</span>
+                        <div class="btn-group">
+                            <button class="btn btn-solid">Solid Button</button>
+                            <button class="btn">Ghost Button</button>
+                        </div>
                     </div>
-                    <div class="artifact-card" style="grid-column: span 6; background: var(--midnight); color: var(--paper);">
-                        <div class="tech-title" style="margin-bottom: var(--space-md);">DARK VARIANT</div>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Artifact cards can be inverted for contrast or when placed inside a dark section.</p>
+                    <div class="split-r p-group" style="align-items: flex-start;">
+                        <span class="micro-data lbl-lead">SYSTEM BADGES</span>
+                        <div class="btn-group">
+                            <span class="badge">Active</span>
+                            <span class="badge">In Progress</span>
+                            <span class="badge" style="opacity: 0.5;">Archived</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="split-2up reveal" style="margin-top: var(--space-xl); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
-                    <span class="micro-data lbl-lead full-bleed">COMPONENT: RULE CARDS (.do-dont-wrapper)</span>
+        <section id="forms">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">03 // INPUT</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">FORM CONTROLS</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="split-2up reveal">
                     <div class="split-l">
-                        <div class="do-dont-wrapper">
-                            <span class="micro-data lbl-lead">ALWAYS USE</span>
-                            <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results.</p>
+                        <div class="form-row">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" placeholder="e.g. Jane Doe">
+                        </div>
+                        <div class="form-row">
+                            <label class="form-label">Institution Type</label>
+                            <select class="form-select">
+                                <option>Select an option...</option>
+                                <option>Federal Government</option>
+                                <option>Private Sector</option>
+                                <option>Non-Profit</option>
+                            </select>
+                        </div>
+                        <div class="form-row" style="margin-top: var(--space-sm);">
+                            <span class="form-label" style="margin-bottom: 0.5rem; display: block;">Interests</span>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    <input type="checkbox" checked>
+                                    <div class="control-box"></div> Levy Network
+                                </label>
+                                <label class="control-label">
+                                    <input type="checkbox">
+                                    <div class="control-box"></div> Levy Studio
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="split-r">
-                        <div class="do-dont-wrapper dont">
-                            <span class="micro-data lbl-lead">NEVER USE</span>
-                            <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Playbook.</p>
+                        <div class="form-row">
+                            <label class="form-label">Project Description</label>
+                            <textarea class="form-textarea" placeholder="Describe the structural gap..."></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="interactive">
+        <section id="media">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">05 // ACTION</span></div>
-                <h2 class="hd-main tech-title display-large reveal">INTERACTIVE</h2>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // IMAGERY</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">MEDIA RATIOS</h2>
+                    <hr class="divider">
+                </div>
 
-                <div class="split-2up reveal" style="margin-top: var(--space-md);">
-                    <div class="split-l p-group" style="align-items: flex-start;">
-                        <span class="micro-data lbl-lead">PRIMARY BUTTON</span>
-                        <p class="body-medium" style="margin-bottom: var(--space-md);">A strict, architectural action button. Transparent with a 1px solid border, reverting to solid fill on hover.</p>
-                        <a href="#" class="btn">Download Assets</a>
+                <div class="txt-wide reveal" style="margin-bottom: var(--space-md);">
+                    <div class="media-placeholder ratio-16-9"></div>
+                    <span class="caption">Widescreen Format (16:9) - Used for primary hero elements and video.</span>
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <div class="media-placeholder ratio-4-3"></div>
+                        <span class="caption">Standard Format (4:3) - Used for editorial content.</span>
+                    </div>
+                    <div class="split-r">
+                        <div class="media-placeholder ratio-1-1"></div>
+                        <span class="caption">Square Format (1:1) - Used for portraits and grid galleries.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="accordions">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">05 // TOGGLES</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">ACCORDIONS (FAQ)</h2>
+                    
+                    <div style="margin-top: var(--space-md);">
+                        <details class="accordion" open>
+                            <summary><span class="tech-title">What is the Levy Studio?</span></summary>
+                            <div class="accordion-content">
+                                <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
+                            </div>
+                        </details>
+                        <details class="accordion">
+                            <summary><span class="tech-title">How does the community capital framework apply?</span></summary>
+                            <div class="accordion-content">
+                                <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                            </div>
+                        </details>
+                        <details class="accordion">
+                            <summary><span class="tech-title">Is Levy a political organization?</span></summary>
+                            <div class="accordion-content">
+                                <p class="body-medium">No. Levy operates as a builder, working in the places and with the people where the promise of the American Project is most actively being tested. It is strictly non-partisan.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">06 // STRUCTURE</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">DATA DISPLAYS</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <span class="micro-data lbl-lead">UNORDERED LISTS</span>
+                        <ul class="system-list ul-bullets">
+                            <li>Human Capital (Workforce & Skills)</li>
+                            <li>Social Capital (Networks & Trust)</li>
+                            <li>Built Capital (Infrastructure)</li>
+                        </ul>
+                        
+                        <span class="micro-data lbl-lead" style="margin-top: var(--space-lg);">DASHED LISTS</span>
+                        <ul class="system-list ul-dashes">
+                            <li>Stop thinking small.</li>
+                            <li>Institutions don't vote. Humans do.</li>
+                            <li>Name the gap, then close it.</li>
+                        </ul>
                     </div>
                     
-                    <div class="split-r p-group" style="align-items: flex-start; background: var(--midnight); padding: var(--space-lg);">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">DARK MODE BUTTON</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7); margin-bottom: var(--space-md);">Inherits context inside `.dark-section` wrappers.</p>
-                        <div class="dark-section" style="background: transparent;">
-                            <a href="#" class="btn">View Guidelines</a>
+                    <div class="split-r">
+                        <span class="micro-data lbl-lead">DATA TABLES</span>
+                        <div class="table-wrapper">
+                            <table class="system-table">
+                                <thead>
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Status</th>
+                                        <th>Usage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Studio OS</td>
+                                        <td>Active</td>
+                                        <td>Public Library</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Institute</td>
+                                        <td>Beta</td>
+                                        <td>Research</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Network</td>
+                                        <td>Scaling</td>
+                                        <td>Washington D.C.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                
-                <div class="full-bleed reveal" style="margin-top: var(--space-xxl); text-align: right; border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-md);">
-                    <span class="micro-data">PREPARED BY FOLKMARK FOR LEVY, 2026</span>
+            </div>
+        </section>
+
+        <section id="artifacts">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">07 // CONTAINERS</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">SYSTEM ARTIFACTS</h2>
+                    
+                    <blockquote style="margin-top: var(--space-md); margin-bottom: var(--space-xl);">"Those aren't two separate arguments. They're the same one."</blockquote>
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <div class="artifact-card">
+                            <span class="badge" style="width: max-content; margin-bottom: var(--space-md);">CORE TENET</span>
+                            <div class="tech-title" style="margin-bottom: var(--space-sm);">THE LEVY NETWORK</div>
+                            <p class="body-medium">The membership community built to make members sharper, better connected, and better equipped.</p>
+                        </div>
+                    </div>
+                    <div class="split-r">
+                        <div class="do-dont-wrapper">
+                            <span class="micro-data lbl-lead">RULE: DIRECT TONE</span>
+                            <p class="body-medium">Speak to people who are already serious and already working. Earn your sentences. Never flatter.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -476,17 +590,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             const navToggle = document.getElementById('navToggle');
             const bentoNav = document.getElementById('bentoNav');
-            const darkSection = document.getElementById('grid'); // Reference point for header inversion
-
-            const evaluateDarkOverlay = () => {
-                const darkTop = darkSection.offsetTop;
-                const darkBottom = darkTop + darkSection.offsetHeight;
-                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
-                    document.getElementById('mainHeader').classList.add('on-dark');
-                } else {
-                    document.getElementById('mainHeader').classList.remove('on-dark');
-                }
-            };
+            const navLinks = document.querySelectorAll('.bento-item');
 
             navToggle.addEventListener('click', () => {
                 const isOpen = bentoNav.classList.toggle('is-open');
@@ -495,22 +599,16 @@
                 document.body.style.overflow = isOpen ? 'hidden' : '';
             });
 
-            // Close nav when clicking a link (helpful for single-page component libraries)
-            document.querySelectorAll('.bento-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    if(bentoNav.classList.contains('is-open')) {
-                        bentoNav.classList.remove('is-open');
-                        navToggle.classList.remove('is-active');
-                        navToggle.setAttribute('aria-expanded', 'false');
-                        document.body.style.overflow = '';
-                    }
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    bentoNav.classList.remove('is-open');
+                    navToggle.classList.remove('is-active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
                 });
             });
-
-            window.addEventListener('scroll', evaluateDarkOverlay);
             
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
