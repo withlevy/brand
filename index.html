@@ -92,26 +92,76 @@
         :focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM (Mapped to Modular Scale)
+           3. TYPOGRAPHY SYSTEM (Optically Calibrated)
            ========================================================================== */
-        .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.02em; }
         
-        /* Headers map to 1.05 or 1.1 line-height to maintain tight architectural blocks */
-        .display-massive { font-size: var(--step-7); line-height: 1; font-weight: 700; letter-spacing: -0.04em; }
-        .display-huge { font-size: var(--step-6); line-height: 1.05; letter-spacing: -0.03em; }
-        .display-large { font-size: var(--step-5); line-height: 1.05; letter-spacing: -0.02em; }
-        .display-medium { font-size: var(--step-3); line-height: 1.1; letter-spacing: -0.01em; }
+        /* OPTICAL CROP UTILITY
+           These pseudo-elements strip the invisible bounding-box space created by CSS line-height,
+           allowing the physical letterforms to snap precisely to the base-8 grid.
+        */
+        .tech-title, .narrative, .micro-data { 
+            position: relative; 
+            display: block; 
+        }
         
-        .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.15; }
+        .tech-title::before, .narrative::before, .micro-data::before {
+            content: ""; display: table;
+        }
+
+        /* HEADING SCALE (Helvetica Neue)
+           Cap Height Ratio: ~0.714
+           Trim Formula: (Line Height - 0.714) / 2 * -1em
+        */
+        .tech-title { 
+            font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; 
+            letter-spacing: -0.02em; 
+            --lh: 1.05; 
+            line-height: var(--lh); 
+            /* Strips top bounding box */
+            --crop-top: calc((var(--lh) - 0.714) * -0.5em); 
+        }
+        .tech-title::before { margin-bottom: var(--crop-top); }
+
+        .display-massive { font-size: var(--step-7); --lh: 1; letter-spacing: -0.04em; }
+        .display-huge { font-size: var(--step-6); --lh: 1.05; letter-spacing: -0.03em; }
+        .display-large { font-size: var(--step-5); --lh: 1.05; letter-spacing: -0.02em; }
+        .display-medium { font-size: var(--step-3); --lh: 1.1; letter-spacing: -0.01em; }
+
+        /* NARRATIVE SCALE (Fraunces)
+           Cap Height Ratio: ~0.730
+        */
+        .narrative { 
+            font-family: var(--font-narrative); font-weight: 200; 
+            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; 
+            --lh: 1.15; 
+            line-height: var(--lh); 
+            --crop-top: calc((var(--lh) - 0.730) * -0.5em);
+        }
+        .narrative::before { margin-bottom: var(--crop-top); }
         
-        /* Body maps to strict 1.5 line height for 24px baseline rhythm */
+        /* MICRO-DATA (Helvetica Neue)
+           Mapped to a 1.5 line-height for baseline rhythm, heavily cropped visually
+        */
+        .micro-data { 
+            font-family: var(--font-tech); font-size: var(--step--1); 
+            text-transform: uppercase; letter-spacing: 0.1em; 
+            --lh: 1.5; 
+            line-height: var(--lh); 
+            color: var(--ink-muted);
+            --crop-top: calc((var(--lh) - 0.714) * -0.5em);
+        }
+        .micro-data::before { margin-bottom: var(--crop-top); }
+        .micro-data.lbl-lead { margin-bottom: var(--space-4); color: var(--ink); }
+        .micro-data.tiny { font-size: var(--step--2); }
+
+        /* BODY COPY 
+           Body text is typically left un-cropped so descenders don't collide with 
+           elements below them, but locked strictly to a 1.5 line height so every 
+           line equals exactly 24px (3x 8px base units).
+        */
         .body-large { font-size: var(--step-1); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: var(--step-0); line-height: 1.5; font-weight: 300; color: var(--ink-light); }
         .body-small { font-size: var(--step--1); line-height: 1.5; color: var(--ink-muted); }
-
-        .micro-data { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.5; color: var(--ink-muted); display: block; }
-        .micro-data.lbl-lead { margin-bottom: var(--space-4); color: var(--ink); }
-        .micro-data.tiny { font-size: var(--step--2); }
 
         strong { font-weight: 500; color: var(--ink); }
         em { font-style: italic; }
