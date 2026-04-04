@@ -1,0 +1,20 @@
+---
+
+---
+
+<div class="table-wrapper">
+    <table class="system-table">
+        <slot />
+    </table>
+</div>
+
+<style>
+    .table-wrapper { width: 100%; overflow-x: auto; border-top: var(--stroke-weight) solid var(--stroke-color); }
+    .system-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .system-table :global(th),
+    .system-table :global(td) { padding: var(--space-2) var(--space-3); border-bottom: var(--stroke-weight) solid var(--stroke-color); border-right: var(--stroke-weight) solid var(--stroke-color); }
+    .system-table :global(th:last-child),
+    .system-table :global(td:last-child) { border-right: none; }
+    .system-table :global(th) { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); font-weight: normal; }
+    .system-table :global(td) { font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; }
+</style>

@@ -1,0 +1,217 @@
+/* ==========================================================================
+   1. ELITE ARCHITECTURAL VARIABLES (Base-8 Grid & Perfect Fourth Scale)
+   ========================================================================== */
+:root {
+    /* Palette Foundation */
+    --midnight: #0f0c29;
+    --paper: #F5F5F3;
+    --cloud-dream: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.4) 55%, rgba(138, 35, 135, 0.6) 100%);
+
+    --ink: var(--midnight);
+    --ink-light: rgba(15, 12, 41, 0.75);
+    --ink-muted: rgba(15, 12, 41, 0.5);
+
+    /* Universal Stroke */
+    --stroke-weight: 1px;
+    --stroke-color: rgba(15, 12, 41, 0.2);
+    --stroke-heavy: rgba(15, 12, 41, 1);
+    --stroke-light: rgba(245, 245, 243, 0.15);
+
+    /* Typography Scale (Perfect Fourth - 1.333 Ratio) */
+    --step--2: 0.563rem; /* 9px */
+    --step--1: 0.750rem; /* 12px */
+    --step-0:  1.000rem; /* 16px - Base */
+    --step-1:  1.333rem; /* 21px */
+    --step-2:  1.777rem; /* 28px */
+    --step-3:  2.369rem; /* 37px */
+    --step-4:  3.157rem; /* 50px */
+    --step-5:  4.209rem; /* 67px */
+    --step-6:  5.610rem; /* 89px */
+    --step-7:  7.478rem; /* 119px */
+
+    --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    --font-narrative: 'Fraunces', serif;
+
+    /* Spatial Grid (Strict Base-8 System: 1rem = 16px) */
+    --space-1:  0.5rem;  /* 8px */
+    --space-2:  1.0rem;  /* 16px */
+    --space-3:  1.5rem;  /* 24px */
+    --space-4:  2.0rem;  /* 32px */
+    --space-6:  3.0rem;  /* 48px */
+    --space-8:  4.0rem;  /* 64px */
+    --space-12: 6.0rem;  /* 96px */
+    --space-16: 8.0rem;  /* 128px */
+    --space-24: 12.0rem; /* 192px */
+
+    --header-height: var(--space-12);
+
+    /* Master Transition Curve */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fluid Root Scaling */
+html { font-size: 14px; scroll-behavior: smooth; background-color: var(--paper); }
+@media (min-width: 768px) { html { font-size: 15px; } }
+@media (min-width: 1024px) { html { font-size: 16px; } }
+@media (min-width: 2000px) { html { font-size: 18px; } }
+
+/* ==========================================================================
+   2. BASE & TEXTURE
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
+
+body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-tech);
+    font-weight: 300;
+    line-height: 1.5; /* Baseline lock */
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    padding-top: var(--header-height);
+}
+
+.noise {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+    pointer-events: none; z-index: 9999; opacity: 0.05;
+    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+}
+
+:focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
+
+/* ==========================================================================
+   3. TYPOGRAPHY SYSTEM (Optically Calibrated)
+   ========================================================================== */
+
+/* OPTICAL CROP UTILITY */
+.tech-title, .narrative, .micro-data { position: relative; display: block; }
+.tech-title::before, .narrative::before, .micro-data::before { content: ""; display: table; }
+
+/* HEADING SCALE (Helvetica Neue | Cap Ratio: ~0.714) */
+.tech-title {
+    font-family: var(--font-tech); font-weight: 500; text-transform: uppercase;
+    letter-spacing: -0.02em;
+    --lh: 1.05; line-height: var(--lh);
+    --crop-top: calc((var(--lh) - 0.714) * -0.5em);
+}
+.tech-title::before { margin-bottom: var(--crop-top); }
+
+.display-massive { font-size: var(--step-7); --lh: 1; letter-spacing: -0.04em; }
+.display-huge { font-size: var(--step-6); --lh: 1.05; letter-spacing: -0.03em; }
+.display-large { font-size: var(--step-5); --lh: 1.05; letter-spacing: -0.02em; }
+.display-medium { font-size: var(--step-3); --lh: 1.1; letter-spacing: -0.01em; }
+
+/* NARRATIVE SCALE (Fraunces | Cap Ratio: ~0.730) */
+.narrative {
+    font-family: var(--font-narrative); font-weight: 200;
+    font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+    --lh: 1.15; line-height: var(--lh);
+    --crop-top: calc((var(--lh) - 0.730) * -0.5em);
+}
+.narrative::before { margin-bottom: var(--crop-top); }
+
+/* MICRO-DATA (Helvetica Neue | 1.5 Baseline Rhythm) */
+.micro-data {
+    font-family: var(--font-tech); font-size: var(--step--1);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    --lh: 1.5; line-height: var(--lh); color: var(--ink-muted);
+    --crop-top: calc((var(--lh) - 0.714) * -0.5em);
+}
+.micro-data::before { margin-bottom: var(--crop-top); }
+.micro-data.lbl-lead { margin-bottom: var(--space-4); color: var(--ink); }
+.micro-data.tiny { font-size: var(--step--2); }
+
+/* BODY COPY (1.5 Strict Line Height) */
+.body-large { font-size: var(--step-1); line-height: 1.5; font-weight: 300; }
+.body-medium { font-size: var(--step-0); line-height: 1.5; font-weight: 300; color: var(--ink-light); }
+.body-small { font-size: var(--step--1); line-height: 1.5; color: var(--ink-muted); }
+
+strong { font-weight: 500; color: var(--ink); }
+em { font-style: italic; }
+.text-link { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease-out-expo); font-weight: 500;}
+.text-link:hover { color: var(--ink-muted); }
+
+/* ==========================================================================
+   4. PROPORTIONAL GRID ARCHITECTURE
+   ========================================================================== */
+section { padding: var(--space-16) 5vw; width: 100%; position: relative; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
+
+.layout-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--space-4); row-gap: var(--space-12);
+    width: 100%; max-width: 2000px; margin: 0 auto; position: relative; z-index: 2;
+}
+
+.lbl { grid-column: 1 / 3; }
+.hd-main { grid-column: 3 / 12; }
+.txt-block { grid-column: 3 / 10; }
+.txt-wide { grid-column: 3 / 13; }
+.txt-center-narrow { grid-column: 4 / 10; text-align: center; }
+
+.split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-8) var(--space-4); }
+.split-l { grid-column: auto / span 5; }
+.split-r { grid-column: auto / span 5; }
+
+.full-bleed { grid-column: 1 / -1; }
+.p-group { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.divider { width: 100%; height: var(--stroke-weight); background: var(--stroke-color); margin: var(--space-8) 0; border: none; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Dark Mode & Textures */
+.dark-section { background: var(--midnight); color: var(--paper); }
+.dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
+.dark-section .micro-data.lbl-lead { color: var(--paper); }
+.dark-section .divider, .dark-section section { border-color: var(--stroke-light); }
+.dark-section .text-link { color: var(--paper); }
+
+.gritty-filter {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.35; mix-blend-mode: color-burn;
+    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+}
+
+/* ==========================================================================
+   5. LAYOUT UTILITIES
+   ========================================================================== */
+.btn-group { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.control-group { display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* Artifact Card Stack Collapse */
+.stack-group .artifact-card + .artifact-card { margin-top: calc(var(--stroke-weight) * -1); }
+
+/* Typography Spec Rows */
+.type-row {
+    grid-column: 1 / -1; display: grid; grid-template-columns: subgrid;
+    padding: var(--space-6) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end;
+}
+.type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
+.type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: var(--space-1); }
+.type-specimen { grid-column: 4 / 13; overflow: hidden; }
+
+/* Grid Visualization Helpers */
+.grid-visualizer { grid-column: span 1; background: rgba(15, 12, 41, 0.03); border: var(--stroke-weight) dashed var(--stroke-color); height: var(--space-8); display: flex; align-items: center; justify-content: center; }
+
+/* ==========================================================================
+   6. RESPONSIVE CHOREOGRAPHY
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .layout-grid { grid-template-columns: repeat(8, 1fr); }
+    .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
+    blockquote { width: 100%; grid-column: 1 / -1; font-size: var(--step-3); }
+    .type-label { grid-column: 1 / -1; margin-bottom: var(--space-4); }
+    .type-specimen { grid-column: 1 / -1; }
+    .grid-visualizer:nth-child(n+9) { display: none; }
+}
+
+@media (max-width: 768px) {
+    .layout-grid { grid-template-columns: repeat(4, 1fr); }
+    .split-l, .split-r { grid-column: 1 / -1; }
+    .grid-visualizer:nth-child(n+5) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+    .reveal { transform: none !important; transition: opacity 1s ease !important; }
+}

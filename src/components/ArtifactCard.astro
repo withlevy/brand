@@ -1,0 +1,27 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+    badge?: string;
+    title: string;
+}
+
+const { badge, title } = Astro.props;
+---
+
+<div class="artifact-card">
+    {badge && (
+        <div style="width: max-content; margin-bottom: var(--space-4);">
+            <Badge label={badge} />
+        </div>
+    )}
+    <div class="tech-title" style="margin-bottom: var(--space-2);">{title}</div>
+    <slot />
+</div>
+
+<style>
+    .artifact-card {
+        background: var(--paper); width: 100%; padding: var(--space-6);
+        border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column;
+    }
+</style>
