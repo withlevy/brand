@@ -14,20 +14,23 @@
            1. BRAND TOKENS & ARCHITECTURAL VARIABLES
            ========================================================================== */
         :root {
+            /* The Void & Paper */
             --midnight: #0f0c29;
-            --violet: #6441a5;
-            --magenta: #8a2387;
-            
             --paper: #F5F5F3; 
-            --ink: #0A0A0A;
-            --ink-light: #5A5A5A;
-            --ink-muted: #666666; /* Contrast improved for accessibility */
+            
+            /* The Data Cloud Motif (Controlled Areas Only) */
+            --cloud-dream: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.4) 55%, rgba(138, 35, 135, 0.6) 100%);
+            
+            /* Diction mapping: Midnight is the sole ink */
+            --ink: var(--midnight);
+            --ink-light: rgba(15, 12, 41, 0.8);
+            --ink-muted: rgba(15, 12, 41, 0.6); /* Replaced standard grey */
             
             --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
             --font-narrative: 'Fraunces', serif;
             
             --header-height: 90px;
-            --hairline-dark: rgba(10, 10, 10, 0.15);
+            --hairline-dark: rgba(15, 12, 41, 0.15); /* Midnight transparency */
             
             /* The Spacing Scale */
             --space-xs: clamp(0.5rem, 1vw, 1rem);
@@ -36,10 +39,6 @@
             --space-lg: clamp(3rem, 5vw, 5rem);
             --space-xl: clamp(4rem, 8vw, 8rem);
             --space-xxl: clamp(6rem, 12vw, 12rem);
-            
-            /* Section Rhythm Logic */
-            --section-padding: var(--space-xl); 
-            --section-margin: var(--space-xxl); 
             
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -61,15 +60,15 @@
             padding-top: var(--header-height);
         }
 
+        /* The Global Gritty Noise Layer */
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
-            pointer-events: none; z-index: 9999; opacity: 0.05;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+            pointer-events: none; z-index: 9999; opacity: 0.06; /* Slightly increased for texture */
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        /* Accessibility Focus Ring */
         :focus-visible {
-            outline: 2px solid var(--violet);
+            outline: 2px solid var(--ink);
             outline-offset: 4px;
         }
 
@@ -78,9 +77,10 @@
            ========================================================================== */
         .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.85; }
         
-        /* Font size bumped from 0.5rem to 0.75rem for legibility */
         .micro-data { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; line-height: 1.6; color: var(--ink-muted); display: block; }
-        .micro-data.accent { color: var(--violet); margin-bottom: var(--space-md); }
+        /* Removed violet accent from micro-data, all are now midnight/muted */
+        .micro-data.lbl-lead { margin-bottom: var(--space-md); color: var(--ink); }
+
         .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.1; }
 
         .display-massive { font-size: clamp(3rem, 11vw, 13rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.85; }
@@ -91,15 +91,29 @@
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
+        /* Finessed Quote: Standard border-left is dead. Centered insight with subtle aura. */
         blockquote {
             font-family: var(--font-narrative);
             font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
             font-weight: 300;
-            font-size: clamp(1.5rem, 3vw, 3rem);
-            line-height: 1.15;
+            font-size: clamp(1.75rem, 4vw, 3.5rem);
+            line-height: 1.05;
             color: var(--ink);
-            border-left: 2px solid var(--violet);
-            padding-left: var(--space-md);
+            position: relative;
+            padding: var(--space-xl) 0;
+            text-align: center;
+            grid-column: 2 / 12;
+            width: 80%;
+            margin: var(--space-lg) auto;
+        }
+
+        blockquote::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--cloud-dream);
+            filter: blur(40px);
+            opacity: 0.1;
+            z-index: -1;
         }
 
         /* ==========================================================================
@@ -108,6 +122,7 @@
         section { 
             padding: var(--section-padding) 0; 
             width: 100%;
+            position: relative; /* For data-cloud overlays */
         }
 
         section:last-of-type { margin-bottom: var(--space-xxl); }
@@ -121,6 +136,7 @@
             max-width: 2400px; 
             margin: 0 auto; 
             padding-inline: 5vw; 
+            z-index: 2;
         }
         
         .lbl { grid-column: 1 / 3; }
@@ -129,7 +145,6 @@
         .txt-wide { grid-column: 3 / 12; }
         .txt-center-narrow { grid-column: 4 / 10; text-align: center; }
         
-        /* Fixed math: spans from column 3 up to 13 to hold 10 columns total */
         .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; }
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
@@ -140,11 +155,29 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+        /* Solid Midnight Architecture, Paper Text */
         .dark-section { 
-            background: linear-gradient(150deg, var(--midnight) 0%, var(--violet) 55%, var(--magenta) 100%); 
+            background: var(--midnight); 
             color: var(--paper); 
         }
-        .dark-section blockquote { color: var(--paper); border-left-color: var(--magenta); }
+        
+        /* Local Gritty Texture over the cloud */
+        .gritty-filter {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.4;
+            mix-blend-mode: color-burn; /* Gives the grit its kick */
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+        }
+
+        /* Ambient Aura behind Position Statement */
+        #thesis .dream-aura {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80dvw; height: 80dvh;
+            background: var(--cloud-dream);
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 1;
+        }
 
         /* ==========================================================================
            5. HEADER & BENTO NAVIGATION
@@ -156,7 +189,7 @@
             padding: 0 5vw; z-index: 2000; transition: background 0.4s ease;
         }
         
-        header.on-dark { background: rgba(15, 12, 41, 0.85); }
+        header.on-dark { background: rgba(15, 12, 41, 0.9); } /* 90% midnight opacity */
         header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
 
         .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; font-size: 1.5rem; }
@@ -173,47 +206,50 @@
         .hamburger.is-active span:nth-child(2) { opacity: 0; }
         .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-        /* Fixed invisible trap with visibility properties */
         .bento-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            background: rgba(245, 245, 243, 0.98); backdrop-filter: blur(20px);
+            background: rgba(15, 12, 41, 0.98); /* Flipped to Midnight base */
             z-index: 1500; padding: calc(var(--header-height) + 2dvh) 5vw 5vw 5vw;
             opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; visibility: visible; }
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); height: 100%; max-height: 80dvh; }
-        .bento-item {
-            background: var(--paper); border: 1px solid var(--hairline-dark); padding: var(--space-md);
-            text-decoration: none; color: var(--ink); display: flex; flex-direction: column; justify-content: space-between;
-            min-height: 180px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
-        }
-        .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
-        .bento-item.large { grid-column: span 2; grid-row: span 2; background: var(--midnight); color: var(--paper); }
-        .bento-item.wide { grid-column: span 2; }
-
-        /* ==========================================================================
-           6. COMPONENTS
-           ========================================================================== */
-        .color-card { border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; aspect-ratio: 4/3; }
-        .color-swatch { flex-grow: 1; width: 100%; border-bottom: 1px solid var(--hairline-dark); }
-        .color-details { padding: var(--space-md); background: var(--paper); }
-        .hex-tag { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: monospace; padding: 0.4rem 0.6rem; background: rgba(0,0,0,0.05); font-size: 0.75rem;}
         
-        .mockup { border: 1px solid var(--hairline-dark); display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.02); padding: var(--space-lg); }
+        .bento-item {
+            background: var(--midnight); border: 1px solid rgba(245, 245, 243, 0.1); padding: var(--space-md);
+            text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 180px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
+        }
+        .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
+
+        .bento-item:hover { border-color: var(--paper); }
+        
+        .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
+        
+        /* Artifact cards inherit paper/midnight based on parent section */
         .artifact-card { background: var(--paper); width: 100%; padding: var(--space-lg); border: 1px solid var(--hairline-dark); display: flex; flex-direction: column; }
         
-        .do-dont-wrapper { border-top: 4px solid var(--violet); background: rgba(0,0,0,0.02); padding: var(--space-lg); height: 100%;}
-        .do-dont-wrapper.dont { border-top-color: var(--ink-muted); opacity: 0.6; }
+        /* Redefined expressions area cloud */
+        #expressions .artifact-cloud-container {
+            position: absolute; top: 10%; left: -10dvw; width: 120dvw; height: 80%;
+            background: var(--cloud-dream);
+            filter: blur(100px);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .do-dont-wrapper { border-top: 4px solid var(--ink); background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;}
+        .do-dont-wrapper.dont { opacity: 0.6; }
 
         /* ==========================================================================
            7. RESPONSIVE CHOREOGRAPHY
-           ========================================================================== */
+           ========================================================================= */
         @media (max-width: 1024px) {
             .layout-grid { grid-template-columns: repeat(8, 1fr); }
             .lbl { grid-column: 1 / -1; margin-bottom: -2vw;} 
             .hd-main { grid-column: 1 / -1; }
-            .txt-block, .txt-wide { grid-column: 2 / 8; }
-            .txt-center-narrow { grid-column: 2 / 8; }
+            .txt-block, .txt-wide, .txt-center-narrow { grid-column: 1 / -1; }
+            blockquote { width: 100%; grid-column: 1 / -1; font-size: 1.5rem; }
             .split-2up { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -226,13 +262,8 @@
 
         /* Reduced Motion Accessibility */
         @media (prefers-reduced-motion: reduce) {
-            * {
-                scroll-behavior: auto !important;
-            }
-            .reveal {
-                transform: none !important;
-                transition: opacity 1s ease !important;
-            }
+            * { scroll-behavior: auto !important; }
+            .reveal { transform: none !important; transition: opacity 1s ease !important; }
         }
     </style>
 </head>
@@ -251,60 +282,67 @@
     <nav class="bento-nav" id="bentoNav">
         <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
             <div class="bento-grid">
-                <a href="#problem" class="bento-item large nav-link"><span class="tech-subhead">01 // THE PROBLEM</span><h3 class="tech-title display-medium">STRUCTURAL<br>DEFICIT</h3></a>
-                <a href="#thesis" class="bento-item wide nav-link"><span class="tech-subhead">02 // THE THESIS</span><h3 class="tech-title display-medium">THE MISSION</h3></a>
+                <a href="#problem" class="bento-item nav-link"><span class="tech-subhead">01 // THE PROBLEM</span><h3 class="tech-title display-medium">STRUCTURAL<br>DEFICIT</h3></a>
+                <a href="#thesis" class="bento-item nav-link"><span class="tech-subhead">02 // THE THESIS</span><h3 class="tech-title display-medium">THE MISSION</h3></a>
                 <a href="#audience" class="bento-item nav-link"><span class="tech-subhead">03 // AUDIENCE</span><h3 class="tech-title display-medium">THE BUILDERS</h3></a>
                 <a href="#expressions" class="bento-item nav-link"><span class="tech-subhead">04 // SYSTEMS</span><h3 class="tech-title display-medium">EXPRESSIONS</h3></a>
-                <a href="#archetype" class="bento-item wide nav-link"><span class="tech-subhead">05 // IDENTITY</span><h3 class="tech-title display-medium">BRAND ARCHETYPE</h3></a>
-                <a href="#verbal" class="bento-item large nav-link"><span class="tech-subhead">06 // DICTION</span><h3 class="tech-title display-medium">VERBAL<br>IDENTITY</h3></a>
+                <a href="#archetype" class="bento-item nav-link"><span class="tech-subhead">05 // IDENTITY</span><h3 class="tech-title display-medium">BRAND ARCHETYPE</h3></a>
+                <a href="#verbal" class="bento-item nav-link"><span class="tech-subhead">06 // DICTION</span><h3 class="tech-title display-medium">VERBAL<br>IDENTITY</h3></a>
             </div>
         </div>
     </nav>
 
     <main>
         <section id="cover" class="layout-grid" style="padding-top: calc(var(--space-xxl) * 1.5);">
-            <div class="lbl reveal"><span class="micro-data">LEVY STRATEGIC DESIGN</span><span class="micro-data">CORE DOCUMENT</span></div>
+            <div class="lbl reveal"><span class="micro-data lbl-lead">LEVY STRATEGIC DESIGN</span><span class="micro-data">CORE DOCUMENT</span></div>
             <h1 class="hd-main tech-title display-huge reveal">LEVY BRAND MANUAL.</h1>
             <div class="txt-block reveal p-group" style="margin-top: var(--space-sm);">
-                <h2 class="tech-title" style="font-size: clamp(1rem, 1.5vw, 1.25rem); color: var(--violet);">STOP THINKING SMALL.</h2>
+                <h2 class="tech-title" style="font-size: clamp(1rem, 1.5vw, 1.25rem); color: var(--ink);">STOP THINKING SMALL.</h2>
                 <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Levy is where the seriously ambitious find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.</h3>
             </div>
         </section>
 
         <section id="problem" class="layout-grid">
-            <div class="lbl reveal"><span class="micro-data accent">01 // THE PROBLEM</span></div>
+            <div class="lbl reveal"><span class="micro-data lbl-lead">01 // THE PROBLEM</span></div>
             <h2 class="hd-main tech-title display-large reveal">SOMETHING HAS<br>GONE WRONG.</h2>
             <div class="txt-block reveal p-group">
                 <p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
                 <p class="body-medium">The people who should be producing the most consequential results — founders, public servants, institutional leaders — are systematically producing less than they're capable of. Because the knowledge, the networks, and the conditions that would let them operate at full capacity don't exist in the same place at the same time.</p>
-                <blockquote>"Those aren't two separate arguments. They're the same one."</blockquote>
-                <p class="body-medium">When seriously ambitious people stay stuck at a fraction of their impact, institutions weaken. Democratic infrastructure quietly erodes through the accumulated weight of potential that never found the right conditions. Nobody teaches this. The knowledge lives in silos. The networks don't cross sectors.</p>
+                
+                <blockquote class="reveal">"Those aren't two separate arguments. They're the same one."</blockquote>
+                
+                <p class="body-medium">When seriously ambitious people stay stuck at a fraction of their impact, institutions weaken. Democratic infrastructure quietly erodes through the accumulated weight of potential that never found the right conditions.</p>
             </div>
         </section>
 
-        <section id="thesis" class="layout-grid">
-            <div class="lbl reveal"><span class="micro-data accent">02 // THE THESIS</span></div>
+        <section id="thesis">
+            <div class="dream-aura"></div>
+            <div class="gritty-filter"></div>
             
-            <div class="full-bleed reveal" style="text-align: center;"><h2 class="tech-title display-massive">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2></div>
-            
-            <div class="txt-center-narrow reveal" style="margin-top: var(--space-md);">
-                <h3 class="narrative display-medium">Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales.</h3>
-            </div>
-            
-            <div class="split-2up reveal" style="margin-top: var(--space-xl);">
-                <div class="split-l p-group">
-                    <span class="micro-data">THE MISSION</span>
-                    <p class="body-medium">To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Working as a builder, not a political organization.</p>
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // THE THESIS</span></div>
+                
+                <div class="full-bleed reveal" style="text-align: center;"><h2 class="tech-title display-massive">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2></div>
+                
+                <div class="txt-center-narrow reveal" style="margin-top: var(--space-md);">
+                    <h3 class="narrative display-medium">Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales.</h3>
                 </div>
-                <div class="split-r p-group">
-                    <span class="micro-data accent">COMMUNITY CAPITALS</span>
-                    <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political. Levy builds at the intersections of those capitals. Closing the gap has the highest leverage on what actually happens next.</p>
+                
+                <div class="split-2up reveal" style="margin-top: var(--space-xl);">
+                    <div class="split-l p-group">
+                        <span class="micro-data lbl-lead">THE MISSION</span>
+                        <p class="body-medium">To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Working as a builder, not a political organization.</p>
+                    </div>
+                    <div class="split-r p-group">
+                        <span class="micro-data lbl-lead">COMMUNITY CAPITALS</span>
+                        <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political. Levy builds at the intersections of those capitals. Closing the gap has the highest leverage on what actually happens next.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="audience" class="dark-section layout-grid">
-            <div class="lbl reveal"><span class="micro-data" style="color: rgba(255,255,255,0.5);">03 // THE AUDIENCE</span></div>
+            <div class="lbl reveal"><span class="micro-data lbl-lead" style="color: rgba(255,255,255,0.8);">03 // THE AUDIENCE</span></div>
             <h2 class="hd-main tech-title display-large reveal">THE SERIOUSLY<br>AMBITIOUS.</h2>
             
             <div class="txt-block reveal p-group" style="margin-bottom: var(--space-lg);">
@@ -313,20 +351,20 @@
 
             <div class="split-2up reveal">
                 <div class="split-l p-group" style="margin-bottom: var(--space-lg);">
-                    <span class="micro-data accent" style="color: var(--paper);">THE FOUNDER</span>
+                    <span class="micro-data lbl-lead" style="color: var(--paper);">THE FOUNDER</span>
                     <p class="body-medium" style="color: rgba(255,255,255,0.7);">Scaling a company who doesn't yet know that government contracts and civic infrastructure are powerful tools. She's hitting a ceiling that isn't about effort — it's about not understanding the terrain.</p>
                 </div>
                 <div class="split-r p-group" style="margin-bottom: var(--space-lg);">
-                    <span class="micro-data accent" style="color: var(--paper);">THE PUBLIC SERVANT</span>
-                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Knows what's possible but can't find private partners who understand how to work within government constraints. He's watched promising partnerships die in procurement.</p>
+                    <span class="micro-data lbl-lead" style="color: var(--paper);">THE PUBLIC SERVANT</span>
+                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Knows what's possible but can't find private partners who understand how to work within government constraints.</p>
                 </div>
                 <div class="split-l p-group">
-                    <span class="micro-data accent" style="color: var(--paper);">THE STRATEGIST</span>
-                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside a corporation with a significant idea. She knows internal politics, but not how to use external partners and policy pressure to make the internal case undeniable.</p>
+                    <span class="micro-data lbl-lead" style="color: var(--paper);">THE STRATEGIST</span>
+                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside a corporation with a significant idea. She knows internal politics, but not how to use external factors to make the internal case undeniable.</p>
                 </div>
                 <div class="split-r p-group">
-                    <span class="micro-data accent" style="color: var(--paper);">THE DEPARTMENT HEAD</span>
-                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside an anchor institution. Knows their organization could do something consequential — if they could find the right partners to structure the effort.</p>
+                    <span class="micro-data lbl-lead" style="color: var(--paper);">THE DEPARTMENT HEAD</span>
+                    <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside an anchor institution. Knows their organization could do something consequential — if they could structure the effort.</p>
                 </div>
             </div>
             
@@ -335,71 +373,75 @@
             </div>
         </section>
 
-        <section id="expressions" class="layout-grid">
-            <div class="lbl reveal"><span class="micro-data accent">04 // SYSTEMS</span></div>
-            <h2 class="hd-main tech-title display-large reveal">THREE INTEGRATED<br>EXPRESSIONS.</h2>
-            
-            <div class="txt-block reveal p-group">
-                <p class="body-large">To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point.</p>
-            </div>
+        <section id="expressions">
+            <div class="artifact-cloud-container"></div>
+            <div class="gritty-filter"></div>
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // SYSTEMS</span></div>
+                <h2 class="hd-main tech-title display-large reveal">THREE INTEGRATED<br>EXPRESSIONS.</h2>
+                
+                <div class="txt-block reveal p-group">
+                    <p class="body-large">To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point.</p>
+                </div>
 
-            <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
-                <div class="artifact-card" style="grid-column: span 4;">
-                    <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY NETWORK</div>
-                    <p class="body-medium">The membership community — a tiered, in-person-anchored gathering of founders, public servants, and institutional strategists. Built to make members sharper, better connected, and better equipped to produce outcomes at real scale.</p>
-                </div>
-                <div class="artifact-card" style="grid-column: span 4;">
-                    <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY STUDIO</div>
-                    <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building produces. Includes the <em>AI Upskilling Pilot</em> and <em>The Open Labs Operating System</em>.</p>
-                </div>
-                <div class="artifact-card" style="grid-column: span 4;">
-                    <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY INSTITUTE</div>
-                    <p class="body-medium">The research and knowledge arm. Developing frameworks and building the intellectual infrastructure that helps members understand how systems work and where leverage lives.</p>
+                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md); position: relative; z-index: 2;">
+                    <div class="artifact-card" style="grid-column: span 4;">
+                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY NETWORK</div>
+                        <p class="body-medium">The membership community — a tiered, in-person-anchored gathering of founders, public servants, and institutional strategists. Built to make members sharper and better connected.</p>
+                    </div>
+                    <div class="artifact-card" style="grid-column: span 4;">
+                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY STUDIO</div>
+                        <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building produces.</p>
+                    </div>
+                    <div class="artifact-card" style="grid-column: span 4;">
+                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY INSTITUTE</div>
+                        <p class="body-medium">The research and knowledge arm. Developing frameworks and building the intellectual infrastructure that helps members understand how systems work.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="archetype" class="layout-grid">
-            <div class="lbl reveal"><span class="micro-data accent">05 // IDENTITY</span></div>
+            <div class="lbl reveal"><span class="micro-data lbl-lead">05 // IDENTITY</span></div>
             <h2 class="hd-main tech-title display-medium reveal">MAGICIAN-SAGE</h2>
             
             <div class="split-2up reveal">
                 <div class="split-l p-group">
                     <span class="micro-data">THE POSTURE</span>
-                    <p class="body-medium">Levy doesn't oversell. Doesn't take credit. Doesn't promise what it can't deliver. It shows up with the right knowledge at the right moment. It connects the right people. It points at what's possible and explains why. Then it gets out of the way.</p>
+                    <p class="body-medium">Levy shows up with the right knowledge at the right moment. It connects the right people. It points at what's possible and explains why. Then it gets out of the way.</p>
                 </div>
                 <div class="split-r p-group">
-                    <span class="micro-data accent">EMOTIONAL CONCEPT</span>
-                    <p class="body-medium"><strong>Actualization.</strong> Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You always believed you could drive results at this scale. You just needed the conditions to prove it.</p>
+                    <span class="micro-data lbl-lead">EMOTIONAL CONCEPT</span>
+                    <p class="body-medium"><strong>Actualization.</strong> Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You just needed the conditions to prove it.</p>
                 </div>
             </div>
         </section>
 
         <section id="verbal" class="layout-grid">
-            <div class="lbl reveal"><span class="micro-data accent">06 // DICTION</span></div>
+            <div class="lbl reveal"><span class="micro-data lbl-lead">06 // DICTION</span></div>
             <h2 class="hd-main tech-title display-medium reveal">VERBAL IDENTITY</h2>
 
             <div class="split-2up reveal" style="margin-bottom: var(--space-lg);">
                 <div class="split-l">
                     <div class="do-dont-wrapper p-group">
-                        <span class="micro-data accent">ALWAYS USE</span>
-                        <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Conditions. Doers. Real.</p>
+                        <span class="micro-data lbl-lead">ALWAYS USE</span>
+                        <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Doers.</p>
                     </div>
                 </div>
                 <div class="split-r">
                     <div class="do-dont-wrapper dont p-group">
                         <span class="micro-data">NEVER USE</span>
-                        <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Journey. Playbook. Blueprint. Citizens. Change. Civic engagement. Impact. Innovator. Changemaker.</p>
+                        <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Playbook. blueprint. Citizens. Change. Civic engagement. Changemaker.</p>
                     </div>
                 </div>
             </div>
             
             <div class="full-bleed reveal">
-                <div class="artifact-card" style="border-top: 4px solid var(--violet);">
+                <div class="artifact-card" style="border-top: 4px solid var(--ink);">
                     <div class="tech-title" style="margin-bottom: var(--space-sm);">TONE & GOVERNANCE</div>
                     <div style="column-count: 2; column-gap: var(--space-lg);">
-                        <p class="body-medium" style="margin-bottom: var(--space-sm);"><strong>Tone:</strong> Direct. Clear. Confident. Speaks to people who are already serious and already working — never performs urgency at them, never flatters them, never explains what they already know. Earns its sentences.</p>
-                        <p class="body-medium"><strong>Strict Rules:</strong> Never operates as a political organization or takes partisan positions. Never tries to convince people to be ambitious. Never takes credit for what members build. Never offers motivation without practical substance or uses vague language about impact.</p>
+                        <p class="body-medium" style="margin-bottom: var(--space-sm);"><strong>Tone:</strong> Direct. Clear. Confident. Speaks to people who are already serious and already working.</p>
+                        <p class="body-medium"><strong>Governance:</strong> Never operates as a political organization. Never flatters. Never offers motivation without substance or uses vague language about impact.</p>
                     </div>
                 </div>
                 <div style="margin-top: var(--space-xl); text-align: right;">
@@ -435,7 +477,7 @@
 
             window.addEventListener('scroll', evaluateDarkOverlay);
             
-            // Respect prefers-reduced-motion for the IntersectionObserver as well
+            // IntersectionObserver with reduced motion handling
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             
             const revealObserver = new IntersectionObserver((entries) => {
@@ -444,7 +486,7 @@
                         entry.target.classList.add("is-visible");
                     }
                 });
-            }, { threshold: prefersReducedMotion ? 0 : 0.1 }); // Fire immediately if reduced motion
+            }, { threshold: prefersReducedMotion ? 0 : 0.1 }); 
             
             document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
         });
