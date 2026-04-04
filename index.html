@@ -211,39 +211,65 @@
         }
 
         /* ==========================================================================
-           5. HEADER & BENTO NAVIGATION
+           5. ARCHITECTURAL HEADER & BENTO NAVIGATION
            ========================================================================== */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
-            background: rgba(245, 245, 243, 0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; z-index: 2000; transition: background 0.4s var(--ease-out-expo);
-            border-bottom: var(--stroke-weight) solid transparent;
+            background: rgba(245, 245, 243, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            z-index: 2000; transition: background 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo);
+            border-bottom: var(--stroke-weight) solid var(--stroke-color); /* The Datum Line */
         }
         
-        header.on-dark { background: rgba(15, 12, 41, 0.95); border-bottom-color: var(--stroke-light);} 
-        header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
+        /* Locks header elements to the master layout grid */
+        .header-inner {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; max-width: 2000px; margin: 0 auto; height: 100%; padding: 0 5vw;
+        }
 
-        .header-logo { display: flex; align-items: center; gap: var(--space-2); color: var(--ink); text-decoration: none; font-size: var(--step-1); }
+        header.on-dark { background: rgba(15, 12, 41, 0.9); border-bottom-color: var(--stroke-light); } 
+        header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
+        header.on-dark .hamburger { border-color: var(--stroke-light); }
+
+        .header-logo { 
+            display: flex; align-items: center; gap: var(--space-2); 
+            color: var(--ink); text-decoration: none; 
+            font-size: var(--step-0); /* Scaled down for authority */
+            letter-spacing: 0.05em; 
+        }
         .header-logo svg { width: var(--space-3); height: var(--space-3); }
 
-        .hamburger { background: none; border: none; cursor: pointer; width: var(--space-6); height: var(--space-6); position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
-        .hamburger-box { width: var(--space-4); height: 18px; position: relative; }
-        .hamburger span { display: block; position: absolute; height: var(--stroke-weight); width: 100%; background: var(--ink); transition: transform 0.4s var(--ease-out-expo); transform-origin: center; }
+        /* The Hamburger as a structural block */
+        .hamburger { 
+            background: transparent; border: var(--stroke-weight) solid var(--stroke-color); 
+            cursor: pointer; width: var(--space-6); height: var(--space-6); /* Strict 48x48px */
+            position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.3s var(--ease-out-expo);
+        }
+        .hamburger:hover { border-color: var(--ink); }
+        header.on-dark .hamburger:hover { border-color: var(--paper); }
+        
+        .hamburger-box { width: 20px; height: 10px; position: relative; } /* Tighter optical alignment */
+        .hamburger span { 
+            display: block; position: absolute; height: var(--stroke-weight); width: 100%; 
+            background: var(--ink); transition: transform 0.4s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo); 
+            transform-origin: center; 
+        }
         .hamburger span:nth-child(1) { top: 0; }
-        .hamburger span:nth-child(2) { top: 8px; }
-        .hamburger span:nth-child(3) { top: 16px; }
+        .hamburger span:nth-child(2) { top: 5px; } 
+        .hamburger span:nth-child(3) { top: 10px; }
 
-        .hamburger.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.is-active span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
         .hamburger.is-active span:nth-child(2) { opacity: 0; }
-        .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        .hamburger.is-active span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 
+        /* Bento Navigation Menu */
         .bento-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(15, 12, 41, 0.98); 
             z-index: 1500; padding: calc(var(--header-height) + var(--space-4)) 5vw var(--space-8) 5vw;
             opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; visibility: visible; }
-        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); height: 100%; max-height: 80dvh; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); height: 100%; max-height: 80dvh; max-width: 2000px; margin: 0 auto;}
         
         .bento-item {
             background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-4);
@@ -417,11 +443,17 @@
     <div class="noise"></div>
 
     <header id="mainHeader">
-        <a href="#cover" class="header-logo tech-title">
-            <svg aria-hidden="true" viewBox="0 0 100 100" fill="currentColor"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></svg>
-            LEVY
-        </a>
-        <button class="hamburger" id="navToggle" aria-expanded="false" aria-label="Toggle Navigation"><div class="hamburger-box"><span></span><span></span><span></span></div></button>
+        <div class="header-inner">
+            <a href="#cover" class="header-logo tech-title">
+                <svg aria-hidden="true" viewBox="0 0 100 100" fill="currentColor"><rect x="15" y="75" width="60" height="15" transform="rotate(-45 15 75)" /><polygon points="45,90 90,90 67.5,67.5" /></svg>
+                LEVY
+            </a>
+            <button class="hamburger" id="navToggle" aria-expanded="false" aria-label="Toggle Navigation">
+                <div class="hamburger-box">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
     </header>
 
     <nav class="bento-nav" id="bentoNav">
