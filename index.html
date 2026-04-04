@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Brand Strategy Core Document</title>
+    <title>Levy | Design System & Component Library</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
     
     <style>
         /* ==========================================================================
-           1. BRAND TOKENS & ARCHITECTURAL VARIABLES
+           1. BRAND TOKENS & ARCHITECTURAL VARIABLES (Global Styles for Astro)
            ========================================================================== */
         :root {
             /* The Void & Paper */
@@ -70,19 +70,14 @@
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        :focus-visible {
-            outline: var(--stroke-weight) solid var(--ink);
-            outline-offset: 4px;
-        }
+        :focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
 
         /* ==========================================================================
            3. TYPOGRAPHY SYSTEM
            ========================================================================== */
         .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.85; }
-        
         .micro-data { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; line-height: 1.6; color: var(--ink-muted); display: block; }
         .micro-data.lbl-lead { margin-bottom: var(--space-md); color: var(--ink); }
-
         .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.1; }
 
         .display-massive { font-size: clamp(3rem, 11vw, 13rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.85; }
@@ -93,51 +88,15 @@
         .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
         .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
 
-        blockquote {
-            font-family: var(--font-narrative);
-            font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
-            font-weight: 300;
-            font-size: clamp(1.75rem, 4vw, 3.5rem);
-            line-height: 1.05;
-            color: var(--ink);
-            position: relative;
-            padding: var(--space-xl) 0;
-            text-align: center;
-            grid-column: 2 / 12;
-            width: 80%;
-            margin: var(--space-lg) auto;
-        }
-
-        blockquote::before {
-            content: '';
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--cloud-dream);
-            filter: blur(40px);
-            opacity: 0.1;
-            z-index: -1;
-        }
-
         /* ==========================================================================
            4. PROPORTIONAL GRID ARCHITECTURE
            ========================================================================== */
-        section { 
-            padding: var(--space-xl) 5vw; 
-            width: 100%;
-            position: relative;
-        }
-
+        section { padding: var(--space-xl) 5vw; width: 100%; position: relative; }
         section:last-of-type { padding-bottom: var(--space-xxl); }
         
         .layout-grid { 
-            display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            column-gap: 2vw; 
-            row-gap: var(--space-xl); 
-            width: 100%; 
-            max-width: 2400px; 
-            margin: 0 auto; 
-            position: relative;
-            z-index: 2;
+            display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 2vw; row-gap: var(--space-xl); 
+            width: 100%; max-width: 2400px; margin: 0 auto; position: relative; z-index: 2;
         }
         
         .lbl { grid-column: 1 / 3; }
@@ -156,33 +115,14 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-        .dark-section { 
-            background: var(--midnight); 
-            color: var(--paper); 
-        }
-        
+        /* Dark Mode & Textures */
+        .dark-section { background: var(--midnight); color: var(--paper); }
+        .dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
+        .dark-section .micro-data.lbl-lead { color: var(--paper); }
+
         .gritty-filter {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.4;
-            mix-blend-mode: color-burn; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: color-burn; 
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
-        }
-
-        #thesis .dream-aura {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80dvw; height: 80dvh;
-            background: var(--cloud-dream);
-            filter: blur(120px);
-            opacity: 0.15;
-            z-index: 1;
-        }
-
-        #expressions .artifact-cloud-container {
-            position: absolute; top: 10%; left: -10dvw; width: 120dvw; height: 80%;
-            background: var(--cloud-dream);
-            filter: blur(100px);
-            opacity: 0.2;
-            z-index: 1;
         }
 
         /* ==========================================================================
@@ -191,8 +131,7 @@
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             background: rgba(245, 245, 243, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5vw; z-index: 2000; transition: background 0.4s ease;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; z-index: 2000; transition: background 0.4s ease;
         }
         
         header.on-dark { background: rgba(15, 12, 41, 0.9); } 
@@ -213,8 +152,7 @@
         .hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
         .bento-nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            background: rgba(15, 12, 41, 0.98); 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(15, 12, 41, 0.98); 
             z-index: 1500; padding: calc(var(--header-height) + 2dvh) 5vw 5vw 5vw;
             opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
         }
@@ -222,9 +160,7 @@
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); height: 100%; max-height: 80dvh; }
         
         .bento-item {
-            background: var(--midnight); 
-            border: var(--stroke-weight) solid var(--stroke-light); 
-            padding: var(--space-md);
+            background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-md);
             text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
             min-height: 180px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
         }
@@ -234,22 +170,50 @@
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
         
         /* ==========================================================================
-           6. COMPONENTS (Unified Strokes & Typography Spec)
+           6. COMPONENTS (Prepared for Astro Components)
            ========================================================================== */
         
+        /* Color Specs */
+        .color-spec { display: flex; flex-direction: column; border: var(--stroke-weight) solid var(--stroke-color); aspect-ratio: 1/1; }
+        .color-spec .color-fill { flex-grow: 1; border-bottom: var(--stroke-weight) solid var(--stroke-color); position: relative;}
+        .color-spec .color-meta { padding: var(--space-md); display: flex; justify-content: space-between; align-items: flex-end; background: var(--paper); }
+        
+        /* Artifact Cards */
         .artifact-card { 
             background: var(--paper); width: 100%; padding: var(--space-lg); 
-            border: var(--stroke-weight) solid var(--stroke-color); 
-            display: flex; flex-direction: column; 
+            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; 
         }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2rem;
+            border: var(--stroke-weight) solid var(--ink); background: transparent; color: var(--ink);
+            cursor: pointer; text-decoration: none; transition: background 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo);
+            font-family: var(--font-tech); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 500;
+        }
+        .btn:hover { background: var(--ink); color: var(--paper); }
+        .dark-section .btn { border-color: var(--paper); color: var(--paper); }
+        .dark-section .btn:hover { background: var(--paper); color: var(--ink); }
         
+        /* Do/Dont Boxes */
         .do-dont-wrapper { 
             background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;
-            border: var(--stroke-weight) solid var(--stroke-color);
+            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; gap: var(--space-md);
         }
-        .do-dont-wrapper.dont { opacity: 0.6; }
+        .do-dont-wrapper.dont { opacity: 0.5; }
 
-        /* Typography Specification Rows */
+        /* Blockquotes */
+        blockquote {
+            font-family: var(--font-narrative); font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+            font-weight: 300; font-size: clamp(1.75rem, 4vw, 3.5rem); line-height: 1.05; color: var(--ink);
+            position: relative; padding: var(--space-xl) 0; text-align: center; grid-column: 2 / 12; width: 80%; margin: var(--space-lg) auto;
+        }
+        blockquote::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--cloud-dream); filter: blur(40px); opacity: 0.1; z-index: -1;
+        }
+
+        /* Typography Specs */
         .type-row { 
             grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; 
             padding: var(--space-lg) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end; 
@@ -257,6 +221,9 @@
         .type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
         .type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: 0.5rem; }
         .type-specimen { grid-column: 4 / 13; overflow: hidden; }
+
+        /* Grid Visualization Helpers */
+        .grid-visualizer { grid-column: span 1; background: rgba(15, 12, 41, 0.05); border: var(--stroke-weight) dashed var(--stroke-color); height: 60px; display: flex; align-items: center; justify-content: center; }
 
         /* ==========================================================================
            7. RESPONSIVE CHOREOGRAPHY
@@ -271,6 +238,7 @@
             .bento-grid { grid-template-columns: 1fr 1fr; }
             .type-label { grid-column: 1 / -1; margin-bottom: var(--space-md); }
             .type-specimen { grid-column: 1 / -1; }
+            .grid-visualizer:nth-child(n+9) { display: none; } /* Hide extra cols on tablet */
         }
         
         @media (max-width: 768px) {
@@ -278,6 +246,7 @@
             .txt-block, .txt-wide, .txt-center-narrow, .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
             .bento-item.wide { grid-column: span 1; }
+            .grid-visualizer:nth-child(n+5) { display: none; } /* Hide extra cols on mobile */
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -301,13 +270,11 @@
     <nav class="bento-nav" id="bentoNav">
         <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
             <div class="bento-grid">
-                <a href="#problem" class="bento-item nav-link"><span class="tech-subhead">01 // THE PROBLEM</span><h3 class="tech-title display-medium">STRUCTURAL<br>DEFICIT</h3></a>
-                <a href="#thesis" class="bento-item nav-link"><span class="tech-subhead">02 // THE THESIS</span><h3 class="tech-title display-medium">THE MISSION</h3></a>
-                <a href="#audience" class="bento-item nav-link"><span class="tech-subhead">03 // AUDIENCE</span><h3 class="tech-title display-medium">THE BUILDERS</h3></a>
-                <a href="#expressions" class="bento-item nav-link"><span class="tech-subhead">04 // SYSTEMS</span><h3 class="tech-title display-medium">EXPRESSIONS</h3></a>
-                <a href="#archetype" class="bento-item nav-link"><span class="tech-subhead">05 // IDENTITY</span><h3 class="tech-title display-medium">BRAND ARCHETYPE</h3></a>
-                <a href="#verbal" class="bento-item nav-link"><span class="tech-subhead">06 // DICTION</span><h3 class="tech-title display-medium">VERBAL<br>IDENTITY</h3></a>
-                <a href="#typography" class="bento-item wide nav-link"><span class="tech-subhead">07 // TYPOGRAPHY</span><h3 class="tech-title display-medium">ARCHITECTURAL<br>SCALE</h3></a>
+                <a href="#colors" class="bento-item nav-link"><span class="tech-subhead">01 // FOUNDATION</span><h3 class="tech-title display-medium">PALETTE</h3></a>
+                <a href="#typography" class="bento-item wide nav-link"><span class="tech-subhead">02 // TYPOGRAPHY</span><h3 class="tech-title display-medium">ARCHITECTURAL SCALE</h3></a>
+                <a href="#grid" class="bento-item nav-link"><span class="tech-subhead">03 // STRUCTURE</span><h3 class="tech-title display-medium">GRID LOGIC</h3></a>
+                <a href="#components" class="bento-item wide nav-link"><span class="tech-subhead">04 // ARTIFACTS</span><h3 class="tech-title display-medium">COMPONENTS</h3></a>
+                <a href="#interactive" class="bento-item nav-link"><span class="tech-subhead">05 // ACTION</span><h3 class="tech-title display-medium">INTERACTIVE</h3></a>
             </div>
         </div>
     </nav>
@@ -315,161 +282,43 @@
     <main>
         <section id="cover" style="padding-top: calc(var(--space-xxl) * 1.5);">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">LEVY STRATEGIC DESIGN</span><span class="micro-data">CORE DOCUMENT</span></div>
-                <h1 class="hd-main tech-title display-huge reveal">LEVY BRAND MANUAL.</h1>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">SYSTEM LIBRARY</span><span class="micro-data">ASTRO READY</span></div>
+                <h1 class="hd-main tech-title display-huge reveal">DESIGN SYSTEM</h1>
                 <div class="txt-block reveal p-group" style="margin-top: var(--space-sm);">
-                    <h2 class="tech-title" style="font-size: clamp(1rem, 1.5vw, 1.25rem); color: var(--ink);">STOP THINKING SMALL.</h2>
-                    <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">Levy is where the seriously ambitious find the understanding, the partners, and the conditions to build at the scale the American Project actually requires.</h3>
+                    <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">The architectural blueprint, component library, and structural logic for Levy. Built for translation into isolated Astro components.</h3>
                 </div>
             </div>
         </section>
 
-        <section id="problem">
+        <section id="colors">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">01 // THE PROBLEM</span></div>
-                <h2 class="hd-main tech-title display-large reveal">SOMETHING HAS<br>GONE WRONG.</h2>
-                <div class="txt-block reveal p-group">
-                    <p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
-                    <p class="body-medium">The people who should be producing the most consequential results — founders, public servants, institutional leaders — are systematically producing less than they're capable of. Because the knowledge, the networks, and the conditions that would let them operate at full capacity don't exist in the same place at the same time.</p>
-                    
-                    <blockquote class="reveal">"Those aren't two separate arguments. They're the same one."</blockquote>
-                    
-                    <p class="body-medium">When seriously ambitious people stay stuck at a fraction of their impact, institutions weaken. Democratic infrastructure quietly erodes through the accumulated weight of potential that never found the right conditions.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="thesis">
-            <div class="dream-aura"></div>
-            <div class="gritty-filter"></div>
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // THE THESIS</span></div>
-                
-                <div class="full-bleed reveal" style="text-align: center;"><h2 class="tech-title display-massive">INSTITUTIONS DON'T VOTE.<br>HUMANS DO.</h2></div>
-                
-                <div class="txt-center-narrow reveal" style="margin-top: var(--space-md);">
-                    <h3 class="narrative display-medium">Personal ROI and civic impact are not in tension here. They're the same outcome, measured at different scales.</h3>
-                </div>
-                
-                <div class="split-2up reveal" style="margin-top: var(--space-xl);">
-                    <div class="split-l p-group">
-                        <span class="micro-data lbl-lead">THE MISSION</span>
-                        <p class="body-medium">To strengthen the promise of liberal democracy and the American Project — by building the civic infrastructure that connects seriously ambitious people to the institutions, systems, and partners that make outlier outcomes possible. Working as a builder, not a political organization.</p>
-                    </div>
-                    <div class="split-r p-group">
-                        <span class="micro-data lbl-lead">COMMUNITY CAPITALS</span>
-                        <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political. Levy builds at the intersections of those capitals. Closing the gap has the highest leverage on what actually happens next.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="audience" class="dark-section">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead" style="color: rgba(255,255,255,0.8);">03 // THE AUDIENCE</span></div>
-                <h2 class="hd-main tech-title display-large reveal">THE SERIOUSLY<br>AMBITIOUS.</h2>
-                
-                <div class="txt-block reveal p-group" style="margin-bottom: var(--space-lg);">
-                    <p class="body-large" style="color: rgba(245,245,243,0.8);">Not people performing ambition or cosplaying as changemakers. The people Levy is built for are already doing the work — solving hard problems and creating real results behind closed doors without waiting for applause.</p>
-                </div>
-
-                <div class="split-2up reveal">
-                    <div class="split-l p-group" style="margin-bottom: var(--space-lg);">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">THE FOUNDER</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Scaling a company who doesn't yet know that government contracts and civic infrastructure are powerful tools. She's hitting a ceiling that isn't about effort — it's about not understanding the terrain.</p>
-                    </div>
-                    <div class="split-r p-group" style="margin-bottom: var(--space-lg);">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">THE PUBLIC SERVANT</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Knows what's possible but can't find private partners who understand how to work within government constraints.</p>
-                    </div>
-                    <div class="split-l p-group">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">THE STRATEGIST</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside a corporation with a significant idea. She knows internal politics, but not how to use external factors to make the internal case undeniable.</p>
-                    </div>
-                    <div class="split-r p-group">
-                        <span class="micro-data lbl-lead" style="color: var(--paper);">THE DEPARTMENT HEAD</span>
-                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside an anchor institution. Knows their organization could do something consequential — if they could structure the effort.</p>
-                    </div>
-                </div>
-                
-                <div class="txt-wide reveal" style="margin-top: var(--space-xl);">
-                    <h3 class="narrative display-medium">The Before State: They feel the gap. They can't name it yet. Levy helps you name the gap. Then helps you close it.</h3>
-                </div>
-            </div>
-        </section>
-
-        <section id="expressions">
-            <div class="artifact-cloud-container"></div>
-            <div class="gritty-filter"></div>
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // SYSTEMS</span></div>
-                <h2 class="hd-main tech-title display-large reveal">THREE INTEGRATED<br>EXPRESSIONS.</h2>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">01 // FOUNDATION</span></div>
+                <h2 class="hd-main tech-title display-large reveal">COLOR LOGIC</h2>
                 
                 <div class="txt-block reveal p-group">
-                    <p class="body-large">To levy is to organize people and resources and direct them toward something that needs doing. Leverage is what happens when you apply force at exactly the right point.</p>
+                    <p class="body-large">Midnight is the hard architecture. Paper is the void. The Data Cloud is the human momentum happening inside the rigid bureaucratic structure.</p>
                 </div>
 
                 <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
-                    <div class="artifact-card" style="grid-column: span 4;">
-                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY NETWORK</div>
-                        <p class="body-medium">The membership community — a tiered, in-person-anchored gathering of founders, public servants, and institutional strategists. Built to make members sharper and better connected.</p>
-                    </div>
-                    <div class="artifact-card" style="grid-column: span 4;">
-                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY STUDIO</div>
-                        <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building produces.</p>
-                    </div>
-                    <div class="artifact-card" style="grid-column: span 4;">
-                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY INSTITUTE</div>
-                        <p class="body-medium">The research and knowledge arm. Developing frameworks and building the intellectual infrastructure that helps members understand how systems work.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="archetype">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">05 // IDENTITY</span></div>
-                <h2 class="hd-main tech-title display-medium reveal">MAGICIAN-SAGE</h2>
-                
-                <div class="split-2up reveal">
-                    <div class="split-l p-group">
-                        <span class="micro-data">THE POSTURE</span>
-                        <p class="body-medium">Levy shows up with the right knowledge at the right moment. It connects the right people. It points at what's possible and explains why. Then it gets out of the way.</p>
-                    </div>
-                    <div class="split-r p-group">
-                        <span class="micro-data lbl-lead">EMOTIONAL CONCEPT</span>
-                        <p class="body-medium"><strong>Actualization.</strong> Not the surprise of exceeding what you thought was possible — the recognition of finally reaching it. You just needed the conditions to prove it.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="verbal">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">06 // DICTION</span></div>
-                <h2 class="hd-main tech-title display-medium reveal">VERBAL IDENTITY</h2>
-
-                <div class="split-2up reveal" style="margin-bottom: var(--space-lg);">
-                    <div class="split-l">
-                        <div class="do-dont-wrapper p-group">
-                            <span class="micro-data lbl-lead">ALWAYS USE</span>
-                            <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results. Practice. Compound. Leverage. Capital. Roots. Doers.</p>
+                    <div class="color-spec" style="grid-column: span 4;">
+                        <div class="color-fill" style="background-color: var(--midnight);"></div>
+                        <div class="color-meta">
+                            <div class="tech-title">MIDNIGHT</div>
+                            <span class="micro-data" style="margin: 0;">#0F0C29</span>
                         </div>
                     </div>
-                    <div class="split-r">
-                        <div class="do-dont-wrapper dont p-group">
-                            <span class="micro-data">NEVER USE</span>
-                            <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Playbook. blueprint. Citizens. Change. Civic engagement. Changemaker.</p>
+                    <div class="color-spec" style="grid-column: span 4;">
+                        <div class="color-fill" style="background-color: var(--paper);"></div>
+                        <div class="color-meta">
+                            <div class="tech-title">PAPER</div>
+                            <span class="micro-data" style="margin: 0;">#F5F5F3</span>
                         </div>
                     </div>
-                </div>
-                
-                <div class="full-bleed reveal">
-                    <div class="artifact-card">
-                        <div class="tech-title" style="margin-bottom: var(--space-sm);">TONE & GOVERNANCE</div>
-                        <div style="column-count: 2; column-gap: var(--space-lg);">
-                            <p class="body-medium" style="margin-bottom: var(--space-sm);"><strong>Tone:</strong> Direct. Clear. Confident. Speaks to people who are already serious and already working.</p>
-                            <p class="body-medium"><strong>Governance:</strong> Never operates as a political organization. Never flatters. Never offers motivation without substance or uses vague language about impact.</p>
+                    <div class="color-spec" style="grid-column: span 4;">
+                        <div class="color-fill" style="background: var(--cloud-dream);"></div>
+                        <div class="color-meta">
+                            <div class="tech-title">DATA CLOUD</div>
+                            <span class="micro-data" style="margin: 0;">GRADIENT</span>
                         </div>
                     </div>
                 </div>
@@ -478,94 +327,144 @@
 
         <section id="typography">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">07 // TYPOGRAPHY</span></div>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // TYPOGRAPHY</span></div>
                 <h2 class="hd-main tech-title display-large reveal">ARCHITECTURAL<br>SCALE</h2>
 
                 <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-md);">
-                    
                     <div class="type-row">
                         <div class="type-label">
                             <span class="micro-data lbl-lead">.DISPLAY-MASSIVE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Bold</span>
                         </div>
-                        <div class="type-specimen">
-                            <div class="display-massive tech-title">LEVY</div>
-                        </div>
+                        <div class="type-specimen"><div class="display-massive tech-title">LEVY</div></div>
                     </div>
 
                     <div class="type-row">
                         <div class="type-label">
                             <span class="micro-data lbl-lead">.DISPLAY-HUGE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Bold</span>
                         </div>
-                        <div class="type-specimen">
-                            <div class="display-huge tech-title">SYSTEMS</div>
-                        </div>
-                    </div>
-
-                    <div class="type-row">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.DISPLAY-LARGE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
-                        </div>
-                        <div class="type-specimen">
-                            <div class="display-large tech-title">ARCHITECTURE</div>
-                        </div>
-                    </div>
-
-                    <div class="type-row">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.DISPLAY-MEDIUM</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tech / Bold</span>
-                        </div>
-                        <div class="type-specimen">
-                            <div class="display-medium tech-title">THE AMERICAN PROJECT</div>
-                        </div>
+                        <div class="type-specimen"><div class="display-huge tech-title">SYSTEMS</div></div>
                     </div>
 
                     <div class="type-row" style="align-items: center;">
                         <div class="type-label">
                             <span class="micro-data lbl-lead">.NARRATIVE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Fraunces / Soft 50 / Wonk 0</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Fraunces / Soft 50</span>
                         </div>
-                        <div class="type-specimen">
-                            <div class="narrative" style="font-size: clamp(2rem, 3vw, 2.5rem);">Actualization. Not the surprise of exceeding what you thought was possible.</div>
-                        </div>
+                        <div class="type-specimen"><div class="narrative" style="font-size: clamp(2rem, 3vw, 2.5rem);">Actualization. Not the surprise of exceeding what you thought was possible.</div></div>
                     </div>
 
                     <div class="type-row" style="align-items: start;">
                         <div class="type-label">
                             <span class="micro-data lbl-lead">.BODY-LARGE</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light / 300</span>
+                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light</span>
                         </div>
-                        <div class="type-specimen">
-                            <p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
-                        </div>
+                        <div class="type-specimen"><p class="body-large">The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p></div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="type-row" style="align-items: start;">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.BODY-MEDIUM</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Light / 300</span>
-                        </div>
-                        <div class="type-specimen">
-                            <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
-                        </div>
-                    </div>
+        <section id="grid" class="dark-section">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">03 // STRUCTURE</span></div>
+                <h2 class="hd-main tech-title display-large reveal">THE 12-COLUMN<br>GRID LOGIC</h2>
 
-                    <div class="type-row" style="align-items: center;">
-                        <div class="type-label">
-                            <span class="micro-data lbl-lead">.MICRO-DATA</span>
-                            <span class="micro-data" style="color: var(--ink-light);">Helvetica Neue / Tracked</span>
-                        </div>
-                        <div class="type-specimen">
-                            <span class="micro-data">07 // TYPOGRAPHY SYSTEM SPECIFICATION</span>
-                        </div>
-                    </div>
-
+                <div class="txt-block reveal p-group" style="margin-bottom: var(--space-lg);">
+                    <p class="body-large" style="color: rgba(245,245,243,0.8);">The layout logic relies on strict, mathematically sound grids. Content spans utilize CSS subgrid to maintain alignment across nested components.</p>
                 </div>
 
-                <div class="full-bleed reveal" style="margin-top: var(--space-xl); text-align: right;">
+                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-bottom: var(--space-xl);">
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">1</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">2</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">3</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">4</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">5</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">6</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">7</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">8</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">9</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">10</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">11</span></div>
+                    <div class="grid-visualizer"><span class="micro-data" style="margin:0;">12</span></div>
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l p-group">
+                        <span class="micro-data lbl-lead" style="color: var(--paper);">.SPLIT-L (SPAN 5)</span>
+                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Inside a `.split-2up` container (which spans columns 3 to 13), the left content block spans 5 columns.</p>
+                    </div>
+                    <div class="split-r p-group">
+                        <span class="micro-data lbl-lead" style="color: var(--paper);">.SPLIT-R (SPAN 5)</span>
+                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">The right content block also spans 5 columns, creating a perfectly balanced 2-up layout that stacks gracefully on mobile.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="components">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // ARTIFACTS</span></div>
+                <h2 class="hd-main tech-title display-large reveal">COMPONENTS</h2>
+
+                <div class="full-bleed reveal" style="margin-top: var(--space-md); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
+                    <span class="micro-data lbl-lead">COMPONENT: BLOCKQUOTE</span>
+                    <blockquote>"Those aren't two separate arguments. They're the same one."</blockquote>
+                </div>
+
+                <div class="full-bleed reveal" style="display: grid; grid-template-columns: subgrid; margin-top: var(--space-xl); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
+                    <span class="micro-data lbl-lead full-bleed">COMPONENT: ARTIFACT CARDS (.artifact-card)</span>
+                    <div class="artifact-card" style="grid-column: span 6;">
+                        <div class="tech-title" style="margin-bottom: var(--space-md);">THE LEVY NETWORK</div>
+                        <p class="body-medium">The membership community — a tiered, in-person-anchored gathering of founders, public servants, and institutional strategists.</p>
+                    </div>
+                    <div class="artifact-card" style="grid-column: span 6; background: var(--midnight); color: var(--paper);">
+                        <div class="tech-title" style="margin-bottom: var(--space-md);">DARK VARIANT</div>
+                        <p class="body-medium" style="color: rgba(255,255,255,0.7);">Artifact cards can be inverted for contrast or when placed inside a dark section.</p>
+                    </div>
+                </div>
+
+                <div class="split-2up reveal" style="margin-top: var(--space-xl); border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-xl);">
+                    <span class="micro-data lbl-lead full-bleed">COMPONENT: RULE CARDS (.do-dont-wrapper)</span>
+                    <div class="split-l">
+                        <div class="do-dont-wrapper">
+                            <span class="micro-data lbl-lead">ALWAYS USE</span>
+                            <p class="body-medium">Build. Outcomes. Understand. Principles. Incentives. Actors. Systems. Scale. Results.</p>
+                        </div>
+                    </div>
+                    <div class="split-r">
+                        <div class="do-dont-wrapper dont">
+                            <span class="micro-data lbl-lead">NEVER USE</span>
+                            <p class="body-medium">Transform. Empower. Ecosystem. Innovative. Synergy. Inspire. Unlock. Playbook.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interactive">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="micro-data lbl-lead">05 // ACTION</span></div>
+                <h2 class="hd-main tech-title display-large reveal">INTERACTIVE</h2>
+
+                <div class="split-2up reveal" style="margin-top: var(--space-md);">
+                    <div class="split-l p-group" style="align-items: flex-start;">
+                        <span class="micro-data lbl-lead">PRIMARY BUTTON</span>
+                        <p class="body-medium" style="margin-bottom: var(--space-md);">A strict, architectural action button. Transparent with a 1px solid border, reverting to solid fill on hover.</p>
+                        <a href="#" class="btn">Download Assets</a>
+                    </div>
+                    
+                    <div class="split-r p-group" style="align-items: flex-start; background: var(--midnight); padding: var(--space-lg);">
+                        <span class="micro-data lbl-lead" style="color: var(--paper);">DARK MODE BUTTON</span>
+                        <p class="body-medium" style="color: rgba(255,255,255,0.7); margin-bottom: var(--space-md);">Inherits context inside `.dark-section` wrappers.</p>
+                        <div class="dark-section" style="background: transparent;">
+                            <a href="#" class="btn">View Guidelines</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="full-bleed reveal" style="margin-top: var(--space-xxl); text-align: right; border-top: var(--stroke-weight) solid var(--stroke-color); padding-top: var(--space-md);">
                     <span class="micro-data">PREPARED BY FOLKMARK FOR LEVY, 2026</span>
                 </div>
             </div>
@@ -577,13 +476,16 @@
         document.addEventListener("DOMContentLoaded", () => {
             const navToggle = document.getElementById('navToggle');
             const bentoNav = document.getElementById('bentoNav');
-            const darkSection = document.getElementById('audience');
+            const darkSection = document.getElementById('grid'); // Reference point for header inversion
 
             const evaluateDarkOverlay = () => {
                 const darkTop = darkSection.offsetTop;
                 const darkBottom = darkTop + darkSection.offsetHeight;
-                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) document.getElementById('mainHeader').classList.add('on-dark');
-                else document.getElementById('mainHeader').classList.remove('on-dark');
+                if (window.scrollY > darkTop - 90 && window.scrollY < darkBottom - 90) {
+                    document.getElementById('mainHeader').classList.add('on-dark');
+                } else {
+                    document.getElementById('mainHeader').classList.remove('on-dark');
+                }
             };
 
             navToggle.addEventListener('click', () => {
@@ -591,6 +493,18 @@
                 navToggle.classList.toggle('is-active');
                 navToggle.setAttribute('aria-expanded', isOpen);
                 document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+
+            // Close nav when clicking a link (helpful for single-page component libraries)
+            document.querySelectorAll('.bento-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    if(bentoNav.classList.contains('is-open')) {
+                        bentoNav.classList.remove('is-open');
+                        navToggle.classList.remove('is-active');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        document.body.style.overflow = '';
+                    }
+                });
             });
 
             window.addEventListener('scroll', evaluateDarkOverlay);
