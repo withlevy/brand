@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levy | Comprehensive Component Library</title>
+    <title>Levy | Architectural Component Library</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,50 +11,73 @@
     
     <style>
         /* ==========================================================================
-           1. BRAND TOKENS & ARCHITECTURAL VARIABLES
+           1. ELITE ARCHITECTURAL VARIABLES (Base-8 Grid & Perfect Fourth Scale)
            ========================================================================== */
         :root {
+            /* Palette Foundation */
             --midnight: #0f0c29;
             --paper: #F5F5F3; 
-            
             --cloud-dream: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.4) 55%, rgba(138, 35, 135, 0.6) 100%);
             
             --ink: var(--midnight);
-            --ink-light: rgba(15, 12, 41, 0.8);
-            --ink-muted: rgba(15, 12, 41, 0.6); 
+            --ink-light: rgba(15, 12, 41, 0.75);
+            --ink-muted: rgba(15, 12, 41, 0.5); 
             
+            /* Universal Stroke */
             --stroke-weight: 1px;
-            --stroke-color: rgba(15, 12, 41, 0.25);
+            --stroke-color: rgba(15, 12, 41, 0.2);
             --stroke-heavy: rgba(15, 12, 41, 1);
             --stroke-light: rgba(245, 245, 243, 0.15); 
             
+            /* Typography Scale (Perfect Fourth - 1.333 Ratio) */
+            --step--2: 0.563rem; /* 9px */
+            --step--1: 0.750rem; /* 12px */
+            --step-0:  1.000rem; /* 16px - Base */
+            --step-1:  1.333rem; /* 21px */
+            --step-2:  1.777rem; /* 28px */
+            --step-3:  2.369rem; /* 37px */
+            --step-4:  3.157rem; /* 50px */
+            --step-5:  4.209rem; /* 67px */
+            --step-6:  5.610rem; /* 89px */
+            --step-7:  7.478rem; /* 119px */
+
             --font-tech: "Helvetica Neue", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
             --font-narrative: 'Fraunces', serif;
             
-            --header-height: 90px;
+            /* Spatial Grid (Strict Base-8 System: 1rem = 16px) */
+            --space-1:  0.5rem;  /* 8px */
+            --space-2:  1.0rem;  /* 16px */
+            --space-3:  1.5rem;  /* 24px */
+            --space-4:  2.0rem;  /* 32px */
+            --space-6:  3.0rem;  /* 48px */
+            --space-8:  4.0rem;  /* 64px */
+            --space-12: 6.0rem;  /* 96px */
+            --space-16: 8.0rem;  /* 128px */
+            --space-24: 12.0rem; /* 192px */
             
-            --space-xs: clamp(0.5rem, 1vw, 1rem);
-            --space-sm: clamp(1rem, 2vw, 1.5rem);
-            --space-md: clamp(1.5rem, 3vw, 3rem);
-            --space-lg: clamp(3rem, 5vw, 5rem);
-            --space-xl: clamp(5rem, 10vw, 10rem); 
-            --space-xxl: clamp(8rem, 14vw, 14rem);
+            --header-height: var(--space-12);
             
+            /* Master Transition Curve */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* Fluid Root Scaling */
+        html { font-size: 14px; scroll-behavior: smooth; background-color: var(--paper); }
+        @media (min-width: 768px) { html { font-size: 15px; } }
+        @media (min-width: 1024px) { html { font-size: 16px; } }
+        @media (min-width: 2000px) { html { font-size: 18px; } }
 
         /* ==========================================================================
            2. BASE & TEXTURE
            ========================================================================== */
         * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
-        html { scroll-behavior: smooth; background-color: var(--paper); }
         
         body {
             background-color: var(--paper);
             color: var(--ink);
             font-family: var(--font-tech);
             font-weight: 300;
-            line-height: 1.4;
+            line-height: 1.5; /* Baseline lock */
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             padding-top: var(--header-height);
@@ -62,89 +85,99 @@
 
         .noise {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
-            pointer-events: none; z-index: 9999; opacity: 0.06; 
+            pointer-events: none; z-index: 9999; opacity: 0.05; 
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
         }
 
-        :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+        :focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
 
         /* ==========================================================================
-           3. TYPOGRAPHY SYSTEM
+           3. TYPOGRAPHY SYSTEM (Mapped to Modular Scale)
            ========================================================================== */
-        .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.85; }
-        .micro-data { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; line-height: 1.6; color: var(--ink-muted); display: block; }
-        .micro-data.lbl-lead { margin-bottom: var(--space-md); color: var(--ink); }
-        .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.1; }
-
-        .display-massive { font-size: clamp(3rem, 11vw, 13rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.85; }
-        .display-huge { font-size: clamp(2.25rem, 8vw, 8rem); letter-spacing: -0.03em; }
-        .display-large { font-size: clamp(1.8rem, 5vw, 5rem); letter-spacing: -0.02em; }
-        .display-medium { font-size: clamp(1.4rem, 3.5vw, 3rem); letter-spacing: -0.01em; }
+        .tech-title { font-family: var(--font-tech); font-weight: 500; text-transform: uppercase; letter-spacing: -0.02em; }
         
-        .body-large { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; font-weight: 300; }
-        .body-medium { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.6; font-weight: 300; color: var(--ink-light); }
-        .body-small { font-size: 0.85rem; line-height: 1.5; color: var(--ink-muted); }
+        /* Headers map to 1.05 or 1.1 line-height to maintain tight architectural blocks */
+        .display-massive { font-size: var(--step-7); line-height: 1; font-weight: 700; letter-spacing: -0.04em; }
+        .display-huge { font-size: var(--step-6); line-height: 1.05; letter-spacing: -0.03em; }
+        .display-large { font-size: var(--step-5); line-height: 1.05; letter-spacing: -0.02em; }
+        .display-medium { font-size: var(--step-3); line-height: 1.1; letter-spacing: -0.01em; }
+        
+        .narrative { font-family: var(--font-narrative); font-weight: 200; font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36; line-height: 1.15; }
+        
+        /* Body maps to strict 1.5 line height for 24px baseline rhythm */
+        .body-large { font-size: var(--step-1); line-height: 1.5; font-weight: 300; }
+        .body-medium { font-size: var(--step-0); line-height: 1.5; font-weight: 300; color: var(--ink-light); }
+        .body-small { font-size: var(--step--1); line-height: 1.5; color: var(--ink-muted); }
 
-        /* Inline Text Styles */
+        .micro-data { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.5; color: var(--ink-muted); display: block; }
+        .micro-data.lbl-lead { margin-bottom: var(--space-4); color: var(--ink); }
+        .micro-data.tiny { font-size: var(--step--2); }
+
         strong { font-weight: 500; color: var(--ink); }
         em { font-style: italic; }
-        .text-link { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s; font-weight: 500;}
+        .text-link { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease-out-expo); font-weight: 500;}
         .text-link:hover { color: var(--ink-muted); }
 
         /* ==========================================================================
            4. PROPORTIONAL GRID ARCHITECTURE
            ========================================================================== */
-        section { padding: var(--space-xl) 5vw; width: 100%; position: relative; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
-        section:last-of-type { padding-bottom: var(--space-xxl); border-bottom: none; }
+        section { padding: var(--space-16) 5vw; width: 100%; position: relative; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+        section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
         
         .layout-grid { 
-            display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 2vw; row-gap: var(--space-xl); 
-            width: 100%; max-width: 2400px; margin: 0 auto; position: relative; z-index: 2;
+            display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--space-4); row-gap: var(--space-12); 
+            width: 100%; max-width: 2000px; margin: 0 auto; position: relative; z-index: 2;
         }
         
+        /* Strict Column Mapping */
         .lbl { grid-column: 1 / 3; }
         .hd-main { grid-column: 3 / 12; }
         .txt-block { grid-column: 3 / 10; } 
-        .txt-wide { grid-column: 3 / 12; }
+        .txt-wide { grid-column: 3 / 13; } /* Extended to 13 to align with standard bounds */
         .txt-center-narrow { grid-column: 4 / 10; text-align: center; }
         
-        .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-xl) 2vw;}
+        .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-8) var(--space-4); }
         .split-l { grid-column: auto / span 5; } 
         .split-r { grid-column: auto / span 5; } 
         
         .full-bleed { grid-column: 1 / -1; }
-        .p-group { display: flex; flex-direction: column; gap: var(--space-md); }
+        .p-group { display: flex; flex-direction: column; gap: var(--space-4); }
 
-        .divider { width: 100%; height: var(--stroke-weight); background: var(--stroke-color); margin: var(--space-lg) 0; border: none; }
+        .divider { width: 100%; height: var(--stroke-weight); background: var(--stroke-color); margin: var(--space-8) 0; border: none; }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
         .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* Dark Mode */
+        /* Dark Mode & Textures */
         .dark-section { background: var(--midnight); color: var(--paper); }
         .dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
         .dark-section .micro-data.lbl-lead { color: var(--paper); }
-        .dark-section .divider { background: var(--stroke-light); }
+        .dark-section .divider, .dark-section section { border-color: var(--stroke-light); }
         .dark-section .text-link { color: var(--paper); }
+
+        .gritty-filter {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.35; mix-blend-mode: color-burn; 
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+        }
 
         /* ==========================================================================
            5. HEADER & BENTO NAVIGATION
            ========================================================================== */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
-            background: rgba(245, 245, 243, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; z-index: 2000; transition: background 0.4s ease;
+            background: rgba(245, 245, 243, 0.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 5vw; z-index: 2000; transition: background 0.4s var(--ease-out-expo);
             border-bottom: var(--stroke-weight) solid transparent;
         }
         
-        header.on-dark { background: rgba(15, 12, 41, 0.9); border-bottom-color: var(--stroke-light);} 
+        header.on-dark { background: rgba(15, 12, 41, 0.95); border-bottom-color: var(--stroke-light);} 
         header.on-dark .header-logo, header.on-dark .hamburger span { color: var(--paper); background-color: var(--paper); }
 
-        .header-logo { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; font-size: 1.5rem; }
-        .header-logo svg { width: 24px; height: 24px; }
+        .header-logo { display: flex; align-items: center; gap: var(--space-2); color: var(--ink); text-decoration: none; font-size: var(--step-1); }
+        .header-logo svg { width: var(--space-3); height: var(--space-3); }
 
-        .hamburger { background: none; border: none; cursor: pointer; width: 44px; height: 44px; position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
-        .hamburger-box { width: 32px; height: 18px; position: relative; }
+        .hamburger { background: none; border: none; cursor: pointer; width: var(--space-6); height: var(--space-6); position: relative; z-index: 2100; display: flex; align-items: center; justify-content: center;}
+        .hamburger-box { width: var(--space-4); height: 18px; position: relative; }
         .hamburger span { display: block; position: absolute; height: var(--stroke-weight); width: 100%; background: var(--ink); transition: transform 0.4s var(--ease-out-expo); transform-origin: center; }
         .hamburger span:nth-child(1) { top: 0; }
         .hamburger span:nth-child(2) { top: 8px; }
@@ -156,32 +189,34 @@
 
         .bento-nav {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(15, 12, 41, 0.98); 
-            z-index: 1500; padding: calc(var(--header-height) + 2dvh) 5vw 5vw 5vw;
+            z-index: 1500; padding: calc(var(--header-height) + var(--space-4)) 5vw var(--space-8) 5vw;
             opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
         }
         .bento-nav.is-open { opacity: 1; visibility: visible; }
-        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); height: 100%; max-height: 80dvh; }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); height: 100%; max-height: 80dvh; }
         
         .bento-item {
-            background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-md);
+            background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-4);
             text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
-            min-height: 160px; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
+            min-height: var(--space-24); transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
         }
+        .bento-item.wide { grid-column: span 2; }
         .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
         .bento-item:hover { border-color: var(--paper); }
         .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
 
         /* ==========================================================================
-           6. COMPONENTS (The Atomic Library)
+           6. COMPONENTS (Atomic Library)
            ========================================================================== */
         
-        /* 6.1 Buttons & Badges */
-        .btn-group { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+        /* 6.1 Buttons & Badges (Locked to 48px Base-8 Height) */
+        .btn-group { display: flex; gap: var(--space-2); flex-wrap: wrap; }
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem;
+            display: inline-flex; align-items: center; justify-content: center; 
+            height: var(--space-6); padding: 0 var(--space-4); /* 48px tall */
             border: var(--stroke-weight) solid var(--ink); background: transparent; color: var(--ink);
-            cursor: pointer; text-decoration: none; transition: background 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo);
-            font-family: var(--font-tech); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 500;
+            cursor: pointer; text-decoration: none; transition: background 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
+            font-family: var(--font-tech); text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.1em; font-weight: 500;
         }
         .btn:hover { background: var(--ink); color: var(--paper); }
         
@@ -189,94 +224,116 @@
         .btn-solid:hover { background: transparent; color: var(--ink); }
 
         .badge {
-            display: inline-flex; padding: 0.3rem 0.6rem; border: var(--stroke-weight) solid var(--stroke-color);
-            background: rgba(15, 12, 41, 0.03); font-family: var(--font-tech); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+            display: inline-flex; align-items: center; height: var(--space-4); padding: 0 var(--space-2); 
+            border: var(--stroke-weight) solid var(--stroke-color); background: rgba(15, 12, 41, 0.03); 
+            font-family: var(--font-tech); font-size: var(--step--2); text-transform: uppercase; letter-spacing: 0.1em;
         }
 
-        /* 6.2 Forms & Inputs */
-        .form-row { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: var(--space-md); width: 100%; }
-        .form-label { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink); }
+        /* 6.2 Forms & Inputs (Locked to 48px Base-8 Height) */
+        .form-row { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
+        .form-label { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
         
         .form-input, .form-textarea, .form-select {
-            width: 100%; padding: 1rem; background: transparent; border: var(--stroke-weight) solid var(--stroke-color);
-            color: var(--ink); font-family: var(--font-tech); font-size: 1rem; font-weight: 300; transition: border-color 0.3s;
+            width: 100%; height: var(--space-6); padding: 0 var(--space-3); 
+            background: transparent; border: var(--stroke-weight) solid var(--stroke-color);
+            color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; transition: border-color 0.3s var(--ease-out-expo);
         }
         .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--ink); }
         .form-input::placeholder, .form-textarea::placeholder { color: var(--ink-muted); opacity: 0.5; }
-        .form-textarea { resize: vertical; min-height: 120px; }
+        .form-textarea { resize: vertical; min-height: var(--space-16); padding: var(--space-2) var(--space-3); height: auto;}
         
-        .form-select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="%230f0c29" stroke-width="1"/></svg>'); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+        .form-select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="%230f0c29" stroke-width="1"/></svg>'); background-repeat: no-repeat; background-position: right var(--space-3) center; cursor: pointer; }
 
-        /* Custom Checkbox/Radio */
-        .control-group { display: flex; gap: var(--space-md); }
-        .control-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-family: var(--font-tech); font-size: 0.9rem; }
+        /* Exact 24px SVG Controls */
+        .control-group { display: flex; flex-direction: column; gap: var(--space-2); }
+        .control-label { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; font-family: var(--font-tech); font-size: var(--step-0); }
         .control-label input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-        .control-box { height: 20px; width: 20px; background: transparent; border: var(--stroke-weight) solid var(--stroke-color); display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s;}
+        .control-box { height: var(--space-3); width: var(--space-3); background: transparent; border: var(--stroke-weight) solid var(--stroke-color); display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s;}
         .control-label input:checked ~ .control-box { background: var(--ink); border-color: var(--ink); }
-        .control-box::after { content: ""; display: none; width: 8px; height: 8px; background: var(--paper); }
+        .control-box::after { content: ""; display: none; width: var(--space-1); height: var(--space-1); background: var(--paper); }
         .control-label input:checked ~ .control-box::after { display: block; }
+        
+        /* Radios */
+        .control-radio .control-box { border-radius: 50%; }
+        .control-radio .control-box::after { border-radius: 50%; }
 
         /* 6.3 Media & Placeholders */
         .media-placeholder {
             width: 100%; background: rgba(15, 12, 41, 0.02); border: var(--stroke-weight) solid var(--stroke-color);
             display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
-            /* Architectural crosshatch pattern */
             background-image: repeating-linear-gradient(45deg, var(--stroke-color) 0, var(--stroke-color) 1px, transparent 1px, transparent 12px);
         }
         .media-placeholder::after {
-            content: 'MEDIA CONTAINER'; position: absolute; background: var(--paper); padding: 0.5rem 1rem;
-            border: var(--stroke-weight) solid var(--stroke-color); font-family: var(--font-tech); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+            content: 'MEDIA CONTAINER'; position: absolute; background: var(--paper); padding: var(--space-1) var(--space-2);
+            border: var(--stroke-weight) solid var(--stroke-color); font-family: var(--font-tech); font-size: var(--step--2); text-transform: uppercase; letter-spacing: 0.1em;
         }
         .ratio-16-9 { aspect-ratio: 16 / 9; }
         .ratio-4-3 { aspect-ratio: 4 / 3; }
         .ratio-1-1 { aspect-ratio: 1 / 1; }
         
-        .caption { font-family: var(--font-tech); font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.75rem; display: block;}
+        .caption { font-family: var(--font-tech); font-size: var(--step--1); color: var(--ink-muted); margin-top: var(--space-2); display: block;}
 
-        /* 6.4 Accordions / Toggles */
-        .accordion { border-top: var(--stroke-weight) solid var(--stroke-color); border-bottom: var(--stroke-weight) solid var(--stroke-color); margin-bottom: calc(var(--stroke-weight) * -1); }
-        .accordion summary { 
-            padding: var(--space-md) 0; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+        /* 6.4 CSS Grid Animated Accordions */
+        .accordion-wrapper { border-top: var(--stroke-weight) solid var(--stroke-color); }
+        .accordion { border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+        .accordion-trigger { 
+            width: 100%; padding: var(--space-3) 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            background: none; border: none; color: var(--ink); text-align: left;
         }
-        .accordion summary::-webkit-details-marker { display: none; }
-        .accordion summary::after { content: '+'; font-family: var(--font-tech); font-size: 1.5rem; font-weight: 300; transition: transform 0.3s; }
-        .accordion[open] summary::after { transform: rotate(45deg); }
-        .accordion-content { padding-bottom: var(--space-md); padding-right: 10%; }
+        .accordion-trigger::after { content: '+'; font-family: var(--font-tech); font-size: var(--step-3); font-weight: 300; line-height: 1; transition: transform 0.4s var(--ease-out-expo); }
+        .accordion.is-open .accordion-trigger::after { transform: rotate(45deg); }
+        
+        /* Grid height transition trick */
+        .accordion-content-grid { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out-expo); }
+        .accordion.is-open .accordion-content-grid { grid-template-rows: 1fr; }
+        .accordion-inner { overflow: hidden; }
+        .accordion-inner p { padding-bottom: var(--space-4); padding-right: 10%; }
 
-        /* 6.5 Tables */
-        .table-wrapper { width: 100%; overflow-x: auto; }
+        /* 6.5 Tables (Perfect Baseline Padding) */
+        .table-wrapper { width: 100%; overflow-x: auto; border-top: var(--stroke-weight) solid var(--stroke-color); }
         .system-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .system-table th, .system-table td { padding: var(--space-md); border: var(--stroke-weight) solid var(--stroke-color); }
-        .system-table th { font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-muted); font-weight: normal;}
-        .system-table td { font-family: var(--font-tech); font-size: 0.95rem; font-weight: 300; }
+        .system-table th, .system-table td { padding: var(--space-2) var(--space-3); border-bottom: var(--stroke-weight) solid var(--stroke-color); border-right: var(--stroke-weight) solid var(--stroke-color); }
+        .system-table th:last-child, .system-table td:last-child { border-right: none; }
+        .system-table th { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); font-weight: normal;}
+        .system-table td { font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; }
 
-        /* 6.6 Lists */
-        .system-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
-        .system-list li { position: relative; padding-left: 1.5rem; font-family: var(--font-tech); font-size: 0.95rem; font-weight: 300; line-height: 1.5;}
-        .system-list.ul-bullets li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 4px; height: 4px; background: var(--ink); }
-        .system-list.ul-dashes li::before { content: '—'; position: absolute; left: 0; top: 0; color: var(--ink); }
-
-        /* 6.7 Structural Blockquotes */
+        /* 6.6 Structural Blockquotes */
         blockquote {
             font-family: var(--font-narrative); font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
-            font-weight: 300; font-size: clamp(1.75rem, 4vw, 3.5rem); line-height: 1.05; color: var(--ink);
-            position: relative; padding: var(--space-xl) 0; text-align: center; grid-column: 2 / 12; width: 80%; margin: var(--space-lg) auto;
+            font-weight: 300; font-size: var(--step-4); line-height: 1.1; color: var(--ink);
+            position: relative; padding: var(--space-12) 0; text-align: center; grid-column: 2 / 12; width: 80%; margin: var(--space-8) auto;
         }
         blockquote::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--cloud-dream); filter: blur(40px); opacity: 0.1; z-index: -1;
+            background: var(--cloud-dream); filter: blur(60px); opacity: 0.15; z-index: -1;
         }
 
-        /* 6.8 Artifact Cards */
+        /* 6.7 Artifact Cards (Margin Collapse Logic) */
         .artifact-card { 
-            background: var(--paper); width: 100%; padding: var(--space-lg); 
+            background: var(--paper); width: 100%; padding: var(--space-6); 
             border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; 
         }
+        
+        /* Negative margin ensures stacked cards don't have 2px borders */
+        .stack-group .artifact-card + .artifact-card { margin-top: calc(var(--stroke-weight) * -1); }
+        
         .do-dont-wrapper { 
-            background: rgba(15, 12, 41, 0.02); padding: var(--space-lg); height: 100%;
-            border: var(--stroke-weight) solid var(--stroke-color);
+            background: rgba(15, 12, 41, 0.02); padding: var(--space-6); height: 100%;
+            border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; gap: var(--space-2);
         }
         .do-dont-wrapper.dont { opacity: 0.5; }
+
+        /* Typography Specs */
+        .type-row { 
+            grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; 
+            padding: var(--space-6) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end; 
+        }
+        .type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
+        .type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: var(--space-1); }
+        .type-specimen { grid-column: 4 / 13; overflow: hidden; }
+
+        /* Grid Visualization Helpers */
+        .grid-visualizer { grid-column: span 1; background: rgba(15, 12, 41, 0.03); border: var(--stroke-weight) dashed var(--stroke-color); height: var(--space-8); display: flex; align-items: center; justify-content: center; }
 
         /* ==========================================================================
            7. RESPONSIVE CHOREOGRAPHY
@@ -284,8 +341,11 @@
         @media (max-width: 1024px) {
             .layout-grid { grid-template-columns: repeat(8, 1fr); }
             .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
-            blockquote { width: 100%; grid-column: 1 / -1; font-size: 1.5rem; }
+            blockquote { width: 100%; grid-column: 1 / -1; font-size: var(--step-3); }
             .bento-grid { grid-template-columns: 1fr 1fr; }
+            .type-label { grid-column: 1 / -1; margin-bottom: var(--space-4); }
+            .type-specimen { grid-column: 1 / -1; }
+            .grid-visualizer:nth-child(n+9) { display: none; } 
         }
         
         @media (max-width: 768px) {
@@ -293,6 +353,7 @@
             .split-l, .split-r { grid-column: 1 / -1; }
             .bento-grid { grid-template-columns: 1fr; }
             .bento-item.wide { grid-column: span 1; }
+            .grid-visualizer:nth-child(n+5) { display: none; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -321,19 +382,19 @@
                 <a href="#forms" class="bento-item wide"><span class="tech-subhead">03 // INPUT</span><h3 class="tech-title display-medium">FORM CONTROLS</h3></a>
                 <a href="#media" class="bento-item wide"><span class="tech-subhead">04 // IMAGERY</span><h3 class="tech-title display-medium">MEDIA & RATIOS</h3></a>
                 <a href="#accordions" class="bento-item"><span class="tech-subhead">05 // TOGGLES</span><h3 class="tech-title display-medium">ACCORDIONS</h3></a>
-                <a href="#data" class="bento-item"><span class="tech-subhead">06 // STRUCTURE</span><h3 class="tech-title display-medium">TABLES & LISTS</h3></a>
+                <a href="#data" class="bento-item"><span class="tech-subhead">06 // STRUCTURE</span><h3 class="tech-title display-medium">TABLES & DATA</h3></a>
                 <a href="#artifacts" class="bento-item wide"><span class="tech-subhead">07 // CONTAINERS</span><h3 class="tech-title display-medium">SYSTEM ARTIFACTS</h3></a>
             </div>
         </div>
     </nav>
 
     <main>
-        <section id="cover" style="padding-top: calc(var(--space-xxl) * 1.5);">
+        <section id="cover" style="padding-top: calc(var(--space-24) * 1.5);">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">COMPREHENSIVE LIBRARY</span><span class="micro-data">ASTRO READY</span></div>
+                <div class="lbl reveal"><span class="micro-data lbl-lead">MATHEMATICAL SCALING</span><span class="micro-data">ASTRO READY</span></div>
                 <h1 class="hd-main tech-title display-huge reveal">DESIGN SYSTEM</h1>
-                <div class="txt-block reveal p-group" style="margin-top: var(--space-sm);">
-                    <h3 class="narrative" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">The atomic components and architectural blueprint for Levy. Built for translation into isolated, modular Astro components.</h3>
+                <div class="txt-block reveal p-group" style="margin-top: var(--space-4);">
+                    <h3 class="narrative" style="font-size: var(--step-3);">The atomic components and architectural blueprint for Levy. Governed by a strict base-8 grid and perfect-fourth typographic scale.</h3>
                 </div>
             </div>
         </section>
@@ -348,18 +409,18 @@
 
                 <div class="split-2up reveal">
                     <div class="split-l p-group">
-                        <span class="micro-data lbl-lead">HEADING SCALE</span>
-                        <div class="display-massive tech-title" style="margin-bottom: var(--space-md);">MASSIVE</div>
-                        <div class="display-huge tech-title" style="margin-bottom: var(--space-md);">HUGE</div>
-                        <div class="display-large tech-title" style="margin-bottom: var(--space-md);">LARGE</div>
+                        <span class="micro-data lbl-lead">HEADING SCALE (RATIO: 1.333)</span>
+                        <div class="display-massive tech-title">MASSIVE</div>
+                        <div class="display-huge tech-title">HUGE</div>
+                        <div class="display-large tech-title">LARGE</div>
                         <div class="display-medium tech-title">MEDIUM</div>
                     </div>
                     
                     <div class="split-r p-group">
                         <span class="micro-data lbl-lead">READING & INLINE</span>
-                        <div class="narrative" style="margin-bottom: var(--space-md); font-size: 2rem;">Narrative display font for insight blocks.</div>
-                        <p class="body-large" style="margin-bottom: var(--space-md);"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
-                        <p class="body-medium" style="margin-bottom: var(--space-md);"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a> for cross-referencing.</p>
+                        <div class="narrative" style="margin-bottom: var(--space-4); font-size: var(--step-3);">Narrative display font for insight blocks.</div>
+                        <p class="body-large"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
+                        <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a> for cross-referencing.</p>
                         <p class="body-small"><strong>Body Small:</strong> Used for captions, disclaimers, and metadata.</p>
                     </div>
                 </div>
@@ -376,14 +437,14 @@
 
                 <div class="split-2up reveal">
                     <div class="split-l p-group" style="align-items: flex-start;">
-                        <span class="micro-data lbl-lead">PRIMARY ACTIONS</span>
+                        <span class="micro-data lbl-lead">PRIMARY ACTIONS (H: 48PX)</span>
                         <div class="btn-group">
                             <button class="btn btn-solid">Solid Button</button>
                             <button class="btn">Ghost Button</button>
                         </div>
                     </div>
                     <div class="split-r p-group" style="align-items: flex-start;">
-                        <span class="micro-data lbl-lead">SYSTEM BADGES</span>
+                        <span class="micro-data lbl-lead">SYSTEM BADGES (H: 32PX)</span>
                         <div class="btn-group">
                             <span class="badge">Active</span>
                             <span class="badge">In Progress</span>
@@ -417,8 +478,8 @@
                                 <option>Non-Profit</option>
                             </select>
                         </div>
-                        <div class="form-row" style="margin-top: var(--space-sm);">
-                            <span class="form-label" style="margin-bottom: 0.5rem; display: block;">Interests</span>
+                        <div class="form-row" style="margin-top: var(--space-2);">
+                            <span class="form-label" style="margin-bottom: var(--space-1); display: block;">Interests</span>
                             <div class="control-group">
                                 <label class="control-label">
                                     <input type="checkbox" checked>
@@ -436,6 +497,19 @@
                             <label class="form-label">Project Description</label>
                             <textarea class="form-textarea" placeholder="Describe the structural gap..."></textarea>
                         </div>
+                        <div class="form-row" style="margin-top: var(--space-2);">
+                            <span class="form-label" style="margin-bottom: var(--space-1); display: block;">Visibility</span>
+                            <div class="control-group">
+                                <label class="control-label control-radio">
+                                    <input type="radio" name="vis" checked>
+                                    <div class="control-box"></div> Public
+                                </label>
+                                <label class="control-label control-radio">
+                                    <input type="radio" name="vis">
+                                    <div class="control-box"></div> Internal Only
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -449,7 +523,7 @@
                     <hr class="divider">
                 </div>
 
-                <div class="txt-wide reveal" style="margin-bottom: var(--space-md);">
+                <div class="txt-wide reveal" style="margin-bottom: var(--space-4);">
                     <div class="media-placeholder ratio-16-9"></div>
                     <span class="caption">Widescreen Format (16:9) - Used for primary hero elements and video.</span>
                 </div>
@@ -471,27 +545,33 @@
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="micro-data lbl-lead">05 // TOGGLES</span></div>
                 <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">ACCORDIONS (FAQ)</h2>
+                    <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
                     
-                    <div style="margin-top: var(--space-md);">
-                        <details class="accordion" open>
-                            <summary><span class="tech-title">What is the Levy Studio?</span></summary>
-                            <div class="accordion-content">
-                                <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
+                    <div class="accordion-wrapper reveal" style="margin-top: var(--space-6);">
+                        <div class="accordion is-open">
+                            <button class="accordion-trigger"><span class="tech-title">What is the Levy Studio?</span></button>
+                            <div class="accordion-content-grid">
+                                <div class="accordion-inner">
+                                    <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
+                                </div>
                             </div>
-                        </details>
-                        <details class="accordion">
-                            <summary><span class="tech-title">How does the community capital framework apply?</span></summary>
-                            <div class="accordion-content">
-                                <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                        </div>
+                        <div class="accordion">
+                            <button class="accordion-trigger"><span class="tech-title">How does the community capital framework apply?</span></button>
+                            <div class="accordion-content-grid">
+                                <div class="accordion-inner">
+                                    <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                                </div>
                             </div>
-                        </details>
-                        <details class="accordion">
-                            <summary><span class="tech-title">Is Levy a political organization?</span></summary>
-                            <div class="accordion-content">
-                                <p class="body-medium">No. Levy operates as a builder, working in the places and with the people where the promise of the American Project is most actively being tested. It is strictly non-partisan.</p>
+                        </div>
+                        <div class="accordion">
+                            <button class="accordion-trigger"><span class="tech-title">Is Levy a political organization?</span></button>
+                            <div class="accordion-content-grid">
+                                <div class="accordion-inner">
+                                    <p class="body-medium">No. Levy operates as a builder, working in the places and with the people where the promise of the American Project is most actively being tested. It is strictly non-partisan.</p>
+                                </div>
                             </div>
-                        </details>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -501,57 +581,42 @@
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="micro-data lbl-lead">06 // STRUCTURE</span></div>
                 <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">DATA DISPLAYS</h2>
+                    <h2 class="tech-title display-medium">TABLES</h2>
                     <hr class="divider">
                 </div>
 
-                <div class="split-2up reveal">
-                    <div class="split-l">
-                        <span class="micro-data lbl-lead">UNORDERED LISTS</span>
-                        <ul class="system-list ul-bullets">
-                            <li>Human Capital (Workforce & Skills)</li>
-                            <li>Social Capital (Networks & Trust)</li>
-                            <li>Built Capital (Infrastructure)</li>
-                        </ul>
-                        
-                        <span class="micro-data lbl-lead" style="margin-top: var(--space-lg);">DASHED LISTS</span>
-                        <ul class="system-list ul-dashes">
-                            <li>Stop thinking small.</li>
-                            <li>Institutions don't vote. Humans do.</li>
-                            <li>Name the gap, then close it.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="split-r">
-                        <span class="micro-data lbl-lead">DATA TABLES</span>
-                        <div class="table-wrapper">
-                            <table class="system-table">
-                                <thead>
-                                    <tr>
-                                        <th>Component</th>
-                                        <th>Status</th>
-                                        <th>Usage</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Studio OS</td>
-                                        <td>Active</td>
-                                        <td>Public Library</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Institute</td>
-                                        <td>Beta</td>
-                                        <td>Research</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Network</td>
-                                        <td>Scaling</td>
-                                        <td>Washington D.C.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="txt-wide reveal">
+                    <div class="table-wrapper">
+                        <table class="system-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Status</th>
+                                    <th>Deployment Phase</th>
+                                    <th>Primary Metric</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Studio OS</td>
+                                    <td><span class="badge">Active</span></td>
+                                    <td>Public Library System</td>
+                                    <td>Cohorts Launched</td>
+                                </tr>
+                                <tr>
+                                    <td>Levy Institute</td>
+                                    <td><span class="badge">Beta</span></td>
+                                    <td>Academic Research</td>
+                                    <td>Frameworks Published</td>
+                                </tr>
+                                <tr>
+                                    <td>The Network</td>
+                                    <td><span class="badge">Scaling</span></td>
+                                    <td>Washington D.C. Node</td>
+                                    <td>Active Members</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -563,18 +628,25 @@
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">SYSTEM ARTIFACTS</h2>
                     
-                    <blockquote style="margin-top: var(--space-md); margin-bottom: var(--space-xl);">"Those aren't two separate arguments. They're the same one."</blockquote>
+                    <blockquote style="margin-top: var(--space-8); margin-bottom: var(--space-12);">"Those aren't two separate arguments. They're the same one."</blockquote>
                 </div>
 
                 <div class="split-2up reveal">
-                    <div class="split-l">
+                    <div class="split-l stack-group">
+                        <span class="micro-data lbl-lead">ARTIFACT CARDS (STACK COLLAPSED)</span>
                         <div class="artifact-card">
-                            <span class="badge" style="width: max-content; margin-bottom: var(--space-md);">CORE TENET</span>
-                            <div class="tech-title" style="margin-bottom: var(--space-sm);">THE LEVY NETWORK</div>
+                            <span class="badge" style="width: max-content; margin-bottom: var(--space-4);">CORE TENET</span>
+                            <div class="tech-title" style="margin-bottom: var(--space-2);">THE LEVY NETWORK</div>
                             <p class="body-medium">The membership community built to make members sharper, better connected, and better equipped.</p>
+                        </div>
+                        <div class="artifact-card">
+                            <span class="badge" style="width: max-content; margin-bottom: var(--space-4);">PROGRAM</span>
+                            <div class="tech-title" style="margin-bottom: var(--space-2);">THE LEVY STUDIO</div>
+                            <p class="body-medium">The portfolio and program-building arm. Designing and scaling initiatives.</p>
                         </div>
                     </div>
                     <div class="split-r">
+                        <span class="micro-data lbl-lead">DO / DON'T BOXES</span>
                         <div class="do-dont-wrapper">
                             <span class="micro-data lbl-lead">RULE: DIRECT TONE</span>
                             <p class="body-medium">Speak to people who are already serious and already working. Earn your sentences. Never flatter.</p>
@@ -588,6 +660,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Navigation Logic
             const navToggle = document.getElementById('navToggle');
             const bentoNav = document.getElementById('bentoNav');
             const navLinks = document.querySelectorAll('.bento-item');
@@ -607,7 +680,16 @@
                     document.body.style.overflow = '';
                 });
             });
+
+            // Accordion Logic
+            const accordions = document.querySelectorAll('.accordion-trigger');
+            accordions.forEach(acc => {
+                acc.addEventListener('click', function() {
+                    this.parentElement.classList.toggle('is-open');
+                });
+            });
             
+            // Scroll Reveal Logic
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
