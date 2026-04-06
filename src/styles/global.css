@@ -1,4 +1,24 @@
 /* ==========================================================================
+   0. SELF-HOSTED FONTS
+   ========================================================================== */
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueUltraLight.otf'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueUltraLightItalic.otf'); font-weight: 100; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueThin.otf'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueThinItalic.otf'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueLight.otf'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueLightItalic.otf'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueRoman.otf'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueItalic.ttf'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueMedium.otf'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueMediumItalic.otf'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueBold.otf'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueBoldItalic.otf'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueHeavy.otf'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueHeavyItalic.otf'); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueBlack.otf'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Helvetica Neue"; src: url('/fonts/helvetica-neue/HelveticaNeueBlackItalic.otf'); font-weight: 900; font-style: italic; font-display: swap; }
+
+/* ==========================================================================
    1. ELITE ARCHITECTURAL VARIABLES (Base-8 Grid & Perfect Fourth Scale)
    ========================================================================== */
 :root {
