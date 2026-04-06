@@ -10,15 +10,9 @@ const classes = ['btn', variant === 'solid' ? 'btn-solid' : ''].filter(Boolean).
 ---
 
 {href ? (
-    <a href={href} class={classes}>
-        <span class="btn-label">{label}</span>
-        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
-    </a>
+    <a href={href} class={classes}>{label}</a>
 ) : (
-    <button class={classes}>
-        <span class="btn-label">{label}</span>
-        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
-    </button>
+    <button class={classes}>{label}</button>
 )}
 
 <style>
@@ -29,27 +23,10 @@ const classes = ['btn', variant === 'solid' ? 'btn-solid' : ''].filter(Boolean).
         cursor: pointer; text-decoration: none;
         transition: background 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
         font-family: var(--font-tech); text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.1em; font-weight: 500;
-        gap: var(--space-1);
         position: relative;
         overflow: hidden;
     }
     .btn:hover { background: var(--ink); color: var(--paper); }
-
-    .btn-label { position: relative; z-index: 1; }
-
-    .btn-arrow {
-        display: inline-block;
-        opacity: 0;
-        transform: translateX(-8px);
-        transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
-        font-size: var(--step--1);
-        position: relative;
-        z-index: 1;
-    }
-    .btn:hover .btn-arrow {
-        opacity: 1;
-        transform: translateX(0);
-    }
 
     .btn::after {
         content: '';

@@ -432,18 +432,6 @@ const JOIN_PAGE = "/join";
         border: 2px solid var(--ink);
         position: relative;
     }
-    .tier-recommended::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        background: linear-gradient(135deg, var(--midnight), rgba(100, 65, 165, 0.6), var(--midnight));
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.5s var(--ease-out-expo);
-    }
-    .tier-recommended:hover::before {
-        opacity: 1;
-    }
     .tier-recommended :global(.artifact-card) {
         border: none;
     }

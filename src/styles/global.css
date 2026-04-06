@@ -217,8 +217,8 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .full-bleed { grid-column: 1 / -1; }
 
 /* Zig-Zag Layout Primitives — live within content area (cols 3-13), overlap forces separate rows */
-.zz-left  { grid-column: 3 / 9; will-change: transform; }
-.zz-right { grid-column: 7 / 13; will-change: transform; }
+.zz-left  { grid-column: 3 / 9; }
+.zz-right { grid-column: 7 / 13; }
 
 .p-group { display: flex; flex-direction: column; gap: var(--space-3); }
 
@@ -231,9 +231,9 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
 .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
 
-/* Clip reveal — for headings */
-.reveal-clip { opacity: 0; clip-path: inset(0 0 100% 0); transition: opacity 0.1s, clip-path 0.8s var(--ease-out-expo); }
-.reveal-clip.is-visible { opacity: 1; clip-path: inset(0 0 0% 0); }
+/* Clip reveal — for headings (negative inset prevents round-letter clipping at tight line-heights) */
+.reveal-clip { opacity: 0; clip-path: inset(-8% 0 108% 0); transition: opacity 0.1s, clip-path 0.8s var(--ease-out-expo); }
+.reveal-clip.is-visible { opacity: 1; clip-path: inset(-8% 0 -8% 0); }
 
 /* Stagger children — for card groups */
 .reveal-stagger > * { opacity: 0; transform: translateY(16px); }
@@ -250,18 +250,7 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 }
 
 /* Dark Mode Context */
-.dark-section {
-    background: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.35) 45%, rgba(138, 35, 135, 0.5) 80%, var(--midnight) 100%);
-    background-size: 200% 200%;
-    animation: gradientDrift 20s ease infinite;
-    color: var(--paper);
-}
-
-@keyframes gradientDrift {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
+.dark-section { background: var(--midnight); color: var(--paper); }
 .dark-section .section-label { color: var(--paper); }
 .dark-section .section-label::after { background: var(--stroke-light); }
 .dark-section .micro-data { color: rgba(245, 245, 243, 0.7); }
@@ -328,5 +317,4 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
     .reveal, .reveal-left { transform: none !important; transition: opacity 1s ease !important; }
     .reveal-clip { clip-path: none !important; transition: opacity 1s ease !important; }
     .reveal-stagger > * { animation: none !important; opacity: 1 !important; transform: none !important; }
-    .dark-section { animation: none !important; }
 }
