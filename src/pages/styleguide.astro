@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import StatementBreakout from '../components/StatementBreakout.astro';
+import Button from '../components/Button.astro';
+import Badge from '../components/Badge.astro';
+import FormInput from '../components/FormInput.astro';
+import FormTextarea from '../components/FormTextarea.astro';
+import FormSelect from '../components/FormSelect.astro';
+import FormCheckbox from '../components/FormCheckbox.astro';
+import FormRadio from '../components/FormRadio.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
+import AccordionWrapper from '../components/AccordionWrapper.astro';
+import Accordion from '../components/Accordion.astro';
+import ArtifactCard from '../components/ArtifactCard.astro';
+import DoDontBox from '../components/DoDontBox.astro';
+import SystemTable from '../components/SystemTable.astro';
+
+const navItems = [
+    { href: "#typography", number: "01", category: "STYLE",      title: "TYPOGRAPHY" },
+    { href: "#buttons",    number: "02", category: "INTERACTION", title: "BUTTONS & LINKS" },
+    { href: "#forms",      number: "03", category: "INPUT",       title: "FORM CONTROLS",   wide: true },
+    { href: "#media",      number: "04", category: "IMAGERY",     title: "MEDIA & RATIOS",  wide: true },
+    { href: "#accordions", number: "05", category: "TOGGLES",     title: "ACCORDIONS" },
+    { href: "#data",       number: "06", category: "STRUCTURE",   title: "TELEMETRY & DATA" },
+    { href: "#artifacts",  number: "07", category: "CONTAINERS",  title: "SYSTEM ARTIFACTS", wide: true },
+];
+
+const institutionOptions = [
+    { value: "Federal Government", text: "Federal Government" },
+    { value: "Private Sector",     text: "Private Sector" },
+    { value: "Non-Profit",         text: "Non-Profit" },
+];
+---
+
+<BaseLayout title="Levy | Astro-Ready Component Library">
+    <div class="marginalia doc-control" style="top: var(--space-24);">REF: LEVY-OP-01 // BASE-8 GRID</div>
+
+    <Header />
+    <BentoNav items={navItems} />
+
+    <main id="main-content">
+
+        <!-- ① COVER -->
+        <StatementBreakout
+            id="cover"
+            marginaliaTopLeft="AEROSPACE<br>STANDARD<br>ASTRO READY"
+            marginaliaBottomRight="DOC: 2026.04<br>REV: A<br>Est. 2026"
+            topNarrative="Levy Strategic Design<br>Washington, District of Columbia<br>DC20001"
+            mainLeft="PROJECT&nbsp;:"
+            mainRightTop="LEVY"
+            mainRightBottom="SYSTEM"
+            bottomNarrative="The atomic components and<br>architectural blueprint for Levy."
+        />
+
+        <!-- ② TYPOGRAPHY -->
+        <section id="typography">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">01 // TYPOGRAPHY</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-large">ARCHITECTURAL SCALE</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l p-group">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">HEADING SCALE (RATIO: 1.333)</span>
+                        <div class="display-massive tech-title">MASSIVE</div>
+                        <div class="display-huge   tech-title">HUGE</div>
+                        <div class="display-large  tech-title">LARGE</div>
+                        <div class="display-medium tech-title">MEDIUM</div>
+                    </div>
+                    <div class="split-r p-group">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">READING & METADATA</span>
+                        <p class="body-large"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
+                        <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a>.</p>
+                        <div class="mt-space-4" style="padding: var(--space-4); border: 1px solid var(--stroke-color); background: rgba(15, 12, 41, 0.01);">
+                            <span class="micro-data mb-space-2">STRUCTURAL TAGS (HELVETICA 300)</span>
+                            <span class="marginalia">AMBIENT MARGINALIA (SOFT FRAUNCES)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ③ BUTTONS & BADGES -->
+        <section id="buttons">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">02 // INTERACTION</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">BUTTONS & BADGES</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l p-group" style="align-items: flex-start;">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">PRIMARY ACTIONS (H: 48PX)</span>
+                        <div class="btn-group">
+                            <Button variant="solid" label="Solid Button" />
+                            <Button variant="ghost" label="Ghost Button" />
+                        </div>
+                    </div>
+                    <div class="split-r p-group" style="align-items: flex-start;">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">SYSTEM BADGES (H: 32PX)</span>
+                        <div class="btn-group">
+                            <Badge label="Active" />
+                            <Badge label="In Progress" />
+                            <Badge label="Archived" opacity={0.5} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ④ FORM CONTROLS -->
+        <section id="forms">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">03 // INPUT</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">FLIGHT MANUAL FORMS</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <FormInput label="Full Name" id="fullName" placeholder="e.g. Jane Doe" />
+                        <FormSelect
+                            label="Institution Type"
+                            id="institutionType"
+                            name="institutionType"
+                            options={institutionOptions}
+                        />
+                        <div class="form-row mt-space-2">
+                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">System Access</span>
+                            <div class="control-group">
+                                <FormCheckbox label="Levy Network" checked />
+                                <FormCheckbox label="Levy Studio" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="split-r">
+                        <FormTextarea label="Project Telemetry" id="projectTelemetry" placeholder="Describe the structural gap..." />
+                        <div class="form-row mt-space-2">
+                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">Visibility Protocol</span>
+                            <div class="control-group">
+                                <FormRadio label="Public Broadcast" name="vis" checked />
+                                <FormRadio label="Internal Only"    name="vis" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑤ MEDIA RATIOS -->
+        <section id="media">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">04 // IMAGERY</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">MEDIA RATIOS</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="txt-wide reveal mb-space-4">
+                    <MediaPlaceholder ratio="16:9" caption="Widescreen Format (16:9) — Used for primary hero elements and video." />
+                </div>
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <MediaPlaceholder ratio="4:3" caption="Standard Format (4:3) — Used for editorial content." />
+                    </div>
+                    <div class="split-r">
+                        <MediaPlaceholder ratio="1:1" caption="Square Format (1:1) — Used for portraits and grid galleries." />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑥ ACCORDIONS -->
+        <section id="accordions">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">05 // TOGGLES</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
+                    <AccordionWrapper class="reveal mt-space-6">
+                        <Accordion title="What is the Levy Studio?" open id="faq-1">
+                            <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
+                        </Accordion>
+                        <Accordion title="How does the community capital framework apply?" id="faq-2">
+                            <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                        </Accordion>
+                    </AccordionWrapper>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑦ TELEMETRY DATA -->
+        <section id="data">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">06 // STRUCTURE</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">TELEMETRY DATA</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="txt-wide reveal">
+                    <SystemTable>
+                        <thead>
+                            <tr>
+                                <th>Component Ref</th>
+                                <th>Status Code</th>
+                                <th>Deployment Phase</th>
+                                <th>Primary Metric</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Studio OS — SYS.01</td>
+                                <td><Badge label="Active" /></td>
+                                <td>Public Library System</td>
+                                <td>Cohorts Launched</td>
+                            </tr>
+                            <tr>
+                                <td>Levy Institute — R.04</td>
+                                <td><Badge label="Beta" /></td>
+                                <td>Academic Research</td>
+                                <td>Frameworks Published</td>
+                            </tr>
+                        </tbody>
+                    </SystemTable>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑧ MID-PAGE STATEMENT BREAKOUT -->
+        <StatementBreakout
+            autoHeight
+            topNarrative="Outlier Outcomes<br>Beta Cohort Integration"
+            mainLeft="314&nbsp;:"
+            mainRightTop="ACTIVE"
+            mainRightBottom="TESTERS"
+            bottomNarrative="13,816 Total Deployments<br>104,248km Verified"
+        />
+
+        <!-- ⑨ SYSTEM ARTIFACTS -->
+        <section id="artifacts">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">07 // CONTAINERS</span></div>
+                <div class="txt-wide reveal p-group">
+                    <h2 class="tech-title display-medium">SYSTEM ARTIFACTS</h2>
+                </div>
+
+                <div class="split-2up reveal mt-space-8">
+                    <div class="split-l stack-group">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">ARTIFACT CARDS (STACK COLLAPSED)</span>
+                        <ArtifactCard badge="CORE TENET" title="THE LEVY NETWORK">
+                            <p class="body-medium">The membership community built to make members sharper, better connected, and better equipped.</p>
+                        </ArtifactCard>
+                        <ArtifactCard badge="PROGRAM" title="THE LEVY STUDIO">
+                            <p class="body-medium">The portfolio and program-building arm. Designing and scaling initiatives.</p>
+                        </ArtifactCard>
+                    </div>
+                    <div class="split-r">
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">DO / DON'T BOXES</span>
+                        <DoDontBox rule="DIRECT TONE">
+                            <p class="body-medium">Speak to people who are already serious and already working. Earn your sentences. Never flatter.</p>
+                        </DoDontBox>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ⑩ DARK FOOTER -->
+        <StatementBreakout
+            theme="dark"
+            topNarrative="Levy Strategic Design<br>End of Document"
+            mainLeft="END&nbsp;:"
+            mainRightTop="SYSTEM"
+            mainRightBottom="MANIFEST"
+            marginaliaBottomLeft="PREPARED BY FOLKMARK<br>FOR LEVY, 2026"
+            marginaliaBottomRight="L.S.D.<br>EST. 2026"
+        />
+
+    </main>
+</BaseLayout>
+
+<style>
+    .form-row  { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
+    .form-label { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
+</style>

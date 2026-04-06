@@ -231,12 +231,30 @@ section.void-section.auto-height { min-height: auto; padding: var(--space-16) 5v
 /* Artifact Card Stack Collapse */
 .stack-group .artifact-card + .artifact-card { margin-top: calc(var(--stroke-weight) * -1); }
 
+/* Fraunces inline override (e.g. "of" in hero) */
+.of-fraunces {
+    font-family: var(--font-narrative);
+    font-weight: 200;
+    font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* Three-column card grid */
+.split-3up {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
 /* ==========================================================================
    6. RESPONSIVE CHOREOGRAPHY
    ========================================================================== */
 @media (max-width: 1024px) {
     .layout-grid { grid-template-columns: repeat(8, 1fr); }
     .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
+    .split-3up { grid-template-columns: 1fr; }
     .doc-control { display: none; }
 }
 
