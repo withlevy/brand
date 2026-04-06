@@ -10,9 +10,15 @@ const classes = ['btn', variant === 'solid' ? 'btn-solid' : ''].filter(Boolean).
 ---
 
 {href ? (
-    <a href={href} class={classes}>{label}</a>
+    <a href={href} class={classes}>
+        <span class="btn-label">{label}</span>
+        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+    </a>
 ) : (
-    <button class={classes}>{label}</button>
+    <button class={classes}>
+        <span class="btn-label">{label}</span>
+        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+    </button>
 )}
 
 <style>
@@ -20,10 +26,44 @@ const classes = ['btn', variant === 'solid' ? 'btn-solid' : ''].filter(Boolean).
         display: inline-flex; align-items: center; justify-content: center;
         height: var(--space-6); padding: 0 var(--space-4);
         border: var(--stroke-weight) solid var(--ink); background: transparent; color: var(--ink);
-        cursor: pointer; text-decoration: none; transition: background 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
+        cursor: pointer; text-decoration: none;
+        transition: background 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
         font-family: var(--font-tech); text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.1em; font-weight: 500;
+        gap: var(--space-1);
+        position: relative;
+        overflow: hidden;
     }
     .btn:hover { background: var(--ink); color: var(--paper); }
+
+    .btn-label { position: relative; z-index: 1; }
+
+    .btn-arrow {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(-8px);
+        transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+        font-size: var(--step--1);
+        position: relative;
+        z-index: 1;
+    }
+    .btn:hover .btn-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .btn::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease-out-expo);
+    }
+    .btn:hover::after {
+        transform: scaleX(1);
+    }
 
     .btn-solid { background: var(--ink); color: var(--paper); }
     .btn-solid:hover { background: transparent; color: var(--ink); }

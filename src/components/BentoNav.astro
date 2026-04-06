@@ -17,8 +17,8 @@ const { items } = Astro.props;
 <nav class="bento-nav" id="bentoNav" aria-label="Main navigation">
     <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
         <div class="bento-grid">
-            {items.map((item) => (
-                <a href={item.href} class:list={["bento-item", { wide: item.wide }]}>
+            {items.map((item, i) => (
+                <a href={item.href} class:list={["bento-item", { wide: item.wide }]} style={`--item-index: ${i}`}>
                     <span class="tech-subhead">{item.number} // {item.category}</span>
                     <h3 class="tech-title display-medium">{item.title}</h3>
                 </a>
@@ -39,12 +39,18 @@ const { items } = Astro.props;
     .bento-item {
         background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-4);
         text-decoration: none; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between;
-        min-height: var(--space-24); transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), border-color 0.4s;
+        min-height: var(--space-24);
+        opacity: 0; transform: translateY(16px) scale(0.97);
+        transition: transform 0.6s var(--ease-out-expo),
+                    opacity 0.5s var(--ease-out-expo),
+                    border-color 0.4s,
+                    background 0.4s;
+        transition-delay: calc(var(--item-index, 0) * 0.06s);
     }
     .bento-item.wide { grid-column: span 2; }
     .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
-    .bento-item:hover { border-color: var(--paper); }
-    .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0); }
+    .bento-item:hover { border-color: var(--paper); background: rgba(245, 245, 243, 0.04); }
+    .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0) scale(1); }
 
     @media (max-width: 1024px) {
         .bento-grid { grid-template-columns: 1fr 1fr; }

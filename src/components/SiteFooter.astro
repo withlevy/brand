@@ -82,8 +82,8 @@ const currentYear = new Date().getFullYear();
 
     .footer-headline {
         margin-top: var(--space-3);
-        max-width: 30ch;
-        font-size: clamp(1rem, 2vw, var(--step-2));
+        max-width: 20ch;
+        font-size: clamp(1.333rem, 3.5vw, var(--step-3));
         color: rgba(245, 245, 243, 0.7);
     }
 
@@ -93,6 +93,23 @@ const currentYear = new Date().getFullYear();
 
     .newsletter-input-group {
         display: flex;
+        position: relative;
+    }
+
+    .newsletter-input-group::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--paper);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .newsletter-input-group:focus-within::after {
+        transform: scaleX(1);
     }
 
     .newsletter-input {
