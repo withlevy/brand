@@ -1,27 +1,69 @@
 ---
 interface Props {
-    topText?: string;
-    bottomText?: string;
-    leftSpans: string[];
-    rightSpans: string[];
+    id?: string;
+    theme?: 'dark';
+    autoHeight?: boolean;
+    topNarrative?: string;
+    bottomNarrative?: string;
+    mainLeft: string;
+    mainRightTop: string;
+    mainRightBottom: string;
+    marginaliaTopLeft?: string;
+    marginaliaTopRight?: string;
+    marginaliaBottomLeft?: string;
+    marginaliaBottomRight?: string;
 }
 
-const { topText, bottomText, leftSpans, rightSpans } = Astro.props;
+const {
+    id,
+    theme,
+    autoHeight,
+    topNarrative,
+    bottomNarrative,
+    mainLeft,
+    mainRightTop,
+    mainRightBottom,
+    marginaliaTopLeft,
+    marginaliaTopRight,
+    marginaliaBottomLeft,
+    marginaliaBottomRight,
+} = Astro.props;
+
+const Tag = theme === 'dark' ? 'footer' : 'section';
+const sectionClasses = [
+    'void-section',
+    theme === 'dark' ? 'dark-section' : '',
+    autoHeight ? 'auto-height' : '',
+].filter(Boolean).join(' ');
 ---
 
-<div class="statement-breakout reveal">
-    <slot />
-    {topText && <div class="statement-top narrative" set:html={topText} />}
-    <div class="statement-main tech-title">
-        <div class="statement-left">
-            {leftSpans.map((s) => <span set:html={s} />)}
+<Tag id={id} class={sectionClasses}>
+    <div class="statement-breakout reveal">
+        {marginaliaTopLeft && (
+            <div class="marginalia" style="position: absolute; top: 0; left: 5vw; text-align: left; line-height: 1.2;" set:html={marginaliaTopLeft} />
+        )}
+        {marginaliaTopRight && (
+            <div class="marginalia" style="position: absolute; top: 0; right: 5vw; text-align: right; line-height: 1.2;" set:html={marginaliaTopRight} />
+        )}
+        {topNarrative && <div class="statement-top narrative" set:html={topNarrative} />}
+        <div class="statement-main tech-title">
+            <div class="statement-left">
+                <span set:html={mainLeft} />
+            </div>
+            <div class="statement-right">
+                <span>{mainRightTop}</span>
+                <span>{mainRightBottom}</span>
+            </div>
         </div>
-        <div class="statement-right">
-            {rightSpans.map((s) => <span>{s}</span>)}
-        </div>
+        {bottomNarrative && <div class="statement-bottom narrative" set:html={bottomNarrative} />}
+        {marginaliaBottomLeft && (
+            <div class="marginalia" style="position: absolute; bottom: 0; left: 5vw; text-align: left; line-height: 1.2;" set:html={marginaliaBottomLeft} />
+        )}
+        {marginaliaBottomRight && (
+            <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;" set:html={marginaliaBottomRight} />
+        )}
     </div>
-    {bottomText && <div class="statement-bottom narrative" set:html={bottomText} />}
-</div>
+</Tag>
 
 <style>
     .statement-breakout { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; position: relative; overflow: hidden; }

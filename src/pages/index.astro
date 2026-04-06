@@ -18,47 +18,43 @@ import DoDontBox from '../components/DoDontBox.astro';
 import SystemTable from '../components/SystemTable.astro';
 
 const navItems = [
-    { href: "#typography", number: "01", category: "STYLE", title: "TYPOGRAPHY" },
-    { href: "#buttons", number: "02", category: "INTERACTION", title: "BUTTONS & LINKS" },
-    { href: "#forms", number: "03", category: "INPUT", title: "FORM CONTROLS", wide: true },
-    { href: "#media", number: "04", category: "IMAGERY", title: "MEDIA & RATIOS", wide: true },
-    { href: "#accordions", number: "05", category: "TOGGLES", title: "ACCORDIONS" },
-    { href: "#data", number: "06", category: "STRUCTURE", title: "TELEMETRY & DATA" },
-    { href: "#artifacts", number: "07", category: "CONTAINERS", title: "SYSTEM ARTIFACTS", wide: true },
+    { href: "#typography", number: "01", category: "STYLE",      title: "TYPOGRAPHY" },
+    { href: "#buttons",    number: "02", category: "INTERACTION", title: "BUTTONS & LINKS" },
+    { href: "#forms",      number: "03", category: "INPUT",       title: "FORM CONTROLS",   wide: true },
+    { href: "#media",      number: "04", category: "IMAGERY",     title: "MEDIA & RATIOS",  wide: true },
+    { href: "#accordions", number: "05", category: "TOGGLES",     title: "ACCORDIONS" },
+    { href: "#data",       number: "06", category: "STRUCTURE",   title: "TELEMETRY & DATA" },
+    { href: "#artifacts",  number: "07", category: "CONTAINERS",  title: "SYSTEM ARTIFACTS", wide: true },
 ];
 
 const institutionOptions = [
     { value: "Federal Government", text: "Federal Government" },
-    { value: "Private Sector", text: "Private Sector" },
-    { value: "Non-Profit", text: "Non-Profit" },
+    { value: "Private Sector",     text: "Private Sector" },
+    { value: "Non-Profit",         text: "Non-Profit" },
 ];
 ---
 
 <BaseLayout title="Levy | Astro-Ready Component Library">
-    <div class="marginalia doc-control" style="top: var(--space-24);">REF: LEVY-OP-01 // BASE-8 GRID </div>
+    <div class="marginalia doc-control" style="top: var(--space-24);">REF: LEVY-OP-01 // BASE-8 GRID</div>
 
     <Header />
     <BentoNav items={navItems} />
 
     <main>
-        <!-- COVER -->
-        <section id="cover" class="void-section">
-            <StatementBreakout
-                topText="Levy Strategic Design<br>Washington, District of Columbia<br>DC20001"
-                leftSpans={["PROJECT&nbsp;:"]}
-                rightSpans={["LEVY", "SYSTEM"]}
-                bottomText="The atomic components and<br>architectural blueprint for Levy."
-            >
-                <div class="marginalia" style="position: absolute; top: 0; left: 5vw; text-align: left; line-height: 1.2;">
-                    AEROSPACE<br>STANDARD<br>ASTRO READY
-                </div>
-                <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;">
-                    DOC: 2026.04<br>REV: A<br>Est. 2026
-                </div>
-            </StatementBreakout>
-        </section>
 
-        <!-- TYPOGRAPHY -->
+        <!-- ① COVER -->
+        <StatementBreakout
+            id="cover"
+            marginaliaTopLeft="AEROSPACE<br>STANDARD<br>ASTRO READY"
+            marginaliaBottomRight="DOC: 2026.04<br>REV: A<br>Est. 2026"
+            topNarrative="Levy Strategic Design<br>Washington, District of Columbia<br>DC20001"
+            mainLeft="PROJECT&nbsp;:"
+            mainRightTop="LEVY"
+            mainRightBottom="SYSTEM"
+            bottomNarrative="The atomic components and<br>architectural blueprint for Levy."
+        />
+
+        <!-- ② TYPOGRAPHY -->
         <section id="typography">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">01 // TYPOGRAPHY</span></div>
@@ -71,16 +67,14 @@ const institutionOptions = [
                     <div class="split-l p-group">
                         <span class="section-label mb-space-4" style="color: var(--ink-muted);">HEADING SCALE (RATIO: 1.333)</span>
                         <div class="display-massive tech-title">MASSIVE</div>
-                        <div class="display-huge tech-title">HUGE</div>
-                        <div class="display-large tech-title">LARGE</div>
+                        <div class="display-huge   tech-title">HUGE</div>
+                        <div class="display-large  tech-title">LARGE</div>
                         <div class="display-medium tech-title">MEDIUM</div>
                     </div>
-
                     <div class="split-r p-group">
                         <span class="section-label mb-space-4" style="color: var(--ink-muted);">READING & METADATA</span>
                         <p class="body-large"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
                         <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a>.</p>
-
                         <div class="mt-space-4" style="padding: var(--space-4); border: 1px solid var(--stroke-color); background: rgba(15, 12, 41, 0.01);">
                             <span class="micro-data mb-space-2">STRUCTURAL TAGS (HELVETICA 300)</span>
                             <span class="marginalia">AMBIENT MARGINALIA (SOFT FRAUNCES)</span>
@@ -90,7 +84,7 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- BUTTONS & BADGES -->
+        <!-- ③ BUTTONS & BADGES -->
         <section id="buttons">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">02 // INTERACTION</span></div>
@@ -119,7 +113,7 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- FORM CONTROLS -->
+        <!-- ④ FORM CONTROLS -->
         <section id="forms">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">03 // INPUT</span></div>
@@ -138,7 +132,7 @@ const institutionOptions = [
                             options={institutionOptions}
                         />
                         <div class="form-row mt-space-2">
-                            <span class="form-label mb-space-2" style="display: block;">System Access</span>
+                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">System Access</span>
                             <div class="control-group">
                                 <FormCheckbox label="Levy Network" checked />
                                 <FormCheckbox label="Levy Studio" />
@@ -148,10 +142,10 @@ const institutionOptions = [
                     <div class="split-r">
                         <FormTextarea label="Project Telemetry" id="projectTelemetry" placeholder="Describe the structural gap..." />
                         <div class="form-row mt-space-2">
-                            <span class="form-label mb-space-2" style="display: block;">Visibility Protocol</span>
+                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">Visibility Protocol</span>
                             <div class="control-group">
                                 <FormRadio label="Public Broadcast" name="vis" checked />
-                                <FormRadio label="Internal Only" name="vis" />
+                                <FormRadio label="Internal Only"    name="vis" />
                             </div>
                         </div>
                     </div>
@@ -159,7 +153,7 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- MEDIA RATIOS -->
+        <!-- ⑤ MEDIA RATIOS -->
         <section id="media">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">04 // IMAGERY</span></div>
@@ -169,27 +163,25 @@ const institutionOptions = [
                 </div>
 
                 <div class="txt-wide reveal mb-space-4">
-                    <MediaPlaceholder ratio="16:9" caption="Widescreen Format (16:9) - Used for primary hero elements and video." />
+                    <MediaPlaceholder ratio="16:9" caption="Widescreen Format (16:9) — Used for primary hero elements and video." />
                 </div>
-
                 <div class="split-2up reveal">
                     <div class="split-l">
-                        <MediaPlaceholder ratio="4:3" caption="Standard Format (4:3) - Used for editorial content." />
+                        <MediaPlaceholder ratio="4:3" caption="Standard Format (4:3) — Used for editorial content." />
                     </div>
                     <div class="split-r">
-                        <MediaPlaceholder ratio="1:1" caption="Square Format (1:1) - Used for portraits and grid galleries." />
+                        <MediaPlaceholder ratio="1:1" caption="Square Format (1:1) — Used for portraits and grid galleries." />
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ACCORDIONS -->
+        <!-- ⑥ ACCORDIONS -->
         <section id="accordions">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">05 // TOGGLES</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
-
                     <AccordionWrapper class="reveal mt-space-6">
                         <Accordion title="What is the Levy Studio?" open id="faq-1">
                             <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
@@ -202,7 +194,7 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- TABLES -->
+        <!-- ⑦ TELEMETRY DATA -->
         <section id="data">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">06 // STRUCTURE</span></div>
@@ -223,13 +215,13 @@ const institutionOptions = [
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Studio OS - SYS.01</td>
+                                <td>Studio OS — SYS.01</td>
                                 <td><Badge label="Active" /></td>
                                 <td>Public Library System</td>
                                 <td>Cohorts Launched</td>
                             </tr>
                             <tr>
-                                <td>Levy Institute - R.04</td>
+                                <td>Levy Institute — R.04</td>
                                 <td><Badge label="Beta" /></td>
                                 <td>Academic Research</td>
                                 <td>Frameworks Published</td>
@@ -240,17 +232,17 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- MID-PAGE STATEMENT -->
-        <section class="void-section auto-height">
-            <StatementBreakout
-                topText="Outlier Outcomes<br>Beta Cohort Integration"
-                leftSpans={["314&nbsp;:"]}
-                rightSpans={["ACTIVE", "TESTERS"]}
-                bottomText="13,816 Total Deployments<br>104,248km Verified"
-            />
-        </section>
+        <!-- ⑧ MID-PAGE STATEMENT BREAKOUT -->
+        <StatementBreakout
+            autoHeight
+            topNarrative="Outlier Outcomes<br>Beta Cohort Integration"
+            mainLeft="314&nbsp;:"
+            mainRightTop="ACTIVE"
+            mainRightBottom="TESTERS"
+            bottomNarrative="13,816 Total Deployments<br>104,248km Verified"
+        />
 
-        <!-- ARTIFACTS -->
+        <!-- ⑨ SYSTEM ARTIFACTS -->
         <section id="artifacts">
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">07 // CONTAINERS</span></div>
@@ -278,25 +270,21 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- FOOTER -->
-        <footer class="void-section dark-section">
-            <StatementBreakout
-                topText="Levy Strategic Design<br>End of Document"
-                leftSpans={["END&nbsp;:"]}
-                rightSpans={["SYSTEM", "MANIFEST"]}
-            >
-                <div class="marginalia" style="position: absolute; bottom: 0; left: 5vw; text-align: left; line-height: 1.2;">
-                    PREPARED BY FOLKMARK<br>FOR LEVY, 2026
-                </div>
-                <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;">
-                    L.S.D.<br>EST. 2026
-                </div>
-            </StatementBreakout>
-        </footer>
+        <!-- ⑩ DARK FOOTER -->
+        <StatementBreakout
+            theme="dark"
+            topNarrative="Levy Strategic Design<br>End of Document"
+            mainLeft="END&nbsp;:"
+            mainRightTop="SYSTEM"
+            mainRightBottom="MANIFEST"
+            marginaliaBottomLeft="PREPARED BY FOLKMARK<br>FOR LEVY, 2026"
+            marginaliaBottomRight="L.S.D.<br>EST. 2026"
+        />
+
     </main>
 </BaseLayout>
 
 <style>
-    .form-row { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
+    .form-row  { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
     .form-label { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
 </style>
