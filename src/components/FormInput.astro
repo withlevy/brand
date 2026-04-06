@@ -23,6 +23,7 @@ const { label, type = 'text', placeholder, id } = Astro.props;
         background: rgba(15, 12, 41, 0.015); border: var(--stroke-weight) solid var(--stroke-color);
         color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; transition: border-color 0.3s var(--ease-out-expo), background 0.3s;
     }
-    .form-input:focus { outline: none; border-color: var(--ink); background: transparent;}
+    .form-input:focus { border-color: var(--ink); background: transparent;}
+    .form-input:focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 2px; }
     .form-input::placeholder { color: var(--ink-muted); opacity: 0.5; }
 </style>

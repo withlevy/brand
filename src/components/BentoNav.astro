@@ -14,7 +14,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav class="bento-nav" id="bentoNav">
+<nav class="bento-nav" id="bentoNav" aria-label="Main navigation">
     <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
         <div class="bento-grid">
             {items.map((item) => (
@@ -51,7 +51,8 @@ const { items } = Astro.props;
     }
 
     @media (max-width: 768px) {
-        .bento-grid { grid-template-columns: 1fr; }
+        .bento-grid { grid-template-columns: 1fr; max-height: none; }
+        .bento-item { min-height: var(--space-16); padding: var(--space-3); }
         .bento-item.wide { grid-column: span 1; }
     }
 </style>

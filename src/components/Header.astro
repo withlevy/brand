@@ -5,9 +5,9 @@
 <header id="mainHeader">
     <div class="header-inner">
         <a href="#cover" class="header-logo">
-            <img src="/logo-header.png" alt="Levy" class="header-logo-img" />
+            <img src="/logo-header.png" alt="Levy" class="header-logo-img" loading="lazy" />
         </a>
-        <button class="hamburger" id="navToggle" aria-expanded="false" aria-label="Toggle Navigation">
+        <button class="hamburger" id="navToggle" aria-expanded="false" aria-controls="bentoNav" aria-label="Toggle Navigation">
             <div class="hamburger-box">
                 <span></span><span></span>
             </div>
@@ -35,14 +35,39 @@
             }
         });
 
+        const closeNav = () => {
+            bentoNav!.classList.remove('is-open');
+            navToggle!.classList.remove('is-active');
+            navToggle!.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            evaluateDarkOverlay();
+            navToggle!.focus();
+        };
+
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                bentoNav!.classList.remove('is-open');
-                navToggle!.classList.remove('is-active');
-                navToggle!.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                evaluateDarkOverlay();
-            });
+            link.addEventListener('click', closeNav);
+        });
+
+        // Escape key closes nav
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && bentoNav!.classList.contains('is-open')) {
+                closeNav();
+            }
+        });
+
+        // Focus trap when nav is open
+        bentoNav!.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab' || !bentoNav!.classList.contains('is-open')) return;
+            const focusable = [navToggle!, ...bentoNav!.querySelectorAll<HTMLElement>('a[href], button')] as HTMLElement[];
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         });
 
         const evaluateDarkOverlay = () => {
@@ -106,4 +131,8 @@
 
     .hamburger.is-active span:nth-child(1) { transform: translateY(4px) rotate(45deg); background: var(--paper); }
     .hamburger.is-active span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); background: var(--paper); }
+
+    @media (max-width: 768px) {
+        .header-logo-img { height: var(--space-6); }
+    }
 </style>
