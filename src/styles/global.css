@@ -142,6 +142,7 @@ body {
 .narrative {
     font-family: var(--font-narrative); font-weight: 200;
     font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 36;
+    font-size: clamp(1rem, 2.5vw, var(--step-3)); color: var(--ink-light);
     --lh: 1.15; line-height: var(--lh);
     --crop-top: calc((var(--lh) - 0.730) * -0.5em);
 }
