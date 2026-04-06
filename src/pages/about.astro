@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import StatementBreakout from '../components/StatementBreakout.astro';
+
+const navItems = [
+    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "/#network",    number: "02", category: "APPROACH",   title: "WHAT BECOMES POSSIBLE", wide: true },
+    { href: "/#membership", number: "03", category: "MEMBERSHIP", title: "THREE WAYS IN", wide: true },
+    { href: "/#proof",      number: "04", category: "PROOF",      title: "THE PROGRAM" },
+    { href: "/#join",       number: "05", category: "ACTION",     title: "JOIN THE NETWORK" },
+];
+---
+
+<BaseLayout title="About — Levy Strategic Design" description="The story behind Levy Strategic Design.">
+    <Header />
+    <BentoNav items={navItems} />
+
+    <main id="main-content">
+        <StatementBreakout
+            id="cover"
+            topNarrative="The company."
+            mainLeft="ABOUT&nbsp;:"
+            mainRightTop="LEVY"
+            mainRightBottom="STRATEGIC"
+            bottomNarrative="Washington, D.C."
+        />
+
+        <section id="about">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">COMING SOON</h2>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="body-large">This page is under construction. Levy Strategic Design helps serious people develop the capabilities to navigate the human systems that determine whether their work reaches the scale it deserves.</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="marginalia">Check back soon for the full story.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <StatementBreakout
+        theme="dark"
+        mainLeft="BUILD&nbsp;:"
+        mainRightTop="THE"
+        mainRightBottom="ROOM"
+        marginaliaBottomLeft="LEVY STRATEGIC DESIGN // WASHINGTON, D.C."
+        marginaliaBottomRight="EST. 2024"
+    />
+</BaseLayout>

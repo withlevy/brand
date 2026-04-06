@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import StatementBreakout from '../components/StatementBreakout.astro';
+
+const navItems = [
+    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "/#network",    number: "02", category: "APPROACH",   title: "WHAT BECOMES POSSIBLE", wide: true },
+    { href: "/#membership", number: "03", category: "MEMBERSHIP", title: "THREE WAYS IN", wide: true },
+    { href: "/#proof",      number: "04", category: "PROOF",      title: "THE PROGRAM" },
+    { href: "/#join",       number: "05", category: "ACTION",     title: "JOIN THE NETWORK" },
+];
+---
+
+<BaseLayout title="Work With Us — Levy Studio &amp; Institute" description="The Levy Studio and The Levy Institute.">
+    <Header />
+    <BentoNav items={navItems} />
+
+    <main id="main-content">
+        <StatementBreakout
+            id="cover"
+            topNarrative="Beyond the Network."
+            mainLeft="WORK&nbsp;:"
+            mainRightTop="WITH"
+            mainRightBottom="US"
+            bottomNarrative="The Levy Studio. The Levy Institute."
+        />
+
+        <section id="studio">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">THE LEVY STUDIO</h2>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="body-large">The Studio is Levy's co-design practice. For initiatives that need direct strategic design support — navigating institutional systems, building coalitions, developing the architecture that moves serious work through serious terrain.</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="marginalia">Details coming soon.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="institute">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">THE LEVY INSTITUTE</h2>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="body-large">The Institute is Levy's applied research arm. Where the methods are developed, tested, and shared. Where the questions that matter most get the rigor they deserve.</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="marginalia">Details coming soon.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <StatementBreakout
+        theme="dark"
+        mainLeft="BUILD&nbsp;:"
+        mainRightTop="THE"
+        mainRightBottom="ROOM"
+        marginaliaBottomLeft="LEVY STRATEGIC DESIGN // WASHINGTON, D.C."
+        marginaliaBottomRight="EST. 2024"
+    />
+</BaseLayout>
