@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+---
+
+<BaseLayout title="My Account — Levy Network" description="Manage your Levy Network membership.">
+    <Header />
+
+    <main id="main-content">
+        <section id="account" class="void-section">
+            <div class="statement-breakout reveal" style="width: 100%; max-width: 600px;">
+                <div class="tech-title" style="margin-bottom: var(--space-4); text-align: center;">
+                    <span class="display-medium">MY ACCOUNT</span>
+                </div>
+                <p class="body-medium" style="text-align: center; margin-bottom: var(--space-8); color: var(--ink-muted);">Manage your Levy Network membership, billing, and profile.</p>
+
+                <!-- Outseta embed container -->
+                <div id="outseta-profile" style="width: 100%; min-height: 400px;">
+                    <div data-o-component="Profile" data-o-options='{"tab": "profile"}'></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script is:inline>
+        // Outseta widget loader
+        // Replace YOUR_DOMAIN with your Outseta subdomain
+        var o_options = {
+            domain: 'levy.outseta.com',
+            load: 'auth',
+            auth: {
+                widgetMode: 'login',
+                authenticationCallbackUrl: window.location.origin + '/account',
+                logoutCallbackUrl: window.location.origin + '/login'
+            }
+        };
+    </script>
+    <script is:inline src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+</BaseLayout>
