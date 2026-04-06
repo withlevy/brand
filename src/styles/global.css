@@ -7,13 +7,15 @@
     --paper: #F5F5F3;
     --cloud-dream: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.4) 55%, rgba(138, 35, 135, 0.6) 100%);
 
+    /* Typography & Ink */
     --ink: var(--midnight);
-    --ink-light: rgba(15, 12, 41, 0.75);
-    --ink-muted: rgba(15, 12, 41, 0.5);
+    --ink-light: rgba(15, 12, 41, 0.8);
+    --ink-muted: rgba(15, 12, 41, 0.65);
+    --ink-ghost: rgba(15, 12, 41, 0.65);
 
     /* Universal Stroke */
     --stroke-weight: 1px;
-    --stroke-color: rgba(15, 12, 41, 0.2);
+    --stroke-color: rgba(15, 12, 41, 0.25);
     --stroke-heavy: rgba(15, 12, 41, 1);
     --stroke-light: rgba(245, 245, 243, 0.15);
 
@@ -84,8 +86,8 @@ body {
    ========================================================================== */
 
 /* OPTICAL CROP UTILITY */
-.tech-title, .narrative, .micro-data { position: relative; display: block; }
-.tech-title::before, .narrative::before, .micro-data::before { content: ""; display: table; }
+.tech-title, .narrative, .micro-data, .marginalia, .section-label { position: relative; display: block; }
+.tech-title::before, .narrative::before, .micro-data::before, .marginalia::before, .section-label::before { content: ""; display: table; }
 
 /* HEADING SCALE (Helvetica Neue | Cap Ratio: ~0.714) */
 .tech-title {
@@ -110,16 +112,28 @@ body {
 }
 .narrative::before { margin-bottom: var(--crop-top); }
 
+/* MARGINALIA & SECTION LABELS (Fraunces Soft | Cap Ratio: ~0.730) */
+.marginalia, .section-label {
+    font-family: var(--font-narrative); font-weight: 100;
+    font-variation-settings: "SOFT" 100, "WONK" 0, "opsz" 9;
+    font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.25em;
+    --lh: 1.5; line-height: var(--lh);
+    --crop-top: calc((var(--lh) - 0.730) * -0.5em);
+}
+.marginalia { color: var(--ink-ghost); }
+.marginalia::before { margin-bottom: var(--crop-top); }
+.section-label { color: var(--ink); }
+.section-label::before { margin-bottom: var(--crop-top); }
+
 /* MICRO-DATA (Helvetica Neue | 1.5 Baseline Rhythm) */
 .micro-data {
-    font-family: var(--font-tech); font-size: var(--step--1);
-    text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: var(--font-tech); font-weight: 300; font-size: var(--step--1);
+    text-transform: uppercase; letter-spacing: 0.05em;
     --lh: 1.5; line-height: var(--lh); color: var(--ink-muted);
     --crop-top: calc((var(--lh) - 0.714) * -0.5em);
 }
 .micro-data::before { margin-bottom: var(--crop-top); }
-.micro-data.lbl-lead { margin-bottom: var(--space-4); color: var(--ink); }
-.micro-data.tiny { font-size: var(--step--2); }
+.micro-data.lbl-lead { color: var(--ink); }
 
 /* BODY COPY (1.5 Strict Line Height) */
 .body-large { font-size: var(--step-1); line-height: 1.5; font-weight: 300; }
@@ -131,11 +145,21 @@ em { font-style: italic; }
 .text-link { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease-out-expo); font-weight: 500;}
 .text-link:hover { color: var(--ink-muted); }
 
+/* Structural Utilities */
+.mt-space-2 { margin-top: var(--space-2); }
+.mt-space-4 { margin-top: var(--space-4); }
+.mt-space-8 { margin-top: var(--space-8); }
+.mb-space-2 { margin-bottom: var(--space-2); }
+.mb-space-4 { margin-bottom: var(--space-4); }
+.mb-space-8 { margin-bottom: var(--space-8); }
+
 /* ==========================================================================
    4. PROPORTIONAL GRID ARCHITECTURE
    ========================================================================== */
 section { padding: var(--space-16) 5vw; width: 100%; position: relative; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
 section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
+section.void-section { padding: var(--space-24) 5vw; border-bottom: none; min-height: 90dvh; display: flex; align-items: center; justify-content: center;}
+section.void-section.auto-height { min-height: auto; padding: var(--space-16) 5vw; }
 
 .layout-grid {
     display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--space-4); row-gap: var(--space-12);
@@ -146,7 +170,6 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .hd-main { grid-column: 3 / 12; }
 .txt-block { grid-column: 3 / 10; }
 .txt-wide { grid-column: 3 / 13; }
-.txt-center-narrow { grid-column: 4 / 10; text-align: center; }
 
 .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-8) var(--space-4); }
 .split-l { grid-column: auto / span 5; }
@@ -160,17 +183,15 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* Dark Mode & Textures */
+/* Dark Mode Context */
 .dark-section { background: var(--midnight); color: var(--paper); }
-.dark-section .micro-data { color: rgba(245, 245, 243, 0.6); }
-.dark-section .micro-data.lbl-lead { color: var(--paper); }
+.dark-section .section-label { color: var(--paper); }
+.dark-section .micro-data { color: rgba(245, 245, 243, 0.7); }
+.dark-section .marginalia { color: rgba(245, 245, 243, 0.6); }
 .dark-section .divider, .dark-section section { border-color: var(--stroke-light); }
 .dark-section .text-link { color: var(--paper); }
-
-.gritty-filter {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.35; mix-blend-mode: color-burn;
-    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.99" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
-}
+.dark-section .statement-top, .dark-section .statement-bottom { color: rgba(245, 245, 243, 0.7); }
+.dark-section .statement-main { color: var(--paper); }
 
 /* ==========================================================================
    5. LAYOUT UTILITIES
@@ -181,34 +202,19 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 /* Artifact Card Stack Collapse */
 .stack-group .artifact-card + .artifact-card { margin-top: calc(var(--stroke-weight) * -1); }
 
-/* Typography Spec Rows */
-.type-row {
-    grid-column: 1 / -1; display: grid; grid-template-columns: subgrid;
-    padding: var(--space-6) 0; border-bottom: var(--stroke-weight) solid var(--stroke-color); align-items: end;
-}
-.type-row:first-of-type { border-top: var(--stroke-weight) solid var(--stroke-color); }
-.type-label { grid-column: 1 / 4; display: flex; flex-direction: column; gap: var(--space-1); }
-.type-specimen { grid-column: 4 / 13; overflow: hidden; }
-
-/* Grid Visualization Helpers */
-.grid-visualizer { grid-column: span 1; background: rgba(15, 12, 41, 0.03); border: var(--stroke-weight) dashed var(--stroke-color); height: var(--space-8); display: flex; align-items: center; justify-content: center; }
-
 /* ==========================================================================
    6. RESPONSIVE CHOREOGRAPHY
    ========================================================================== */
 @media (max-width: 1024px) {
     .layout-grid { grid-template-columns: repeat(8, 1fr); }
     .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
-    blockquote { width: 100%; grid-column: 1 / -1; font-size: var(--step-3); }
-    .type-label { grid-column: 1 / -1; margin-bottom: var(--space-4); }
-    .type-specimen { grid-column: 1 / -1; }
-    .grid-visualizer:nth-child(n+9) { display: none; }
+    .doc-control { display: none; }
 }
 
 @media (max-width: 768px) {
     .layout-grid { grid-template-columns: repeat(4, 1fr); }
     .split-l, .split-r { grid-column: 1 / -1; }
-    .grid-visualizer:nth-child(n+5) { display: none; }
+    .statement-top, .statement-bottom { font-size: var(--step-1); }
 }
 
 @media (prefers-reduced-motion: reduce) {

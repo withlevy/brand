@@ -2,16 +2,17 @@
 interface Props {
     title: string;
     open?: boolean;
+    id?: string;
 }
 
-const { title, open = false } = Astro.props;
+const { title, open = false, id } = Astro.props;
 ---
 
 <div class:list={["accordion", { "is-open": open }]}>
-    <button class="accordion-trigger">
+    <button class="accordion-trigger" aria-expanded={open ? "true" : "false"} aria-controls={id}>
         <span class="tech-title">{title}</span>
     </button>
-    <div class="accordion-content-grid">
+    <div class="accordion-content-grid" id={id}>
         <div class="accordion-inner">
             <slot />
         </div>
@@ -23,7 +24,9 @@ const { title, open = false } = Astro.props;
         const triggers = document.querySelectorAll('.accordion-trigger');
         triggers.forEach(trigger => {
             trigger.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
                 this.parentElement!.classList.toggle('is-open');
+                this.setAttribute('aria-expanded', String(!isExpanded));
             });
         });
     });
