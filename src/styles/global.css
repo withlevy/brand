@@ -213,9 +213,9 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 
 .full-bleed { grid-column: 1 / -1; }
 
-/* Zig-Zag Layout Primitives */
+/* Zig-Zag Layout Primitives (overlap at col 6 forces each block onto its own row) */
 .zz-left  { grid-column: 1 / 7; }
-.zz-right { grid-column: 7 / 13; }
+.zz-right { grid-column: 6 / 13; }
 
 .p-group { display: flex; flex-direction: column; gap: var(--space-4); }
 
