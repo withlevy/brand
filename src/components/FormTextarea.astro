@@ -2,14 +2,15 @@
 interface Props {
     label: string;
     placeholder?: string;
+    id?: string;
 }
 
-const { label, placeholder } = Astro.props;
+const { label, placeholder, id } = Astro.props;
 ---
 
 <div class="form-row">
-    <label class="form-label">{label}</label>
-    <textarea class="form-textarea" placeholder={placeholder}></textarea>
+    <label class="form-label" for={id}>{label}</label>
+    <textarea id={id} class="form-textarea" placeholder={placeholder}></textarea>
 </div>
 
 <style>
