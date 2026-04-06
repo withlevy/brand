@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
+import StatementBreakout from '../components/StatementBreakout.astro';
 import Button from '../components/Button.astro';
 import Badge from '../components/Badge.astro';
 import FormInput from '../components/FormInput.astro';
@@ -15,7 +16,6 @@ import Accordion from '../components/Accordion.astro';
 import ArtifactCard from '../components/ArtifactCard.astro';
 import DoDontBox from '../components/DoDontBox.astro';
 import SystemTable from '../components/SystemTable.astro';
-import Blockquote from '../components/Blockquote.astro';
 
 const navItems = [
     { href: "#typography", number: "01", category: "STYLE", title: "TYPOGRAPHY" },
@@ -23,31 +23,45 @@ const navItems = [
     { href: "#forms", number: "03", category: "INPUT", title: "FORM CONTROLS", wide: true },
     { href: "#media", number: "04", category: "IMAGERY", title: "MEDIA & RATIOS", wide: true },
     { href: "#accordions", number: "05", category: "TOGGLES", title: "ACCORDIONS" },
-    { href: "#data", number: "06", category: "STRUCTURE", title: "TABLES & DATA" },
+    { href: "#data", number: "06", category: "STRUCTURE", title: "TELEMETRY & DATA" },
     { href: "#artifacts", number: "07", category: "CONTAINERS", title: "SYSTEM ARTIFACTS", wide: true },
+];
+
+const institutionOptions = [
+    { value: "Federal Government", text: "Federal Government" },
+    { value: "Private Sector", text: "Private Sector" },
+    { value: "Non-Profit", text: "Non-Profit" },
 ];
 ---
 
-<BaseLayout title="Levy | Architectural Component Library">
+<BaseLayout title="Levy | Astro-Ready Component Library">
+    <div class="marginalia doc-control" style="top: var(--space-24);">REF: LEVY-OP-01 // BASE-8 GRID </div>
+
     <Header />
     <BentoNav items={navItems} />
 
     <main>
         <!-- COVER -->
-        <section id="cover" style="padding-top: calc(var(--space-24) * 1.5);">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">MATHEMATICAL SCALING</span><span class="micro-data">ASTRO READY</span></div>
-                <h1 class="hd-main tech-title display-huge reveal">DESIGN SYSTEM</h1>
-                <div class="txt-block reveal p-group" style="margin-top: var(--space-4);">
-                    <h3 class="narrative" style="font-size: var(--step-3);">The atomic components and architectural blueprint for Levy. Governed by a strict base-8 grid and perfect-fourth typographic scale.</h3>
+        <section id="cover" class="void-section">
+            <StatementBreakout
+                topText="Levy Strategic Design<br>Washington, District of Columbia<br>DC20001"
+                leftSpans={["PROJECT&nbsp;:"]}
+                rightSpans={["LEVY", "SYSTEM"]}
+                bottomText="The atomic components and<br>architectural blueprint for Levy."
+            >
+                <div class="marginalia" style="position: absolute; top: 0; left: 5vw; text-align: left; line-height: 1.2;">
+                    AEROSPACE<br>STANDARD<br>ASTRO READY
                 </div>
-            </div>
+                <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;">
+                    DOC: 2026.04<br>REV: A<br>Est. 2026
+                </div>
+            </StatementBreakout>
         </section>
 
         <!-- TYPOGRAPHY -->
         <section id="typography">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">01 // TYPOGRAPHY</span></div>
+                <div class="lbl reveal"><span class="section-label">01 // TYPOGRAPHY</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-large">ARCHITECTURAL SCALE</h2>
                     <hr class="divider">
@@ -55,7 +69,7 @@ const navItems = [
 
                 <div class="split-2up reveal">
                     <div class="split-l p-group">
-                        <span class="micro-data lbl-lead">HEADING SCALE (RATIO: 1.333)</span>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">HEADING SCALE (RATIO: 1.333)</span>
                         <div class="display-massive tech-title">MASSIVE</div>
                         <div class="display-huge tech-title">HUGE</div>
                         <div class="display-large tech-title">LARGE</div>
@@ -63,11 +77,14 @@ const navItems = [
                     </div>
 
                     <div class="split-r p-group">
-                        <span class="micro-data lbl-lead">READING & INLINE</span>
-                        <div class="narrative" style="margin-bottom: var(--space-4); font-size: var(--step-3);">Narrative display font for insight blocks.</div>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">READING & METADATA</span>
                         <p class="body-large"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
-                        <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a> for cross-referencing.</p>
-                        <p class="body-small"><strong>Body Small:</strong> Used for captions, disclaimers, and metadata.</p>
+                        <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a>.</p>
+
+                        <div class="mt-space-4" style="padding: var(--space-4); border: 1px solid var(--stroke-color); background: rgba(15, 12, 41, 0.01);">
+                            <span class="micro-data mb-space-2">STRUCTURAL TAGS (HELVETICA 300)</span>
+                            <span class="marginalia">AMBIENT MARGINALIA (SOFT FRAUNCES)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +93,7 @@ const navItems = [
         <!-- BUTTONS & BADGES -->
         <section id="buttons">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">02 // INTERACTION</span></div>
+                <div class="lbl reveal"><span class="section-label">02 // INTERACTION</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">BUTTONS & BADGES</h2>
                     <hr class="divider">
@@ -84,14 +101,14 @@ const navItems = [
 
                 <div class="split-2up reveal">
                     <div class="split-l p-group" style="align-items: flex-start;">
-                        <span class="micro-data lbl-lead">PRIMARY ACTIONS (H: 48PX)</span>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">PRIMARY ACTIONS (H: 48PX)</span>
                         <div class="btn-group">
                             <Button variant="solid" label="Solid Button" />
                             <Button variant="ghost" label="Ghost Button" />
                         </div>
                     </div>
                     <div class="split-r p-group" style="align-items: flex-start;">
-                        <span class="micro-data lbl-lead">SYSTEM BADGES (H: 32PX)</span>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">SYSTEM BADGES (H: 32PX)</span>
                         <div class="btn-group">
                             <Badge label="Active" />
                             <Badge label="In Progress" />
@@ -105,18 +122,23 @@ const navItems = [
         <!-- FORM CONTROLS -->
         <section id="forms">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">03 // INPUT</span></div>
+                <div class="lbl reveal"><span class="section-label">03 // INPUT</span></div>
                 <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">FORM CONTROLS</h2>
+                    <h2 class="tech-title display-medium">FLIGHT MANUAL FORMS</h2>
                     <hr class="divider">
                 </div>
 
                 <div class="split-2up reveal">
                     <div class="split-l">
                         <FormInput label="Full Name" placeholder="e.g. Jane Doe" />
-                        <FormSelect label="Institution Type" options={["Select an option...", "Federal Government", "Private Sector", "Non-Profit"]} />
-                        <div class="form-row" style="margin-top: var(--space-2);">
-                            <span class="form-label" style="margin-bottom: var(--space-1); display: block;">Interests</span>
+                        <FormSelect
+                            label="Institution Type"
+                            id="institutionType"
+                            name="institutionType"
+                            options={institutionOptions}
+                        />
+                        <div class="form-row mt-space-2">
+                            <span class="form-label mb-space-2" style="display: block;">System Access</span>
                             <div class="control-group">
                                 <FormCheckbox label="Levy Network" checked />
                                 <FormCheckbox label="Levy Studio" />
@@ -124,11 +146,11 @@ const navItems = [
                         </div>
                     </div>
                     <div class="split-r">
-                        <FormTextarea label="Project Description" placeholder="Describe the structural gap..." />
-                        <div class="form-row" style="margin-top: var(--space-2);">
-                            <span class="form-label" style="margin-bottom: var(--space-1); display: block;">Visibility</span>
+                        <FormTextarea label="Project Telemetry" placeholder="Describe the structural gap..." />
+                        <div class="form-row mt-space-2">
+                            <span class="form-label mb-space-2" style="display: block;">Visibility Protocol</span>
                             <div class="control-group">
-                                <FormRadio label="Public" name="vis" checked />
+                                <FormRadio label="Public Broadcast" name="vis" checked />
                                 <FormRadio label="Internal Only" name="vis" />
                             </div>
                         </div>
@@ -140,13 +162,13 @@ const navItems = [
         <!-- MEDIA RATIOS -->
         <section id="media">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">04 // IMAGERY</span></div>
+                <div class="lbl reveal"><span class="section-label">04 // IMAGERY</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">MEDIA RATIOS</h2>
                     <hr class="divider">
                 </div>
 
-                <div class="txt-wide reveal" style="margin-bottom: var(--space-4);">
+                <div class="txt-wide reveal mb-space-4">
                     <MediaPlaceholder ratio="16:9" caption="Widescreen Format (16:9) - Used for primary hero elements and video." />
                 </div>
 
@@ -164,20 +186,17 @@ const navItems = [
         <!-- ACCORDIONS -->
         <section id="accordions">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">05 // TOGGLES</span></div>
+                <div class="lbl reveal"><span class="section-label">05 // TOGGLES</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
 
-                    <div class="reveal" style="margin-top: var(--space-6);">
+                    <div class="accordion-wrapper-outer reveal mt-space-6">
                         <AccordionWrapper>
-                            <Accordion title="What is the Levy Studio?" open>
+                            <Accordion title="What is the Levy Studio?" open id="faq-1">
                                 <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
                             </Accordion>
-                            <Accordion title="How does the community capital framework apply?">
+                            <Accordion title="How does the community capital framework apply?" id="faq-2">
                                 <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
-                            </Accordion>
-                            <Accordion title="Is Levy a political organization?">
-                                <p class="body-medium">No. Levy operates as a builder, working in the places and with the people where the promise of the American Project is most actively being tested. It is strictly non-partisan.</p>
                             </Accordion>
                         </AccordionWrapper>
                     </div>
@@ -188,9 +207,9 @@ const navItems = [
         <!-- TABLES -->
         <section id="data">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">06 // STRUCTURE</span></div>
+                <div class="lbl reveal"><span class="section-label">06 // STRUCTURE</span></div>
                 <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">TABLES</h2>
+                    <h2 class="tech-title display-medium">TELEMETRY DATA</h2>
                     <hr class="divider">
                 </div>
 
@@ -198,30 +217,24 @@ const navItems = [
                     <SystemTable>
                         <thead>
                             <tr>
-                                <th>Component</th>
-                                <th>Status</th>
+                                <th>Component Ref</th>
+                                <th>Status Code</th>
                                 <th>Deployment Phase</th>
                                 <th>Primary Metric</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Studio OS</td>
+                                <td>Studio OS - SYS.01</td>
                                 <td><Badge label="Active" /></td>
                                 <td>Public Library System</td>
                                 <td>Cohorts Launched</td>
                             </tr>
                             <tr>
-                                <td>Levy Institute</td>
+                                <td>Levy Institute - R.04</td>
                                 <td><Badge label="Beta" /></td>
                                 <td>Academic Research</td>
                                 <td>Frameworks Published</td>
-                            </tr>
-                            <tr>
-                                <td>The Network</td>
-                                <td><Badge label="Scaling" /></td>
-                                <td>Washington D.C. Node</td>
-                                <td>Active Members</td>
                             </tr>
                         </tbody>
                     </SystemTable>
@@ -229,19 +242,27 @@ const navItems = [
             </div>
         </section>
 
+        <!-- MID-PAGE STATEMENT -->
+        <section class="void-section auto-height">
+            <StatementBreakout
+                topText="Outlier Outcomes<br>Beta Cohort Integration"
+                leftSpans={["314&nbsp;:"]}
+                rightSpans={["ACTIVE", "TESTERS"]}
+                bottomText="13,816 Total Deployments<br>104,248km Verified"
+            />
+        </section>
+
         <!-- ARTIFACTS -->
         <section id="artifacts">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="micro-data lbl-lead">07 // CONTAINERS</span></div>
+                <div class="lbl reveal"><span class="section-label">07 // CONTAINERS</span></div>
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">SYSTEM ARTIFACTS</h2>
-
-                    <Blockquote>"Those aren't two separate arguments. They're the same one."</Blockquote>
                 </div>
 
-                <div class="split-2up reveal">
+                <div class="split-2up reveal mt-space-8">
                     <div class="split-l stack-group">
-                        <span class="micro-data lbl-lead">ARTIFACT CARDS (STACK COLLAPSED)</span>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">ARTIFACT CARDS (STACK COLLAPSED)</span>
                         <ArtifactCard badge="CORE TENET" title="THE LEVY NETWORK">
                             <p class="body-medium">The membership community built to make members sharper, better connected, and better equipped.</p>
                         </ArtifactCard>
@@ -250,7 +271,7 @@ const navItems = [
                         </ArtifactCard>
                     </div>
                     <div class="split-r">
-                        <span class="micro-data lbl-lead">DO / DON'T BOXES</span>
+                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">DO / DON'T BOXES</span>
                         <DoDontBox rule="DIRECT TONE">
                             <p class="body-medium">Speak to people who are already serious and already working. Earn your sentences. Never flatter.</p>
                         </DoDontBox>
@@ -258,10 +279,26 @@ const navItems = [
                 </div>
             </div>
         </section>
+
+        <!-- FOOTER -->
+        <footer class="void-section dark-section">
+            <StatementBreakout
+                topText="Levy Strategic Design<br>End of Document"
+                leftSpans={["END&nbsp;:"]}
+                rightSpans={["SYSTEM", "MANIFEST"]}
+            >
+                <div class="marginalia" style="position: absolute; bottom: 0; left: 5vw; text-align: left; line-height: 1.2;">
+                    PREPARED BY FOLKMARK<br>FOR LEVY, 2026
+                </div>
+                <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;">
+                    L.S.D.<br>EST. 2026
+                </div>
+            </StatementBreakout>
+        </footer>
     </main>
 </BaseLayout>
 
 <style>
     .form-row { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
-    .form-label { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
+    .form-label { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
 </style>

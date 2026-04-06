@@ -1,55 +1,91 @@
 ---
-interface Props {
-    label: string;
-    options: string[];
+interface SelectOption {
+    value: string;
+    text: string;
 }
 
-const { label, options } = Astro.props;
+interface Props {
+    label: string;
+    id?: string;
+    name?: string;
+    options: SelectOption[];
+    placeholder?: string;
+}
+
+const { label, id, name, options, placeholder = 'Select an option...' } = Astro.props;
+const labelId = id ? `${id}Label` : undefined;
 ---
 
 <div class="form-row">
-    <label class="form-label">{label}</label>
-    <div class="select-wrapper">
-        <select class="form-select">
-            {options.map((option) => (
-                <option>{option}</option>
+    <label class="form-label" id={labelId}>{label}</label>
+
+    <div class="custom-select-container">
+        <select id={id} name={name} class="native-select-hidden" aria-hidden="true" tabindex="-1">
+            <option value="" disabled selected>{placeholder}</option>
+            {options.map((opt) => (
+                <option value={opt.value}>{opt.text}</option>
             ))}
         </select>
-        <div class="select-arrow">
-            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor">
-                <path d="M1 4L6 9L11 4" stroke-width="1"/>
-            </svg>
-        </div>
+        <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby={labelId}>
+            <span class="custom-select-value">{placeholder}</span>
+            <div class="custom-select-arrow"><svg aria-hidden="true" viewBox="0 0 12 12" fill="none" stroke="currentColor"><path d="M1 4L6 9L11 4" stroke-width="1"/></svg></div>
+        </button>
+        <ul class="custom-select-options" role="listbox" aria-labelledby={labelId} tabindex="-1">
+            {options.map((opt) => (
+                <li class="custom-select-option" role="option" aria-selected="false" data-value={opt.value}>{opt.text}</li>
+            ))}
+        </ul>
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const containers = document.querySelectorAll('.custom-select-container');
+
+        containers.forEach(container => {
+            const trigger = container.querySelector('.custom-select-trigger') as HTMLButtonElement;
+            const options = container.querySelectorAll('.custom-select-option');
+            const nativeSelect = container.querySelector('.native-select-hidden') as HTMLSelectElement;
+            const valueDisplay = container.querySelector('.custom-select-value');
+
+            if (!trigger || !nativeSelect) return;
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = container.classList.contains('is-open');
+                document.querySelectorAll('.custom-select-container').forEach(c => c.classList.remove('is-open'));
+                if (!isOpen) container.classList.add('is-open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nativeSelect.value = (option as HTMLElement).getAttribute('data-value') || '';
+                    if (valueDisplay) valueDisplay.textContent = option.textContent;
+                    container.classList.remove('is-open');
+                });
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select-container').forEach(c => c.classList.remove('is-open'));
+        });
+    });
+</script>
+
 <style>
     .form-row { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
-    .form-label { font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); }
+    .form-label { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
 
-    .select-wrapper { position: relative; width: 100%; height: var(--space-6); }
-
-    .form-select {
-        appearance: none; width: 100%; height: 100%;
-        padding: 0 var(--space-6) 0 var(--space-3);
-        background: transparent; border: var(--stroke-weight) solid var(--stroke-color);
-        color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300;
-        cursor: pointer; transition: border-color 0.3s var(--ease-out-expo);
-    }
-
-    .form-select:focus { outline: none; border-color: var(--ink); }
-    .form-select:hover { border-color: var(--ink); }
-
-    .select-arrow {
-        position: absolute; top: 0; right: 0;
-        width: var(--space-6); height: 100%;
-        border-left: var(--stroke-weight) solid var(--stroke-color);
-        display: flex; align-items: center; justify-content: center;
-        pointer-events: none;
-        color: var(--ink); transition: border-color 0.3s var(--ease-out-expo);
-    }
-
-    .form-select:hover + .select-arrow,
-    .form-select:focus + .select-arrow { border-left-color: var(--ink); }
-    .select-arrow svg { width: 12px; height: 12px; }
+    .custom-select-container { position: relative; width: 100%; height: var(--space-6); }
+    .native-select-hidden { display: none; }
+    .custom-select-trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; padding: 0 0 0 var(--space-3); background: rgba(15, 12, 41, 0.015); border: var(--stroke-weight) solid var(--stroke-color); color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; cursor: pointer; transition: border-color 0.3s var(--ease-out-expo), background 0.3s; text-align: left; }
+    .custom-select-trigger:focus, .custom-select-trigger:hover, .custom-select-container.is-open .custom-select-trigger { outline: none; border-color: var(--ink); background: transparent; }
+    .custom-select-arrow { width: var(--space-6); height: 100%; border-left: var(--stroke-weight) solid var(--stroke-color); display: flex; align-items: center; justify-content: center; pointer-events: none; color: var(--ink); transition: border-color 0.3s var(--ease-out-expo); }
+    .custom-select-trigger:focus .custom-select-arrow, .custom-select-trigger:hover .custom-select-arrow, .custom-select-container.is-open .custom-select-arrow { border-left-color: var(--ink); }
+    .custom-select-options { position: absolute; top: calc(100% + var(--stroke-weight)); left: 0; width: 100%; background: var(--paper); border: var(--stroke-weight) solid var(--ink); display: none; flex-direction: column; z-index: 100; max-height: 240px; overflow-y: auto; list-style: none; }
+    .custom-select-container.is-open .custom-select-options { display: flex; }
+    .custom-select-option { padding: var(--space-2) var(--space-3); cursor: pointer; font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+    .custom-select-option:last-child { border-bottom: none; }
+    .custom-select-option:hover, .custom-select-option.is-selected { background: var(--ink); color: var(--paper); }
 </style>
