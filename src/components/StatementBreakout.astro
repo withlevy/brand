@@ -74,4 +74,9 @@ const sectionClasses = [
     .statement-left, .statement-right { display: flex; flex-direction: column; white-space: nowrap; }
     .statement-left { text-align: right; justify-content: flex-start; }
     .statement-right { text-align: left; justify-content: flex-start; }
+
+    @media (max-width: 480px) {
+        .statement-main { flex-direction: column; align-items: center; }
+        .statement-left, .statement-right { text-align: center; }
+    }
 </style>

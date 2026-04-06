@@ -14,6 +14,7 @@ interface Props {
 
 const { label, id, name, options, placeholder = 'Select an option...' } = Astro.props;
 const labelId = id ? `${id}Label` : undefined;
+const listboxId = id ? `${id}Listbox` : undefined;
 ---
 
 <div class="form-row">
@@ -26,13 +27,13 @@ const labelId = id ? `${id}Label` : undefined;
                 <option value={opt.value}>{opt.text}</option>
             ))}
         </select>
-        <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby={labelId}>
+        <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby={labelId} aria-controls={listboxId}>
             <span class="custom-select-value">{placeholder}</span>
             <div class="custom-select-arrow"><svg aria-hidden="true" viewBox="0 0 12 12" fill="none" stroke="currentColor"><path d="M1 4L6 9L11 4" stroke-width="1"/></svg></div>
         </button>
-        <ul class="custom-select-options" role="listbox" aria-labelledby={labelId} tabindex="-1">
-            {options.map((opt) => (
-                <li class="custom-select-option" role="option" aria-selected="false" data-value={opt.value}>{opt.text}</li>
+        <ul class="custom-select-options" id={listboxId} role="listbox" aria-labelledby={labelId}>
+            {options.map((opt, i) => (
+                <li class="custom-select-option" role="option" aria-selected="false" data-value={opt.value} id={id ? `${id}Option${i}` : undefined}>{opt.text}</li>
             ))}
         </ul>
     </div>
@@ -44,31 +45,124 @@ const labelId = id ? `${id}Label` : undefined;
 
         containers.forEach(container => {
             const trigger = container.querySelector('.custom-select-trigger') as HTMLButtonElement;
-            const options = container.querySelectorAll('.custom-select-option');
+            const optionsList = container.querySelector('.custom-select-options') as HTMLUListElement;
+            const options = container.querySelectorAll('.custom-select-option') as NodeListOf<HTMLElement>;
             const nativeSelect = container.querySelector('.native-select-hidden') as HTMLSelectElement;
             const valueDisplay = container.querySelector('.custom-select-value');
 
-            if (!trigger || !nativeSelect) return;
+            if (!trigger || !nativeSelect || !optionsList) return;
+
+            let activeIndex = -1;
+
+            const isOpen = () => container.classList.contains('is-open');
+
+            const open = () => {
+                document.querySelectorAll('.custom-select-container').forEach(c => c.classList.remove('is-open'));
+                container.classList.add('is-open');
+                trigger.setAttribute('aria-expanded', 'true');
+                if (activeIndex >= 0) {
+                    highlightOption(activeIndex);
+                }
+            };
+
+            const close = (returnFocus = true) => {
+                container.classList.remove('is-open');
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.removeAttribute('aria-activedescendant');
+                if (returnFocus) trigger.focus();
+            };
+
+            const selectOption = (index: number) => {
+                const option = options[index];
+                if (!option) return;
+                nativeSelect.value = option.getAttribute('data-value') || '';
+                if (valueDisplay) valueDisplay.textContent = option.textContent;
+                options.forEach(o => {
+                    o.setAttribute('aria-selected', 'false');
+                    o.classList.remove('is-selected');
+                });
+                option.setAttribute('aria-selected', 'true');
+                option.classList.add('is-selected');
+                activeIndex = index;
+                close();
+            };
+
+            const highlightOption = (index: number) => {
+                options.forEach(o => o.classList.remove('is-highlighted'));
+                if (index >= 0 && index < options.length) {
+                    options[index].classList.add('is-highlighted');
+                    options[index].scrollIntoView({ block: 'nearest' });
+                    const optionId = options[index].getAttribute('id');
+                    if (optionId) trigger.setAttribute('aria-activedescendant', optionId);
+                    activeIndex = index;
+                }
+            };
 
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const isOpen = container.classList.contains('is-open');
-                document.querySelectorAll('.custom-select-container').forEach(c => c.classList.remove('is-open'));
-                if (!isOpen) container.classList.add('is-open');
+                if (isOpen()) { close(); } else { open(); }
             });
 
-            options.forEach(option => {
+            trigger.addEventListener('keydown', (e) => {
+                switch (e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (!isOpen()) { open(); }
+                        highlightOption(Math.min(activeIndex + 1, options.length - 1));
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (!isOpen()) { open(); }
+                        highlightOption(Math.max(activeIndex - 1, 0));
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        if (isOpen()) highlightOption(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        if (isOpen()) highlightOption(options.length - 1);
+                        break;
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        if (isOpen() && activeIndex >= 0) {
+                            selectOption(activeIndex);
+                        } else {
+                            open();
+                        }
+                        break;
+                    case 'Escape':
+                        if (isOpen()) {
+                            e.preventDefault();
+                            close();
+                        }
+                        break;
+                    case 'Tab':
+                        if (isOpen()) close(false);
+                        break;
+                }
+            });
+
+            options.forEach((option, index) => {
                 option.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    nativeSelect.value = (option as HTMLElement).getAttribute('data-value') || '';
-                    if (valueDisplay) valueDisplay.textContent = option.textContent;
-                    container.classList.remove('is-open');
+                    selectOption(index);
+                });
+                option.addEventListener('mouseenter', () => {
+                    highlightOption(index);
                 });
             });
         });
 
         document.addEventListener('click', () => {
-            document.querySelectorAll('.custom-select-container').forEach(c => c.classList.remove('is-open'));
+            document.querySelectorAll('.custom-select-container').forEach(c => {
+                if (c.classList.contains('is-open')) {
+                    c.classList.remove('is-open');
+                    const trigger = c.querySelector('.custom-select-trigger') as HTMLButtonElement;
+                    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+                }
+            });
         });
     });
 </script>
@@ -80,12 +174,15 @@ const labelId = id ? `${id}Label` : undefined;
     .custom-select-container { position: relative; width: 100%; height: var(--space-6); }
     .native-select-hidden { display: none; }
     .custom-select-trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; padding: 0 0 0 var(--space-3); background: rgba(15, 12, 41, 0.015); border: var(--stroke-weight) solid var(--stroke-color); color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; cursor: pointer; transition: border-color 0.3s var(--ease-out-expo), background 0.3s; text-align: left; }
-    .custom-select-trigger:focus, .custom-select-trigger:hover, .custom-select-container.is-open .custom-select-trigger { outline: none; border-color: var(--ink); background: transparent; }
+    .custom-select-trigger:hover, .custom-select-container.is-open .custom-select-trigger { border-color: var(--ink); background: transparent; }
+    .custom-select-trigger:focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 2px; }
     .custom-select-arrow { width: var(--space-6); height: 100%; border-left: var(--stroke-weight) solid var(--stroke-color); display: flex; align-items: center; justify-content: center; pointer-events: none; color: var(--ink); transition: border-color 0.3s var(--ease-out-expo); }
-    .custom-select-trigger:focus .custom-select-arrow, .custom-select-trigger:hover .custom-select-arrow, .custom-select-container.is-open .custom-select-arrow { border-left-color: var(--ink); }
-    .custom-select-options { position: absolute; top: calc(100% + var(--stroke-weight)); left: 0; width: 100%; background: var(--paper); border: var(--stroke-weight) solid var(--ink); display: none; flex-direction: column; z-index: 100; max-height: 240px; overflow-y: auto; list-style: none; }
+    .custom-select-trigger:hover .custom-select-arrow, .custom-select-container.is-open .custom-select-arrow { border-left-color: var(--ink); }
+    .custom-select-options { position: absolute; top: calc(100% + var(--stroke-weight)); left: 0; width: 100%; background: var(--paper); border: var(--stroke-weight) solid var(--ink); display: none; flex-direction: column; z-index: 100; max-height: 50vh; overflow-y: auto; list-style: none; }
     .custom-select-container.is-open .custom-select-options { display: flex; }
-    .custom-select-option { padding: var(--space-2) var(--space-3); cursor: pointer; font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; border-bottom: var(--stroke-weight) solid var(--stroke-color); }
+    .custom-select-option { padding: var(--space-2) var(--space-3); cursor: pointer; font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; border-bottom: var(--stroke-weight) solid var(--stroke-color); min-height: 44px; display: flex; align-items: center; }
     .custom-select-option:last-child { border-bottom: none; }
     .custom-select-option:hover, .custom-select-option.is-selected { background: var(--ink); color: var(--paper); }
+    .custom-select-option.is-highlighted { background: rgba(15, 12, 41, 0.08); }
+    .custom-select-option.is-highlighted.is-selected { background: var(--ink); color: var(--paper); }
 </style>

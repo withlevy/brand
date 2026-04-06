@@ -101,6 +101,15 @@ body {
 
 :focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 4px; }
 
+.skip-link {
+    position: absolute; top: var(--space-2); left: var(--space-2); z-index: 10000;
+    padding: var(--space-1) var(--space-3); background: var(--ink); color: var(--paper);
+    font-family: var(--font-tech); font-size: var(--step--1); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none;
+    transform: translateY(-200%); transition: transform 0.2s var(--ease-out-expo);
+}
+.skip-link:focus { transform: translateY(0); }
+
 /* ==========================================================================
    3. TYPOGRAPHY SYSTEM (Optically Calibrated)
    ========================================================================== */
@@ -232,9 +241,18 @@ section.void-section.auto-height { min-height: auto; padding: var(--space-16) 5v
 }
 
 @media (max-width: 768px) {
+    :root { --header-height: var(--space-8); }
     .layout-grid { grid-template-columns: repeat(4, 1fr); }
     .split-l, .split-r { grid-column: 1 / -1; }
     .statement-top, .statement-bottom { font-size: var(--step-1); }
+}
+
+@media (max-width: 480px) {
+    section { padding: var(--space-8) 4vw; }
+    section:last-of-type { padding-bottom: var(--space-16); }
+    section.void-section { padding: var(--space-16) 4vw; }
+    section.void-section.auto-height { padding: var(--space-8) 4vw; }
+    .layout-grid { column-gap: var(--space-2); row-gap: var(--space-8); }
 }
 
 @media (prefers-reduced-motion: reduce) {

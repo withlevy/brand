@@ -7,7 +7,7 @@ interface Props {
 const { type = 'do', rule } = Astro.props;
 ---
 
-<div class:list={["do-dont-wrapper", { dont: type === 'dont' }]}>
+<div class:list={["do-dont-wrapper", { dont: type === 'dont' }]} role="region" aria-label={type === 'dont' ? `Don't: ${rule}` : `Do: ${rule}`}>
     <span class="micro-data lbl-lead">{`RULE: ${rule}`}</span>
     <slot />
 </div>
@@ -17,5 +17,6 @@ const { type = 'do', rule } = Astro.props;
         background: rgba(15, 12, 41, 0.02); padding: var(--space-6); height: 100%;
         border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; gap: var(--space-2);
     }
-    .do-dont-wrapper.dont { opacity: 0.5; }
+    .do-dont-wrapper.dont { border-left: 3px solid rgba(15, 12, 41, 0.3); background: rgba(15, 12, 41, 0.04); }
+    .do-dont-wrapper.dont .micro-data { text-decoration: line-through; }
 </style>

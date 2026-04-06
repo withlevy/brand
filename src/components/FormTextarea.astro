@@ -23,6 +23,11 @@ const { label, placeholder, id } = Astro.props;
         color: var(--ink); font-family: var(--font-tech); font-size: var(--step-0); font-weight: 300; transition: border-color 0.3s var(--ease-out-expo), background 0.3s;
         resize: vertical; min-height: var(--space-16); height: auto;
     }
-    .form-textarea:focus { outline: none; border-color: var(--ink); background: transparent;}
+    .form-textarea:focus { border-color: var(--ink); background: transparent;}
+    .form-textarea:focus-visible { outline: var(--stroke-weight) solid var(--ink); outline-offset: 2px; }
     .form-textarea::placeholder { color: var(--ink-muted); opacity: 0.5; }
+
+    @media (max-width: 768px) {
+        .form-textarea { min-height: var(--space-12); }
+    }
 </style>

@@ -13,12 +13,19 @@ const ratioClass = {
 }[ratio];
 ---
 
-<div>
-    <div class:list={["media-placeholder", ratioClass]}></div>
-    {caption && <span class="caption">{caption}</span>}
-</div>
+{caption ? (
+    <figure class="media-figure">
+        <div class:list={["media-placeholder", ratioClass]} role="img" aria-label="Media placeholder"></div>
+        <figcaption class="caption">{caption}</figcaption>
+    </figure>
+) : (
+    <div>
+        <div class:list={["media-placeholder", ratioClass]} role="img" aria-label="Media placeholder"></div>
+    </div>
+)}
 
 <style>
+    .media-figure { margin: 0; }
     .media-placeholder {
         width: 100%; background: rgba(15, 12, 41, 0.02); border: var(--stroke-weight) solid var(--stroke-color);
         display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;

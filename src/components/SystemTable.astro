@@ -1,21 +1,27 @@
 ---
+interface Props {
+    caption?: string;
+}
 
+const { caption } = Astro.props;
 ---
 
-<div class="table-wrapper">
+<div class="table-wrapper" role="region" aria-label={caption || 'Data table'} tabindex="0">
     <table class="system-table">
+        {caption && <caption class="table-caption">{caption}</caption>}
         <slot />
     </table>
 </div>
 
 <style>
-    .table-wrapper { width: 100%; overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+    .table-wrapper { width: 100%; overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); -webkit-overflow-scrolling: touch; background: linear-gradient(to right, var(--paper) 30%, transparent), linear-gradient(to left, var(--paper) 30%, transparent), linear-gradient(to right, rgba(15, 12, 41, 0.15), transparent 20px), linear-gradient(to left, rgba(15, 12, 41, 0.15), transparent 20px); background-position: left center, right center, left center, right center; background-repeat: no-repeat; background-size: 40px 100%, 40px 100%, 20px 100%, 20px 100%; background-attachment: local, local, scroll, scroll; }
     .system-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .table-caption { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); text-align: left; padding: var(--space-2) var(--space-3); caption-side: top; }
     .system-table :global(th),
     .system-table :global(td) { padding: var(--space-2) var(--space-3); border-bottom: var(--stroke-weight) solid var(--stroke-color); border-right: var(--stroke-weight) solid var(--stroke-color); }
     .system-table :global(th:last-child),
     .system-table :global(td:last-child) { border-right: none; }
     .system-table :global(tr:last-child td) { border-bottom: none; }
-    .system-table :global(th) { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); background: rgba(15, 12, 41, 0.02); border-bottom: var(--stroke-weight) solid var(--ink);}
-    .system-table :global(td) { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink-muted); }
+    .system-table :global(th) { font-family: var(--font-tech); font-size: max(var(--step--1), 0.75rem); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); background: rgba(15, 12, 41, 0.02); border-bottom: var(--stroke-weight) solid var(--ink);}
+    .system-table :global(td) { font-family: var(--font-tech); font-size: max(var(--step--1), 0.75rem); font-weight: 300; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink-muted); }
 </style>
