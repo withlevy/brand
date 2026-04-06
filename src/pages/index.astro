@@ -7,11 +7,11 @@ import ArtifactCard from '../components/ArtifactCard.astro';
 import Button from '../components/Button.astro';
 
 const navItems = [
-    { href: "#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
-    { href: "#network",    number: "02", category: "APPROACH",   title: "WHAT BECOMES POSSIBLE", wide: true },
-    { href: "#membership", number: "03", category: "MEMBERSHIP", title: "THREE WAYS IN", wide: true },
-    { href: "#proof",      number: "04", category: "PROOF",      title: "THE PROGRAM" },
-    { href: "#join",       number: "05", category: "ACTION",     title: "JOIN THE NETWORK" },
+    { href: "#company",    number: "01", category: "COMPANY",    title: "WHO WE ARE" },
+    { href: "#work",       number: "02", category: "PROOF",      title: "WORK IN THE FIELD", wide: true },
+    { href: "#network",    number: "03", category: "NETWORK",    title: "THE LEVY NETWORK", wide: true },
+    { href: "#membership", number: "04", category: "MEMBERSHIP", title: "THREE WAYS IN" },
+    { href: "#join",       number: "05", category: "ACTION",     title: "JOIN" },
 ];
 ---
 
@@ -36,56 +36,124 @@ const navItems = [
         />
 
         <!-- ============================================================
-             SECTION 2 — INTEREST
+             SECTION 2 — PORTRAITS
              ============================================================ -->
         <section id="problem">
             <div class="layout-grid">
                 <div class="txt-wide reveal">
-                    <h2 class="tech-title display-large">YOU'VE ALWAYS BEEN CAPABLE OF MORE THAN THIS</h2>
+                    <h2 class="tech-title display-large">THE WORK DESERVES BETTER INFRASTRUCTURE</h2>
                 </div>
 
                 <div class="txt-block reveal">
-                    <p class="narrative">The work you're trying to do is harder than it needs to be. Not because you're not capable. Because you've been navigating alone.</p>
+                    <p class="narrative">Not because you're not capable. Because the systems weren't built for what you're trying to do.</p>
                 </div>
 
                 <div class="txt-block">
-                    <p class="body-large reveal" style="margin-bottom: var(--space-4);">The founder who can see exactly how her company changes a market — structurally, not incrementally — and keeps hitting institutional terrain nobody taught her to navigate.</p>
-                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.1s;">The program officer with a clearer view than almost anyone of what would actually work. No private partners who know how to move within the constraints he lives inside every day.</p>
-                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.2s;">The department head who knows his institution has the infrastructure, the legitimacy, and the relationships to anchor something significant. Still looking for people who know how to build for those assets rather than around them.</p>
-                    <p class="body-large reveal" style="transition-delay: 0.3s;">The corporate strategist who has identified the move. Realizing the internal case will never get made without external architecture. Nobody taught her how to build it.</p>
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4);">You can see exactly how your company changes a market — structurally, not incrementally. You keep hitting institutional terrain nobody taught you to navigate.</p>
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.1s;">You have a clearer view than almost anyone of what would actually work. You don't have private partners who know how to move within the constraints you live inside every day.</p>
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.2s;">You know your institution has the infrastructure, the legitimacy, and the relationships to anchor something significant. You're still looking for people who know how to build for those assets rather than around them.</p>
+                    <p class="body-large reveal" style="transition-delay: 0.3s;">You've identified the move. You're realizing the internal case will never get made without external architecture. Nobody taught you how to build it.</p>
                 </div>
 
                 <div class="txt-block reveal">
-                    <p class="body-large" style="margin-top: var(--space-8);">Different fields. Different problems. The same experience: doing serious work at a serious scale, largely without the people who understand why.</p>
-                </div>
-
-                <div class="txt-block reveal" style="margin-top: var(--space-8);">
                     <p class="tech-title display-medium">LEVY IS WHERE THOSE PEOPLE FIND EACH OTHER.</p>
                 </div>
             </div>
         </section>
 
         <!-- ============================================================
-             SECTION 3 — GEAR-SHIFT
+             SECTION 3 — THREE ARMS
+             ============================================================ -->
+        <section id="company">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">ONE COMPANY. THREE FUNCTIONS.</h2>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="narrative">A network where you operate in serious company. A studio that builds what your work requires. An institute that develops the methods.</p>
+                </div>
+
+                <div class="split-3up reveal">
+                    <ArtifactCard badge="COMMUNITY" title="THE LEVY NETWORK">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">The membership community. Events, signal, curated introductions, and the rooms where the work actually moves.</p>
+                        <div style="margin-top: auto;">
+                            <Button variant="ghost" href="#membership" label="See membership" />
+                        </div>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="CO-DESIGN" title="THE LEVY STUDIO">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">The practice arm. Direct strategic design for initiatives navigating institutional systems. Currently operating The Upskilling Labs and publishing Human Capital Quarterly.</p>
+                        <div style="margin-top: auto;">
+                            <Button variant="ghost" href="#work" label="See current work" />
+                        </div>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="RESEARCH" title="THE LEVY INSTITUTE">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">The intellectual engine. Hosts the Builders Breakfast speaker series, produces the strategy essays, and designs the workshop methods Network members use.</p>
+                        <div style="margin-top: auto;">
+                            <Button variant="ghost" href="/studio#institute" label="Learn more" />
+                        </div>
+                    </ArtifactCard>
+                </div>
+
+                <div class="txt-wide reveal" style="margin-top: var(--space-4);">
+                    <p class="marginalia">The arms are distinct but not separate. The Institute designs the methods. The Studio builds the interventions. The Network is where the people find each other.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 4 — STUDIO PROOF
+             ============================================================ -->
+        <section id="work">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">ALREADY IN THE FIELD</h2>
+                </div>
+
+                <div class="split-2up reveal">
+                    <div class="split-l">
+                        <ArtifactCard badge="LEVY STUDIO" title="THE UPSKILLING LABS">
+                            <p class="body-medium" style="margin-bottom: var(--space-4);">A workforce development initiative building the bridge between institutional employers and the people they need to reach. Designing upskilling infrastructure that works within the systems public and private organizations actually operate.</p>
+                            <p class="micro-data" style="margin-top: auto;">ACTIVE // WASHINGTON, D.C.</p>
+                        </ArtifactCard>
+                    </div>
+                    <div class="split-r">
+                        <ArtifactCard badge="LEVY STUDIO" title="HUMAN CAPITAL QUARTERLY">
+                            <p class="body-medium" style="margin-bottom: var(--space-4);">A quarterly event series hosted in Washington, D.C., convening public and private workforce-focused organizations. Becoming a co-authored report and publication by the coalition it assembles.</p>
+                            <p class="micro-data" style="margin-top: auto;">QUARTERLY // WASHINGTON, D.C.</p>
+                        </ArtifactCard>
+                    </div>
+                </div>
+
+                <div class="txt-block reveal" style="margin-top: var(--space-4);">
+                    <p class="marginalia">Network members have early access to Studio initiatives and shape what comes next.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 5 — GEAR-SHIFT
              ============================================================ -->
         <StatementBreakout
             theme="dark"
             autoHeight
-            id="stop"
-            topNarrative="The ceiling you're hitting is not your ceiling."
-            mainLeft="STOP&nbsp;:"
-            mainRightTop="THINKING"
-            mainRightBottom="SMALL."
-            bottomNarrative="What you've been building has been waiting on the right people. You don't need to be convinced the goal is worth it. You never did. And you won't have to explain yourself here."
+            id="shift"
+            topNarrative="The mix is the method."
+            mainLeft="BUILD&nbsp;:"
+            mainRightTop="THE"
+            mainRightBottom="ROOM."
+            bottomNarrative="60% founders and builders. 30% institutional operators and public servants. 10% researchers. Each group has what the other two cannot get anywhere else."
         />
 
         <!-- ============================================================
-             SECTION 4 — DESIRE
+             SECTION 6 — NETWORK EXPERIENCE
              ============================================================ -->
         <section id="network">
             <div class="layout-grid">
                 <div class="txt-wide reveal">
-                    <h2 class="tech-title display-large">HERE'S WHAT BECOMES POSSIBLE</h2>
+                    <h2 class="tech-title display-large">WHAT BECOMES POSSIBLE</h2>
                 </div>
 
                 <div class="txt-block reveal">
@@ -93,21 +161,36 @@ const navItems = [
                 </div>
 
                 <div class="txt-block">
-                    <p class="body-large reveal">Levy is a strategic design company. In practice that means one thing: we help serious people develop the capabilities to navigate the human systems — institutional, political, civic — that determine whether their work reaches the scale it deserves. Washington is where the most important of those systems concentrate. It is where we work. The methods travel with you wherever the work goes next.</p>
-                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.1s;">The Levy Network brings together founders, public servants, institutional operators, and researchers who have made the same bet — not on the same thing, but at the same altitude. They're working on entirely different problems. What they share is the seriousness with which they've decided to work on them.</p>
-                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.2s;">In practice this looks like a Tuesday morning breakfast where a federal program officer and a startup founder compare notes on the same procurement process from opposite sides — and neither of them expected to leave with what they left with. A happy hour where a conversation surfaces the connection someone has been trying to make for six months. A member trying to get closer to a major technology company who pulls a thread through the Network and finds the person who ran civic hackathons with that company in another city. By the end of the week they have an introduction they couldn't have manufactured.</p>
-                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.3s;">The mix is deliberate: 60% founders and builders, 30% institutional operators and public servants, 10% researchers and applied thinkers. Each group has what the other two cannot get anywhere else. The exchange between them is where the most consequential work tends to actually happen.</p>
-                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.4s;">What compounds over time isn't just relationships or access. It's fluency — the ability to read a system, find the leverage, build the coalition, and move something significant through institutions that weren't designed to move quickly. Most people improvise this their entire careers. The Network is built to make it something you develop deliberately, in good company, in rooms where the conversation is worth having for its own sake. The American Project has always depended on people like this finding each other.</p>
+                    <p class="body-large reveal">You show up to a Tuesday morning breakfast and find yourself comparing notes on the same procurement process with someone on the other side of it — and you don't leave with what you expected. You pull a thread through the Network looking to get closer to a major technology company and find the person who ran civic hackathons with them in another city. By the end of the week you have an introduction you couldn't have manufactured.</p>
+                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.1s;">What compounds isn't just relationships or access. It's fluency — your ability to read a system, find the leverage, build the coalition, and move something significant through institutions that weren't designed to move quickly. The Network is built to make that something you develop deliberately, in good company.</p>
                 </div>
 
                 <div class="txt-block reveal" style="margin-top: var(--space-8);">
-                    <p class="micro-data">THE MIX IS THE METHOD. THE WORK IS THE POINT.</p>
+                    <dl style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1) var(--space-8); font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em;">
+                        <dt style="color: var(--ink); font-weight: 500;">Builders Breakfasts</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Strategy Sprints</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Ongoing</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Human Capital Quarterly</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Quarterly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Member Happy Hours</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Portfolio Initiatives</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Active</dd>
+                    </dl>
+                </div>
+
+                <div class="txt-wide reveal" style="margin-top: var(--space-8); display: flex; gap: var(--space-8); flex-wrap: wrap; font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted);">
+                    <span>FOUNDING COHORT</span>
+                    <span>WASHINGTON, D.C.</span>
+                    <span>60 / 30 / 10</span>
+                    <span>EST. 2024</span>
                 </div>
             </div>
         </section>
 
         <!-- ============================================================
-             SECTION 5 — TIERS
+             SECTION 7 — MEMBERSHIP TIERS
              ============================================================ -->
         <section id="membership">
             <div class="layout-grid">
@@ -121,73 +204,55 @@ const navItems = [
 
                 <div class="split-3up reveal">
                     <ArtifactCard badge="SIGNAL TIER" title="INSIDER">
-                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're building orientation. The field-level understanding of how the systems you're working in actually operate — before you need to move in them.</p>
-                        <p class="body-small" style="margin-bottom: var(--space-4);">Monthly intelligence on what's actually moving at the intersection of builders and institutions. Field-level signal before it becomes consensus. Executive essays on how systems work and where the leverage is. Occasional curated co-authorship. The content is written to travel — members forward it to exactly the right person with the note: <em style="font-style: normal;">this is where I work</em>.</p>
-                        <p class="tech-title display-medium" style="margin-top: var(--space-4);">$XX / MO</p>
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're building orientation — field-level understanding of how the systems you're working in actually operate.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-1);">Monthly intelligence briefing</p>
+                            <p style="margin-bottom: var(--space-1);">Executive essays on systems and leverage</p>
+                            <p style="margin-bottom: var(--space-1);">Curated co-authorship (occasional)</p>
+                            <p>Content designed to forward</p>
+                        </div>
+                        <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
                         <div style="margin-top: var(--space-4);">
                             <Button variant="ghost" href="#" label="Join as Insider" />
                         </div>
                     </ArtifactCard>
 
                     <ArtifactCard badge="CORE TIER" title="BUILDER">
-                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're developing the capability. In contact with people navigating the same systems from different positions, practicing the methods, building the relationships that change what you're able to do.</p>
-                        <p class="body-small" style="margin-bottom: var(--space-4);">Everything in Insider. Builders Breakfasts — small, intentionally mixed, high signal before 10am. Strategy Sprints — the methods most operators are improvising. Workshops, speaker series, and applied sessions built around real problems. Full network access and curated introductions. Member happy hours. A growing portfolio of active initiatives to work on directly — real projects with real stakes, built around the problems members are already trying to solve. The people are interesting. The work is genuinely more interesting than almost anywhere else you'll spend your Tuesday mornings.</p>
-                        <p class="tech-title display-medium" style="margin-top: var(--space-4);">$XX / MO</p>
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're developing the capability — in contact with people navigating the same systems from different positions.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-1);">Everything in Insider</p>
+                            <p style="margin-bottom: var(--space-1);">Builders Breakfasts (monthly, small, mixed)</p>
+                            <p style="margin-bottom: var(--space-1);">Strategy Sprints and workshops</p>
+                            <p style="margin-bottom: var(--space-1);">Full network access and curated introductions</p>
+                            <p style="margin-bottom: var(--space-1);">Member happy hours</p>
+                            <p>Portfolio initiative participation</p>
+                        </div>
+                        <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
                         <div style="margin-top: var(--space-4);">
                             <Button variant="solid" href="#" label="Join as Builder" />
                         </div>
                     </ArtifactCard>
 
                     <ArtifactCard badge="CO-DESIGN TIER" title="ARCHITECT">
-                        <p class="body-medium" style="margin-bottom: var(--space-4);">You have a real initiative and you need Levy working directly alongside you on the specific systems it needs to move through.</p>
-                        <p class="body-small" style="margin-bottom: var(--space-4);">Everything in Builder. Direct advisory access with Levy's senior team. Structured co-design sessions — not calls, sessions with a frame and an output that belongs to you. For initiatives that warrant it: a pathway to the Studio.</p>
-                        <p class="body-small" style="margin-top: var(--space-4);">Architect is by conversation. <a href="#contact" class="text-link">Get in touch →</a></p>
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You have a real initiative and you need Levy working directly alongside you on the systems it needs to move through.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-1);">Everything in Builder</p>
+                            <p style="margin-bottom: var(--space-1);">Direct advisory access, Levy senior team</p>
+                            <p style="margin-bottom: var(--space-1);">Structured co-design sessions</p>
+                            <p>Studio pathway for qualifying initiatives</p>
+                        </div>
+                        <p class="body-small" style="margin-top: auto;">Architect is by conversation. <a href="#contact" class="text-link">Get in touch →</a></p>
                     </ArtifactCard>
                 </div>
-            </div>
-        </section>
 
-        <!-- ============================================================
-             SECTION 6 — PROOF
-             ============================================================ -->
-        <section id="proof">
-            <div class="layout-grid">
-                <div class="txt-block reveal">
-                    <dl style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1) var(--space-8); font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em;">
-                        <dt style="color: var(--ink); font-weight: 500;">Builders Breakfasts</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
-                        <dt style="color: var(--ink); font-weight: 500;">Speaker Series</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Quarterly</dd>
-                        <dt style="color: var(--ink); font-weight: 500;">Strategy Sprints</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Ongoing</dd>
-                        <dt style="color: var(--ink); font-weight: 500;">Member Happy Hours</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
-                        <dt style="color: var(--ink); font-weight: 500;">Levy Institute</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Weekly</dd>
-                        <dt style="color: var(--ink); font-weight: 500;">Portfolio Initiatives</dt>
-                        <dd style="color: var(--ink-muted); font-weight: 300;">Active & Open</dd>
-                    </dl>
-                </div>
-
-                <div class="txt-block reveal" style="margin-top: var(--space-6);">
-                    <p class="marginalia">Current portfolio includes The Upskilling Labs and The Open Labs Operating System. Members shape what comes next.</p>
-                </div>
-
-                <div class="txt-wide reveal" style="margin-top: var(--space-8); display: flex; gap: var(--space-8); flex-wrap: wrap; font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted);">
-                    <span>FOUNDING COHORT</span>
-                    <span>WASHINGTON, D.C.</span>
-                    <span>60 / 30 / 10</span>
-                    <span>EST. 2024</span>
-                </div>
-
-                <div class="txt-block reveal" style="margin-top: var(--space-4);">
-                    <p class="marginalia">The members joining now are not joining a finished product. They are shaping one.</p>
+                <div class="txt-wide reveal" style="margin-top: var(--space-4);">
+                    <p class="marginalia">The people are interesting. The work is genuinely more interesting than almost anywhere else you'll spend your Tuesday mornings.</p>
                 </div>
             </div>
         </section>
 
         <!-- ============================================================
-             SECTION 7 — ACTION
+             SECTION 8 — ACTION
              ============================================================ -->
         <section id="join">
             <div class="layout-grid">
@@ -196,7 +261,7 @@ const navItems = [
                 </div>
 
                 <div class="txt-block reveal">
-                    <p class="body-large">Insider and Builder are self-serve. Architect starts with a conversation. The founding cohort is open. The work is worth doing.</p>
+                    <p class="body-large">You can join Insider or Builder today. If you're working on something that warrants Architect, start with a conversation. The founding cohort is open.</p>
                 </div>
 
                 <div class="txt-wide reveal" style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
@@ -223,7 +288,7 @@ const navItems = [
         mainRightTop="THE"
         mainRightBottom="ROOM"
         marginaliaBottomLeft="LEVY STRATEGIC DESIGN // WASHINGTON, D.C."
-        marginaliaBottomRight="EST. 2026"
+        marginaliaBottomRight="EST. 2024"
     />
 
 </BaseLayout>
