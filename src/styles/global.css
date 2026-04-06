@@ -200,6 +200,12 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .txt-block { grid-column: 3 / 10; }
 .txt-wide { grid-column: 3 / 13; }
 
+/* Zigzag positioning — staggered grid placements */
+.pos-left { grid-column: 1 / 7; }
+.pos-right { grid-column: 7 / 13; }
+.pos-indent { grid-column: 3 / 9; }
+.pos-flush-right { grid-column: 5 / 12; }
+
 .split-2up { grid-column: 3 / 13; display: grid; grid-template-columns: subgrid; gap: var(--space-8) var(--space-4); }
 .split-l { grid-column: auto / span 5; }
 .split-r { grid-column: auto / span 5; }
@@ -253,7 +259,7 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
    ========================================================================== */
 @media (max-width: 1024px) {
     .layout-grid { grid-template-columns: repeat(8, 1fr); }
-    .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up { grid-column: 1 / -1; }
+    .lbl, .hd-main, .txt-block, .txt-wide, .txt-center-narrow, .split-2up, .pos-left, .pos-right, .pos-indent, .pos-flush-right { grid-column: 1 / -1; }
     .split-3up { grid-template-columns: 1fr; }
     .doc-control { display: none; }
 }
