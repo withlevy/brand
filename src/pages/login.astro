@@ -7,6 +7,7 @@ import Header from '../components/Header.astro';
     <Header />
 
     <main id="main-content">
+        <h1 class="sr-only">Sign in to the Levy Network</h1>
         <section id="login" class="void-section">
             <div class="statement-breakout reveal" style="width: 100%; max-width: 480px;">
                 <div class="tech-title" style="margin-bottom: var(--space-2); text-align: center;">
@@ -20,22 +21,9 @@ import Header from '../components/Header.astro';
                 </div>
 
                 <p class="micro-data" style="text-align: center; margin-top: var(--space-8);">
-                    Not a member yet? <a href="/#membership" class="text-link">Explore membership →</a>
+                    Not a member yet? <a href="/#membership" class="text-link">Explore membership &rarr;</a>
                 </p>
             </div>
         </section>
     </main>
-
-    <script is:inline>
-        var o_options = {
-            domain: 'levy.outseta.com',
-            load: 'auth',
-            auth: {
-                widgetMode: 'login',
-                authenticationCallbackUrl: window.location.origin + '/account',
-                logoutCallbackUrl: window.location.origin + '/login'
-            }
-        };
-    </script>
-    <script is:inline src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </BaseLayout>

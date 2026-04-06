@@ -5,11 +5,11 @@ import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
 
 const navItems = [
-    { href: "/#company",    number: "01", category: "COMPANY",    title: "WHO WE ARE" },
-    { href: "/#work",       number: "02", category: "PROOF",      title: "WORK IN THE FIELD", wide: true },
-    { href: "/#network",    number: "03", category: "NETWORK",    title: "THE LEVY NETWORK", wide: true },
-    { href: "/#membership", number: "04", category: "MEMBERSHIP", title: "THREE WAYS IN" },
-    { href: "/#join",       number: "05", category: "ACTION",     title: "JOIN" },
+    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
+    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
+    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
+    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
 ];
 ---
 
@@ -18,6 +18,7 @@ const navItems = [
     <BentoNav items={navItems} />
 
     <main id="main-content">
+        <h1 class="sr-only">Insights from Levy Strategic Design</h1>
         <StatementBreakout
             id="cover"
             topNarrative="Field-level signal."
