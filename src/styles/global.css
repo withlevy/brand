@@ -160,8 +160,9 @@ body {
 }
 .marginalia { color: var(--ink-ghost); }
 .marginalia::before { margin-bottom: var(--crop-top); }
-.section-label { color: var(--ink); }
+.section-label { color: var(--ink); display: flex; align-items: center; gap: var(--space-3); }
 .section-label::before { margin-bottom: var(--crop-top); }
+.section-label::after { content: ''; flex: 1; height: var(--stroke-weight); background: var(--stroke-color); min-width: var(--space-4); }
 
 /* MICRO-DATA (Helvetica Neue | 1.5 Baseline Rhythm) */
 .micro-data {
@@ -216,8 +217,8 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .full-bleed { grid-column: 1 / -1; }
 
 /* Zig-Zag Layout Primitives — live within content area (cols 3-13), overlap forces separate rows */
-.zz-left  { grid-column: 3 / 9; }
-.zz-right { grid-column: 7 / 13; }
+.zz-left  { grid-column: 3 / 9; will-change: transform; }
+.zz-right { grid-column: 7 / 13; will-change: transform; }
 
 .p-group { display: flex; flex-direction: column; gap: var(--space-3); }
 
@@ -226,9 +227,43 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+/* Slide from left — for section labels */
+.reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
+.reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+/* Clip reveal — for headings */
+.reveal-clip { opacity: 0; clip-path: inset(0 0 100% 0); transition: opacity 0.1s, clip-path 0.8s var(--ease-out-expo); }
+.reveal-clip.is-visible { opacity: 1; clip-path: inset(0 0 0% 0); }
+
+/* Stagger children — for card groups */
+.reveal-stagger > * { opacity: 0; transform: translateY(16px); }
+.reveal-stagger.is-visible > * { animation: staggerIn 0.8s var(--ease-out-expo) both; }
+.reveal-stagger.is-visible > *:nth-child(1) { animation-delay: 0s; }
+.reveal-stagger.is-visible > *:nth-child(2) { animation-delay: 0.1s; }
+.reveal-stagger.is-visible > *:nth-child(3) { animation-delay: 0.2s; }
+.reveal-stagger.is-visible > *:nth-child(4) { animation-delay: 0.3s; }
+.reveal-stagger.is-visible > *:nth-child(5) { animation-delay: 0.4s; }
+.reveal-stagger.is-visible > *:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes staggerIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Dark Mode Context */
-.dark-section { background: var(--midnight); color: var(--paper); }
+.dark-section {
+    background: linear-gradient(150deg, var(--midnight) 0%, rgba(100, 65, 165, 0.35) 45%, rgba(138, 35, 135, 0.5) 80%, var(--midnight) 100%);
+    background-size: 200% 200%;
+    animation: gradientDrift 20s ease infinite;
+    color: var(--paper);
+}
+
+@keyframes gradientDrift {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
 .dark-section .section-label { color: var(--paper); }
+.dark-section .section-label::after { background: var(--stroke-light); }
 .dark-section .micro-data { color: rgba(245, 245, 243, 0.7); }
 .dark-section .marginalia { color: rgba(245, 245, 243, 0.6); }
 .dark-section .divider, .dark-section section { border-color: var(--stroke-light); }
@@ -290,5 +325,8 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 
 @media (prefers-reduced-motion: reduce) {
     * { scroll-behavior: auto !important; }
-    .reveal { transform: none !important; transition: opacity 1s ease !important; }
+    .reveal, .reveal-left { transform: none !important; transition: opacity 1s ease !important; }
+    .reveal-clip { clip-path: none !important; transition: opacity 1s ease !important; }
+    .reveal-stagger > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .dark-section { animation: none !important; }
 }

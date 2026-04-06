@@ -23,9 +23,22 @@ const { badge, title } = Astro.props;
     .artifact-card {
         background: var(--paper); width: 100%; padding: var(--space-6);
         border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column;
+        transition: transform 0.4s var(--ease-out-expo),
+                    box-shadow 0.4s var(--ease-out-expo),
+                    border-color 0.4s var(--ease-out-expo);
+    }
+
+    .artifact-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 32px rgba(15, 12, 41, 0.08);
+        border-color: rgba(15, 12, 41, 0.5);
     }
 
     @media (max-width: 768px) {
         .artifact-card { padding: var(--space-4); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .artifact-card:hover { transform: none; }
     }
 </style>

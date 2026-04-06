@@ -39,29 +39,29 @@ const sectionClasses = [
 
 <Tag id={id} class={sectionClasses}>
     {marginaliaTopLeft && (
-        <div class="marginalia" style="position: absolute; top: 0; left: 5vw; text-align: left; line-height: 1.2;" set:html={marginaliaTopLeft} />
+        <div class="marginalia hero-entrance" style="position: absolute; top: 0; left: 5vw; text-align: left; line-height: 1.2; --entrance-order: 0;" set:html={marginaliaTopLeft} />
     )}
     {marginaliaTopRight && (
-        <div class="marginalia" style="position: absolute; top: 0; right: 5vw; text-align: right; line-height: 1.2;" set:html={marginaliaTopRight} />
+        <div class="marginalia hero-entrance" style="position: absolute; top: 0; right: 5vw; text-align: right; line-height: 1.2; --entrance-order: 0;" set:html={marginaliaTopRight} />
     )}
-    <div class="statement-breakout reveal">
-        {topNarrative && <div class="statement-top narrative" set:html={topNarrative} />}
+    <div class="statement-breakout">
+        {topNarrative && <div class="statement-top narrative hero-entrance" style="--entrance-order: 1;" set:html={topNarrative} />}
         <div class="statement-main tech-title">
-            <div class="statement-left">
+            <div class="statement-left hero-entrance hero-clip" style="--entrance-order: 2;">
                 <span set:html={mainLeft} />
             </div>
-            <div class="statement-right">
+            <div class="statement-right hero-entrance hero-clip" style="--entrance-order: 3;">
                 <span>{mainRightTop}</span>
                 <span>{mainRightBottom}</span>
             </div>
         </div>
-        {bottomNarrative && <div class="statement-bottom narrative" set:html={bottomNarrative} />}
+        {bottomNarrative && <div class="statement-bottom narrative hero-entrance" style="--entrance-order: 4;" set:html={bottomNarrative} />}
     </div>
     {marginaliaBottomLeft && (
-        <div class="marginalia" style="position: absolute; bottom: 0; left: 5vw; text-align: left; line-height: 1.2;" set:html={marginaliaBottomLeft} />
+        <div class="marginalia hero-entrance" style="position: absolute; bottom: 0; left: 5vw; text-align: left; line-height: 1.2; --entrance-order: 5;" set:html={marginaliaBottomLeft} />
     )}
     {marginaliaBottomRight && (
-        <div class="marginalia" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2;" set:html={marginaliaBottomRight} />
+        <div class="marginalia hero-entrance" style="position: absolute; bottom: 0; right: 5vw; text-align: right; line-height: 1.2; --entrance-order: 5;" set:html={marginaliaBottomRight} />
     )}
 </Tag>
 
@@ -83,4 +83,36 @@ const sectionClasses = [
     :global(.dark-section) .statement-main { color: var(--paper); }
     :global(.dark-section) .statement-top,
     :global(.dark-section) .statement-bottom { color: rgba(245, 245, 243, 0.7); }
+
+    /* Hero entrance choreography */
+    .hero-entrance {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: heroReveal 1s var(--ease-out-expo) forwards;
+        animation-delay: calc(var(--entrance-order, 0) * 0.15s + 0.3s);
+    }
+
+    .hero-clip {
+        opacity: 0;
+        clip-path: inset(0 0 100% 0);
+        animation: heroClipReveal 0.9s var(--ease-out-expo) forwards;
+        animation-delay: calc(var(--entrance-order, 0) * 0.15s + 0.3s);
+    }
+
+    @keyframes heroReveal {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heroClipReveal {
+        to { opacity: 1; clip-path: inset(0 0 0% 0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-entrance, .hero-clip {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            clip-path: none !important;
+        }
+    }
 </style>
