@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import ArtifactCard from '../components/ArtifactCard.astro';
+import Button from '../components/Button.astro';
+
+const navItems = [
+    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
+    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
+    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
+    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
+];
+
+const OUTSETA_BUILDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=rmk5w09g#o-anonymous";
+const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=Nmdndw90#o-anonymous";
+---
+
+<BaseLayout title="Join the Levy Network" description="The membership network for people operating ahead of consensus. Three tiers, each a distinct relationship with Levy.">
+    <Header />
+    <BentoNav items={navItems} />
+
+    <main id="main-content">
+        <h1 class="sr-only">Join the Levy Network</h1>
+
+        <section id="join-intro">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Membership</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-large">JOIN THE LEVY NETWORK</p>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="narrative">The membership network for people operating ahead of consensus. Three tiers, each a distinct relationship with Levy — not a volume discount on the same product.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tiers">
+            <div class="layout-grid">
+                <div class="split-3up reveal">
+                    <ArtifactCard badge="SIGNAL TIER" title="INSIDER">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">The signal tier. You're building orientation — field-level understanding of how the systems you're working in actually operate. Some of the most effective members here are institutional operators using Insider intelligence to stay ahead of fields that move faster than their internal briefings.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-1);">Monthly intelligence briefing</p>
+                            <p style="margin-bottom: var(--space-1);">Executive essays on systems and leverage</p>
+                            <p style="margin-bottom: var(--space-1);">Curated co-authorship (occasional)</p>
+                            <p>Content designed to forward</p>
+                        </div>
+                        <!-- PRICING: confirm with Outseta -->
+                        <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
+                        <div style="margin-top: var(--space-4);">
+                            <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+                        </div>
+                    </ArtifactCard>
+
+                    <div class="tier-recommended">
+                        <ArtifactCard badge="CORE TIER — RECOMMENDED" title="BUILDER">
+                            <p class="body-medium" style="margin-bottom: var(--space-4);">The center of gravity of the Network. You're developing the capability — in contact with people navigating the same systems from different positions. The mix is the method: founders, operators, researchers, each with what the other two cannot get anywhere else.</p>
+                            <div class="body-small" style="margin-bottom: var(--space-4);">
+                                <p style="margin-bottom: var(--space-1);">Everything in Insider</p>
+                                <p style="margin-bottom: var(--space-1);">Builders Breakfasts — monthly, small, mixed</p>
+                                <p style="margin-bottom: var(--space-1);">Strategy Sprints and workshops</p>
+                                <p style="margin-bottom: var(--space-1);">Full network access and curated introductions</p>
+                                <p style="margin-bottom: var(--space-1);">Member happy hours</p>
+                                <p>Portfolio initiative participation</p>
+                            </div>
+                            <!-- PRICING: confirm with Outseta -->
+                            <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
+                            <div style="margin-top: var(--space-4);">
+                                <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+                            </div>
+                        </ArtifactCard>
+                    </div>
+
+                    <ArtifactCard badge="CO-DESIGN TIER" title="ARCHITECT">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">Not purchasable. You have a real initiative and you need Levy working directly alongside you on the systems it needs to move through. Architect is by conversation — if you're working on something that warrants it, we'll know quickly.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-4);">
+                            <p style="margin-bottom: var(--space-1);">Everything in Builder</p>
+                            <p style="margin-bottom: var(--space-1);">Direct advisory access, Levy senior team</p>
+                            <p style="margin-bottom: var(--space-1);">Structured co-design sessions</p>
+                            <p>Studio pathway for qualifying initiatives</p>
+                        </div>
+                        <p class="body-small" style="margin-top: auto;"><a href="mailto:hello@levy.design" class="text-link">Start a conversation &rarr;</a></p>
+                    </ArtifactCard>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</BaseLayout>
+
+<style>
+    .tier-recommended {
+        border: 2px solid var(--ink);
+        position: relative;
+    }
+    .tier-recommended :global(.artifact-card) {
+        border: none;
+    }
+</style>

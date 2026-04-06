@@ -18,6 +18,7 @@ const navItems = [
 
 const OUTSETA_BUILDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=rmk5w09g#o-anonymous";
 const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=Nmdndw90#o-anonymous";
+const JOIN_PAGE = "/join";
 ---
 
 <BaseLayout title="The Levy Network" description="The membership network for people operating ahead of consensus.">
@@ -41,8 +42,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
         />
 
         <div class="hero-cta-bar">
-            <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
-            <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+            <Button variant="solid" href={JOIN_PAGE} label="Join as Builder" />
+            <Button variant="ghost" href={JOIN_PAGE} label="Join as Insider" />
         </div>
 
         <!-- ============================================================
@@ -234,7 +235,7 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                 </div>
 
                 <div class="txt-wide reveal" style="margin-top: var(--space-4); display: flex; justify-content: center;">
-                    <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+                    <Button variant="solid" href={JOIN_PAGE} label="Join as Builder" />
                 </div>
             </div>
         </section>
@@ -321,8 +322,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                 </div>
 
                 <div class="txt-wide reveal" style="margin-top: var(--space-4); display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
-                    <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
-                    <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+                    <Button variant="solid" href={JOIN_PAGE} label="Join as Builder" />
+                    <Button variant="ghost" href={JOIN_PAGE} label="Join as Insider" />
                 </div>
 
                 <div class="txt-wide reveal" style="margin-top: var(--space-4);">
@@ -381,8 +382,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                 </div>
 
                 <div class="txt-wide reveal" style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
-                    <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
-                    <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+                    <Button variant="solid" href={JOIN_PAGE} label="Join as Builder" />
+                    <Button variant="ghost" href={JOIN_PAGE} label="Join as Insider" />
                     <a href="mailto:hello@levy.design" class="text-link" style="font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em;">Start a conversation about Architect &rarr;</a>
                 </div>
             </div>
