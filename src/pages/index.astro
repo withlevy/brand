@@ -130,7 +130,7 @@ const institutionOptions = [
 
                 <div class="split-2up reveal">
                     <div class="split-l">
-                        <FormInput label="Full Name" placeholder="e.g. Jane Doe" />
+                        <FormInput label="Full Name" id="fullName" placeholder="e.g. Jane Doe" />
                         <FormSelect
                             label="Institution Type"
                             id="institutionType"
@@ -146,7 +146,7 @@ const institutionOptions = [
                         </div>
                     </div>
                     <div class="split-r">
-                        <FormTextarea label="Project Telemetry" placeholder="Describe the structural gap..." />
+                        <FormTextarea label="Project Telemetry" id="projectTelemetry" placeholder="Describe the structural gap..." />
                         <div class="form-row mt-space-2">
                             <span class="form-label mb-space-2" style="display: block;">Visibility Protocol</span>
                             <div class="control-group">
@@ -190,16 +190,14 @@ const institutionOptions = [
                 <div class="txt-wide reveal p-group">
                     <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
 
-                    <div class="accordion-wrapper-outer reveal mt-space-6">
-                        <AccordionWrapper>
-                            <Accordion title="What is the Levy Studio?" open id="faq-1">
-                                <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
-                            </Accordion>
-                            <Accordion title="How does the community capital framework apply?" id="faq-2">
-                                <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
-                            </Accordion>
-                        </AccordionWrapper>
-                    </div>
+                    <AccordionWrapper class="reveal mt-space-6">
+                        <Accordion title="What is the Levy Studio?" open id="faq-1">
+                            <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
+                        </Accordion>
+                        <Accordion title="How does the community capital framework apply?" id="faq-2">
+                            <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
+                        </Accordion>
+                    </AccordionWrapper>
                 </div>
             </div>
         </section>
