@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import ArtifactCard from '../components/ArtifactCard.astro';
 import Button from '../components/Button.astro';
 import AccordionWrapper from '../components/AccordionWrapper.astro';
@@ -394,15 +395,7 @@ const JOIN_PAGE = "/join";
     <!-- ============================================================
          FOOTER
          ============================================================ -->
-    <StatementBreakout
-        theme="dark"
-        topNarrative="The founding cohort is open."
-        mainLeft="BUILD&nbsp;:"
-        mainRightTop="THE"
-        mainRightBottom="ROOM"
-        marginaliaBottomLeft="LEVY STRATEGIC DESIGN"
-        marginaliaBottomRight="WASHINGTON, D.C."
-    />
+    <SiteFooter />
 
 </BaseLayout>
 

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Button from '../components/Button.astro';
 import Badge from '../components/Badge.astro';
 import FormInput from '../components/FormInput.astro';
@@ -270,18 +271,9 @@ const institutionOptions = [
             </div>
         </section>
 
-        <!-- ⑩ DARK FOOTER -->
-        <StatementBreakout
-            theme="dark"
-            topNarrative="Levy Strategic Design<br>End of Document"
-            mainLeft="END&nbsp;:"
-            mainRightTop="SYSTEM"
-            mainRightBottom="MANIFEST"
-            marginaliaBottomLeft="PREPARED BY FOLKMARK<br>FOR LEVY, 2026"
-            marginaliaBottomRight="L.S.D.<br>EST. 2026"
-        />
-
     </main>
+
+    <SiteFooter />
 </BaseLayout>
 
 <style>
