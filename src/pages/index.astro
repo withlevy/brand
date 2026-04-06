@@ -3,288 +3,227 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
-import Button from '../components/Button.astro';
-import Badge from '../components/Badge.astro';
-import FormInput from '../components/FormInput.astro';
-import FormTextarea from '../components/FormTextarea.astro';
-import FormSelect from '../components/FormSelect.astro';
-import FormCheckbox from '../components/FormCheckbox.astro';
-import FormRadio from '../components/FormRadio.astro';
-import MediaPlaceholder from '../components/MediaPlaceholder.astro';
-import AccordionWrapper from '../components/AccordionWrapper.astro';
-import Accordion from '../components/Accordion.astro';
 import ArtifactCard from '../components/ArtifactCard.astro';
-import DoDontBox from '../components/DoDontBox.astro';
-import SystemTable from '../components/SystemTable.astro';
+import Button from '../components/Button.astro';
 
 const navItems = [
-    { href: "#typography", number: "01", category: "STYLE",      title: "TYPOGRAPHY" },
-    { href: "#buttons",    number: "02", category: "INTERACTION", title: "BUTTONS & LINKS" },
-    { href: "#forms",      number: "03", category: "INPUT",       title: "FORM CONTROLS",   wide: true },
-    { href: "#media",      number: "04", category: "IMAGERY",     title: "MEDIA & RATIOS",  wide: true },
-    { href: "#accordions", number: "05", category: "TOGGLES",     title: "ACCORDIONS" },
-    { href: "#data",       number: "06", category: "STRUCTURE",   title: "TELEMETRY & DATA" },
-    { href: "#artifacts",  number: "07", category: "CONTAINERS",  title: "SYSTEM ARTIFACTS", wide: true },
-];
-
-const institutionOptions = [
-    { value: "Federal Government", text: "Federal Government" },
-    { value: "Private Sector",     text: "Private Sector" },
-    { value: "Non-Profit",         text: "Non-Profit" },
+    { href: "#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "#network",    number: "02", category: "APPROACH",   title: "WHAT BECOMES POSSIBLE", wide: true },
+    { href: "#membership", number: "03", category: "MEMBERSHIP", title: "THREE WAYS IN", wide: true },
+    { href: "#proof",      number: "04", category: "PROOF",      title: "THE PROGRAM" },
+    { href: "#join",       number: "05", category: "ACTION",     title: "JOIN THE NETWORK" },
 ];
 ---
 
-<BaseLayout title="Levy | Astro-Ready Component Library">
-    <div class="marginalia doc-control" style="top: var(--space-24);">REF: LEVY-OP-01 // BASE-8 GRID</div>
-
+<BaseLayout title="Levy Strategic Design" description="For people operating ahead of consensus.">
     <Header />
     <BentoNav items={navItems} />
 
     <main id="main-content">
 
-        <!-- ① COVER -->
+        <!-- ============================================================
+             SECTION 1 — HERO
+             ============================================================ -->
         <StatementBreakout
             id="cover"
-            marginaliaTopLeft="AEROSPACE<br>STANDARD<br>ASTRO READY"
-            marginaliaBottomRight="DOC: 2026.04<br>REV: A<br>Est. 2026"
-            topNarrative="Levy Strategic Design<br>Washington, District of Columbia<br>DC20001"
-            mainLeft="PROJECT&nbsp;:"
-            mainRightTop="LEVY"
-            mainRightBottom="SYSTEM"
-            bottomNarrative="The atomic components and<br>architectural blueprint for Levy."
+            marginaliaTopLeft="WASHINGTON<br>DISTRICT OF COLUMBIA<br>EST. 2024"
+            marginaliaTopRight="LEVY STRATEGIC DESIGN<br>THE LEVY NETWORK<br>THE LEVY STUDIO<br>THE LEVY INSTITUTE"
+            topNarrative="For people operating ahead of consensus."
+            mainLeft="MISSION&nbsp;:"
+            mainRightTop="OUTLIER"
+            mainRightBottom="OUTCOMES"
+            bottomNarrative="Levy Strategic Design<br>Washington<br>District <span class='of-fraunces'>of</span> Columbia"
         />
 
-        <!-- ② TYPOGRAPHY -->
-        <section id="typography">
+        <!-- ============================================================
+             SECTION 2 — INTEREST
+             ============================================================ -->
+        <section id="problem">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">01 // TYPOGRAPHY</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-large">ARCHITECTURAL SCALE</h2>
-                    <hr class="divider">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">YOU'VE ALWAYS BEEN CAPABLE OF MORE THAN THIS</h2>
                 </div>
 
-                <div class="split-2up reveal">
-                    <div class="split-l p-group">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">HEADING SCALE (RATIO: 1.333)</span>
-                        <div class="display-massive tech-title">MASSIVE</div>
-                        <div class="display-huge   tech-title">HUGE</div>
-                        <div class="display-large  tech-title">LARGE</div>
-                        <div class="display-medium tech-title">MEDIUM</div>
-                    </div>
-                    <div class="split-r p-group">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">READING & METADATA</span>
-                        <p class="body-large"><strong>Body Large:</strong> The gap between what capable people are building and what they could be building is not a motivation problem. It's a structural one.</p>
-                        <p class="body-medium"><strong>Body Medium:</strong> This is standard paragraph text. It supports <em>italic emphasis</em>, <strong>bold strength</strong>, and <a href="#" class="text-link">inline text links</a>.</p>
-                        <div class="mt-space-4" style="padding: var(--space-4); border: 1px solid var(--stroke-color); background: rgba(15, 12, 41, 0.01);">
-                            <span class="micro-data mb-space-2">STRUCTURAL TAGS (HELVETICA 300)</span>
-                            <span class="marginalia">AMBIENT MARGINALIA (SOFT FRAUNCES)</span>
-                        </div>
-                    </div>
+                <div class="txt-block reveal">
+                    <p class="narrative">The work you're trying to do is harder than it needs to be. Not because you're not capable. Because you've been navigating alone.</p>
+                </div>
+
+                <div class="txt-block">
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4);">The founder who can see exactly how her company changes a market — structurally, not incrementally — and keeps hitting institutional terrain nobody taught her to navigate.</p>
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.1s;">The program officer with a clearer view than almost anyone of what would actually work. No private partners who know how to move within the constraints he lives inside every day.</p>
+                    <p class="body-large reveal" style="margin-bottom: var(--space-4); transition-delay: 0.2s;">The department head who knows his institution has the infrastructure, the legitimacy, and the relationships to anchor something significant. Still looking for people who know how to build for those assets rather than around them.</p>
+                    <p class="body-large reveal" style="transition-delay: 0.3s;">The corporate strategist who has identified the move. Realizing the internal case will never get made without external architecture. Nobody taught her how to build it.</p>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="body-large" style="margin-top: var(--space-8);">Different fields. Different problems. The same experience: doing serious work at a serious scale, largely without the people who understand why.</p>
+                </div>
+
+                <div class="txt-block reveal" style="margin-top: var(--space-8);">
+                    <p class="tech-title display-medium">LEVY IS WHERE THOSE PEOPLE FIND EACH OTHER.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ③ BUTTONS & BADGES -->
-        <section id="buttons">
+        <!-- ============================================================
+             SECTION 3 — GEAR-SHIFT
+             ============================================================ -->
+        <StatementBreakout
+            theme="dark"
+            autoHeight
+            id="stop"
+            topNarrative="The ceiling you're hitting is not your ceiling."
+            mainLeft="STOP&nbsp;:"
+            mainRightTop="THINKING"
+            mainRightBottom="SMALL."
+            bottomNarrative="What you've been building has been waiting on the right people. You don't need to be convinced the goal is worth it. You never did. And you won't have to explain yourself here."
+        />
+
+        <!-- ============================================================
+             SECTION 4 — DESIRE
+             ============================================================ -->
+        <section id="network">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">02 // INTERACTION</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">BUTTONS & BADGES</h2>
-                    <hr class="divider">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">HERE'S WHAT BECOMES POSSIBLE</h2>
                 </div>
 
-                <div class="split-2up reveal">
-                    <div class="split-l p-group" style="align-items: flex-start;">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">PRIMARY ACTIONS (H: 48PX)</span>
-                        <div class="btn-group">
-                            <Button variant="solid" label="Solid Button" />
-                            <Button variant="ghost" label="Ghost Button" />
-                        </div>
-                    </div>
-                    <div class="split-r p-group" style="align-items: flex-start;">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">SYSTEM BADGES (H: 32PX)</span>
-                        <div class="btn-group">
-                            <Badge label="Active" />
-                            <Badge label="In Progress" />
-                            <Badge label="Archived" opacity={0.5} />
-                        </div>
-                    </div>
+                <div class="txt-block reveal">
+                    <p class="narrative">Not the same people. The same calibration.</p>
+                </div>
+
+                <div class="txt-block">
+                    <p class="body-large reveal">Levy is a strategic design company. In practice that means one thing: we help serious people develop the capabilities to navigate the human systems — institutional, political, civic — that determine whether their work reaches the scale it deserves. Washington is where the most important of those systems concentrate. It is where we work. The methods travel with you wherever the work goes next.</p>
+                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.1s;">The Levy Network brings together founders, public servants, institutional operators, and researchers who have made the same bet — not on the same thing, but at the same altitude. They're working on entirely different problems. What they share is the seriousness with which they've decided to work on them.</p>
+                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.2s;">In practice this looks like a Tuesday morning breakfast where a federal program officer and a startup founder compare notes on the same procurement process from opposite sides — and neither of them expected to leave with what they left with. A happy hour where a conversation surfaces the connection someone has been trying to make for six months. A member trying to get closer to a major technology company who pulls a thread through the Network and finds the person who ran civic hackathons with that company in another city. By the end of the week they have an introduction they couldn't have manufactured.</p>
+                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.3s;">The mix is deliberate: 60% founders and builders, 30% institutional operators and public servants, 10% researchers and applied thinkers. Each group has what the other two cannot get anywhere else. The exchange between them is where the most consequential work tends to actually happen.</p>
+                    <p class="body-large reveal" style="margin-top: var(--space-4); transition-delay: 0.4s;">What compounds over time isn't just relationships or access. It's fluency — the ability to read a system, find the leverage, build the coalition, and move something significant through institutions that weren't designed to move quickly. Most people improvise this their entire careers. The Network is built to make it something you develop deliberately, in good company, in rooms where the conversation is worth having for its own sake. The American Project has always depended on people like this finding each other.</p>
+                </div>
+
+                <div class="txt-block reveal" style="margin-top: var(--space-8);">
+                    <p class="micro-data">THE MIX IS THE METHOD. THE WORK IS THE POINT.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ④ FORM CONTROLS -->
-        <section id="forms">
+        <!-- ============================================================
+             SECTION 5 — TIERS
+             ============================================================ -->
+        <section id="membership">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">03 // INPUT</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">FLIGHT MANUAL FORMS</h2>
-                    <hr class="divider">
-                </div>
-
-                <div class="split-2up reveal">
-                    <div class="split-l">
-                        <FormInput label="Full Name" id="fullName" placeholder="e.g. Jane Doe" />
-                        <FormSelect
-                            label="Institution Type"
-                            id="institutionType"
-                            name="institutionType"
-                            options={institutionOptions}
-                        />
-                        <div class="form-row mt-space-2">
-                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">System Access</span>
-                            <div class="control-group">
-                                <FormCheckbox label="Levy Network" checked />
-                                <FormCheckbox label="Levy Studio" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="split-r">
-                        <FormTextarea label="Project Telemetry" id="projectTelemetry" placeholder="Describe the structural gap..." />
-                        <div class="form-row mt-space-2">
-                            <span class="form-label" style="display: block; margin-bottom: var(--space-2);">Visibility Protocol</span>
-                            <div class="control-group">
-                                <FormRadio label="Public Broadcast" name="vis" checked />
-                                <FormRadio label="Internal Only"    name="vis" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ⑤ MEDIA RATIOS -->
-        <section id="media">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">04 // IMAGERY</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">MEDIA RATIOS</h2>
-                    <hr class="divider">
-                </div>
-
-                <div class="txt-wide reveal mb-space-4">
-                    <MediaPlaceholder ratio="16:9" caption="Widescreen Format (16:9) — Used for primary hero elements and video." />
-                </div>
-                <div class="split-2up reveal">
-                    <div class="split-l">
-                        <MediaPlaceholder ratio="4:3" caption="Standard Format (4:3) — Used for editorial content." />
-                    </div>
-                    <div class="split-r">
-                        <MediaPlaceholder ratio="1:1" caption="Square Format (1:1) — Used for portraits and grid galleries." />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ⑥ ACCORDIONS -->
-        <section id="accordions">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">05 // TOGGLES</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">ACCORDIONS (GRID ANIMATED)</h2>
-                    <AccordionWrapper class="reveal mt-space-6">
-                        <Accordion title="What is the Levy Studio?" open id="faq-1">
-                            <p class="body-medium">The portfolio and program-building arm. Designing, launching, and scaling initiatives that demonstrate what cross-sector coalition building actually produces.</p>
-                        </Accordion>
-                        <Accordion title="How does the community capital framework apply?" id="faq-2">
-                            <p class="body-medium">Durable outcomes require simultaneous investment across the forms of capital a community runs on — human, social, cultural, financial, built, and political.</p>
-                        </Accordion>
-                    </AccordionWrapper>
-                </div>
-            </div>
-        </section>
-
-        <!-- ⑦ TELEMETRY DATA -->
-        <section id="data">
-            <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">06 // STRUCTURE</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">TELEMETRY DATA</h2>
-                    <hr class="divider">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">THREE WAYS IN</h2>
                 </div>
 
                 <div class="txt-wide reveal">
-                    <SystemTable>
-                        <thead>
-                            <tr>
-                                <th>Component Ref</th>
-                                <th>Status Code</th>
-                                <th>Deployment Phase</th>
-                                <th>Primary Metric</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Studio OS — SYS.01</td>
-                                <td><Badge label="Active" /></td>
-                                <td>Public Library System</td>
-                                <td>Cohorts Launched</td>
-                            </tr>
-                            <tr>
-                                <td>Levy Institute — R.04</td>
-                                <td><Badge label="Beta" /></td>
-                                <td>Academic Research</td>
-                                <td>Frameworks Published</td>
-                            </tr>
-                        </tbody>
-                    </SystemTable>
+                    <p class="marginalia">Each tier is a distinct relationship with Levy — not a volume discount on the same product.</p>
+                </div>
+
+                <div class="split-3up reveal">
+                    <ArtifactCard badge="SIGNAL TIER" title="INSIDER">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're building orientation. The field-level understanding of how the systems you're working in actually operate — before you need to move in them.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-4);">Monthly intelligence on what's actually moving at the intersection of builders and institutions. Field-level signal before it becomes consensus. Executive essays on how systems work and where the leverage is. Occasional curated co-authorship. The content is written to travel — members forward it to exactly the right person with the note: <em style="font-style: normal;">this is where I work</em>.</p>
+                        <p class="tech-title display-medium" style="margin-top: var(--space-4);">$XX / MO</p>
+                        <div style="margin-top: var(--space-4);">
+                            <Button variant="ghost" href="#" label="Join as Insider" />
+                        </div>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="CORE TIER" title="BUILDER">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're developing the capability. In contact with people navigating the same systems from different positions, practicing the methods, building the relationships that change what you're able to do.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-4);">Everything in Insider. Builders Breakfasts — small, intentionally mixed, high signal before 10am. Strategy Sprints — the methods most operators are improvising. Workshops, speaker series, and applied sessions built around real problems. Full network access and curated introductions. Member happy hours. A growing portfolio of active initiatives to work on directly — real projects with real stakes, built around the problems members are already trying to solve. The people are interesting. The work is genuinely more interesting than almost anywhere else you'll spend your Tuesday mornings.</p>
+                        <p class="tech-title display-medium" style="margin-top: var(--space-4);">$XX / MO</p>
+                        <div style="margin-top: var(--space-4);">
+                            <Button variant="solid" href="#" label="Join as Builder" />
+                        </div>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="CO-DESIGN TIER" title="ARCHITECT">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You have a real initiative and you need Levy working directly alongside you on the specific systems it needs to move through.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-4);">Everything in Builder. Direct advisory access with Levy's senior team. Structured co-design sessions — not calls, sessions with a frame and an output that belongs to you. For initiatives that warrant it: a pathway to the Studio.</p>
+                        <p class="body-small" style="margin-top: var(--space-4);">Architect is by conversation. <a href="#contact" class="text-link">Get in touch →</a></p>
+                    </ArtifactCard>
                 </div>
             </div>
         </section>
 
-        <!-- ⑧ MID-PAGE STATEMENT BREAKOUT -->
-        <StatementBreakout
-            autoHeight
-            topNarrative="Outlier Outcomes<br>Beta Cohort Integration"
-            mainLeft="314&nbsp;:"
-            mainRightTop="ACTIVE"
-            mainRightBottom="TESTERS"
-            bottomNarrative="13,816 Total Deployments<br>104,248km Verified"
-        />
-
-        <!-- ⑨ SYSTEM ARTIFACTS -->
-        <section id="artifacts">
+        <!-- ============================================================
+             SECTION 6 — PROOF
+             ============================================================ -->
+        <section id="proof">
             <div class="layout-grid">
-                <div class="lbl reveal"><span class="section-label">07 // CONTAINERS</span></div>
-                <div class="txt-wide reveal p-group">
-                    <h2 class="tech-title display-medium">SYSTEM ARTIFACTS</h2>
+                <div class="txt-block reveal">
+                    <dl style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1) var(--space-8); font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em;">
+                        <dt style="color: var(--ink); font-weight: 500;">Builders Breakfasts</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Speaker Series</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Quarterly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Strategy Sprints</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Ongoing</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Member Happy Hours</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Monthly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Levy Institute</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Weekly</dd>
+                        <dt style="color: var(--ink); font-weight: 500;">Portfolio Initiatives</dt>
+                        <dd style="color: var(--ink-muted); font-weight: 300;">Active & Open</dd>
+                    </dl>
                 </div>
 
-                <div class="split-2up reveal mt-space-8">
-                    <div class="split-l stack-group">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">ARTIFACT CARDS (STACK COLLAPSED)</span>
-                        <ArtifactCard badge="CORE TENET" title="THE LEVY NETWORK">
-                            <p class="body-medium">The membership community built to make members sharper, better connected, and better equipped.</p>
-                        </ArtifactCard>
-                        <ArtifactCard badge="PROGRAM" title="THE LEVY STUDIO">
-                            <p class="body-medium">The portfolio and program-building arm. Designing and scaling initiatives.</p>
-                        </ArtifactCard>
-                    </div>
-                    <div class="split-r">
-                        <span class="section-label mb-space-4" style="color: var(--ink-muted);">DO / DON'T BOXES</span>
-                        <DoDontBox rule="DIRECT TONE">
-                            <p class="body-medium">Speak to people who are already serious and already working. Earn your sentences. Never flatter.</p>
-                        </DoDontBox>
-                    </div>
+                <div class="txt-block reveal" style="margin-top: var(--space-6);">
+                    <p class="marginalia">Current portfolio includes The Upskilling Labs and The Open Labs Operating System. Members shape what comes next.</p>
+                </div>
+
+                <div class="txt-wide reveal" style="margin-top: var(--space-8); display: flex; gap: var(--space-8); flex-wrap: wrap; font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted);">
+                    <span>FOUNDING COHORT</span>
+                    <span>WASHINGTON, D.C.</span>
+                    <span>60 / 30 / 10</span>
+                    <span>EST. 2024</span>
+                </div>
+
+                <div class="txt-block reveal" style="margin-top: var(--space-4);">
+                    <p class="marginalia">The members joining now are not joining a finished product. They are shaping one.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ⑩ DARK FOOTER -->
-        <StatementBreakout
-            theme="dark"
-            topNarrative="Levy Strategic Design<br>End of Document"
-            mainLeft="END&nbsp;:"
-            mainRightTop="SYSTEM"
-            mainRightBottom="MANIFEST"
-            marginaliaBottomLeft="PREPARED BY FOLKMARK<br>FOR LEVY, 2026"
-            marginaliaBottomRight="L.S.D.<br>EST. 2026"
-        />
+        <!-- ============================================================
+             SECTION 7 — ACTION
+             ============================================================ -->
+        <section id="join">
+            <div class="layout-grid">
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">JOIN THE LEVY NETWORK</h2>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="body-large">Insider and Builder are self-serve. Architect starts with a conversation. The founding cohort is open. The work is worth doing.</p>
+                </div>
+
+                <div class="txt-wide reveal" style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
+                    <Button variant="ghost" href="#" label="Join as Insider" />
+                    <Button variant="solid" href="#" label="Join as Builder" />
+                    <a href="#contact" class="text-link" style="font-family: var(--font-tech); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.1em;">Apply for Architect →</a>
+                </div>
+
+                <div class="txt-wide reveal" style="margin-top: var(--space-8); opacity: 0.5;">
+                    <p class="micro-data">LEVY STRATEGIC DESIGN // WASHINGTON, D.C. // EST. 2024</p>
+                </div>
+            </div>
+        </section>
 
     </main>
-</BaseLayout>
 
-<style>
-    .form-row  { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); width: 100%; }
-    .form-label { font-family: var(--font-tech); font-size: var(--step--1); font-weight: 300; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
-</style>
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <StatementBreakout
+        theme="dark"
+        topNarrative="The founding cohort is open. The work is worth doing."
+        mainLeft="BUILD&nbsp;:"
+        mainRightTop="THE"
+        mainRightBottom="ROOM"
+        marginaliaBottomLeft="LEVY STRATEGIC DESIGN // WASHINGTON, D.C."
+        marginaliaBottomRight="EST. 2026"
+    />
+
+</BaseLayout>
