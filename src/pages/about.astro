@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 const navItems = [
     { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
@@ -44,12 +45,5 @@ const navItems = [
         </section>
     </main>
 
-    <StatementBreakout
-        theme="dark"
-        mainLeft="BUILD&nbsp;:"
-        mainRightTop="THE"
-        mainRightBottom="ROOM"
-        marginaliaBottomLeft="LEVY STRATEGIC DESIGN // WASHINGTON, D.C."
-        marginaliaBottomRight="EST. 2024"
-    />
+    <SiteFooter />
 </BaseLayout>
