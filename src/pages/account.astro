@@ -7,6 +7,7 @@ import Header from '../components/Header.astro';
     <Header />
 
     <main id="main-content">
+        <h1 class="sr-only">My Levy Network Account</h1>
         <section id="account" class="void-section">
             <div class="statement-breakout reveal" style="width: 100%; max-width: 600px;">
                 <div class="tech-title" style="margin-bottom: var(--space-4); text-align: center;">
@@ -21,19 +22,4 @@ import Header from '../components/Header.astro';
             </div>
         </section>
     </main>
-
-    <script is:inline>
-        // Outseta widget loader
-        // Replace YOUR_DOMAIN with your Outseta subdomain
-        var o_options = {
-            domain: 'levy.outseta.com',
-            load: 'auth',
-            auth: {
-                widgetMode: 'login',
-                authenticationCallbackUrl: window.location.origin + '/account',
-                logoutCallbackUrl: window.location.origin + '/login'
-            }
-        };
-    </script>
-    <script is:inline src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </BaseLayout>
