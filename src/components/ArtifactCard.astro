@@ -4,18 +4,19 @@ import Badge from './Badge.astro';
 interface Props {
     badge?: string;
     title: string;
+    compact?: boolean;
 }
 
-const { badge, title } = Astro.props;
+const { badge, title, compact } = Astro.props;
 ---
 
-<div class="artifact-card">
+<div class:list={["artifact-card", { "artifact-card--compact": compact }]}>
     {badge && (
-        <div style="width: max-content; margin-bottom: var(--space-4);">
+        <div style={`width: max-content; margin-bottom: ${compact ? 'var(--space-2)' : 'var(--space-4)'};`}>
             <Badge label={badge} />
         </div>
     )}
-    <div class="tech-title" style="margin-bottom: var(--space-2);">{title}</div>
+    <div class="tech-title" style={`margin-bottom: ${compact ? 'var(--space-1)' : 'var(--space-2)'};`}>{title}</div>
     <slot />
 </div>
 
@@ -34,8 +35,11 @@ const { badge, title } = Astro.props;
         border-color: rgba(15, 12, 41, 0.5);
     }
 
+    .artifact-card--compact { padding: var(--space-4); }
+
     @media (max-width: 768px) {
         .artifact-card { padding: var(--space-4); }
+        .artifact-card--compact { padding: var(--space-3); }
     }
 
     @media (prefers-reduced-motion: reduce) {
