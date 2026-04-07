@@ -231,10 +231,6 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
 .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
 
-/* Clip reveal — for headings (negative inset prevents round-letter clipping at tight line-heights) */
-.reveal-clip { opacity: 0; clip-path: inset(-8% 0 108% 0); transition: opacity 0.1s, clip-path 0.8s var(--ease-out-expo); }
-.reveal-clip.is-visible { opacity: 1; clip-path: inset(-8% 0 -8% 0); }
-
 /* Stagger children — for card groups */
 .reveal-stagger > * { opacity: 0; transform: translateY(16px); }
 .reveal-stagger.is-visible > * { animation: staggerIn 0.8s var(--ease-out-expo) both; }
@@ -315,6 +311,5 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 @media (prefers-reduced-motion: reduce) {
     * { scroll-behavior: auto !important; }
     .reveal, .reveal-left { transform: none !important; transition: opacity 1s ease !important; }
-    .reveal-clip { clip-path: none !important; transition: opacity 1s ease !important; }
     .reveal-stagger > * { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
