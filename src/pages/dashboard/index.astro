@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import BentoNav from '../../components/BentoNav.astro';
+import ArtifactCard from '../../components/ArtifactCard.astro';
+import Button from '../../components/Button.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { NAV_ITEMS } from '../../lib/nav';
+---
+
+<BaseLayout title="Dashboard — Levy Network" description="Your Levy Network member dashboard.">
+    <Header />
+    <BentoNav items={NAV_ITEMS} currentPath="/dashboard" />
+
+    <main id="main-content">
+        <h1 class="sr-only">Member Dashboard</h1>
+
+        <!-- Welcome Section -->
+        <section id="dashboard-welcome">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Dashboard</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-large" id="welcome-heading">WELCOME BACK</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative" id="welcome-sub">Loading your membership...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section id="dashboard-actions">
+            <div class="layout-grid">
+                <div class="split-3up reveal">
+                    <a href="/dashboard/account" class="action-link">
+                        <ArtifactCard badge="MANAGE" title="MY ACCOUNT" compact>
+                            <p class="body-small">Update your profile, billing, and membership settings.</p>
+                        </ArtifactCard>
+                    </a>
+                    <a href="/insights" class="action-link">
+                        <ArtifactCard badge="READ" title="INSIGHTS" compact>
+                            <p class="body-small">Intelligence briefings, essays, and analysis for your tier.</p>
+                        </ArtifactCard>
+                    </a>
+                    <a href="/network" class="action-link">
+                        <ArtifactCard badge="EXPLORE" title="THE NETWORK" compact>
+                            <p class="body-small">Learn about the infrastructure, events, and member community.</p>
+                        </ArtifactCard>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier-Aware Sections (hidden until JS resolves tier) -->
+
+        <!-- All Members (Free+) -->
+        <section class="tier-section" data-min-tier="1" id="section-member">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Your Membership</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-medium">ACCOUNT STATUS</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative" id="account-status">You are an active Levy Network member.</p>
+                    <div style="margin-top: var(--space-4);">
+                        <Button variant="ghost" href="/dashboard/account" label="Manage Account" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insider+ (Level 2+) -->
+        <section class="tier-section" data-min-tier="2" id="section-insider">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Insider Access</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-medium">INTELLIGENCE &amp; ESSAYS</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative">Your Insider tier includes monthly intelligence briefings and executive essays on systems and leverage.</p>
+                    <div style="margin-top: var(--space-4);">
+                        <Button variant="ghost" href="/insights" label="Read Latest Insights" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Builder+ (Level 3+) -->
+        <section class="tier-section" data-min-tier="3" id="section-builder">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Builder Access</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-medium">EVENTS &amp; NETWORK</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative">As a Builder, you have access to Builders Breakfasts, Strategy Sprints, workshops, curated introductions, and member happy hours.</p>
+                    <div class="builder-features" style="margin-top: var(--space-4);">
+                        <div class="split-2up">
+                            <ArtifactCard title="BUILDERS BREAKFASTS" compact>
+                                <p class="body-small">Monthly, small, mixed-discipline gatherings. Invitations sent via email.</p>
+                            </ArtifactCard>
+                            <ArtifactCard title="STRATEGY SPRINTS" compact>
+                                <p class="body-small">Intensive workshops on live strategic challenges. Watch for scheduling announcements.</p>
+                            </ArtifactCard>
+                        </div>
+                    </div>
+                    <div style="margin-top: var(--space-4);">
+                        <Button variant="ghost" href="mailto:hello@levy.design" label="Request Introduction" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architect (Level 4) -->
+        <section class="tier-section" data-min-tier="4" id="section-architect">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Architect Access</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-medium">ADVISORY &amp; CO-DESIGN</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative">Your Architect tier includes direct advisory access to the Levy senior team and structured co-design sessions for qualifying initiatives.</p>
+                    <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+                        <Button variant="solid" href="mailto:hello@levy.design" label="Schedule Session" />
+                        <Button variant="ghost" href="/studio" label="Explore Studio Pathway" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upgrade Prompt (hidden for Architects) -->
+        <section class="tier-section" id="section-upgrade" data-max-tier="3" style="display: none;">
+            <div class="layout-grid">
+                <div class="lbl reveal"><span class="section-label">Grow</span></div>
+                <div class="txt-wide reveal">
+                    <p class="tech-title display-medium">UNLOCK MORE</p>
+                </div>
+                <div class="txt-block reveal">
+                    <p class="narrative" id="upgrade-text">Upgrade your membership to access more of the Levy Network.</p>
+                    <div style="margin-top: var(--space-4);">
+                        <Button variant="solid" href="/join" label="View Membership Tiers" id="upgrade-btn" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <SiteFooter />
+</BaseLayout>
+
+<script>
+    const TIER_CONFIG: Record<string, { level: number; uid: string | null; label: string }> = {
+        architect: { level: 4, uid: 'LmJ47j9P', label: 'Architect' },
+        builder:   { level: 3, uid: 'rmk5w09g', label: 'Builder' },
+        insider:   { level: 2, uid: 'Nmdndw90', label: 'Insider' },
+        free:      { level: 1, uid: 'MQvb4oQY', label: 'Free' },
+        public:    { level: 0, uid: null,        label: 'Public' },
+    };
+
+    function getUserLevel(user: any): number {
+        if (!user) return 0;
+        const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
+        if (!planUid) return 0;
+        for (const tier of Object.values(TIER_CONFIG)) {
+            if (tier.uid === planUid) return tier.level;
+        }
+        return 0;
+    }
+
+    function getUserTierLabel(user: any): string {
+        if (!user) return 'Member';
+        const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
+        if (!planUid) return 'Free';
+        for (const tier of Object.values(TIER_CONFIG)) {
+            if (tier.uid === planUid) return tier.label;
+        }
+        return 'Member';
+    }
+
+    function getNextTier(currentLevel: number): { label: string; uid: string | null } | null {
+        const tiers = Object.values(TIER_CONFIG).sort((a, b) => a.level - b.level);
+        for (const tier of tiers) {
+            if (tier.level > currentLevel && tier.uid) return tier;
+        }
+        return null;
+    }
+
+    function waitForOutseta(callback: (Outseta: any) => void) {
+        const check = () => {
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.getUser) {
+                callback(Outseta);
+            } else {
+                setTimeout(check, 200);
+            }
+        };
+        check();
+    }
+
+    function applyDashboard(user: any) {
+        const userLevel = getUserLevel(user);
+        const tierLabel = getUserTierLabel(user);
+        const firstName = user?.FirstName || '';
+
+        // Update welcome heading
+        const heading = document.getElementById('welcome-heading');
+        if (heading) {
+            heading.textContent = firstName ? `WELCOME BACK, ${firstName.toUpperCase()}` : 'WELCOME BACK';
+        }
+
+        // Update welcome subtitle
+        const sub = document.getElementById('welcome-sub');
+        if (sub) {
+            sub.textContent = `You are a ${tierLabel} member of the Levy Network.`;
+        }
+
+        // Update account status
+        const status = document.getElementById('account-status');
+        if (status) {
+            status.textContent = `Your current tier: ${tierLabel}. Manage your profile, billing, and preferences from your account page.`;
+        }
+
+        // Show tier sections based on user level
+        document.querySelectorAll<HTMLElement>('.tier-section[data-min-tier]').forEach((section) => {
+            const minTier = parseInt(section.dataset.minTier || '0', 10);
+            if (userLevel >= minTier) {
+                section.style.display = '';
+            }
+        });
+
+        // Show upgrade prompt for non-Architects
+        const upgradeSection = document.getElementById('section-upgrade');
+        const maxTier = parseInt(upgradeSection?.dataset.maxTier || '3', 10);
+        if (upgradeSection && userLevel <= maxTier && userLevel < 4) {
+            upgradeSection.style.display = '';
+            const nextTier = getNextTier(userLevel);
+            if (nextTier) {
+                const upgradeText = document.getElementById('upgrade-text');
+                if (upgradeText) {
+                    upgradeText.textContent = `Upgrade to ${nextTier.label} to unlock additional access and capabilities.`;
+                }
+                const upgradeBtn = document.getElementById('upgrade-btn') as HTMLAnchorElement;
+                if (upgradeBtn && nextTier.uid) {
+                    upgradeBtn.href = `https://levy.outseta.com/auth?widgetMode=register&planUid=${nextTier.uid}#o-anonymous`;
+                    upgradeBtn.textContent = `Upgrade to ${nextTier.label}`;
+                }
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        waitForOutseta(async (Outseta) => {
+            try {
+                const user = await Outseta.getUser();
+                applyDashboard(user);
+            } catch {
+                applyDashboard(null);
+            }
+        });
+    });
+</script>
+
+<style>
+    .tier-section[data-min-tier] {
+        display: none;
+    }
+
+    .action-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .action-link:hover :global(.artifact-card) {
+        border-color: var(--ink);
+        transform: translateY(-2px);
+    }
+
+    .split-2up {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+    }
+
+    @media (max-width: 768px) {
+        .split-2up {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
