@@ -4,21 +4,46 @@ interface Props {
     href: string;
     date: Date;
     excerpt: string;
+    tier?: string;
+    tierLabel?: string;
+    tierLevel?: number;
+    tierUid?: string | null;
 }
 
-const { title, href, date, excerpt } = Astro.props;
+const { title, href, date, excerpt, tier = 'public', tierLabel = 'Public', tierLevel = 0, tierUid = null } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
     month: 'short',
     year: 'numeric',
 }).toUpperCase();
+
+const isGated = tierLevel > 0;
+const cardClass = `insight-card${isGated ? ' insight-card--gated' : ''}`;
 ---
 
-<a href={href} class="insight-card">
+<a
+    href={href}
+    class={cardClass}
+    data-tier={tier}
+    data-tier-level={tierLevel}
+    data-tier-uid={tierUid ?? ''}
+    data-post-slug={href.replace('/insights/', '')}
+>
+    {isGated && (
+        <span class={`tier-badge tier-badge--${tier}`}>{tierLabel}</span>
+    )}
     <span class="micro-data insight-date">{formattedDate}</span>
     <h3 class="tech-title insight-title">{title}</h3>
     <p class="body-medium insight-excerpt">{excerpt}</p>
-    <span class="micro-data insight-cta">Read more &rarr;</span>
+    <span class="micro-data insight-cta" data-default-text="Read more">Read more &rarr;</span>
+    {isGated && (
+        <span class="insight-lock" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+        </span>
+    )}
 </a>
 
 <style>
@@ -32,15 +57,66 @@ const formattedDate = date.toLocaleDateString('en-US', {
         gap: var(--space-2);
         text-decoration: none;
         color: inherit;
+        position: relative;
         transition: transform 0.4s var(--ease-out-expo),
                     box-shadow 0.4s var(--ease-out-expo),
-                    border-color 0.4s var(--ease-out-expo);
+                    border-color 0.4s var(--ease-out-expo),
+                    opacity 0.4s var(--ease-out-expo);
     }
 
     .insight-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 32px rgba(15, 12, 41, 0.08);
         border-color: rgba(15, 12, 41, 0.5);
+    }
+
+    .insight-card--gated {
+        opacity: 0.6;
+    }
+
+    .insight-card--gated:hover {
+        opacity: 1;
+    }
+
+    .insight-card--gated.is-authorized {
+        opacity: 1;
+    }
+
+    .tier-badge {
+        font-family: var(--font-tech);
+        font-size: var(--step--2);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.25em 0.6em;
+        width: fit-content;
+        background: rgba(15, 12, 41, 0.06);
+        color: var(--ink-muted);
+        border: 1px solid rgba(15, 12, 41, 0.1);
+    }
+
+    .tier-badge--architect {
+        background: rgba(15, 12, 41, 0.12);
+        color: var(--ink);
+        border-color: rgba(15, 12, 41, 0.25);
+    }
+
+    .tier-badge--builder {
+        background: rgba(15, 12, 41, 0.09);
+        color: var(--ink-light);
+        border-color: rgba(15, 12, 41, 0.18);
+    }
+
+    .tier-badge--insider {
+        background: rgba(15, 12, 41, 0.06);
+        color: var(--ink-muted);
+        border-color: rgba(15, 12, 41, 0.12);
+    }
+
+    .tier-badge--free {
+        background: rgba(15, 12, 41, 0.03);
+        color: var(--ink-ghost);
+        border-color: rgba(15, 12, 41, 0.08);
     }
 
     .insight-date {
@@ -69,6 +145,18 @@ const formattedDate = date.toLocaleDateString('en-US', {
 
     .insight-card:hover .insight-cta {
         color: var(--ink-muted);
+    }
+
+    .insight-lock {
+        position: absolute;
+        top: var(--space-3);
+        right: var(--space-3);
+        color: var(--ink-ghost);
+        transition: opacity 0.3s var(--ease-out-expo);
+    }
+
+    .insight-card.is-authorized .insight-lock {
+        display: none;
     }
 
     @media (max-width: 768px) {

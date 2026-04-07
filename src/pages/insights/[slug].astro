@@ -28,6 +28,8 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
     day: 'numeric',
     year: 'numeric',
 });
+
+const isGated = post.tierLevel > 0;
 ---
 
 <BaseLayout title={`${post.title} — Levy Insights`} description={post.description}>
@@ -42,15 +44,46 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
                 </div>
                 <div class="txt-block reveal">
                     <time class="micro-data" datetime={post.pubDate.toISOString()}>{formattedDate}</time>
+                    {isGated && (
+                        <span class={`tier-badge tier-badge--${post.tier}`} style="margin-top: var(--space-2); display: inline-block;">{post.tierLabel}</span>
+                    )}
                     <h1 class="tech-title display-large article-title">{post.title}</h1>
                 </div>
             </div>
 
-            <div class="layout-grid article-body-grid">
-                <div class="article-body reveal">
-                    <div class="prose" set:html={post.content} />
+            {isGated ? (
+                <!-- Gated: show teaser + gate overlay, content loaded dynamically -->
+                <div class="layout-grid article-body-grid">
+                    <div class="article-body reveal">
+                        <div class="prose gate-teaser">
+                            <p>{post.description}</p>
+                        </div>
+                        <div class="gate-fade"></div>
+                        <div
+                            id="gated-content"
+                            class="gate-container"
+                            data-slug={post.slug}
+                            data-tier={post.tier}
+                            data-tier-level={post.tierLevel}
+                            data-tier-uid={post.tierUid ?? ''}
+                            data-tier-label={post.tierLabel}
+                        >
+                            <div class="gate-cta-area" id="gate-cta-area">
+                                <div class="gate-loading" id="gate-loading">
+                                    <span class="micro-data">Checking access...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <!-- Public: render full content at build time -->
+                <div class="layout-grid article-body-grid">
+                    <div class="article-body reveal">
+                        <div class="prose" set:html={post.content} />
+                    </div>
+                </div>
+            )}
 
             <div class="layout-grid">
                 <div class="txt-block reveal">
@@ -62,6 +95,165 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
 
     <SiteFooter />
 </BaseLayout>
+
+{isGated && (
+<script>
+    /**
+     * Waterfall Content Gate — Article-level gating logic.
+     * Checks Outseta auth and fetches gated content from the Cloudflare Function.
+     */
+
+    const TIER_CONFIG: Record<string, { level: number; uid: string | null; label: string }> = {
+        architect: { level: 4, uid: 'LmJ47j9P', label: 'Architect' },
+        builder:   { level: 3, uid: 'rmk5w09g', label: 'Builder' },
+        insider:   { level: 2, uid: 'Nmdndw90', label: 'Insider' },
+        free:      { level: 1, uid: 'MQvb4oQY', label: 'Free' },
+        public:    { level: 0, uid: null,        label: 'Public' },
+    };
+
+    function getUserLevel(user: any): number {
+        if (!user) return 0;
+        const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
+        if (!planUid) return 0;
+        for (const tier of Object.values(TIER_CONFIG)) {
+            if (tier.uid === planUid) return tier.level;
+        }
+        return 0;
+    }
+
+    function waitForOutseta(callback: (Outseta: any) => void) {
+        const check = () => {
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.getUser) {
+                callback(Outseta);
+            } else {
+                setTimeout(check, 200);
+            }
+        };
+        check();
+    }
+
+    function renderGateCta(options: {
+        type: 'login' | 'upgrade';
+        tierLabel?: string;
+        tierUid?: string;
+    }) {
+        const ctaArea = document.getElementById('gate-cta-area');
+        const loading = document.getElementById('gate-loading');
+        if (!ctaArea) return;
+        if (loading) loading.style.display = 'none';
+
+        const btn = document.createElement('a');
+        btn.className = 'gate-cta';
+
+        if (options.type === 'login') {
+            btn.textContent = 'Sign in to read this article';
+            btn.href = '#';
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const Outseta = (window as any).Outseta;
+                if (Outseta?.auth?.open) {
+                    Outseta.auth.open({ widgetMode: 'login' });
+                } else {
+                    window.location.href = 'https://levy.outseta.com/auth?widgetMode=login#o-anonymous';
+                }
+            });
+        } else {
+            btn.textContent = `Upgrade to ${options.tierLabel || 'Premium'} to read`;
+            btn.href = `https://levy.outseta.com/auth?widgetMode=register&planUid=${options.tierUid || ''}#o-anonymous`;
+        }
+
+        const hint = document.createElement('p');
+        hint.className = 'micro-data gate-hint';
+        hint.textContent = options.type === 'login'
+            ? 'This article requires a membership to access.'
+            : `This article is available to ${options.tierLabel} members and above.`;
+
+        ctaArea.appendChild(hint);
+        ctaArea.appendChild(btn);
+    }
+
+    async function fetchGatedContent(slug: string, accessToken: string) {
+        const res = await fetch('/api/get-beehiiv-content', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ slug }),
+        });
+
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw { status: res.status, ...data };
+        }
+
+        return res.json();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('gated-content');
+        if (!container) return;
+
+        const slug = container.dataset.slug || '';
+        const postLevel = parseInt(container.dataset.tierLevel || '0', 10);
+        const tierLabel = container.dataset.tierLabel || '';
+        const tierUid = container.dataset.tierUid || '';
+
+        waitForOutseta(async (Outseta) => {
+            let user: any = null;
+            try {
+                user = await Outseta.getUser();
+            } catch {}
+
+            if (!user) {
+                renderGateCta({ type: 'login' });
+                return;
+            }
+
+            const userLevel = getUserLevel(user);
+            if (userLevel < postLevel) {
+                renderGateCta({ type: 'upgrade', tierLabel, tierUid });
+                return;
+            }
+
+            // Authorized — fetch full content
+            const loading = document.getElementById('gate-loading');
+            if (loading) {
+                loading.querySelector('span')!.textContent = 'Loading article...';
+            }
+
+            try {
+                const accessToken = Outseta.getAccessToken();
+                const data = await fetchGatedContent(slug, accessToken);
+
+                // Replace the gate container with the actual content
+                const prose = document.createElement('div');
+                prose.className = 'prose';
+                prose.innerHTML = data.html;
+
+                // Remove teaser and fade
+                const teaser = container.parentElement?.querySelector('.gate-teaser');
+                const fade = container.parentElement?.querySelector('.gate-fade');
+                if (teaser) teaser.remove();
+                if (fade) fade.remove();
+
+                container.replaceWith(prose);
+            } catch (err: any) {
+                if (loading) loading.style.display = 'none';
+                if (err.status === 403) {
+                    renderGateCta({ type: 'upgrade', tierLabel, tierUid });
+                } else {
+                    const ctaArea = document.getElementById('gate-cta-area');
+                    if (ctaArea) {
+                        ctaArea.innerHTML = '<p class="micro-data" style="color: var(--ink-muted);">Unable to load article. Please try again later.</p>';
+                    }
+                }
+            }
+        });
+    });
+</script>
+)}
 
 <style>
     .article-title {
@@ -86,6 +278,62 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
     .article-body {
         grid-column: 3 / 10;
         padding: var(--space-12) 0;
+    }
+
+    /* Gate teaser — faded excerpt */
+    .gate-teaser {
+        position: relative;
+    }
+
+    .gate-fade {
+        height: 80px;
+        background: linear-gradient(to bottom, transparent, var(--paper));
+        margin-top: calc(-1 * var(--space-8));
+        position: relative;
+        z-index: 1;
+    }
+
+    .gate-container {
+        text-align: center;
+        padding: var(--space-8) 0;
+    }
+
+    .gate-cta-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+    }
+
+    .gate-loading {
+        color: var(--ink-muted);
+    }
+
+    :global(.gate-hint) {
+        color: var(--ink-muted);
+        margin-bottom: var(--space-2);
+    }
+
+    :global(.gate-cta) {
+        display: inline-block;
+        font-family: var(--font-tech);
+        font-size: var(--step--1);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--paper);
+        background: var(--midnight);
+        padding: var(--space-2) var(--space-4);
+        border: 1px solid var(--midnight);
+        transition: background 0.3s var(--ease-out-expo),
+                    color 0.3s var(--ease-out-expo);
+        cursor: pointer;
+    }
+
+    :global(.gate-cta:hover) {
+        background: transparent;
+        color: var(--midnight);
     }
 
     /* Prose styles for Beehiiv content */
