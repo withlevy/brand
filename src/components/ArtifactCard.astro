@@ -22,7 +22,8 @@ const { badge, title, compact } = Astro.props;
 
 <style>
     .artifact-card {
-        background: var(--paper); width: 100%; padding: var(--space-6);
+        --card-pad: var(--space-6);
+        background: var(--paper); width: 100%; padding: var(--card-pad);
         border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column;
         transition: transform 0.4s var(--ease-out-expo),
                     box-shadow 0.4s var(--ease-out-expo),
@@ -35,11 +36,11 @@ const { badge, title, compact } = Astro.props;
         border-color: rgba(15, 12, 41, 0.5);
     }
 
-    .artifact-card--compact { padding: var(--space-4); }
+    .artifact-card--compact { --card-pad: var(--space-4); }
 
     @media (max-width: 768px) {
-        .artifact-card { padding: var(--space-4); }
-        .artifact-card--compact { padding: var(--space-3); }
+        .artifact-card { --card-pad: var(--space-4); }
+        .artifact-card--compact { --card-pad: var(--space-3); }
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -14,7 +14,8 @@ const { type = 'do', rule } = Astro.props;
 
 <style>
     .do-dont-wrapper {
-        background: rgba(15, 12, 41, 0.02); padding: var(--space-6); height: 100%;
+        --card-pad: var(--space-6);
+        background: rgba(15, 12, 41, 0.02); padding: var(--card-pad); height: 100%;
         border: var(--stroke-weight) solid var(--stroke-color); display: flex; flex-direction: column; gap: var(--space-2);
     }
     .do-dont-wrapper.dont { border-left: 3px solid rgba(15, 12, 41, 0.3); background: rgba(15, 12, 41, 0.04); }
