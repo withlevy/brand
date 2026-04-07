@@ -6,6 +6,7 @@ import StatementBreakout from '../../components/StatementBreakout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import InsightCard from '../../components/InsightCard.astro';
 import { fetchPosts } from '../../lib/rss';
+import { TIER_MAP } from '../../lib/tiers';
 
 const navItems = [
     { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
@@ -51,6 +52,10 @@ const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
                                 href={`/insights/${post.slug}`}
                                 date={post.pubDate}
                                 excerpt={post.description}
+                                tier={post.tier}
+                                tierLabel={post.tierLabel}
+                                tierLevel={post.tierLevel}
+                                tierUid={post.tierUid}
                             />
                         ))}
                     </div>
@@ -75,3 +80,95 @@ const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
         max-width: 1200px;
     }
 </style>
+
+<script>
+    /**
+     * Waterfall Content Gate — Grid-level gating logic.
+     * Adjusts InsightCard CTAs based on the user's Outseta auth state.
+     */
+
+    const TIER_CONFIG: Record<string, { level: number; uid: string | null; label: string }> = {
+        architect: { level: 4, uid: 'LmJ47j9P', label: 'Architect' },
+        builder:   { level: 3, uid: 'rmk5w09g', label: 'Builder' },
+        insider:   { level: 2, uid: 'Nmdndw90', label: 'Insider' },
+        free:      { level: 1, uid: 'MQvb4oQY', label: 'Free' },
+        public:    { level: 0, uid: null,        label: 'Public' },
+    };
+
+    function getUserLevel(user: any): number {
+        if (!user) return 0;
+        const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
+        if (!planUid) return 0;
+        for (const tier of Object.values(TIER_CONFIG)) {
+            if (tier.uid === planUid) return tier.level;
+        }
+        return 0;
+    }
+
+    function applyGating(user: any) {
+        const userLevel = getUserLevel(user);
+        const gatedCards = document.querySelectorAll<HTMLAnchorElement>('.insight-card[data-tier-level]');
+
+        gatedCards.forEach((card) => {
+            const postLevel = parseInt(card.dataset.tierLevel || '0', 10);
+            const tier = card.dataset.tier || 'public';
+            const cta = card.querySelector<HTMLSpanElement>('.insight-cta');
+
+            if (postLevel === 0) return; // Public posts — no gating needed
+
+            if (userLevel >= postLevel) {
+                // Authorized — restore normal behavior
+                card.classList.add('is-authorized');
+                if (cta) cta.innerHTML = 'Read more &rarr;';
+            } else if (user) {
+                // Logged in but insufficient tier — show upgrade CTA
+                const tierInfo = TIER_CONFIG[tier];
+                const upgradeUid = tierInfo?.uid || '';
+                if (cta) cta.innerHTML = `Upgrade to ${tierInfo?.label || 'Premium'} &rarr;`;
+                card.addEventListener('click', (e) => {
+                    if (userLevel < postLevel) {
+                        e.preventDefault();
+                        window.location.href = `https://levy.outseta.com/auth?widgetMode=register&planUid=${upgradeUid}#o-anonymous`;
+                    }
+                });
+            } else {
+                // Not logged in — show sign-in CTA
+                if (cta) cta.innerHTML = 'Sign in to read &rarr;';
+                card.addEventListener('click', (e) => {
+                    if (!user) {
+                        e.preventDefault();
+                        const Outseta = (window as any).Outseta;
+                        if (Outseta?.auth?.open) {
+                            Outseta.auth.open({ widgetMode: 'login' });
+                        } else {
+                            window.location.href = 'https://levy.outseta.com/auth?widgetMode=login#o-anonymous';
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function waitForOutseta(callback: (Outseta: any) => void) {
+        const check = () => {
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.getUser) {
+                callback(Outseta);
+            } else {
+                setTimeout(check, 200);
+            }
+        };
+        check();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        waitForOutseta(async (Outseta) => {
+            try {
+                const user = await Outseta.getUser();
+                applyGating(user);
+            } catch {
+                applyGating(null);
+            }
+        });
+    });
+</script>
