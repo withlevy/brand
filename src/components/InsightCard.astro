@@ -48,9 +48,10 @@ const cardClass = `insight-card${isGated ? ' insight-card--gated' : ''}`;
 
 <style>
     .insight-card {
+        --card-pad: var(--space-6);
         background: var(--paper);
         width: 100%;
-        padding: var(--space-6);
+        padding: var(--card-pad);
         border: var(--stroke-weight) solid var(--stroke-color);
         display: flex;
         flex-direction: column;
@@ -161,7 +162,7 @@ const cardClass = `insight-card${isGated ? ' insight-card--gated' : ''}`;
 
     @media (max-width: 768px) {
         .insight-card {
-            padding: var(--space-4);
+            --card-pad: var(--space-4);
         }
     }
 
