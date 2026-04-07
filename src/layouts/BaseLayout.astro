@@ -2,9 +2,12 @@
 interface Props {
     title: string;
     description?: string;
+    ogImage?: string;
+    type?: 'website' | 'article';
 }
 
-const { title, description = 'Levy Design System' } = Astro.props;
+const { title, description = 'Levy Design System', ogImage = '/og-default.png', type = 'website' } = Astro.props;
+const canonicalURL = Astro.url.href;
 
 import '../styles/global.css';
 ---
@@ -17,6 +20,20 @@ import '../styles/global.css';
     <title>{title}</title>
     <meta name="description" content={description}>
     <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="canonical" href={canonicalURL}>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content={type}>
+    <meta property="og:url" content={canonicalURL}>
+    <meta property="og:image" content={new URL(ogImage, Astro.url).href}>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={new URL(ogImage, Astro.url).href}>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
