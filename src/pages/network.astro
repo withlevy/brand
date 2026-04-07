@@ -1,0 +1,370 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import StatementBreakout from '../components/StatementBreakout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ArtifactCard from '../components/ArtifactCard.astro';
+import Button from '../components/Button.astro';
+import AccordionWrapper from '../components/AccordionWrapper.astro';
+import Accordion from '../components/Accordion.astro';
+import { NAV_ITEMS } from '../lib/nav';
+
+const OUTSETA_BUILDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=rmk5w09g#o-anonymous";
+const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=Nmdndw90#o-anonymous";
+---
+
+<BaseLayout title="The Levy Network" description="The membership network for people operating ahead of consensus. Events, introductions, and the rooms where the work moves.">
+    <Header />
+    <BentoNav items={NAV_ITEMS} currentPath="/network" />
+
+    <main id="main-content">
+        <h1 class="sr-only">The Levy Network</h1>
+
+        <!-- ============================================================
+             SECTION 1 — HERO
+             ============================================================ -->
+        <StatementBreakout
+            id="cover"
+            topNarrative="Where serious builders<br>find each other"
+            mainLeft="THE&nbsp;:"
+            mainRightTop="LEVY"
+            mainRightBottom="NETWORK"
+            bottomNarrative="Events &middot; Introductions &middot; The rooms where the work moves"
+        />
+
+        <div class="hero-cta-bar hero-entrance" style="--entrance-order: 5;">
+            <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+            <Button variant="ghost" href="#membership" label="See Membership" />
+        </div>
+
+        <!-- ============================================================
+             SECTION 2 — VALUE PROPOSITION
+             ============================================================ -->
+        <section id="value">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">01 // The Network</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">THE INFRASTRUCTURE<br>FOR SERIOUS BUILDERS</h2>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="narrative">A membership community where founders, institutional operators, and researchers collide — producing outcomes none could achieve alone.</p>
+                </div>
+
+                <div class="zz-left reveal">
+                    <p class="micro-data" style="margin-bottom: var(--space-2);">The Collision</p>
+                    <p class="body-large">The people are interesting. The work is more interesting. Founders navigating procurement sit next to public servants who know the system from the inside. Researchers with methods meet operators with problems worth solving. The mix is the method.</p>
+                </div>
+                <div class="zz-right reveal">
+                    <p class="micro-data" style="margin-bottom: var(--space-2);">The Signal</p>
+                    <p class="body-large">You develop a persistent read on the systems you're working in. Monthly intelligence briefings, executive essays, and curated co-authorship give you what internal channels and industry media don't — field-level orientation designed to forward.</p>
+                </div>
+                <div class="zz-left reveal">
+                    <p class="micro-data" style="margin-bottom: var(--space-2);">The Rooms</p>
+                    <p class="body-large">Builders Breakfasts, Strategy Sprints, member happy hours. Not networking events. Working sessions where the people and the problems actually meet — and where the relationships that compound get built.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 3 — WHAT'S INSIDE
+             ============================================================ -->
+        <section id="inside">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">02 // Inside</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">WHAT'S INSIDE</h2>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="narrative">Not a feature list. The concrete architecture of how members operate.</p>
+                </div>
+
+                <div class="split-3up reveal-stagger">
+                    <ArtifactCard badge="MONTHLY" title="BUILDERS BREAKFASTS">
+                        <p class="body-medium">Small-group, cross-sector sessions. Founders, operators, and researchers in the same room working through real problems. The format is designed so the mix does the work — each person brings what the others cannot get anywhere else.</p>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="WORKSHOPS" title="STRATEGY SPRINTS">
+                        <p class="body-medium">Intensive workshops on navigating institutional systems, building coalitions, and making the case. The methods come from the Levy Institute. The pressure-testing comes from the room.</p>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="MONTHLY" title="INTELLIGENCE BRIEFING">
+                        <p class="body-medium">A monthly briefing on the systems and fields members operate in. What's shifting, what's opening, what the official channels won't tell you for six months. Designed to forward to the colleague who needs to see it.</p>
+                    </ArtifactCard>
+                </div>
+
+                <div class="split-3up reveal-stagger" style="margin-top: 0;">
+                    <ArtifactCard badge="ONGOING" title="CURATED INTRODUCTIONS">
+                        <p class="body-medium">Not a directory. Deliberate connections between people whose work intersects. When a founder needs to understand procurement, they meet the person who built the system. When a researcher needs a field partner, we know who.</p>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="QUARTERLY" title="MEMBER HAPPY HOURS">
+                        <p class="body-medium">Informal convenings where the work recedes and the people come forward. The relationships that compound over years start in rooms like these.</p>
+                    </ArtifactCard>
+
+                    <ArtifactCard badge="WEEKLY" title="EXECUTIVE ESSAYS">
+                        <p class="body-medium">Deep analysis on systems, leverage, and strategic positioning. Written for people who make decisions — not people who consume content. Each essay is a tool, not a take.</p>
+                    </ArtifactCard>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 4 — WHO IT'S FOR
+             ============================================================ -->
+        <section id="who">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">03 // Fit</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">WHO IT'S FOR</h2>
+                </div>
+
+                <div class="zz-left reveal">
+                    <ArtifactCard badge="FOUNDERS & BUILDERS" title="YOU NEED THE INSTITUTIONAL MAP">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You're building something that touches public systems, regulated industries, or institutional buyers. You can see the structural opportunity. You keep hitting terrain nobody taught you to navigate.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-2);"><strong>Core fear:</strong> Building something significant and getting locked out by systems you don't know how to move through.</p>
+                        <p class="body-small"><strong>Outlier outcome:</strong> You become the person institutions call — because you learned to build for their constraints, not around them.</p>
+                    </ArtifactCard>
+                </div>
+
+                <div class="zz-right reveal">
+                    <ArtifactCard badge="INSTITUTIONAL OPERATORS" title="YOU NEED OUTSIDE SIGNAL">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">You work inside government, a university, a hospital system, a foundation. You know the internal briefings aren't enough. The fields you operate in move faster than your institution's ability to track them.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-2);"><strong>Core fear:</strong> Your institution has the infrastructure to anchor something significant, and you can't find the external partners who know how to build for it.</p>
+                        <p class="body-small"><strong>Outlier outcome:</strong> You lead the initiative others follow — because you had the outside architecture before the internal case was ready.</p>
+                    </ArtifactCard>
+                </div>
+
+                <div class="zz-left reveal">
+                    <ArtifactCard badge="RESEARCHERS & PRACTITIONERS" title="YOU NEED PRACTICAL APPLICATION">
+                        <p class="body-medium" style="margin-bottom: var(--space-4);">Your work matters. You've identified the move. You're realizing the case will never get made without external architecture — the people, the rooms, the pressure-testing that turns research into leverage.</p>
+                        <p class="body-small" style="margin-bottom: var(--space-2);"><strong>Core fear:</strong> Producing work that's cited but never implemented. Relevance in theory, irrelevance in practice.</p>
+                        <p class="body-small"><strong>Outlier outcome:</strong> You shape the field — not just study it. Your methods become the ones practitioners actually use.</p>
+                    </ArtifactCard>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 5 — TESTIMONIALS
+             ============================================================ -->
+        <section id="proof">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">04 // Signal</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">FROM THE NETWORK</h2>
+                </div>
+
+                <div class="split-2up reveal-stagger">
+                    <div class="split-l">
+                        <blockquote class="testimonial-block">
+                            <p class="body-large testimonial-quote">"The Builders Breakfast changed how I think about coalition. I walked in with a procurement problem and left with three people who'd already solved it from the inside."</p>
+                            <footer class="micro-data"><!-- Replace with real member name and title --><br>NETWORK MEMBER</footer>
+                        </blockquote>
+                    </div>
+                    <div class="split-r">
+                        <blockquote class="testimonial-block">
+                            <p class="body-large testimonial-quote">"I spent two years trying to find the right private-sector partners through conferences. In my first month as a Builder, Levy made three introductions that actually understood our constraints."</p>
+                            <footer class="micro-data"><!-- Replace with real member name and title --><br>NETWORK MEMBER</footer>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="split-2up reveal-stagger">
+                    <div class="split-l">
+                        <blockquote class="testimonial-block">
+                            <p class="body-large testimonial-quote">"The intelligence briefing is the only thing I forward to my board. It gives me the outside signal I can't get from internal channels."</p>
+                            <footer class="micro-data"><!-- Replace with real member name and title --><br>NETWORK MEMBER</footer>
+                        </blockquote>
+                    </div>
+                    <div class="split-r">
+                        <blockquote class="testimonial-block">
+                            <p class="body-large testimonial-quote">"My research sat in journals for years. Through the Network, it became the framework a city agency actually used. That's not networking — that's architecture."</p>
+                            <footer class="micro-data"><!-- Replace with real member name and title --><br>NETWORK MEMBER</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 6 — MEMBERSHIP TIERS
+             ============================================================ -->
+        <section id="membership">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">05 // Membership</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">THREE WAYS IN</h2>
+                </div>
+
+                <div class="txt-block reveal">
+                    <p class="narrative">Each tier is a distinct relationship with Levy — not a volume discount on the same product.</p>
+                </div>
+
+                <div class="split-3up reveal-stagger">
+                    <ArtifactCard badge="SIGNAL TIER" title="INSIDER" compact>
+                        <p class="body-small" style="margin-bottom: var(--space-2);">The signal tier. You're building orientation — field-level understanding of how the systems you're working in actually operate. Some of the most effective members here are institutional operators using Insider intelligence to stay ahead of fields that move faster than their internal briefings.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-2);">
+                            <p style="margin-bottom: var(--space-1);">Monthly intelligence briefing</p>
+                            <p style="margin-bottom: var(--space-1);">Executive essays on systems and leverage</p>
+                            <p style="margin-bottom: var(--space-1);">Curated co-authorship (occasional)</p>
+                            <p>Content designed to forward</p>
+                        </div>
+                        <p class="tech-title display-medium" style="margin-top: auto;">$127 / YR</p>
+                        <p class="micro-data" style="margin-top: var(--space-1);">or $37 / quarter</p>
+                        <div style="margin-top: var(--space-2);">
+                            <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+                        </div>
+                    </ArtifactCard>
+
+                    <div class="tier-recommended">
+                        <ArtifactCard badge="CORE TIER — RECOMMENDED" title="BUILDER" compact>
+                            <p class="body-small" style="margin-bottom: var(--space-2);">The center of gravity of the Network. You're developing the capability — in contact with people navigating the same systems from different positions. The mix is the method: founders, operators, researchers, each with what the other two cannot get anywhere else.</p>
+                            <div class="body-small" style="margin-bottom: var(--space-2);">
+                                <p style="margin-bottom: var(--space-1);">Everything in Insider</p>
+                                <p style="margin-bottom: var(--space-1);">Builders Breakfasts — monthly, small, mixed</p>
+                                <p style="margin-bottom: var(--space-1);">Strategy Sprints and workshops</p>
+                                <p style="margin-bottom: var(--space-1);">Full network access and curated introductions</p>
+                                <p style="margin-bottom: var(--space-1);">Member happy hours</p>
+                                <p>Portfolio initiative participation</p>
+                            </div>
+                            <p class="tech-title display-medium" style="margin-top: auto;">$1,200 / YR</p>
+                            <p class="micro-data" style="margin-top: var(--space-1);">or $360 / quarter</p>
+                            <div style="margin-top: var(--space-2);">
+                                <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+                            </div>
+                        </ArtifactCard>
+                    </div>
+
+                    <ArtifactCard badge="CO-DESIGN TIER" title="ARCHITECT" compact>
+                        <p class="body-small" style="margin-bottom: var(--space-2);">Not purchasable. You have a real initiative and you need Levy working directly alongside you on the systems it needs to move through. Architect is by conversation — if you're working on something that warrants it, we'll know quickly.</p>
+                        <div class="body-small" style="margin-bottom: var(--space-2);">
+                            <p style="margin-bottom: var(--space-1);">Everything in Builder</p>
+                            <p style="margin-bottom: var(--space-1);">Direct advisory access, Levy senior team</p>
+                            <p style="margin-bottom: var(--space-1);">Structured co-design sessions</p>
+                            <p>Studio pathway for qualifying initiatives</p>
+                        </div>
+                        <p class="body-small" style="margin-top: auto;"><a href="mailto:hello@levy.design" class="text-link">Start a conversation &rarr;</a></p>
+                    </ArtifactCard>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 7 — FAQ
+             ============================================================ -->
+        <section id="faq">
+            <div class="layout-grid">
+                <div class="lbl reveal-left"><span class="section-label">06 // Questions</span></div>
+                <div class="txt-wide reveal">
+                    <h2 class="tech-title display-large">COMMON QUESTIONS</h2>
+                </div>
+
+                <div class="txt-wide reveal">
+                    <AccordionWrapper>
+                        <Accordion title="WHAT HAPPENS AFTER I JOIN?" id="faq-join">
+                            <p class="body-medium">You get immediate access to the intelligence briefing archive and executive essays. Within your first week, you'll receive a welcome orientation and — for Builder members — an introduction to the next Builders Breakfast. We don't do onboarding decks. You're in the room, working, from day one.</p>
+                        </Accordion>
+                        <Accordion title="WHO ARE THE OTHER MEMBERS?" id="faq-members">
+                            <p class="body-medium">Founders building companies that touch institutional systems. Public servants and institutional operators who need outside signal. Researchers turning methods into interventions. The common thread: they're all operating ahead of consensus and need infrastructure that matches.</p>
+                        </Accordion>
+                        <Accordion title="IS THE NETWORK ONLY IN WASHINGTON, D.C.?" id="faq-location">
+                            <p class="body-medium">The Network is anchored in Washington, D.C. — that's where the Builders Breakfasts, happy hours, and most convenings happen. The intelligence briefing, executive essays, and curated introductions work regardless of location. Many Insider members operate nationally and internationally.</p>
+                        </Accordion>
+                        <Accordion title="WHAT'S THE DIFFERENCE BETWEEN INSIDER AND BUILDER?" id="faq-tiers">
+                            <p class="body-medium">Insider is the signal tier — you get the intelligence briefing, essays, and orientation. Builder is the full network — you get everything in Insider plus the Builders Breakfasts, Strategy Sprints, curated introductions, happy hours, and portfolio initiative participation. It's the difference between reading the map and being in the room.</p>
+                        </Accordion>
+                        <Accordion title="CAN I UPGRADE MY MEMBERSHIP LATER?" id="faq-upgrade">
+                            <p class="body-medium">Yes. Many members start as Insiders to build orientation, then move to Builder when they're ready for the full network. Your Insider investment is prorated toward the upgrade. Architect is by conversation — if your initiative warrants it, we'll know quickly.</p>
+                        </Accordion>
+                        <Accordion title="HOW DO I CANCEL?" id="faq-cancel">
+                            <p class="body-medium">You can cancel anytime from your account dashboard. No retention calls, no friction. If the Network isn't producing value, we'd rather know than keep you subscribed.</p>
+                        </Accordion>
+                    </AccordionWrapper>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 8 — FINAL CTA
+             ============================================================ -->
+        <section id="final-cta">
+            <div class="layout-grid">
+                <div class="txt-wide reveal" style="text-align: center;">
+                    <p class="narrative" style="margin-bottom: var(--space-6);">The infrastructure exists. The rooms are running. The question is whether you're in them.</p>
+                    <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <SiteFooter />
+
+</BaseLayout>
+
+<style>
+    .hero-cta-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-9) 5vw;
+        border-bottom: var(--stroke-weight) solid var(--stroke-color);
+    }
+
+    .hero-entrance {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: heroReveal 1s var(--ease-out-expo) forwards;
+        animation-delay: calc(var(--entrance-order, 0) * 0.15s + 0.3s);
+    }
+
+    @keyframes heroReveal {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-entrance {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+    }
+
+    .tier-recommended {
+        border: 2px solid var(--ink);
+        position: relative;
+    }
+    .tier-recommended :global(.artifact-card) {
+        border: none;
+    }
+
+    .testimonial-block {
+        padding: var(--space-6) 0;
+    }
+    .testimonial-quote {
+        font-family: var(--font-narrative);
+        font-weight: 200;
+        font-variation-settings: "SOFT" 50, "WONK" 0;
+        font-style: italic;
+        margin-bottom: var(--space-4);
+    }
+    .testimonial-block footer {
+        margin-top: var(--space-2);
+    }
+
+    #final-cta {
+        padding-top: var(--space-12);
+        padding-bottom: var(--space-12);
+    }
+
+    @media (max-width: 480px) {
+        .hero-cta-bar {
+            flex-direction: column;
+            padding: var(--space-6) 4vw;
+        }
+    }
+</style>
