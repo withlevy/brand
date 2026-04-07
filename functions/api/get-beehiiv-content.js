@@ -7,6 +7,7 @@
  * Environment variables (set in Cloudflare Pages dashboard):
  *   - BEEHIIV_API_KEY: Beehiiv API bearer token
  *   - BEEHIIV_PUBLICATION_ID: Beehiiv publication ID
+ *   - OUTSETA_API_SECRET: Outseta API secret (Base64-encoded) for server-side token verification
  */
 
 const TIER_MAP = {
@@ -52,12 +53,62 @@ function getTierFromTags(tags) {
 }
 
 /**
- * Validate the Outseta access token by calling their profile API.
- * Returns the user's account object or null if invalid.
+ * Decode a Base64URL string to a Uint8Array.
  */
-async function validateOutsetaToken(accessToken) {
-    const res = await fetch('https://levy.outseta.com/api/v1/profile', {
-        headers: { 'Authorization': `Bearer ${accessToken}` },
+function base64UrlDecode(str) {
+    const padded = str.replace(/-/g, '+').replace(/_/g, '/');
+    const binary = atob(padded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return bytes;
+}
+
+/**
+ * Verify an Outseta JWT using the OUTSETA_API_SECRET (HMAC-SHA256).
+ * Returns the decoded payload or null if verification fails.
+ */
+async function verifyOutsetaToken(accessToken, apiSecret) {
+    try {
+        const parts = accessToken.split('.');
+        if (parts.length !== 3) return null;
+
+        const [headerB64, payloadB64, signatureB64] = parts;
+
+        // Import the secret as an HMAC key
+        const keyData = base64UrlDecode(apiSecret);
+        const key = await crypto.subtle.importKey(
+            'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']
+        );
+
+        // Verify the signature against header.payload
+        const data = new TextEncoder().encode(`${headerB64}.${payloadB64}`);
+        const signature = base64UrlDecode(signatureB64);
+        const valid = await crypto.subtle.verify('HMAC', key, signature, data);
+
+        if (!valid) return null;
+
+        // Decode and parse the payload
+        const payload = JSON.parse(new TextDecoder().decode(base64UrlDecode(payloadB64)));
+
+        // Check expiration
+        if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) return null;
+
+        return payload;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Fetch the full Outseta user profile using the API secret for server-to-server auth.
+ * Uses the person UID from the verified JWT to look up subscription details.
+ */
+async function fetchOutsetaProfile(personUid, apiSecret) {
+    const res = await fetch(`https://levy.outseta.com/api/v1/crm/people/${personUid}?fields=Account.CurrentSubscription.Plan.Uid`, {
+        headers: {
+            'Authorization': `Outseta ${apiSecret}`,
+            'Content-Type': 'application/json',
+        },
     });
     if (!res.ok) return null;
     return res.json();
@@ -99,7 +150,8 @@ export async function onRequestPost(context) {
     // Validate environment
     const apiKey = env.BEEHIIV_API_KEY;
     const pubId = env.BEEHIIV_PUBLICATION_ID;
-    if (!apiKey || !pubId) {
+    const outsetaSecret = env.OUTSETA_API_SECRET;
+    if (!apiKey || !pubId || !outsetaSecret) {
         return jsonResponse({ error: 'server_config', message: 'Server misconfiguration.' }, 500);
     }
 
@@ -132,13 +184,30 @@ export async function onRequestPost(context) {
         }, 401);
     }
 
-    // Validate token with Outseta
-    const profile = await validateOutsetaToken(accessToken);
-    if (!profile) {
+    // Verify the JWT signature using OUTSETA_API_SECRET (HMAC-SHA256)
+    const tokenPayload = await verifyOutsetaToken(accessToken, outsetaSecret);
+    if (!tokenPayload) {
         return jsonResponse({
             error: 'invalid_token',
             message: 'Invalid or expired access token.',
         }, 401);
+    }
+
+    // Fetch user profile from Outseta using the API secret for server-to-server auth
+    const personUid = tokenPayload.sub || tokenPayload.nameid;
+    if (!personUid) {
+        return jsonResponse({
+            error: 'invalid_token',
+            message: 'Token missing user identifier.',
+        }, 401);
+    }
+
+    const profile = await fetchOutsetaProfile(personUid, outsetaSecret);
+    if (!profile) {
+        return jsonResponse({
+            error: 'profile_error',
+            message: 'Unable to retrieve user profile.',
+        }, 500);
     }
 
     // Determine user's tier level from their subscription plan
