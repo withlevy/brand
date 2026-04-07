@@ -44,7 +44,7 @@ const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
                 </div>
 
                 {posts.length > 0 ? (
-                    <div class="split-3up reveal-stagger">
+                    <div class="split-3up insights-grid reveal-stagger">
                         {posts.map((post) => (
                             <InsightCard
                                 title={post.title}
@@ -69,3 +69,9 @@ const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
 
     <SiteFooter />
 </BaseLayout>
+
+<style>
+    .insights-grid {
+        max-width: 1200px;
+    }
+</style>

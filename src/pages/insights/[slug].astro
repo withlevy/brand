@@ -40,7 +40,7 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
                 <div class="lbl reveal-left">
                     <a href="/insights" class="back-link micro-data">&larr; All Insights</a>
                 </div>
-                <div class="txt-wide reveal">
+                <div class="txt-block reveal">
                     <time class="micro-data" datetime={post.pubDate.toISOString()}>{formattedDate}</time>
                     <h1 class="tech-title display-large article-title">{post.title}</h1>
                 </div>
@@ -66,6 +66,7 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
 <style>
     .article-title {
         margin-top: var(--space-3);
+        max-width: 40rem;
     }
 
     .back-link {
@@ -94,6 +95,7 @@ const formattedDate = post.pubDate.toLocaleDateString('en-US', {
         font-size: var(--step-0);
         line-height: 1.7;
         color: var(--ink-light);
+        max-width: 40rem;
     }
 
     .prose :global(h1),
