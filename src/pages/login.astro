@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { NAV_ITEMS } from '../lib/nav';
 ---
 
 <BaseLayout title="Sign In — Levy Network" description="Sign in to the Levy Network.">
     <Header />
+    <BentoNav items={NAV_ITEMS} currentPath="/login" />
 
     <main id="main-content">
         <h1 class="sr-only">Sign in to the Levy Network</h1>
@@ -26,4 +30,6 @@ import Header from '../components/Header.astro';
             </div>
         </section>
     </main>
+
+    <SiteFooter />
 </BaseLayout>

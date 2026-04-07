@@ -9,16 +9,17 @@ interface NavItem {
 
 interface Props {
     items: NavItem[];
+    currentPath?: string;
 }
 
-const { items } = Astro.props;
+const { items, currentPath } = Astro.props;
 ---
 
 <nav class="bento-nav" id="bentoNav" aria-label="Main navigation">
     <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
         <div class="bento-grid">
             {items.map((item, i) => (
-                <a href={item.href} class:list={["bento-item", { wide: item.wide }]} style={`--item-index: ${i}`}>
+                <a href={item.href} class:list={["bento-item", { wide: item.wide, "is-current": currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href)) }]} style={`--item-index: ${i}`} aria-current={currentPath === item.href ? "page" : undefined}>
                     <span class="tech-subhead">{item.number} // {item.category}</span>
                     <h3 class="tech-title display-medium">{item.title}</h3>
                 </a>
@@ -50,6 +51,7 @@ const { items } = Astro.props;
     .bento-item.wide { grid-column: span 2; }
     .bento-item .tech-subhead { color: rgba(245, 245, 243, 0.6); }
     .bento-item:hover { border-color: var(--paper); background: rgba(245, 245, 243, 0.04); }
+    .bento-item.is-current { border-color: var(--paper); background: rgba(245, 245, 243, 0.06); }
     .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0) scale(1); }
 
     @media (max-width: 1024px) {

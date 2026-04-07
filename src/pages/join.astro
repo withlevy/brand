@@ -4,14 +4,8 @@ import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import ArtifactCard from '../components/ArtifactCard.astro';
 import Button from '../components/Button.astro';
-
-const navItems = [
-    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
-    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
-    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
-    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
-    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
-];
+import SiteFooter from '../components/SiteFooter.astro';
+import { NAV_ITEMS } from '../lib/nav';
 
 const OUTSETA_BUILDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=rmk5w09g#o-anonymous";
 const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=Nmdndw90#o-anonymous";
@@ -19,7 +13,7 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
 
 <BaseLayout title="Join the Levy Network" description="The membership network for people operating ahead of consensus. Three tiers, each a distinct relationship with Levy.">
     <Header />
-    <BentoNav items={navItems} />
+    <BentoNav items={NAV_ITEMS} currentPath="/join" />
 
     <main id="main-content">
         <h1 class="sr-only">Join the Levy Network</h1>
@@ -48,8 +42,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                             <p style="margin-bottom: var(--space-1);">Curated co-authorship (occasional)</p>
                             <p>Content designed to forward</p>
                         </div>
-                        <!-- PRICING: confirm with Outseta -->
-                        <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
+                        <p class="tech-title display-medium" style="margin-top: auto;">$127 / YR</p>
+                        <p class="micro-data" style="margin-top: var(--space-1);">or $37 / quarter</p>
                         <div style="margin-top: var(--space-2);">
                             <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
                         </div>
@@ -66,8 +60,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                                 <p style="margin-bottom: var(--space-1);">Member happy hours</p>
                                 <p>Portfolio initiative participation</p>
                             </div>
-                            <!-- PRICING: confirm with Outseta -->
-                            <p class="tech-title display-medium" style="margin-top: auto;">$XX / MO</p>
+                            <p class="tech-title display-medium" style="margin-top: auto;">$1,200 / YR</p>
+                            <p class="micro-data" style="margin-top: var(--space-1);">or $360 / quarter</p>
                             <div style="margin-top: var(--space-2);">
                                 <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
                             </div>
@@ -89,6 +83,8 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
         </section>
 
     </main>
+
+    <SiteFooter />
 </BaseLayout>
 
 <style>

@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import BentoNav from '../../components/BentoNav.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import { fetchPosts } from '../../lib/rss';
+import { NAV_ITEMS } from '../../lib/nav';
 
 export async function getStaticPaths() {
     const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
@@ -14,14 +15,6 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-
-const navItems = [
-    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
-    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
-    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
-    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
-    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
-];
 
 const formattedDate = post.pubDate.toLocaleDateString('en-US', {
     month: 'long',
@@ -34,7 +27,7 @@ const isGated = post.tierLevel > 0;
 
 <BaseLayout title={`${post.title} — Levy Insights`} description={post.description}>
     <Header />
-    <BentoNav items={navItems} />
+    <BentoNav items={NAV_ITEMS} currentPath="/insights" />
 
     <main id="main-content">
         <article class="insight-article">

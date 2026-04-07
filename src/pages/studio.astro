@@ -4,19 +4,13 @@ import Header from '../components/Header.astro';
 import BentoNav from '../components/BentoNav.astro';
 import StatementBreakout from '../components/StatementBreakout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-
-const navItems = [
-    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
-    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
-    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
-    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
-    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
-];
+import Button from '../components/Button.astro';
+import { NAV_ITEMS } from '../lib/nav';
 ---
 
 <BaseLayout title="Work With Us — Levy Studio &amp; Institute" description="The Levy Studio and The Levy Institute.">
     <Header />
-    <BentoNav items={navItems} />
+    <BentoNav items={NAV_ITEMS} currentPath="/studio" />
 
     <main id="main-content">
         <h1 class="sr-only">The Levy Studio and Institute</h1>
@@ -39,7 +33,10 @@ const navItems = [
                     <p class="body-large">The Studio is Levy's co-design practice. For initiatives that need direct strategic design support — navigating institutional systems, building coalitions, developing the architecture that moves serious work through serious terrain.</p>
                 </div>
                 <div class="txt-block reveal">
-                    <p class="marginalia">Details coming soon.</p>
+                    <p class="body-large">Currently operating The Upskilling Labs with DC Public Library and publishing Human Capital Quarterly — a co-authored report shaped by the coalition it assembles.</p>
+                </div>
+                <div class="txt-wide reveal" style="margin-top: var(--space-4);">
+                    <Button variant="ghost" href="mailto:hello@levy.design" label="Start a conversation" />
                 </div>
             </div>
         </section>
@@ -54,7 +51,10 @@ const navItems = [
                     <p class="body-large">The Institute is Levy's applied research arm. Where the methods are developed, tested, and shared. Where the questions that matter most get the rigor they deserve.</p>
                 </div>
                 <div class="txt-block reveal">
-                    <p class="marginalia">Details coming soon.</p>
+                    <p class="body-large">Hosts the Builders Breakfast speaker series, produces the strategy essays, and designs the workshop methods Network members use.</p>
+                </div>
+                <div class="txt-wide reveal" style="margin-top: var(--space-4);">
+                    <Button variant="ghost" href="/insights" label="Read our insights" />
                 </div>
             </div>
         </section>

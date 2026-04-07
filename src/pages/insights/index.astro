@@ -7,21 +7,14 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import InsightCard from '../../components/InsightCard.astro';
 import { fetchPosts } from '../../lib/rss';
 import { TIER_MAP } from '../../lib/tiers';
-
-const navItems = [
-    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
-    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
-    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
-    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
-    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
-];
+import { NAV_ITEMS } from '../../lib/nav';
 
 const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
 ---
 
 <BaseLayout title="Insights — Levy Strategic Design" description="Essays, analysis, and field-level signal from Levy.">
     <Header />
-    <BentoNav items={navItems} />
+    <BentoNav items={NAV_ITEMS} currentPath="/insights" />
 
     <main id="main-content">
         <h1 class="sr-only">Insights from Levy Strategic Design</h1>
