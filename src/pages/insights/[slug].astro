@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import BentoNav from '../../components/BentoNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { fetchPosts } from '../../lib/rss';
+
+export async function getStaticPaths() {
+    const posts = await fetchPosts('https://rss.beehiiv.com/feeds/fwVb8aZ2Qa.xml');
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+
+const navItems = [
+    { href: "/#problem",    number: "01", category: "CONTEXT",    title: "THE PROBLEM" },
+    { href: "/#model",      number: "02", category: "COMPANY",    title: "THE MODEL", wide: true },
+    { href: "/#outcomes",   number: "03", category: "OUTCOMES",   title: "WHAT MEMBERS GET", wide: true },
+    { href: "/#who",        number: "04", category: "FIT",        title: "WHO IT'S FOR" },
+    { href: "/#membership", number: "05", category: "MEMBERSHIP", title: "THREE WAYS IN" },
+];
+
+const formattedDate = post.pubDate.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+});
+---
+
+<BaseLayout title={`${post.title} — Levy Insights`} description={post.description}>
+    <Header />
+    <BentoNav items={navItems} />
+
+    <main id="main-content">
+        <article class="insight-article">
+            <div class="layout-grid">
+                <div class="lbl reveal-left">
+                    <a href="/insights" class="back-link micro-data">&larr; All Insights</a>
+                </div>
+                <div class="txt-wide reveal">
+                    <time class="micro-data" datetime={post.pubDate.toISOString()}>{formattedDate}</time>
+                    <h1 class="tech-title display-large article-title">{post.title}</h1>
+                </div>
+            </div>
+
+            <div class="layout-grid article-body-grid">
+                <div class="article-body reveal">
+                    <div class="prose" set:html={post.content} />
+                </div>
+            </div>
+
+            <div class="layout-grid">
+                <div class="txt-block reveal">
+                    <a href="/insights" class="back-link micro-data">&larr; Back to all insights</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <SiteFooter />
+</BaseLayout>
+
+<style>
+    .article-title {
+        margin-top: var(--space-3);
+    }
+
+    .back-link {
+        color: var(--ink-muted);
+        text-decoration: none;
+        transition: color 0.3s var(--ease-out-expo);
+    }
+
+    .back-link:hover {
+        color: var(--ink);
+    }
+
+    .article-body-grid {
+        border-bottom: none;
+    }
+
+    .article-body {
+        grid-column: 3 / 10;
+        padding: var(--space-12) 0;
+    }
+
+    /* Prose styles for Beehiiv content */
+    .prose {
+        font-family: var(--font-tech);
+        font-weight: 300;
+        font-size: var(--step-0);
+        line-height: 1.7;
+        color: var(--ink-light);
+    }
+
+    .prose :global(h1),
+    .prose :global(h2),
+    .prose :global(h3),
+    .prose :global(h4) {
+        font-family: var(--font-tech);
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.2;
+        margin-top: var(--space-8);
+        margin-bottom: var(--space-3);
+    }
+
+    .prose :global(h1) { font-size: var(--step-4); }
+    .prose :global(h2) { font-size: var(--step-3); }
+    .prose :global(h3) { font-size: var(--step-2); }
+    .prose :global(h4) { font-size: var(--step-1); }
+
+    .prose :global(p) {
+        margin-bottom: var(--space-3);
+    }
+
+    .prose :global(a) {
+        color: var(--ink);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        font-weight: 500;
+        transition: color 0.3s var(--ease-out-expo);
+    }
+
+    .prose :global(a:hover) {
+        color: var(--ink-muted);
+    }
+
+    .prose :global(img) {
+        max-width: 100%;
+        height: auto;
+        margin: var(--space-6) 0;
+    }
+
+    .prose :global(blockquote) {
+        border-left: 3px solid var(--stroke-color);
+        padding-left: var(--space-4);
+        margin: var(--space-6) 0;
+        color: var(--ink-muted);
+        font-style: italic;
+    }
+
+    .prose :global(ul),
+    .prose :global(ol) {
+        margin: var(--space-3) 0;
+        padding-left: var(--space-4);
+    }
+
+    .prose :global(li) {
+        margin-bottom: var(--space-1);
+    }
+
+    .prose :global(hr) {
+        border: none;
+        border-top: var(--stroke-weight) solid var(--stroke-color);
+        margin: var(--space-8) 0;
+    }
+
+    .prose :global(pre),
+    .prose :global(code) {
+        font-family: monospace;
+        font-size: var(--step--1);
+    }
+
+    .prose :global(pre) {
+        background: rgba(15, 12, 41, 0.04);
+        padding: var(--space-4);
+        overflow-x: auto;
+        margin: var(--space-4) 0;
+    }
+
+    .prose :global(figure) {
+        margin: var(--space-6) 0;
+    }
+
+    .prose :global(figcaption) {
+        font-size: var(--step--1);
+        color: var(--ink-muted);
+        margin-top: var(--space-1);
+    }
+
+    .prose :global(table) {
+        width: 100%;
+        border-collapse: collapse;
+        margin: var(--space-4) 0;
+        font-size: var(--step--1);
+    }
+
+    .prose :global(th),
+    .prose :global(td) {
+        border: var(--stroke-weight) solid var(--stroke-color);
+        padding: var(--space-2);
+        text-align: left;
+    }
+
+    .prose :global(th) {
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+    @media (max-width: 1024px) {
+        .article-body {
+            grid-column: 1 / -1;
+        }
+    }
+</style>
