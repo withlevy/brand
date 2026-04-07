@@ -47,10 +47,10 @@ const sectionClasses = [
     <div class="statement-breakout">
         {topNarrative && <div class="statement-top narrative hero-entrance" style="--entrance-order: 1;" set:html={topNarrative} />}
         <div class="statement-main tech-title">
-            <div class="statement-left hero-entrance hero-clip" style="--entrance-order: 2;">
+            <div class="statement-left hero-entrance" style="--entrance-order: 2;">
                 <span set:html={mainLeft} />
             </div>
-            <div class="statement-right hero-entrance hero-clip" style="--entrance-order: 3;">
+            <div class="statement-right hero-entrance" style="--entrance-order: 3;">
                 <span>{mainRightTop}</span>
                 <span>{mainRightBottom}</span>
             </div>
@@ -92,27 +92,15 @@ const sectionClasses = [
         animation-delay: calc(var(--entrance-order, 0) * 0.15s + 0.3s);
     }
 
-    .hero-clip {
-        opacity: 0;
-        clip-path: inset(-8% 0 108% 0);
-        animation: heroClipReveal 0.9s var(--ease-out-expo) forwards;
-        animation-delay: calc(var(--entrance-order, 0) * 0.15s + 0.3s);
-    }
-
     @keyframes heroReveal {
         to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes heroClipReveal {
-        to { opacity: 1; clip-path: inset(-8% 0 -8% 0); }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-        .hero-entrance, .hero-clip {
+        .hero-entrance {
             animation: none !important;
             opacity: 1 !important;
             transform: none !important;
-            clip-path: none !important;
         }
     }
 </style>
