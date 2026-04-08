@@ -18,11 +18,20 @@ import { NAV_ITEMS } from '../lib/nav';
                 <div class="tech-title" style="margin-bottom: var(--space-2); text-align: center;">
                     <span class="display-medium">MEMBERS ONLY</span>
                 </div>
-                <p class="body-medium" style="text-align: center; margin-bottom: var(--space-8); color: var(--ink-muted);">This page is available to Levy Network members. Sign in to access your dashboard, or explore membership options.</p>
+                <p class="body-medium" id="access-message" style="text-align: center; margin-bottom: var(--space-8); color: var(--ink-muted);">This page is available to Levy Network members. Sign in to access your dashboard, or explore membership options.</p>
 
-                <div style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
+                <!-- Default: not logged in -->
+                <div id="cta-logged-out" style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
                     <Button variant="solid" href="/login" label="Sign In" />
                     <Button variant="ghost" href="/join" label="Explore Membership" />
+                </div>
+
+                <!-- Logged in but wrong tier -->
+                <div id="cta-logged-in" style="display: none; flex-direction: column; align-items: center; gap: var(--space-3);">
+                    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center;">
+                        <Button variant="solid" href="/join" label="Upgrade Membership" />
+                        <Button variant="ghost" href="/dashboard" label="Go to Dashboard" />
+                    </div>
                 </div>
             </div>
         </section>
@@ -30,3 +39,28 @@ import { NAV_ITEMS } from '../lib/nav';
 
     <SiteFooter />
 </BaseLayout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let attempts = 0;
+        const check = () => {
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.getUser) {
+                const user = Outseta.getUser();
+                if (user?.Email) {
+                    const message = document.getElementById('access-message');
+                    const ctaOut = document.getElementById('cta-logged-out');
+                    const ctaIn = document.getElementById('cta-logged-in');
+                    if (message) {
+                        message.textContent = 'Your current membership tier doesn\u2019t include access to this page. Upgrade to unlock more of the Levy Network.';
+                    }
+                    if (ctaOut) ctaOut.style.display = 'none';
+                    if (ctaIn) ctaIn.style.display = 'flex';
+                }
+            } else if (++attempts < 20) {
+                setTimeout(check, 500);
+            }
+        };
+        check();
+    });
+</script>

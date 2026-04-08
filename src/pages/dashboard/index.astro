@@ -186,11 +186,15 @@ import { NAV_ITEMS } from '../../lib/nav';
         return null;
     }
 
-    function waitForOutseta(callback: (Outseta: any) => void) {
+    function waitForOutseta(callback: (Outseta: any) => void, onTimeout: () => void) {
+        let attempts = 0;
+        const maxAttempts = 40; // 8 seconds
         const check = () => {
             const Outseta = (window as any).Outseta;
             if (Outseta?.getUser) {
                 callback(Outseta);
+            } else if (++attempts >= maxAttempts) {
+                onTimeout();
             } else {
                 setTimeout(check, 200);
             }
@@ -198,10 +202,20 @@ import { NAV_ITEMS } from '../../lib/nav';
         check();
     }
 
+    function isSubscriptionActive(user: any): boolean {
+        const sub = user?.Account?.CurrentSubscription;
+        if (!sub) return false;
+        // Outseta uses SubscriptionStatus: 2 = Active, 3 = Past Due (still active)
+        // Cancelled/Expired subscriptions won't have an active status
+        if (sub.BillingRenewalTerm === 0) return false;
+        return true;
+    }
+
     function applyDashboard(user: any) {
         const userLevel = getUserLevel(user);
         const tierLabel = getUserTierLabel(user);
         const firstName = user?.FirstName || '';
+        const subscriptionActive = isSubscriptionActive(user);
 
         // Update welcome heading
         const heading = document.getElementById('welcome-heading');
@@ -212,13 +226,21 @@ import { NAV_ITEMS } from '../../lib/nav';
         // Update welcome subtitle
         const sub = document.getElementById('welcome-sub');
         if (sub) {
-            sub.textContent = `You are a ${tierLabel} member of the Levy Network.`;
+            if (!subscriptionActive && userLevel <= 1) {
+                sub.textContent = 'Your membership is inactive. Renew to regain full access.';
+            } else {
+                sub.textContent = `You are a ${tierLabel} member of the Levy Network.`;
+            }
         }
 
         // Update account status
         const status = document.getElementById('account-status');
         if (status) {
-            status.textContent = `Your current tier: ${tierLabel}. Manage your profile, billing, and preferences from your account page.`;
+            if (!subscriptionActive && userLevel <= 1) {
+                status.innerHTML = `Your membership has expired or been cancelled. <a href="/join" class="text-link">Renew your membership &rarr;</a>`;
+            } else {
+                status.textContent = `Your current tier: ${tierLabel}. Manage your profile, billing, and preferences from your account page.`;
+            }
         }
 
         // Show tier sections based on user level
@@ -241,23 +263,43 @@ import { NAV_ITEMS } from '../../lib/nav';
                     upgradeText.textContent = `Upgrade to ${nextTier.label} to unlock additional access and capabilities.`;
                 }
                 const upgradeBtn = document.getElementById('upgrade-btn') as HTMLAnchorElement;
-                if (upgradeBtn && nextTier.uid) {
-                    upgradeBtn.href = `https://levy.outseta.com/auth?widgetMode=register&planUid=${nextTier.uid}#o-anonymous`;
+                if (upgradeBtn) {
                     upgradeBtn.textContent = `Upgrade to ${nextTier.label}`;
+                    // Open Outseta profile widget to plan change tab instead of registration
+                    upgradeBtn.href = '#';
+                    upgradeBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const Outseta = (window as any).Outseta;
+                        if (Outseta?.profile?.open) {
+                            Outseta.profile.open({ tab: 'planChange' });
+                        } else {
+                            window.location.href = '/join';
+                        }
+                    });
                 }
             }
         }
     }
 
+    function showError() {
+        const sub = document.getElementById('welcome-sub');
+        if (sub) {
+            sub.innerHTML = 'Unable to load your membership details. <a href="" class="text-link" onclick="location.reload()">Retry</a>';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        waitForOutseta(async (Outseta) => {
-            try {
-                const user = await Outseta.getUser();
-                applyDashboard(user);
-            } catch {
-                applyDashboard(null);
-            }
-        });
+        waitForOutseta(
+            async (Outseta) => {
+                try {
+                    const user = await Outseta.getUser();
+                    applyDashboard(user);
+                } catch {
+                    applyDashboard(null);
+                }
+            },
+            showError
+        );
     });
 </script>
 
