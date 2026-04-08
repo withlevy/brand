@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import BentoNav from '../components/BentoNav.astro';
+import Button from '../components/Button.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { NAV_ITEMS } from '../lib/nav';
+---
+
+<BaseLayout title="Welcome to the Levy Network" description="Your membership is confirmed. Welcome to the Levy Network.">
+    <Header />
+    <BentoNav items={NAV_ITEMS} currentPath="" />
+
+    <main id="main-content">
+        <h1 class="sr-only">Membership Confirmed</h1>
+        <section class="void-section">
+            <div class="statement-breakout reveal" style="width: 100%; max-width: 520px;">
+                <div class="tech-title" style="margin-bottom: var(--space-2); text-align: center;">
+                    <span class="display-medium">WELCOME TO THE NETWORK</span>
+                </div>
+                <p class="body-medium" style="text-align: center; margin-bottom: var(--space-4); color: var(--ink-muted);">Your membership is confirmed. Check your email to set your password and activate your account.</p>
+                <p class="body-medium" style="text-align: center; margin-bottom: var(--space-8); color: var(--ink-muted);">Once activated, sign in to access your member dashboard, insights, and network resources.</p>
+
+                <div style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
+                    <Button variant="solid" href="/login" label="Sign In" />
+                    <Button variant="ghost" href="/insights" label="Browse Insights" />
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <SiteFooter />
+</BaseLayout>
