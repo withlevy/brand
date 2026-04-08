@@ -42,14 +42,7 @@ import '../styles/global.css';
     <script is:inline>
     var o_options = {
         domain: 'levy.outseta.com',
-        load: 'auth,nocode,profile',
-        nocode: {
-            auth: {
-                loginPath: '/login',
-                authRequiredPaths: ['/dashboard', '/dashboard/account'],
-                accessDeniedPath: '/access-denied'
-            }
-        }
+        load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     };
     </script>
     <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" is:inline></script>
