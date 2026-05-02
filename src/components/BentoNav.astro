@@ -5,6 +5,7 @@ interface NavItem {
     category: string;
     title: string;
     wide?: boolean;
+    membersOnly?: boolean;
 }
 
 interface Props {
@@ -19,12 +20,15 @@ const { items, currentPath } = Astro.props;
     <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
         <div class="bento-grid">
             {items.map((item, i) => (
-                <a href={item.href} class:list={["bento-item", { wide: item.wide, "is-current": currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href)) }]} style={`--item-index: ${i}`} aria-current={currentPath === item.href ? "page" : undefined}>
+                <a href={item.href} class:list={["bento-item", { wide: item.wide, "is-current": currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href)), "member-only": item.membersOnly }]} style={`--item-index: ${i}`} aria-current={currentPath === item.href ? "page" : undefined}>
                     <span class="tech-subhead">{item.number} // {item.category}</span>
                     <h3 class="tech-title display-medium">{item.title}</h3>
                 </a>
             ))}
         </div>
+        <button type="button" data-o-logout-link="1" class="nav-logout" aria-label="Log out of your account">
+            Log Out
+        </button>
     </div>
 </nav>
 
@@ -53,6 +57,21 @@ const { items, currentPath } = Astro.props;
     .bento-item:hover { border-color: var(--paper); background: rgba(245, 245, 243, 0.04); }
     .bento-item.is-current { border-color: var(--paper); background: rgba(245, 245, 243, 0.06); }
     .bento-nav.is-open .bento-item { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Member-only items: hidden until body.is-authenticated is set by lifecycle script */
+    .bento-item.member-only { display: none; }
+    :global(body.is-authenticated) .bento-item.member-only { display: flex; }
+
+    .nav-logout {
+        display: none;
+        background: none; border: var(--stroke-weight) solid var(--stroke-light); color: rgba(245, 245, 243, 0.6);
+        font-family: var(--font-tech); font-size: var(--step--1); font-weight: 500; text-transform: uppercase;
+        letter-spacing: 0.1em; cursor: pointer; padding: var(--space-2) var(--space-4);
+        transition: color 0.3s var(--ease-out-expo), border-color 0.3s; margin-top: var(--space-4);
+        min-height: 44px; align-items: center; justify-content: center;
+    }
+    .nav-logout:hover { color: var(--paper); border-color: var(--paper); }
+    :global(body.is-authenticated) .nav-logout { display: flex; }
 
     @media (max-width: 1024px) {
         .bento-grid { grid-template-columns: 1fr 1fr; }

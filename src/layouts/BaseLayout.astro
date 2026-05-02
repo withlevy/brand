@@ -68,11 +68,11 @@ import '../styles/global.css';
         if (!joinLink) return;
         if (user) {
           joinLink.textContent = 'Account';
-          joinLink.setAttribute('href', '/dashboard/account');
-          joinLink.setAttribute('aria-label', 'Your Levy account');
+          joinLink.setAttribute('href', '/dashboard');
+          joinLink.setAttribute('aria-label', 'Your Levy member hub');
         } else {
           joinLink.textContent = 'Login';
-          joinLink.setAttribute('href', 'https://levy.outseta.com/auth?widgetMode=login#o-anonymous');
+          joinLink.setAttribute('href', '/login');
           joinLink.setAttribute('aria-label', 'Sign in to your account');
         }
         document.body.classList.toggle('is-authenticated', !!user);

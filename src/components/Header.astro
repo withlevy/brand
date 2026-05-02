@@ -8,7 +8,7 @@
             <img src="/logo-header.png" alt="Levy" class="header-logo-img" loading="lazy" />
         </a>
         <div class="header-actions">
-            <a href="https://levy.outseta.com/auth?widgetMode=login#o-anonymous" class="header-login header-join" id="headerAuthLink">Login</a>
+            <a href="/login" class="header-login header-join" id="headerAuthLink">Login</a>
             <button class="hamburger" id="navToggle" aria-expanded="false" aria-controls="bentoNav" aria-label="Toggle Navigation">
                 <div class="hamburger-box">
                     <span></span><span></span>
@@ -93,20 +93,17 @@
 
         window.addEventListener('scroll', evaluateDarkOverlay);
 
-        // Auth-aware click: open login or profile popup based on body auth class set by lifecycle script
+        // For unauthenticated users, open Outseta login popup if available (smoother than page nav).
+        // For authenticated users, the href is set to /dashboard by the lifecycle script — no intercept needed.
         const authLink = document.getElementById('headerAuthLink') as HTMLAnchorElement;
         if (authLink) {
             authLink.addEventListener('click', (e) => {
                 const Outseta = (window as any).Outseta;
                 const isAuthenticated = document.body.classList.contains('is-authenticated');
-                if (isAuthenticated && Outseta?.profile?.open) {
-                    e.preventDefault();
-                    Outseta.profile.open({ mode: 'popup', tab: 'profile' });
-                } else if (!isAuthenticated && Outseta?.auth?.open) {
+                if (!isAuthenticated && Outseta?.auth?.open) {
                     e.preventDefault();
                     Outseta.auth.open({ widgetMode: 'login' });
                 }
-                // If Outseta not loaded, fall through to href fallback
             });
         }
     });
@@ -154,6 +151,10 @@
         text-decoration: none;
         color: var(--ink);
         transition: color 0.4s var(--ease-out-expo);
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 var(--space-1);
     }
     header.on-dark .header-login {
         color: var(--paper);
