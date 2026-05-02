@@ -8,7 +8,7 @@
             <img src="/logo-header.png" alt="Levy" class="header-logo-img" loading="lazy" />
         </a>
         <div class="header-actions">
-            <a href="https://levy.outseta.com/auth?widgetMode=login#o-anonymous" class="header-login" id="headerAuthLink">Login</a>
+            <a href="https://levy.outseta.com/auth?widgetMode=login#o-anonymous" class="header-login header-join" id="headerAuthLink">Login</a>
             <button class="hamburger" id="navToggle" aria-expanded="false" aria-controls="bentoNav" aria-label="Toggle Navigation">
                 <div class="hamburger-box">
                     <span></span><span></span>
@@ -51,14 +51,12 @@
             link.addEventListener('click', closeNav);
         });
 
-        // Escape key closes nav
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && bentoNav!.classList.contains('is-open')) {
                 closeNav();
             }
         });
 
-        // Focus trap when nav is open
         bentoNav!.addEventListener('keydown', (e) => {
             if (e.key !== 'Tab' || !bentoNav!.classList.contains('is-open')) return;
             const focusable = [navToggle!, ...bentoNav!.querySelectorAll<HTMLElement>('a[href], button')] as HTMLElement[];
@@ -95,43 +93,21 @@
 
         window.addEventListener('scroll', evaluateDarkOverlay);
 
-        // Auth-aware login/account toggle
+        // Auth-aware click: open login or profile popup based on body auth class set by lifecycle script
         const authLink = document.getElementById('headerAuthLink') as HTMLAnchorElement;
         if (authLink) {
-            let isAuthenticated = false;
-
-            // Click handler: open Outseta login or profile popup
             authLink.addEventListener('click', (e) => {
                 const Outseta = (window as any).Outseta;
-                if (isAuthenticated) {
+                const isAuthenticated = document.body.classList.contains('is-authenticated');
+                if (isAuthenticated && Outseta?.profile?.open) {
                     e.preventDefault();
-                    if (Outseta?.profile?.open) {
-                        Outseta.profile.open();
-                    }
-                } else if (Outseta?.auth?.open) {
+                    Outseta.profile.open({ mode: 'popup', tab: 'profile' });
+                } else if (!isAuthenticated && Outseta?.auth?.open) {
                     e.preventDefault();
                     Outseta.auth.open({ widgetMode: 'login' });
                 }
-                // If Outseta not loaded, fall through to href fallback URL
+                // If Outseta not loaded, fall through to href fallback
             });
-
-            const checkAuth = () => {
-                const Outseta = (window as any).Outseta;
-                if (Outseta?.getUser) {
-                    const user = Outseta.getUser();
-                    if (user?.Email) {
-                        isAuthenticated = true;
-                        authLink.textContent = 'Account';
-                        authLink.href = '#';
-                    }
-                }
-            };
-            // Outseta loads async — poll briefly then stop
-            let attempts = 0;
-            const interval = setInterval(() => {
-                checkAuth();
-                if (++attempts >= 20) clearInterval(interval);
-            }, 500);
         }
     });
 </script>

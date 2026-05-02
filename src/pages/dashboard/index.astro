@@ -6,6 +6,14 @@ import ArtifactCard from '../../components/ArtifactCard.astro';
 import Button from '../../components/Button.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import { NAV_ITEMS } from '../../lib/nav';
+
+// JWT payload written by middleware after verifying Outseta token
+const user = (Astro.locals as any).outsetaUser ?? {};
+const givenName: string | undefined = user.given_name ?? user.GivenName ?? user.FirstName;
+const fullName: string | undefined = user.name ?? user.nameid ?? user.FullName;
+const email: string | undefined = user.email ?? user.Email;
+const serverGreeting = givenName || fullName?.split(' ')[0] || email || '';
+const welcomeHeading = serverGreeting ? `WELCOME BACK, ${serverGreeting.toUpperCase()}` : 'WELCOME BACK';
 ---
 
 <BaseLayout title="Dashboard — Levy Network" description="Your Levy Network member dashboard.">
@@ -20,7 +28,7 @@ import { NAV_ITEMS } from '../../lib/nav';
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">Dashboard</span></div>
                 <div class="txt-wide reveal">
-                    <p class="tech-title display-large" id="welcome-heading">WELCOME BACK</p>
+                    <p class="tech-title display-large" id="welcome-heading">{welcomeHeading}</p>
                 </div>
                 <div class="txt-block reveal">
                     <p class="narrative" id="welcome-sub">Loading your membership...</p>
@@ -205,8 +213,6 @@ import { NAV_ITEMS } from '../../lib/nav';
     function isSubscriptionActive(user: any): boolean {
         const sub = user?.Account?.CurrentSubscription;
         if (!sub) return false;
-        // Outseta uses SubscriptionStatus: 2 = Active, 3 = Past Due (still active)
-        // Cancelled/Expired subscriptions won't have an active status
         if (sub.BillingRenewalTerm === 0) return false;
         return true;
     }
@@ -217,9 +223,9 @@ import { NAV_ITEMS } from '../../lib/nav';
         const firstName = user?.FirstName || '';
         const subscriptionActive = isSubscriptionActive(user);
 
-        // Update welcome heading
+        // Update welcome heading only if server greeting is blank (no JWT claim)
         const heading = document.getElementById('welcome-heading');
-        if (heading) {
+        if (heading && !heading.textContent?.includes(',')) {
             heading.textContent = firstName ? `WELCOME BACK, ${firstName.toUpperCase()}` : 'WELCOME BACK';
         }
 
@@ -265,7 +271,6 @@ import { NAV_ITEMS } from '../../lib/nav';
                 const upgradeBtn = document.getElementById('upgrade-btn') as HTMLAnchorElement;
                 if (upgradeBtn) {
                     upgradeBtn.textContent = `Upgrade to ${nextTier.label}`;
-                    // Open Outseta profile widget to plan change tab instead of registration
                     upgradeBtn.href = '#';
                     upgradeBtn.addEventListener('click', (e) => {
                         e.preventDefault();
