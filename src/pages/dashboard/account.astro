@@ -12,24 +12,44 @@ import { NAV_ITEMS } from '../../lib/nav';
 
     <main id="main-content">
         <h1 class="sr-only">My Levy Network Account</h1>
-        <section id="account" class="void-section">
+        <section id="account" class="void-section auto-height">
             <div class="statement-breakout reveal" style="width: 100%; max-width: 600px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+                    <a href="/dashboard" class="text-link">&larr; Dashboard</a>
+                    <button type="button" data-o-logout-link="1" class="logout-btn">Log Out</button>
+                </div>
+
                 <div class="tech-title" style="margin-bottom: var(--space-4); text-align: center;">
                     <span class="display-medium">MY ACCOUNT</span>
                 </div>
                 <p class="body-medium" style="text-align: center; margin-bottom: var(--space-8); color: var(--ink-muted);">Manage your Levy Network membership, billing, and profile.</p>
 
-                <!-- Outseta embed container -->
                 <div id="outseta-profile" role="region" aria-label="Account profile management" style="width: 100%; min-height: 400px;">
-                    <div data-o-component="Profile" data-o-options='{"tab": "profile"}'></div>
+                    <div data-o-profile="1" data-mode="embed"></div>
                 </div>
-
-                <p class="micro-data" style="text-align: center; margin-top: var(--space-8);">
-                    <a href="/dashboard" class="text-link">&larr; Back to Dashboard</a>
-                </p>
             </div>
         </section>
     </main>
 
     <SiteFooter />
 </BaseLayout>
+
+<style>
+    .logout-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        color: var(--ink-muted);
+        font-family: var(--font-tech);
+        font-size: var(--step--1);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        transition: color 0.3s var(--ease-out-expo);
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .logout-btn:hover { color: var(--ink); }
+</style>

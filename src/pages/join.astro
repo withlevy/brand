@@ -7,8 +7,16 @@ import Button from '../components/Button.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { NAV_ITEMS } from '../lib/nav';
 
-const OUTSETA_BUILDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=rmk5w09g#o-anonymous";
-const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planUid=Nmdndw90#o-anonymous";
+const PLAN_UIDS: Record<string, string> = {
+    insider:   'Nmdndw90',
+    builder:   'rmk5w09g',
+    architect: 'LmJ47j9P',
+};
+
+const planParam = (Astro.url.searchParams.get('plan') ?? '').toLowerCase();
+const planUid = PLAN_UIDS[planParam] ?? PLAN_UIDS.builder;
+const selectedTier = planParam in PLAN_UIDS ? planParam : 'builder';
+const showEmbed = planParam in PLAN_UIDS;
 ---
 
 <BaseLayout title="Join the Levy Network" description="The membership network for people operating ahead of consensus. Three tiers, each a distinct relationship with Levy.">
@@ -45,7 +53,7 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                         <p class="tech-title display-medium" style="margin-top: auto;">$127 / YR</p>
                         <p class="micro-data" style="margin-top: var(--space-1);">or $37 / quarter</p>
                         <div style="margin-top: var(--space-2);">
-                            <Button variant="ghost" href={OUTSETA_INSIDER} label="Join as Insider" />
+                            <Button variant="ghost" href="/join?plan=insider" label="Join as Insider" />
                         </div>
                     </ArtifactCard>
 
@@ -63,7 +71,7 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
                             <p class="tech-title display-medium" style="margin-top: auto;">$1,200 / YR</p>
                             <p class="micro-data" style="margin-top: var(--space-1);">or $360 / quarter</p>
                             <div style="margin-top: var(--space-2);">
-                                <Button variant="solid" href={OUTSETA_BUILDER} label="Join as Builder" />
+                                <Button variant="solid" href="/join?plan=builder" label="Join as Builder" />
                             </div>
                         </ArtifactCard>
                     </div>
@@ -82,10 +90,46 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
             </div>
         </section>
 
+        {showEmbed && (
+            <section id="join-embed" class="join-embed-section">
+                <div class="layout-grid">
+                    <div class="lbl reveal"><span class="section-label">Sign Up</span></div>
+                    <div class="txt-block reveal">
+                        <p class="tech-title display-medium">CREATE YOUR ACCOUNT</p>
+                        <p class="body-medium" style="margin-bottom: var(--space-8); color: var(--ink-muted);">
+                            Joining as {selectedTier.charAt(0).toUpperCase() + selectedTier.slice(1)}.
+                            <a href="/join" class="text-link">Change tier &rarr;</a>
+                        </p>
+                        <div id="outseta-register" role="region" aria-label="Membership registration form" style="width: 100%; max-width: 480px; min-height: 400px;">
+                            <div
+                                data-o-auth="1"
+                                data-mode="embed"
+                                data-widget-mode="register"
+                                data-plan-uid={planUid}
+                            ></div>
+                        </div>
+                        <p class="micro-data" style="margin-top: var(--space-8);">
+                            Already a member? <a href="/login" class="text-link">Sign in &rarr;</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        )}
+
     </main>
 
     <SiteFooter />
 </BaseLayout>
+
+<script is:inline>
+    // Scroll to embed when plan param is present
+    document.addEventListener('DOMContentLoaded', function () {
+        var embed = document.getElementById('join-embed');
+        if (embed) {
+            embed.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+</script>
 
 <style>
     .tier-recommended {
@@ -94,5 +138,9 @@ const OUTSETA_INSIDER = "https://levy.outseta.com/auth?widgetMode=register&planU
     }
     .tier-recommended :global(.artifact-card) {
         border: none;
+    }
+
+    .join-embed-section {
+        border-top: 2px solid var(--ink);
     }
 </style>

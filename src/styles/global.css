@@ -324,7 +324,7 @@ section:last-of-type { padding-bottom: var(--space-24); border-bottom: none; }
 @media (max-width: 480px) {
     section { padding: var(--space-9) 4vw; }
     section:last-of-type { padding-bottom: var(--space-18); }
-    .void-section { padding: var(--space-18) 4vw; }
+    .void-section { padding: var(--space-9) 4vw var(--space-12); min-height: unset; align-items: flex-start; }
     .void-section.auto-height { padding: var(--space-9) 4vw; }
     .layout-grid { column-gap: var(--space-2); row-gap: var(--space-6); }
 }

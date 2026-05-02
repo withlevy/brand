@@ -6,6 +6,14 @@ import ArtifactCard from '../../components/ArtifactCard.astro';
 import Button from '../../components/Button.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import { NAV_ITEMS } from '../../lib/nav';
+
+// JWT payload written by middleware after verifying Outseta token
+const user = (Astro.locals as any).outsetaUser ?? {};
+const givenName: string | undefined = user.given_name ?? user.GivenName ?? user.FirstName;
+const fullName: string | undefined = user.name ?? user.nameid ?? user.FullName;
+const email: string | undefined = user.email ?? user.Email;
+const serverGreeting = givenName || fullName?.split(' ')[0] || email || '';
+const welcomeHeading = serverGreeting ? `WELCOME BACK, ${serverGreeting.toUpperCase()}` : 'WELCOME BACK';
 ---
 
 <BaseLayout title="Dashboard — Levy Network" description="Your Levy Network member dashboard.">
@@ -20,7 +28,7 @@ import { NAV_ITEMS } from '../../lib/nav';
             <div class="layout-grid">
                 <div class="lbl reveal"><span class="section-label">Dashboard</span></div>
                 <div class="txt-wide reveal">
-                    <p class="tech-title display-large" id="welcome-heading">WELCOME BACK</p>
+                    <p class="tech-title display-large" id="welcome-heading">{welcomeHeading}</p>
                 </div>
                 <div class="txt-block reveal">
                     <p class="narrative" id="welcome-sub">Loading your membership...</p>
@@ -150,32 +158,35 @@ import { NAV_ITEMS } from '../../lib/nav';
 </BaseLayout>
 
 <script>
-    const TIER_CONFIG: Record<string, { level: number; uid: string | null; label: string }> = {
+    // Plan UIDs from Outseta. Free / unrecognized plans fall through to level 1
+    // (authenticated base member) so the base "Account Status" section renders.
+    const TIER_CONFIG: Record<string, { level: number; uid: string; label: string }> = {
         architect: { level: 4, uid: 'LmJ47j9P', label: 'Architect' },
         builder:   { level: 3, uid: 'rmk5w09g', label: 'Builder' },
         insider:   { level: 2, uid: 'Nmdndw90', label: 'Insider' },
-        free:      { level: 1, uid: 'MQvb4oQY', label: 'Free' },
-        public:    { level: 0, uid: null,        label: 'Public' },
     };
 
     function getUserLevel(user: any): number {
         if (!user) return 0;
         const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
-        if (!planUid) return 0;
-        for (const tier of Object.values(TIER_CONFIG)) {
-            if (tier.uid === planUid) return tier.level;
+        if (planUid) {
+            for (const tier of Object.values(TIER_CONFIG)) {
+                if (tier.uid === planUid) return tier.level;
+            }
         }
-        return 0;
+        // Authenticated but no recognized active plan — treat as base member
+        return 1;
     }
 
     function getUserTierLabel(user: any): string {
         if (!user) return 'Member';
         const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
-        if (!planUid) return 'Free';
-        for (const tier of Object.values(TIER_CONFIG)) {
-            if (tier.uid === planUid) return tier.label;
+        if (planUid) {
+            for (const tier of Object.values(TIER_CONFIG)) {
+                if (tier.uid === planUid) return tier.label;
+            }
         }
-        return 'Member';
+        return 'Free';
     }
 
     function getNextTier(currentLevel: number): { label: string; uid: string | null } | null {
@@ -205,8 +216,6 @@ import { NAV_ITEMS } from '../../lib/nav';
     function isSubscriptionActive(user: any): boolean {
         const sub = user?.Account?.CurrentSubscription;
         if (!sub) return false;
-        // Outseta uses SubscriptionStatus: 2 = Active, 3 = Past Due (still active)
-        // Cancelled/Expired subscriptions won't have an active status
         if (sub.BillingRenewalTerm === 0) return false;
         return true;
     }
@@ -217,9 +226,9 @@ import { NAV_ITEMS } from '../../lib/nav';
         const firstName = user?.FirstName || '';
         const subscriptionActive = isSubscriptionActive(user);
 
-        // Update welcome heading
+        // Update welcome heading only if server greeting is blank (no JWT claim)
         const heading = document.getElementById('welcome-heading');
-        if (heading) {
+        if (heading && !heading.textContent?.includes(',')) {
             heading.textContent = firstName ? `WELCOME BACK, ${firstName.toUpperCase()}` : 'WELCOME BACK';
         }
 
@@ -265,7 +274,6 @@ import { NAV_ITEMS } from '../../lib/nav';
                 const upgradeBtn = document.getElementById('upgrade-btn') as HTMLAnchorElement;
                 if (upgradeBtn) {
                     upgradeBtn.textContent = `Upgrade to ${nextTier.label}`;
-                    // Open Outseta profile widget to plan change tab instead of registration
                     upgradeBtn.href = '#';
                     upgradeBtn.addEventListener('click', (e) => {
                         e.preventDefault();

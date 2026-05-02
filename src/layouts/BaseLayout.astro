@@ -43,16 +43,76 @@ import '../styles/global.css';
     var o_options = {
         domain: 'levy.outseta.com',
         load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
-        nocode: {
-            auth: {
-                loginPath: '/login',
-                authRequiredPaths: ['/dashboard'],
-                accessDeniedPath: '/access-denied'
-            }
+        auth: {
+            authenticationCallbackUrl: window.location.origin + '/dashboard',
+            registrationConfirmationUrl: window.location.origin + '/dashboard',
+            passwordResetUrl: window.location.origin + '/login'
         }
     };
     </script>
     <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" is:inline></script>
+
+    <!-- Outseta lifecycle: mirror access token to cookie for SSR JWT gating;
+         redirect on logout; toggle header Login<->Account. -->
+    <script is:inline>
+    (function () {
+      function cookieSecureFlag() {
+        return window.location.protocol === 'https:' ? '; Secure' : '';
+      }
+      function setTokenCookie(token) {
+        if (!token) return;
+        document.cookie = 'outseta_token=' + token + '; path=/; max-age=86400; SameSite=Lax' + cookieSecureFlag();
+      }
+      function clearTokenCookie() {
+        document.cookie = 'outseta_token=; path=/; max-age=0; SameSite=Lax' + cookieSecureFlag();
+      }
+      function applyAuthState(user) {
+        var joinLink = document.querySelector('.header-join');
+        if (!joinLink) return;
+        if (user) {
+          joinLink.textContent = 'Account';
+          joinLink.setAttribute('href', '/dashboard');
+          joinLink.setAttribute('aria-label', 'Your Levy member hub');
+        } else {
+          joinLink.textContent = 'Login';
+          joinLink.setAttribute('href', '/login');
+          joinLink.setAttribute('aria-label', 'Sign in to your account');
+        }
+        document.body.classList.toggle('is-authenticated', !!user);
+        document.body.classList.toggle('is-anonymous', !user);
+      }
+
+      function bootstrap() {
+        if (!window.Outseta) return;
+        var token = Outseta.getAccessToken && Outseta.getAccessToken();
+        if (token) setTokenCookie(token);
+        Outseta.getUser
+          ? Outseta.getUser().then(applyAuthState).catch(function () { applyAuthState(null); })
+          : applyAuthState(null);
+
+        Outseta.on('accessToken.set', function (t) { setTokenCookie(t); });
+        Outseta.on('login', function () {
+          var t = Outseta.getAccessToken && Outseta.getAccessToken();
+          if (t) setTokenCookie(t);
+          Outseta.getUser().then(applyAuthState);
+        });
+        Outseta.on('logout', function () {
+          clearTokenCookie();
+          applyAuthState(null);
+          window.location.href = '/signed-out';
+        });
+        Outseta.on('subscription.update', function () {
+          Outseta.getUser().then(applyAuthState);
+        });
+      }
+
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(bootstrap, 0);
+      } else {
+        document.addEventListener('DOMContentLoaded', bootstrap);
+      }
+    })();
+    </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>

@@ -10,22 +10,27 @@ const currentYear = new Date().getFullYear();
         <p class="narrative footer-headline">
             Insights on strategy, design, and the future of work&mdash;delivered when it matters.
         </p>
-        <form class="newsletter-form" data-newsletter-form>
+        <form class="newsletter-form" action="https://levy.outseta.com/email/lists/MQvb4oQY/subscribe" method="post">
             <div class="newsletter-input-group">
                 <label for="footer-email" class="sr-only">Email address</label>
                 <input
                     type="email"
                     id="footer-email"
-                    name="email"
+                    name="Email"
                     class="newsletter-input"
                     placeholder="Your email address"
                     required
                     autocomplete="email"
                 />
-                <button type="submit" class="newsletter-btn">Subscribe</button>
+                <button type="submit" class="newsletter-btn" data-wait="Sending...">Subscribe</button>
+            </div>
+            <!-- Honeypot — must be empty; wrong name causes bot-flagging of real signups -->
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input type="text" name="o_q24bClZJMfnImoR5BAUXwhkf_y1uZ3Ifp" tabindex="-1" value="" autocomplete="off" />
             </div>
             <p class="micro-data newsletter-privacy">No spam. Unsubscribe anytime.</p>
         </form>
+        <script src="https://cdn.outseta.com/emailsignup.min.js" defer is:inline></script>
     </div>
 
     <hr class="footer-divider" />
@@ -44,9 +49,10 @@ const currentYear = new Date().getFullYear();
             <span class="footer-nav-heading">Resources</span>
             <ul class="footer-nav-list">
                 <li><a href="/insights">Insights</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/join">Membership</a></li>
-                <li><a href="/login">Login</a></li>
+                <li class="anonymous-only"><a href="/login">Login</a></li>
+                <li class="member-only"><a href="/dashboard">Dashboard</a></li>
+                <li class="member-only"><a href="/dashboard/account">My Account</a></li>
             </ul>
         </div>
         <div class="footer-nav-col">
@@ -90,6 +96,7 @@ const currentYear = new Date().getFullYear();
 
     .newsletter-form {
         margin-top: var(--space-6);
+        position: relative;
     }
 
     .newsletter-input-group {
@@ -159,11 +166,6 @@ const currentYear = new Date().getFullYear();
         color: var(--paper);
     }
 
-    .newsletter-btn:disabled {
-        opacity: 0.6;
-        cursor: default;
-    }
-
     .newsletter-privacy {
         margin-top: var(--space-2);
         color: rgba(245, 245, 243, 0.4);
@@ -218,6 +220,12 @@ const currentYear = new Date().getFullYear();
         color: var(--paper);
     }
 
+    /* Auth-state-aware footer links: default state mirrors anonymous so
+       there is no flash of member links on first paint. */
+    .footer-nav-list .member-only { display: none; }
+    :global(body.is-authenticated) .footer-nav-list .member-only { display: list-item; }
+    :global(body.is-authenticated) .footer-nav-list .anonymous-only { display: none; }
+
     /* Zone 3: Copyright */
     .footer-bottom {
         display: flex;
@@ -267,35 +275,3 @@ const currentYear = new Date().getFullYear();
         }
     }
 </style>
-
-<script>
-    const form = document.querySelector('[data-newsletter-form]');
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = form.querySelector('input[type="email"]') as HTMLInputElement;
-            const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-            const email = input.value;
-            const originalText = btn.textContent;
-
-            btn.textContent = 'Sending...';
-            btn.disabled = true;
-
-            try {
-                if ((window as any).Outseta?.leadCapture) {
-                    await (window as any).Outseta.leadCapture.add({ Email: email });
-                }
-                btn.textContent = 'Subscribed';
-                input.value = '';
-            } catch (err) {
-                btn.textContent = 'Try again';
-                console.error('Newsletter signup error:', err);
-            }
-
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 3000);
-        });
-    }
-</script>
