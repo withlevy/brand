@@ -8,7 +8,33 @@
             <img src="/logo-header.png" alt="Levy" class="header-logo-img" loading="lazy" />
         </a>
         <div class="header-actions">
-            <a href="https://levy.outseta.com/auth?widgetMode=login#o-anonymous" class="header-login" id="headerAuthLink">Login</a>
+            <a href="https://levy.outseta.com/auth?widgetMode=login#o-anonymous" class="header-login" id="headerLoginLink">Login</a>
+
+            <div class="account-menu" id="accountMenu" hidden>
+                <button
+                    type="button"
+                    class="account-trigger"
+                    id="accountTrigger"
+                    aria-expanded="false"
+                    aria-haspopup="menu"
+                    aria-controls="accountDropdown"
+                    aria-label="Account menu"
+                >
+                    <span class="account-avatar" id="accountAvatar" aria-hidden="true">
+                        <span class="account-avatar-initials" id="accountAvatarInitials"></span>
+                    </span>
+                </button>
+                <div class="account-dropdown" id="accountDropdown" role="menu" aria-labelledby="accountTrigger">
+                    <div class="account-dropdown-header">
+                        <p class="account-dropdown-name" id="accountDropdownName"></p>
+                        <p class="account-dropdown-email" id="accountDropdownEmail"></p>
+                    </div>
+                    <a href="/dashboard" class="account-dropdown-item" role="menuitem">Dashboard</a>
+                    <button type="button" class="account-dropdown-item" role="menuitem" id="accountProfileBtn">Profile</button>
+                    <button type="button" class="account-dropdown-item account-dropdown-logout" role="menuitem" id="accountLogoutBtn">Log out</button>
+                </div>
+            </div>
+
             <button class="hamburger" id="navToggle" aria-expanded="false" aria-controls="bentoNav" aria-label="Toggle Navigation">
                 <div class="hamburger-box">
                     <span></span><span></span>
@@ -51,14 +77,12 @@
             link.addEventListener('click', closeNav);
         });
 
-        // Escape key closes nav
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && bentoNav!.classList.contains('is-open')) {
                 closeNav();
             }
         });
 
-        // Focus trap when nav is open
         bentoNav!.addEventListener('keydown', (e) => {
             if (e.key !== 'Tab' || !bentoNav!.classList.contains('is-open')) return;
             const focusable = [navToggle!, ...bentoNav!.querySelectorAll<HTMLElement>('a[href], button')] as HTMLElement[];
@@ -95,44 +119,158 @@
 
         window.addEventListener('scroll', evaluateDarkOverlay);
 
-        // Auth-aware login/account toggle
-        const authLink = document.getElementById('headerAuthLink') as HTMLAnchorElement;
-        if (authLink) {
-            let isAuthenticated = false;
+        // Auth-aware login/account UI
+        const loginLink = document.getElementById('headerLoginLink') as HTMLAnchorElement | null;
+        const accountMenu = document.getElementById('accountMenu') as HTMLElement | null;
+        const accountTrigger = document.getElementById('accountTrigger') as HTMLButtonElement | null;
+        const accountDropdown = document.getElementById('accountDropdown') as HTMLElement | null;
+        const accountAvatar = document.getElementById('accountAvatar') as HTMLElement | null;
+        const accountAvatarInitials = document.getElementById('accountAvatarInitials') as HTMLElement | null;
+        const accountDropdownName = document.getElementById('accountDropdownName') as HTMLElement | null;
+        const accountDropdownEmail = document.getElementById('accountDropdownEmail') as HTMLElement | null;
+        const accountProfileBtn = document.getElementById('accountProfileBtn') as HTMLButtonElement | null;
+        const accountLogoutBtn = document.getElementById('accountLogoutBtn') as HTMLButtonElement | null;
 
-            // Click handler: open Outseta login or profile popup
-            authLink.addEventListener('click', (e) => {
-                const Outseta = (window as any).Outseta;
-                if (isAuthenticated) {
-                    e.preventDefault();
-                    if (Outseta?.profile?.open) {
-                        Outseta.profile.open();
-                    }
-                } else if (Outseta?.auth?.open) {
-                    e.preventDefault();
-                    Outseta.auth.open({ widgetMode: 'login' });
-                }
-                // If Outseta not loaded, fall through to href fallback URL
-            });
+        loginLink?.addEventListener('click', (e) => {
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.auth?.open) {
+                e.preventDefault();
+                Outseta.auth.open({ widgetMode: 'login' });
+            }
+        });
 
-            const checkAuth = () => {
-                const Outseta = (window as any).Outseta;
-                if (Outseta?.getUser) {
-                    const user = Outseta.getUser();
-                    if (user?.Email) {
-                        isAuthenticated = true;
-                        authLink.textContent = 'Account';
-                        authLink.href = '#';
+        const closeAccountMenu = () => {
+            if (!accountMenu) return;
+            accountMenu.classList.remove('is-open');
+            accountTrigger?.setAttribute('aria-expanded', 'false');
+        };
+
+        const toggleAccountMenu = () => {
+            if (!accountMenu) return;
+            const willOpen = !accountMenu.classList.contains('is-open');
+            accountMenu.classList.toggle('is-open', willOpen);
+            accountTrigger?.setAttribute('aria-expanded', String(willOpen));
+        };
+
+        accountTrigger?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAccountMenu();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!accountMenu?.classList.contains('is-open')) return;
+            if (accountMenu.contains(e.target as Node)) return;
+            closeAccountMenu();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && accountMenu?.classList.contains('is-open')) {
+                closeAccountMenu();
+                accountTrigger?.focus();
+            }
+        });
+
+        accountProfileBtn?.addEventListener('click', () => {
+            closeAccountMenu();
+            const Outseta = (window as any).Outseta;
+            if (Outseta?.profile?.open) {
+                Outseta.profile.open({ tab: 'profile' });
+            } else {
+                window.location.href = '/dashboard/account';
+            }
+        });
+
+        accountLogoutBtn?.addEventListener('click', async () => {
+            closeAccountMenu();
+            const Outseta = (window as any).Outseta;
+            try {
+                if (Outseta?.auth?.logout) {
+                    await Outseta.auth.logout();
+                } else if (Outseta?.setAccessToken) {
+                    Outseta.setAccessToken('');
+                }
+            } finally {
+                window.location.href = '/';
+            }
+        });
+
+        const initialsFrom = (user: any): string => {
+            const first = (user?.FirstName || '').trim();
+            const last = (user?.LastName || '').trim();
+            if (first || last) {
+                return `${first[0] || ''}${last[0] || ''}`.toUpperCase();
+            }
+            const email = (user?.Email || '').trim();
+            return email ? email[0]!.toUpperCase() : '';
+        };
+
+        const renderAuthed = (user: any) => {
+            if (!loginLink || !accountMenu) return;
+            loginLink.hidden = true;
+            accountMenu.hidden = false;
+
+            const fullName = [user?.FirstName, user?.LastName].filter(Boolean).join(' ').trim();
+            if (accountDropdownName) accountDropdownName.textContent = fullName || 'Member';
+            if (accountDropdownEmail) accountDropdownEmail.textContent = user?.Email || '';
+
+            const imageUrl: string | undefined = user?.ProfileImageS3Url || user?.ProfileImageURL;
+            if (accountAvatar) {
+                accountAvatar.querySelectorAll('img').forEach((img) => img.remove());
+                if (imageUrl) {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = '';
+                    img.loading = 'lazy';
+                    img.className = 'account-avatar-img';
+                    accountAvatar.appendChild(img);
+                }
+            }
+            if (accountAvatarInitials) {
+                accountAvatarInitials.textContent = initialsFrom(user);
+            }
+        };
+
+        const renderAnon = () => {
+            if (!loginLink || !accountMenu) return;
+            loginLink.hidden = false;
+            accountMenu.hidden = true;
+            closeAccountMenu();
+        };
+
+        let lastAuthState: 'unknown' | 'authed' | 'anon' = 'unknown';
+
+        const checkAuth = async () => {
+            const Outseta = (window as any).Outseta;
+            if (!Outseta?.getUser) return false;
+            try {
+                const user = await Outseta.getUser();
+                if (user?.Email) {
+                    if (lastAuthState !== 'authed') {
+                        renderAuthed(user);
+                        lastAuthState = 'authed';
+                    }
+                } else {
+                    if (lastAuthState !== 'anon') {
+                        renderAnon();
+                        lastAuthState = 'anon';
                     }
                 }
-            };
-            // Outseta loads async — poll briefly then stop
-            let attempts = 0;
-            const interval = setInterval(() => {
-                checkAuth();
-                if (++attempts >= 20) clearInterval(interval);
-            }, 500);
-        }
+                return true;
+            } catch {
+                return false;
+            }
+        };
+
+        let attempts = 0;
+        const interval = setInterval(async () => {
+            const ready = await checkAuth();
+            if (ready || ++attempts >= 40) clearInterval(interval);
+        }, 200);
+
+        const Outseta = (window as any).Outseta;
+        Outseta?.on?.('accessToken.set', () => { lastAuthState = 'unknown'; checkAuth(); });
+        Outseta?.on?.('subscription.update', () => { lastAuthState = 'unknown'; checkAuth(); });
+        Outseta?.on?.('profile.update', () => { lastAuthState = 'unknown'; checkAuth(); });
     });
 </script>
 
@@ -183,6 +321,123 @@
         color: var(--paper);
     }
 
+    /* Account menu */
+    .account-menu { position: relative; }
+
+    .account-trigger {
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: transform 0.3s var(--ease-out-expo);
+    }
+    .account-trigger:hover { transform: translateY(-1px); }
+
+    .account-avatar {
+        position: relative;
+        width: var(--space-4);
+        height: var(--space-4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: var(--midnight);
+        color: var(--paper);
+        overflow: hidden;
+        border: var(--stroke-weight) solid var(--stroke-color);
+        transition: border-color 0.4s var(--ease-out-expo);
+    }
+    header.on-dark .account-avatar { border-color: var(--stroke-light); }
+
+    .account-avatar-img {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .account-avatar-initials {
+        font-family: var(--font-tech);
+        font-size: var(--step--1);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        line-height: 1;
+        text-transform: uppercase;
+        color: var(--paper);
+    }
+
+    .account-dropdown {
+        position: absolute;
+        top: calc(100% + var(--space-2));
+        right: 0;
+        min-width: 240px;
+        background: var(--paper);
+        border: var(--stroke-weight) solid var(--stroke-color);
+        box-shadow: 0 16px 48px rgba(15, 12, 41, 0.12);
+        opacity: 0;
+        transform: translateY(-4px);
+        pointer-events: none;
+        transition: opacity 0.25s var(--ease-out-expo), transform 0.25s var(--ease-out-expo);
+        z-index: 2050;
+    }
+    .account-menu.is-open .account-dropdown {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .account-dropdown-header {
+        padding: var(--space-3);
+        border-bottom: var(--stroke-weight) solid var(--stroke-color);
+    }
+    .account-dropdown-name {
+        font-family: var(--font-tech);
+        font-size: var(--step-0);
+        font-weight: 500;
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.3;
+    }
+    .account-dropdown-email {
+        font-family: var(--font-tech);
+        font-size: var(--step--1);
+        color: var(--ink-muted);
+        margin: 4px 0 0;
+        line-height: 1.3;
+        word-break: break-all;
+    }
+
+    .account-dropdown-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: none;
+        padding: var(--space-2) var(--space-3);
+        font-family: var(--font-tech);
+        font-size: var(--step--1);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.2s var(--ease-out-expo), color 0.2s var(--ease-out-expo);
+    }
+    .account-dropdown-item:hover,
+    .account-dropdown-item:focus-visible {
+        background: var(--midnight);
+        color: var(--paper);
+        outline: none;
+    }
+    .account-dropdown-logout {
+        border-top: var(--stroke-weight) solid var(--stroke-color);
+    }
+
     .hamburger {
         background: transparent; border: none;
         cursor: pointer; width: var(--space-6); height: var(--space-6);
@@ -206,5 +461,6 @@
 
     @media (max-width: 768px) {
         .header-logo-img { height: var(--space-6); }
+        .account-dropdown { min-width: 220px; }
     }
 </style>
