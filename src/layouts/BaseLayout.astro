@@ -56,12 +56,15 @@ import '../styles/global.css';
          redirect on logout; toggle header Login<->Account. -->
     <script is:inline>
     (function () {
+      function cookieSecureFlag() {
+        return window.location.protocol === 'https:' ? '; Secure' : '';
+      }
       function setTokenCookie(token) {
         if (!token) return;
-        document.cookie = 'outseta_token=' + token + '; path=/; max-age=86400; SameSite=Lax';
+        document.cookie = 'outseta_token=' + token + '; path=/; max-age=86400; SameSite=Lax' + cookieSecureFlag();
       }
       function clearTokenCookie() {
-        document.cookie = 'outseta_token=; path=/; max-age=0; SameSite=Lax';
+        document.cookie = 'outseta_token=; path=/; max-age=0; SameSite=Lax' + cookieSecureFlag();
       }
       function applyAuthState(user) {
         var joinLink = document.querySelector('.header-join');

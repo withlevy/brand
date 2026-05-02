@@ -17,7 +17,7 @@ const { items, currentPath } = Astro.props;
 ---
 
 <nav class="bento-nav" id="bentoNav" aria-label="Main navigation">
-    <div style="width: 100%; max-width: 2400px; margin: 0 auto; height: 100%;">
+    <div class="bento-nav-inner">
         <div class="bento-grid">
             {items.map((item, i) => (
                 <a href={item.href} class:list={["bento-item", { wide: item.wide, "is-current": currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href)), "member-only": item.membersOnly }]} style={`--item-index: ${i}`} aria-current={currentPath === item.href ? "page" : undefined}>
@@ -39,7 +39,19 @@ const { items, currentPath } = Astro.props;
         opacity: 0; visibility: hidden; transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s; overflow-y: auto;
     }
     .bento-nav.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
-    .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); height: 100%; max-height: 80dvh; max-width: 2000px; margin: 0 auto; }
+
+    .bento-nav-inner {
+        width: 100%; max-width: 2400px; margin: 0 auto;
+        min-height: 100%;
+        display: flex; flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .bento-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1);
+        flex: 1 1 auto;
+        width: 100%; max-width: 2000px; margin: 0 auto;
+    }
 
     .bento-item {
         background: var(--midnight); border: var(--stroke-weight) solid var(--stroke-light); padding: var(--space-4);
@@ -67,18 +79,19 @@ const { items, currentPath } = Astro.props;
         background: none; border: var(--stroke-weight) solid var(--stroke-light); color: rgba(245, 245, 243, 0.6);
         font-family: var(--font-tech); font-size: var(--step--1); font-weight: 500; text-transform: uppercase;
         letter-spacing: 0.1em; cursor: pointer; padding: var(--space-2) var(--space-4);
-        transition: color 0.3s var(--ease-out-expo), border-color 0.3s; margin-top: var(--space-4);
+        transition: color 0.3s var(--ease-out-expo), border-color 0.3s;
         min-height: 44px; align-items: center; justify-content: center;
+        align-self: center;
     }
     .nav-logout:hover { color: var(--paper); border-color: var(--paper); }
-    :global(body.is-authenticated) .nav-logout { display: flex; }
+    :global(body.is-authenticated) .nav-logout { display: inline-flex; }
 
     @media (max-width: 1024px) {
         .bento-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 768px) {
-        .bento-grid { grid-template-columns: 1fr; max-height: none; }
+        .bento-grid { grid-template-columns: 1fr; }
         .bento-item { min-height: var(--space-16); padding: var(--space-3); }
         .bento-item.wide { grid-column: span 1; }
     }

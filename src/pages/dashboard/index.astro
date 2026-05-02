@@ -158,32 +158,35 @@ const welcomeHeading = serverGreeting ? `WELCOME BACK, ${serverGreeting.toUpperC
 </BaseLayout>
 
 <script>
-    const TIER_CONFIG: Record<string, { level: number; uid: string | null; label: string }> = {
+    // Plan UIDs from Outseta. Free / unrecognized plans fall through to level 1
+    // (authenticated base member) so the base "Account Status" section renders.
+    const TIER_CONFIG: Record<string, { level: number; uid: string; label: string }> = {
         architect: { level: 4, uid: 'LmJ47j9P', label: 'Architect' },
         builder:   { level: 3, uid: 'rmk5w09g', label: 'Builder' },
         insider:   { level: 2, uid: 'Nmdndw90', label: 'Insider' },
-        free:      { level: 1, uid: 'MQvb4oQY', label: 'Free' },
-        public:    { level: 0, uid: null,        label: 'Public' },
     };
 
     function getUserLevel(user: any): number {
         if (!user) return 0;
         const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
-        if (!planUid) return 0;
-        for (const tier of Object.values(TIER_CONFIG)) {
-            if (tier.uid === planUid) return tier.level;
+        if (planUid) {
+            for (const tier of Object.values(TIER_CONFIG)) {
+                if (tier.uid === planUid) return tier.level;
+            }
         }
-        return 0;
+        // Authenticated but no recognized active plan — treat as base member
+        return 1;
     }
 
     function getUserTierLabel(user: any): string {
         if (!user) return 'Member';
         const planUid = user?.Account?.CurrentSubscription?.Plan?.Uid;
-        if (!planUid) return 'Free';
-        for (const tier of Object.values(TIER_CONFIG)) {
-            if (tier.uid === planUid) return tier.label;
+        if (planUid) {
+            for (const tier of Object.values(TIER_CONFIG)) {
+                if (tier.uid === planUid) return tier.label;
+            }
         }
-        return 'Member';
+        return 'Free';
     }
 
     function getNextTier(currentLevel: number): { label: string; uid: string | null } | null {
