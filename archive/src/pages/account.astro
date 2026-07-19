@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+---
+
+<BaseLayout
+  title="Your Account — Levy"
+  description="Manage your Levy Network membership, profile, and billing."
+>
+
+  <SectionShell
+    id="account"
+    theme="light"
+    noBorder={true}
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y)); padding-bottom: calc(var(--space-section-y) * 1.5); min-height: 100vh;"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Account" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY NETWORK // MEMBER PROFILE" />
+        <h1 class="headline-m helvetica-medium">
+          Your account.
+        </h1>
+        <p class="helvetica-light mb-12" style="font-size: var(--type-body); max-width: 28rem;">
+          Manage your membership, billing, and profile details.
+        </p>
+
+        <div class="account-embed">
+          <div class="dimension" style="opacity: 0.35; margin-bottom: var(--space-8);">
+            MEMBER PROFILE // ACCOUNT MANAGEMENT
+          </div>
+          <div data-o-profile="1" data-mode="embed"></div>
+        </div>
+
+        <div class="account-actions mt-12">
+          <a href="/members" class="dimension" style="display: inline-flex; opacity: 0.6;">
+            ← BACK TO MEMBER HUB
+          </a>
+          <button type="button" class="dimension account-logout" data-o-logout-link="1">
+            LOG OUT →
+          </button>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  .account-embed {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+    min-height: 20rem;
+  }
+
+  .account-actions {
+    display: flex;
+    gap: var(--space-8);
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-6);
+  }
+
+  .account-logout {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  .account-logout:hover { opacity: 1; }
+</style>

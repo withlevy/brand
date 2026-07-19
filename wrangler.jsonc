@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "levy-website",
+  "compatibility_date": "2025-09-27",
+  // Static site: no `main` worker. Cloudflare serves the staged `dist`
+  // directory (index.html + inline assets) directly.
+  "assets": {
+    "directory": "dist"
+  }
+}

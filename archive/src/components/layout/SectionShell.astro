@@ -1,0 +1,28 @@
+---
+interface Props {
+  id?: string;
+  theme?: 'light' | 'dark';
+  class?: string;
+  noBorder?: boolean;
+  noMinHeight?: boolean;
+  style?: string;
+}
+
+const {
+  id,
+  theme = 'light',
+  class: className = '',
+  noBorder = false,
+  noMinHeight = false,
+  style,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  data-theme={theme}
+  class:list={[className, { 'no-border': noBorder, 'no-min-height': noMinHeight }]}
+  style={style}
+>
+  <slot />
+</section>

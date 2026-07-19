@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionShell from '../../components/layout/SectionShell.astro';
+import VerticalLabel from '../../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../../components/typography/DimensionLabel.astro';
+import Button from '../../components/ui/Button.astro';
+import { getCollection } from 'astro:content';
+
+const allEvents = await getCollection('events', ({ data }) => !data.draft);
+const upcoming = allEvents
+  .filter(e => e.data.date >= new Date())
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const past = allEvents
+  .filter(e => e.data.date < new Date())
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title="Events — Levy"
+  description="Strategic convenings, gatherings, and public programming from the Levy environment."
+>
+
+  <!-- =========================================================
+       01 / ANCHOR
+       ========================================================= -->
+  <SectionShell
+    id="events-anchor"
+    theme="light"
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Events" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY // EVENTS & PROGRAMMING" />
+        <h1 class="headline-l helvetica-medium">
+          Where serious people convene.
+        </h1>
+        <p class="body-text helvetica-light">
+          Levy events are structured around real problems — not panels, not
+          networking events. Convenings, lectures, and working sessions
+          designed for people who can contribute at the level the problems
+          require.
+        </p>
+
+        <!-- IMAGERY: Event photography — structured settings, serious rooms,
+             roundtables, private convenings. NOT corporate conference vibes.
+             Recommended: 16:9, warm but institutional tone. -->
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / UPCOMING
+       ========================================================= -->
+  <SectionShell id="upcoming" theme="dark" noBorder={upcoming.length === 0 && past.length === 0}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Upcoming" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="SCHEDULE // UPCOMING EVENTS" />
+
+        {upcoming.length > 0 ? (
+          <div class="event-list">
+            {upcoming.map((event) => (
+              <a href={`/events/${event.id}`} class="event-item">
+                <div class="event-meta">
+                  <span class="dimension" style="margin-bottom: 0;">
+                    {event.data.type.toUpperCase()} // {event.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                  {event.data.location && (
+                    <span class="event-location helvetica-light">{event.data.location}</span>
+                  )}
+                </div>
+                <h3 class="fraunces-h3 event-title">{event.data.title}</h3>
+                <p class="helvetica-light event-desc">{event.data.description}</p>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="events-empty">
+            <p class="helvetica-light" style="font-size: 0.9rem; opacity: 0.45; max-width: 28rem;">
+              Programming is being finalized. Leave your email to be notified
+              when events are announced.
+            </p>
+            <form class="events-form mt-8" method="POST" action="#">
+              <div class="input-group" style="max-width: 22rem;">
+                <label class="input-label" for="events-email">Notification</label>
+                <input
+                  type="email"
+                  id="events-email"
+                  name="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  class="minimal-input"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn mt-6">Notify Me</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
+  </SectionShell>
+
+  {past.length > 0 && (
+    <SectionShell id="past" theme="light" noBorder={true}>
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <VerticalLabel text="Archive" />
+        </div>
+
+        <div class="span-col-2-5 reveal delay-1">
+          <DimensionLabel text="ARCHIVE // PAST EVENTS" />
+          <div class="event-list">
+            {past.map((event) => (
+              <a href={`/events/${event.id}`} class="event-item">
+                <div class="event-meta">
+                  <span class="dimension" style="margin-bottom: 0;">
+                    {event.data.type.toUpperCase()} // {event.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                </div>
+                <h3 class="fraunces-h3 event-title">{event.data.title}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  )}
+
+</BaseLayout>
+
+<style>
+  .event-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .event-item {
+    display: block;
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+  }
+
+  .event-item:hover { opacity: 0.7; }
+
+  .event-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .event-location {
+    font-size: 0.8rem;
+    opacity: 0.5;
+  }
+
+  .event-title {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    line-height: 1.3;
+    margin-bottom: var(--space-3);
+  }
+
+  .event-desc {
+    font-size: 0.9rem;
+    opacity: 0.65;
+    max-width: 36rem;
+  }
+
+  .events-empty {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+  }
+
+  .events-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+</style>

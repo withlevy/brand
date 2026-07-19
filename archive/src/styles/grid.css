@@ -1,0 +1,130 @@
+/* ==========================================================================
+   GRID SYSTEM
+   NASA 1976-inspired 5-column grid.
+   Rule: grid governs macro layout; flexbox lives inside components.
+   ========================================================================== */
+
+/* --- Layout Wrapper --- */
+.layout-wrapper {
+  position: relative;
+  z-index: var(--z-layout);
+  padding: 0 var(--space-layout-x);
+  margin: 0 auto;
+  max-width: 1600px;
+}
+
+/* --- Section Base --- */
+section {
+  position: relative;
+  padding: var(--space-section-y) 0;
+  border-bottom: 1px solid var(--border-color);
+  min-height: 90vh;
+  background-color: transparent;
+  color: inherit;
+  transition: border-color 0.8s ease-in-out;
+}
+
+section.no-border    { border-bottom: none; }
+section.no-min-height { min-height: auto; }
+
+/* --- NASA 5-Column Grid --- */
+.nasa-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-grid-gap);
+  width: 100%;
+  align-items: start;
+}
+
+/* --- Column Spans --- */
+.span-col-1   { grid-column: 1 / 2; }   /* Metadata rail */
+.span-col-2-5 { grid-column: 2 / 6; }   /* Full content width */
+.span-col-2-4 { grid-column: 2 / 5; }   /* Narrative text (col 5 void) */
+.span-col-2-3 { grid-column: 2 / 4; }   /* Half-width content */
+.span-col-4-5 { grid-column: 4 / 6; }   /* Right column pair */
+.span-col-5   { grid-column: 5 / 6; }   /* Column 5 only */
+.span-all     { grid-column: 1 / 6; }   /* Full bleed */
+
+/* ==========================================================================
+   SWISS 12-COLUMN GRID
+   Clean, content-driven layout. No visible hairlines.
+   ========================================================================== */
+
+.swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  align-items: start;
+}
+
+.col-span-1  { grid-column: span 1; }
+.col-span-2  { grid-column: span 2; }
+.col-span-3  { grid-column: span 3; }
+.col-span-4  { grid-column: span 4; }
+.col-span-5  { grid-column: span 5; }
+.col-span-6  { grid-column: span 6; }
+.col-span-7  { grid-column: span 7; }
+.col-span-8  { grid-column: span 8; }
+.col-span-9  { grid-column: span 9; }
+.col-span-10 { grid-column: span 10; }
+.col-span-11 { grid-column: span 11; }
+.col-span-12 { grid-column: span 12; }
+
+.col-start-1  { grid-column-start: 1; }
+.col-start-2  { grid-column-start: 2; }
+.col-start-3  { grid-column-start: 3; }
+.col-start-4  { grid-column-start: 4; }
+.col-start-5  { grid-column-start: 5; }
+.col-start-6  { grid-column-start: 6; }
+.col-start-7  { grid-column-start: 7; }
+.col-start-8  { grid-column-start: 8; }
+.col-start-9  { grid-column-start: 9; }
+.col-start-10 { grid-column-start: 10; }
+
+/* --- Tablet: Remove forced min-height --- */
+@media (min-width: 769px) and (max-width: 1100px) {
+  section {
+    min-height: auto;
+  }
+}
+
+/* --- Mobile: Single column collapse --- */
+@media (max-width: 900px) {
+  .nasa-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-grid-gap-mobile);
+  }
+
+  .span-col-1,
+  .span-col-2-5,
+  .span-col-2-4,
+  .span-col-2-3,
+  .span-col-4-5,
+  .span-col-5,
+  .span-all {
+    grid-column: 1 / -1;
+  }
+
+  section {
+    padding: var(--space-section-y-mobile) 0;
+    min-height: auto;
+  }
+
+  /* Swiss grid mobile collapse */
+  .swiss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .col-span-1, .col-span-2, .col-span-3, .col-span-4,
+  .col-span-5, .col-span-6, .col-span-7, .col-span-8,
+  .col-span-9, .col-span-10, .col-span-11, .col-span-12 {
+    grid-column: 1 / -1;
+  }
+
+  .col-start-1, .col-start-2, .col-start-3, .col-start-4,
+  .col-start-5, .col-start-6, .col-start-7, .col-start-8,
+  .col-start-9, .col-start-10 {
+    grid-column-start: auto;
+  }
+}

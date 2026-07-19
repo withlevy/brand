@@ -1,0 +1,122 @@
+---
+const primaryLinks = [
+  { href: '/network',  label: 'The Network' },
+  { href: '/studio',   label: 'Studio'      },
+  { href: '/institute',label: 'Institute'   },
+  { href: '/newsroom', label: 'Newsroom'    },
+];
+
+const secondaryLinks = [
+  { href: '/about',    label: 'About'       },
+  { href: '/events',   label: 'Events'      },
+  { href: '/pricing',  label: 'Pricing'     },
+];
+---
+
+<nav
+  class="fullscreen-menu"
+  id="fullscreenMenu"
+  aria-label="Primary navigation"
+  aria-hidden="true"
+>
+  <!-- Interior grain layer -->
+  <div class="paper-grain grain-dark" style="opacity: 0.05;" aria-hidden="true"></div>
+
+  <div class="nasa-grid" style="padding-top: 10vh;">
+    <div class="span-col-1">
+      <div class="vertical-label" style="color: var(--washi); opacity: 0.5;">
+        Navigation
+      </div>
+    </div>
+
+    <div class="span-col-2-4">
+      <div class="menu-links">
+        {primaryLinks.map(link => (
+          <a href={link.href} class="menu-item">{link.label}</a>
+        ))}
+      </div>
+    </div>
+
+    <div class="span-col-5" style="padding-top: 0.5rem;">
+      <div class="menu-secondary">
+        {secondaryLinks.map(link => (
+          <a href={link.href} class="menu-item-secondary">{link.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA block at bottom -->
+  <div class="menu-cta-block nasa-grid">
+    <div class="span-col-1"></div>
+    <div class="span-col-2-5">
+      <div class="menu-cta-row">
+        <a href="/join" class="menu-cta-primary menu-item menu-cta-anonymous">Join the Network</a>
+        <a href="/login" class="menu-cta-secondary menu-item menu-cta-anonymous">Log In</a>
+        <a href="/account" class="menu-cta-primary menu-item menu-cta-authenticated">Your Account</a>
+        <button type="button" class="menu-cta-secondary menu-item menu-cta-authenticated" data-o-logout-link="1">Log Out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .menu-secondary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: 1.25rem;
+  }
+
+  .menu-item-secondary {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--washi);
+    text-decoration: none;
+    opacity: 0.45;
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-item-secondary:hover { opacity: 1; }
+
+  .menu-cta-block {
+    position: absolute;
+    bottom: var(--space-section-y);
+    left: 0;
+    right: 0;
+  }
+
+  .menu-cta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    border-top: 1px solid rgba(247, 247, 246, 0.12);
+    padding-top: var(--space-6);
+  }
+
+  .menu-cta-primary {
+    font-size: var(--type-micro);
+  }
+
+  .menu-cta-secondary {
+    font-size: var(--type-micro);
+    opacity: 0.4;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .menu-cta-secondary:hover { opacity: 1; }
+
+  /* Auth-state visibility — toggled by body class in BaseLayout */
+  .menu-cta-authenticated { display: none; }
+  :global(body.is-authenticated) .menu-cta-anonymous { display: none; }
+  :global(body.is-authenticated) .menu-cta-authenticated { display: inline-flex; }
+</style>

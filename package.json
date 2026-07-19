@@ -1,16 +1,15 @@
 {
-  "name": "levy-design-system",
-  "type": "module",
+  "name": "levy-website",
   "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Levy — minimal one-page site (self-contained index.html).",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "rm -rf dist && mkdir -p dist && cp index.html dist/index.html",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
-  "dependencies": {
-    "@astrojs/cloudflare": "^12.6.13",
-    "astro": "^5.7.10",
-    "fast-xml-parser": "^5.5.10",
-    "jose": "^5.9.6"
+  "devDependencies": {
+    "wrangler": "^4.73.0"
   }
 }

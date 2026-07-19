@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('signal');
+const posts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map(post => ({
+    label: post.data.label,
+    title: post.data.title,
+    date: post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    href: `/newsroom/${post.id}`,
+  }));
+---
+
+<BaseLayout
+  title="Newsroom — Levy"
+  description="Field notes on institutional leverage, public-private coordination, and the conditions that produce outlier outcomes."
+>
+
+  <!-- =========================================================
+       01 / SIGNAL ANCHOR
+       What this archive is and why it exists.
+       ========================================================= -->
+  <SectionShell
+    id="newsroom-anchor"
+    theme="light"
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Signal" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY // FIELD NOTES & SIGNAL DISPATCH" />
+        <h1 class="headline-l helvetica-medium">
+          The unwritten rules of power.
+        </h1>
+        <p class="body-text helvetica-light mb-8">
+          Field notes on institutional leverage, public-private coordination,
+          and the structural conditions that make outlier outcomes more or less
+          likely. Not commentary. Not analysis for its own sake. Intelligence
+          with a point of view and a use.
+        </p>
+        <p class="body-text helvetica-light">
+          Published when there is something worth saying. No calendar to meet.
+          No word count to hit. No noise.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / ARCHIVE
+       Content collection ready. Intentional placeholder when empty.
+       ========================================================= -->
+  <SectionShell id="archive" theme="dark" noBorder={true}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Archive" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="SIGNAL ARCHIVE // FIELD NOTES" />
+
+        {posts.length > 0 ? (
+          <div class="archive-list">
+            {posts.map((post) => (
+              <a href={post.href} class="archive-item">
+                <div class="archive-item-meta dimension">{post.label} // {post.date}</div>
+                <h3 class="fraunces-h3 archive-item-title">{post.title}</h3>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="archive-empty">
+            <div class="archive-empty-lines">
+              {[1,2,3,4,5].map((n) => (
+                <div class="archive-empty-row">
+                  <span class="archive-empty-index dimension">{String(n).padStart(2,'0')}</span>
+                  <span class="archive-empty-bar"></span>
+                </div>
+              ))}
+            </div>
+            <p class="helvetica-light mt-12" style="font-size: 0.9rem; opacity: 0.45; max-width: 28rem;">
+              The first dispatches are being prepared. Leave your email
+              to receive Signal when it publishes.
+            </p>
+            <form class="signal-form mt-8" method="POST" action="#">
+              <div class="input-group" style="max-width: 22rem;">
+                <label class="input-label" for="signal-email">Secure Channel</label>
+                <input
+                  type="email"
+                  id="signal-email"
+                  name="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  class="minimal-input"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn mt-6">Receive Signal</button>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  /* Archive list (used when content exists) */
+  .archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .archive-item {
+    display: block;
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+  }
+
+  .archive-item:hover { opacity: 0.7; }
+
+  .archive-item-meta {
+    margin-bottom: var(--space-3);
+  }
+
+  .archive-item-title {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    line-height: 1.3;
+  }
+
+  /* Empty state */
+  .archive-empty {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+  }
+
+  .archive-empty-lines {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 40rem;
+  }
+
+  .archive-empty-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .archive-empty-index {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    letter-spacing: 0.2em;
+    opacity: 0.25;
+    white-space: nowrap;
+    min-width: 2rem;
+  }
+
+  .archive-empty-bar {
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+    display: block;
+  }
+
+  .signal-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+</style>

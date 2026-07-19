@@ -1,0 +1,91 @@
+/* ==========================================================================
+   GLOBAL BASE
+   Reset, body, materiality layers.
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--seal-red);
+  color: var(--washi);
+}
+
+a {
+  color: inherit;
+}
+
+/* Article body prose links — underline only, full text-color */
+.article-body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.article-body a:hover {
+  opacity: 0.6;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--theme-fade);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Double-Layered Grain (flash-free light/dark transitions) --- */
+
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-grain);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  transition: opacity 0.8s ease-in-out;
+}
+
+.grain-light {
+  mix-blend-mode: multiply;
+  opacity: 0.035;
+}
+
+.grain-dark {
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+body.dark-mode .grain-light { opacity: 0; }
+body.dark-mode .grain-dark  { opacity: 0.05; }
+
+
+/* ==========================================================================
+   HOMEPAGE — full-bleed layout override
+   Removes wrapper margins; sections take own horizontal padding so their
+   backgrounds can bleed edge-to-edge while content aligns with header/footer.
+   ========================================================================== */
+
+body.page-home main.layout-wrapper {
+  margin: 0;
+}
+
+body.page-home section {
+  padding-left: var(--space-layout-x);
+  padding-right: var(--space-layout-x);
+}
+
+body.page-home .swiss-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+}

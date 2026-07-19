@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Membership Tiers — Levy Network"
+  description="Insider, Builder, Architect. Three tiers of access to the Levy Network operating environment."
+>
+
+  <!-- =========================================================
+       01 / FRAMING
+       Position the tier structure correctly before the table.
+       ========================================================= -->
+  <SectionShell
+    id="pricing-anchor"
+    theme="light"
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Membership" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY NETWORK // ACCESS TIERS" />
+        <h1 class="headline-l helvetica-medium">
+          Three tiers. One environment.
+        </h1>
+        <p class="body-text helvetica-light">
+          The tier structure exists to support self-selection, not to create
+          artificial scarcity. Each level reflects a genuinely different
+          relationship to the network: in access depth, engagement intensity,
+          and operating proximity to the full Levy environment. Choose based
+          on how you actually want to operate — not on aspiration.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / TIER CARDS
+       Insider / Builder / Architect — strategic, not a feature grid.
+       ========================================================= -->
+  <SectionShell id="tiers" theme="dark" noBorder={true}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Tiers" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <div class="pricing-grid">
+
+          <!-- Insider -->
+          <div class="pricing-card">
+            <DimensionLabel text="TIER 01" />
+            <h2 class="fraunces-h3 tier-heading">Insider</h2>
+            <p class="tier-positioning helvetica-light">
+              For people who want to be inside the environment —
+              receiving its signal, eligible for its gatherings —
+              without full operational commitment.
+            </p>
+
+            <div class="tier-access">
+              <div class="access-label dimension">WHAT YOU GET</div>
+              <ul class="access-list helvetica-light">
+                <li>Monthly Signal dispatch</li>
+                <li>Curated reading and intelligence</li>
+                <li>Eligibility for select public gatherings</li>
+                <li>Levy Network directory access</li>
+              </ul>
+            </div>
+
+            <div class="tier-cta">
+              <Button href="/join?plan=insider" class="btn-ghost">Join as Insider</Button>
+            </div>
+          </div>
+
+          <!-- Builder -->
+          <div class="pricing-card pricing-card--featured">
+            <DimensionLabel text="TIER 02" />
+            <h2 class="fraunces-h3 tier-heading">Builder</h2>
+            <p class="tier-positioning helvetica-light">
+              For people who are actively building something and want
+              to operate inside the network — not just adjacent to it.
+            </p>
+
+            <div class="tier-access">
+              <div class="access-label dimension">WHAT YOU GET</div>
+              <ul class="access-list helvetica-light">
+                <li>Everything in Insider</li>
+                <li>Access to all network convenings and gatherings</li>
+                <li>Structured peer introductions</li>
+                <li>Member collaboration surfaces</li>
+                <li>Working groups and programming access</li>
+              </ul>
+            </div>
+
+            <div class="tier-cta">
+              <Button href="/join?plan=builder">Join as Builder</Button>
+            </div>
+          </div>
+
+          <!-- Architect -->
+          <div class="pricing-card">
+            <DimensionLabel text="TIER 03" />
+            <h2 class="fraunces-h3 tier-heading">Architect</h2>
+            <p class="tier-positioning helvetica-light">
+              For principals operating at the highest level of institutional
+              leverage who want full access to the Levy environment and
+              proximity to its strategic layer.
+            </p>
+
+            <div class="tier-access">
+              <div class="access-label dimension">WHAT YOU GET</div>
+              <ul class="access-list helvetica-light">
+                <li>Everything in Builder</li>
+                <li>Studio resource access and advisory layer</li>
+                <li>Institute programming and research access</li>
+                <li>Priority access to Levy-convened events</li>
+                <li>Direct engagement with Levy principals</li>
+              </ul>
+            </div>
+
+            <div class="tier-cta">
+              <Button href="/join?plan=architect" class="btn-ghost">Join as Architect</Button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing note -->
+    <div class="nasa-grid" style="margin-top: var(--space-16);">
+      <div class="span-col-1"></div>
+      <div class="span-col-2-4 reveal">
+        <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.45; max-width: 36rem;">
+          Pricing for each tier is set at account creation. If you have
+          questions about which tier is right for your situation,
+          <a href="/about" style="color: inherit; text-decoration: underline; opacity: 1;">read more about the environment</a>
+          or <a href="/network" style="color: inherit; text-decoration: underline; opacity: 1;">review the full network brief</a>.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  .pricing-card {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .pricing-card--featured {
+    border-top: var(--heavy-line);
+  }
+
+  .tier-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .tier-positioning {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    opacity: 0.8;
+  }
+
+  .tier-access {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .access-label {
+    margin-bottom: 0;
+  }
+
+  .access-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.75;
+  }
+
+  .access-list li::before {
+    content: '—  ';
+    font-family: var(--font-mono);
+    opacity: 0.5;
+  }
+
+  .tier-cta {
+    padding-top: var(--space-4);
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import MenuToggle from './MenuToggle.astro';
+// The .header-join anchor is swapped to "Account" by the auth-state script in
+// BaseLayout when Outseta reports an authenticated user.
+---
+
+<header>
+  <a href="/" class="brand-mark" aria-label="Levy — home">
+    <svg
+      class="icon-svg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1081 1081"
+      aria-hidden="true"
+    >
+      <g transform="translate(0,1081) scale(0.1,-0.1)" fill="currentColor">
+        <path d="M7894 9151 c-21 -16 -1390 -1381 -3041 -3032 -2663 -2665 -3002
+-3008 -3008 -3041 -15 -82 -23 -73 458 -555 486 -485 481 -481 563 -463 33 8
+434 405 3056 3027 1661 1660 3026 3031 3035 3047 10 20 14 44 10 74 -5 44 -14
+54 -469 509 -463 463 -463 463 -514 463 -41 0 -59 -6 -90 -29z"/>
+        <path d="M5205 3959 c-21 -6 -305 -282 -923 -896 -893 -888 -893 -888 -892
+-931 0 -50 20 -94 52 -116 20 -14 211 -16 1856 -16 1834 0 1834 0 1867 33 60
+60 59 132 -3 193 -20 20 -432 413 -915 873 -517 492 -893 843 -915 853 -40 19
+-80 21 -127 7z"/>
+      </g>
+    </svg>
+    <span class="logotype">LEVY</span>
+  </a>
+
+  <div class="header-controls">
+    <a href="/join" class="header-join" aria-label="Join the Levy Network">Join</a>
+    <MenuToggle />
+  </div>
+</header>

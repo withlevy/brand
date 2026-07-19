@@ -1,0 +1,16 @@
+{
+  "name": "levy-design-system",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.13",
+    "astro": "^5.7.10",
+    "fast-xml-parser": "^5.5.10",
+    "jose": "^5.9.6"
+  }
+}

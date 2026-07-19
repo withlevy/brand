@@ -1,0 +1,269 @@
+---
+// Auth gate: handled server-side in src/middleware.ts (verifies Outseta JWT
+// from `outseta_token` cookie against Outseta's JWKS). Anonymous users are
+// redirected to /login before this page renders.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionShell from '../../components/layout/SectionShell.astro';
+import VerticalLabel from '../../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../../components/typography/DimensionLabel.astro';
+
+const user = (Astro.locals as any).outsetaUser ?? {};
+const givenName: string | undefined =
+  user.given_name ?? user.GivenName ?? user.FirstName;
+const fullName: string | undefined =
+  user.name ?? user.nameid ?? user.FullName;
+const email: string | undefined = user.email ?? user.Email;
+const greeting = givenName || fullName?.split(' ')[0] || email || 'Member';
+---
+
+<BaseLayout
+  title="Member Hub — Levy Network"
+  description="Your Levy Network member environment. Access resources, directory, and programming."
+>
+
+  <!-- =========================================================
+       01 / WELCOME
+       ========================================================= -->
+  <SectionShell
+    id="member-welcome"
+    theme="light"
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Members" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY NETWORK // MEMBER ENVIRONMENT" />
+        <h1 class="headline-l helvetica-medium">
+          Welcome, {greeting}.
+        </h1>
+        <p class="body-text helvetica-light">
+          You're inside the Levy Network. This is your hub for member
+          resources, the network directory, upcoming programming, and
+          account management.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / NOW PANEL — placeholder member feed + quick actions
+       ========================================================= -->
+  <SectionShell id="member-now" theme="light" noBorder={true} noMinHeight={true}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Now" />
+      </div>
+
+      <div class="span-col-2-3 reveal delay-1">
+        <DimensionLabel text="ACTIVE FEED // PLACEHOLDER" />
+        <div class="now-panel">
+          <div class="now-item">
+            <div class="dimension">SIGNAL // 01</div>
+            <h3 class="fraunces-h3" style="font-size: 1.15rem; margin-top: var(--space-3);">Member environment in early access.</h3>
+            <p class="helvetica-light" style="font-size: 0.9rem; opacity: 0.7; margin-top: var(--space-3);">
+              The full member experience — directory, resources, and
+              programming — comes online in stages. Your access is active.
+            </p>
+          </div>
+          <div class="now-item">
+            <div class="dimension">DISPATCH // SIGNAL</div>
+            <h3 class="fraunces-h3" style="font-size: 1.15rem; margin-top: var(--space-3);">Next dispatch goes out monthly.</h3>
+            <p class="helvetica-light" style="font-size: 0.9rem; opacity: 0.7; margin-top: var(--space-3);">
+              Field notes on public-private coordination and Action Design.
+              Delivered to the email associated with your account.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2">
+        <DimensionLabel text="QUICK ACTIONS" />
+        <div class="quick-actions">
+          <button type="button" class="quick-action" data-action="profile">
+            <span class="dimension">PROFILE</span>
+            <span class="qa-label">Manage your profile</span>
+          </button>
+          <button type="button" class="quick-action" data-action="subscription">
+            <span class="dimension">SUBSCRIPTION</span>
+            <span class="qa-label">Manage plan & billing</span>
+          </button>
+          <button type="button" class="quick-action" data-action="password">
+            <span class="dimension">SECURITY</span>
+            <span class="qa-label">Change password</span>
+          </button>
+          <button type="button" class="quick-action quick-action--logout" data-o-logout-link="1">
+            <span class="dimension">SESSION</span>
+            <span class="qa-label">Log out</span>
+          </button>
+        </div>
+        {email && (
+          <p class="helvetica-light member-meta">
+            Signed in as <span class="member-meta-email">{email}</span>
+          </p>
+        )}
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       03 / NAVIGATION — areas of the member environment
+       ========================================================= -->
+  <SectionShell id="member-links" theme="dark" noBorder={true}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Access" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="MEMBER ACCESS // NAVIGATION" />
+        <div class="member-grid">
+
+          <a href="/members/resources" class="member-card">
+            <div class="dimension" style="margin-bottom: var(--space-4);">RESOURCES</div>
+            <h3 class="fraunces-h3" style="font-size: 1.25rem; margin-bottom: var(--space-3);">Member Resources</h3>
+            <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6;">
+              Exclusive materials, frameworks, and intelligence.
+            </p>
+          </a>
+
+          <a href="/members/directory" class="member-card">
+            <div class="dimension" style="margin-bottom: var(--space-4);">DIRECTORY</div>
+            <h3 class="fraunces-h3" style="font-size: 1.25rem; margin-bottom: var(--space-3);">Network Directory</h3>
+            <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6;">
+              Find and connect with other network members.
+            </p>
+          </a>
+
+          <a href="/events" class="member-card">
+            <div class="dimension" style="margin-bottom: var(--space-4);">EVENTS</div>
+            <h3 class="fraunces-h3" style="font-size: 1.25rem; margin-bottom: var(--space-3);">Upcoming Events</h3>
+            <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6;">
+              Convenings, lectures, and programming.
+            </p>
+          </a>
+
+          <a href="/account" class="member-card">
+            <div class="dimension" style="margin-bottom: var(--space-4);">ACCOUNT</div>
+            <h3 class="fraunces-h3" style="font-size: 1.25rem; margin-bottom: var(--space-3);">Your Account</h3>
+            <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6;">
+              Profile, membership tier, and billing.
+            </p>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<script is:inline>
+  // Wire profile/subscription/password buttons to Outseta popups.
+  // The data-o-logout-link button is handled by Outseta directly.
+  document.querySelectorAll('.quick-action[data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      var tab = btn.getAttribute('data-action');
+      if (window.Outseta && window.Outseta.profile && window.Outseta.profile.open) {
+        window.Outseta.profile.open({ mode: 'popup', tab: tab });
+      } else {
+        window.location.href = '/account';
+      }
+    });
+  });
+</script>
+
+<style>
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 900px) {
+    .member-grid { grid-template-columns: 1fr; }
+  }
+
+  .member-card {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-8);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease, transform 0.4s var(--ease-expo);
+  }
+
+  .member-card:hover {
+    opacity: 0.75;
+    transform: translateY(-2px);
+  }
+
+  .now-panel {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .now-item {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--space-8);
+  }
+
+  .now-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .quick-actions {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quick-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-5) 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.3s var(--ease-expo);
+  }
+
+  .quick-action:hover {
+    opacity: 0.7;
+    transform: translateX(2px);
+  }
+
+  .quick-action:last-child { border-bottom: none; }
+
+  .qa-label {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 0.95rem;
+  }
+
+  .quick-action--logout .qa-label { opacity: 0.65; }
+
+  .member-meta {
+    margin-top: var(--space-6);
+    font-size: 0.8rem;
+    opacity: 0.45;
+  }
+
+  .member-meta-email {
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+</style>

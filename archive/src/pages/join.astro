@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+
+const PLAN_UIDS: Record<string, string> = {
+  insider: 'Nmdndw90',
+  builder: 'rmk5w09g',
+  architect: 'LmJ47j9P',
+};
+
+const planParam = (Astro.url.searchParams.get('plan') ?? '').toLowerCase();
+const planUid = PLAN_UIDS[planParam] ?? PLAN_UIDS.builder;
+const selectedTier = planParam in PLAN_UIDS ? planParam : 'builder';
+---
+
+<BaseLayout
+  title="Join the Levy Network"
+  description="Self-serve membership access to the Levy Network. Choose your tier and join the operating environment."
+>
+
+  <!-- =========================================================
+       01 / ANCHOR
+       Brief, conversion-oriented framing before the embed.
+       ========================================================= -->
+  <SectionShell
+    id="join-anchor"
+    theme="light"
+    noMinHeight={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Access" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="THE LEVY NETWORK // MEMBERSHIP ACCESS" />
+        <h1 class="headline-l helvetica-medium">
+          Join the Network.
+        </h1>
+        <p class="body-text helvetica-light">
+          Membership is self-serve. Select your tier below, create your
+          account, and gain access to the Levy environment. Each tier is
+          designed for a different level of engagement — not as an upsell
+          sequence, but as a genuine choice about how you want to operate.
+        </p>
+      </div>
+
+      <div class="span-col-2-5 reveal delay-2 mt-12">
+        <div class="tier-summary">
+          <div class="tier-summary-item">
+            <div class="dimension">INSIDER</div>
+            <p class="helvetica-light" style="font-size: 0.85rem; margin-top: var(--space-2);">
+              Signal access, curated dispatches, select events.
+            </p>
+          </div>
+          <div class="tier-summary-item">
+            <div class="dimension">BUILDER</div>
+            <p class="helvetica-light" style="font-size: 0.85rem; margin-top: var(--space-2);">
+              Active network participation, peer introductions, convenings.
+            </p>
+          </div>
+          <div class="tier-summary-item">
+            <div class="dimension">ARCHITECT</div>
+            <p class="helvetica-light" style="font-size: 0.85rem; margin-top: var(--space-2);">
+              Full environment access: network, studio, institute programming.
+            </p>
+          </div>
+        </div>
+        <a href="/pricing" class="dimension mt-8" style="display: inline-flex;">COMPARE TIERS IN DETAIL →</a>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / SIGNUP EMBED
+       Outseta self-serve signup. Embed loads here once configured.
+       ========================================================= -->
+  <SectionShell
+    id="join-embed"
+    theme="dark"
+    noBorder={true}
+    noMinHeight={true}
+    style="padding-bottom: calc(var(--space-section-y) * 1.5);"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Signup" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="ACCOUNT CREATION // SECURE SIGNUP" />
+
+        <div class="signup-embed">
+          <div class="dimension" style="opacity: 0.4; margin-bottom: var(--space-6);">
+            MEMBERSHIP SIGNUP // {selectedTier.toUpperCase()} TIER
+          </div>
+          <div
+            data-o-auth="1"
+            data-mode="embed"
+            data-widget-mode="register"
+            data-plan-uid={planUid}
+          ></div>
+        </div>
+
+        <p class="helvetica-light mt-12" style="font-size: 0.8rem; opacity: 0.4;">
+          Already a member?
+          <a href="/login" style="color: inherit; opacity: 1; text-decoration: underline;">Log in to your account.</a>
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  .tier-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+  }
+
+  @media (max-width: 900px) {
+    .tier-summary { grid-template-columns: 1fr; }
+  }
+
+  .tier-summary-item {
+    padding-right: var(--space-4);
+  }
+
+  .signup-embed {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+    max-width: 38rem;
+  }
+</style>

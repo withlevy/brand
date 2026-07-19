@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEVY // System UI Kit & CSS Framework</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,100..900&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     SYSTEM RULES FOR AI AGENTS (Claude / Cursor / Copilot)
+     - GRID: Always use .nasa-grid wrapper. Never use inline margins for layout.
+       Map elements to .span-col-1 (metadata), .span-col-2-4 (text), etc.
+     - TYPOGRAPHY: Strict adherence to classes. 
+       .helvetica-medium (H1/H2), .fraunces-h3 (H3), .helvetica-light (p).
+     - THEME: To invert a section, add data-theme="dark" to the <section>. 
+       Do NOT hardcode colors. Always use var(--text-color) and var(--bg-color).
+     ========================================================================== */
+
+  /* ==========================================================================
+     01. DESIGN TOKENS (Variables)
+     ========================================================================== */
+  :root {
+    /* Base Colors */
+    --mission-white: #F4F4F4; 
+    --midnight-navy: #0A111F;
+    --violet-atmosphere: #6B21A8;
+    
+    /* Riso Ink Layers */
+    --ink-base: rgba(107, 33, 168, 0.15); 
+    --ink-active: rgba(63, 0, 255, 0.25); 
+    
+    /* Functional Colors (Default Light Theme) */
+    --bg-color: var(--mission-white);
+    --text-color: var(--midnight-navy);
+    --border-color: rgba(10, 17, 31, 0.15);
+    --heavy-line: 1.5px solid var(--midnight-navy);
+    
+    /* Physics & Animation */
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+    --theme-fade: background-color 0.8s ease-in-out, color 0.8s ease-in-out, border-color 0.8s ease-in-out;
+  }
+
+  /* Structural Dark Mode Override */
+  body.dark-mode {
+    --bg-color: var(--midnight-navy);
+    --text-color: var(--mission-white);
+    --border-color: rgba(244, 244, 244, 0.15);
+    --heavy-line: 1.5px solid var(--mission-white);
+  }
+
+  /* ==========================================================================
+     02. BASE (Reset & Materiality)
+     ========================================================================== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: var(--violet-atmosphere); color: var(--mission-white); }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body { 
+    background-color: var(--bg-color); color: var(--text-color);
+    transition: var(--theme-fade);
+    overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Double-Layered Grain for Flash-Free Transitions */
+  .paper-grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    transition: opacity 0.8s ease-in-out;
+  }
+  .grain-light { mix-blend-mode: multiply; opacity: 0.035; }
+  .grain-dark { mix-blend-mode: screen; opacity: 0; }
+  
+  body.dark-mode .grain-light { opacity: 0; }
+  body.dark-mode .grain-dark { opacity: 0.05; }
+
+  /* ==========================================================================
+     03. LAYOUT (NASA 1976 5-Column Grid)
+     ========================================================================== */
+  .layout-wrapper {
+    position: relative; z-index: 10; margin: 0 4vw;
+  }
+
+  section {
+    position: relative; padding: 20vh 0; border-bottom: 1px solid var(--border-color);
+    min-height: 90vh; background-color: transparent; color: inherit;
+    transition: border-color 0.8s ease-in-out;
+  }
+
+  .nasa-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4vw; width: 100%; align-items: start; }
+  
+  .span-col-1 { grid-column: 1 / 2; }       
+  .span-col-2-5 { grid-column: 2 / 6; }     
+  .span-col-2-4 { grid-column: 2 / 5; }     
+  .span-col-2-3 { grid-column: 2 / 4; }     
+  .span-col-4-5 { grid-column: 4 / 6; }     
+  .span-all { grid-column: 1 / 6; }         
+
+  /* ==========================================================================
+     04. TYPOGRAPHY
+     ========================================================================== */
+  .helvetica-medium { 
+    font-family: 'Inter', -apple-system, sans-serif; font-weight: 500; 
+    letter-spacing: -0.03em; line-height: 1.05; text-transform: uppercase; 
+  }
+  .headline-l { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 3rem; }
+  .headline-m { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem; }
+  
+  .helvetica-light {
+    font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; 
+    letter-spacing: 0; line-height: 1.6; opacity: 0.85; 
+  }
+  .body-text { font-size: clamp(0.95rem, 2vw, 1.1rem); max-width: 40rem; }
+
+  .fraunces-h3 { 
+    font-family: 'Fraunces', serif; font-variation-settings: "opsz" 100, "SOFT" 50, "WONK" 0;
+    font-weight: 150; letter-spacing: 0.01em; line-height: 1.25; 
+  }
+
+  .dimension {
+    font-family: monospace; font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.75rem; opacity: 0.5; margin-bottom: 1.5rem;
+  }
+  .dimension::before {
+    content: ''; width: 1.5rem; height: 1px; background: currentColor; display: block;
+    transform: rotate(45deg); transform-origin: left center;
+  }
+  .vertical-label {
+    writing-mode: vertical-rl; text-orientation: mixed; font-family: monospace; 
+    font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+    opacity: 0.4; display: flex; align-items: center; gap: 1.5rem;
+  }
+  .vertical-label::before { content: ''; width: 1px; height: 3rem; background: currentColor; }
+
+  /* ==========================================================================
+     05. NAVIGATION & HAMBURGER MENU
+     ========================================================================== */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 4.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 4vw; z-index: 10000; border-bottom: 1px solid var(--border-color); 
+    font-family: monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+    background: transparent; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    transition: var(--theme-fade); color: var(--text-color);
+  }
+  .brand-mark { display: flex; align-items: center; gap: 1rem; position: relative; z-index: 10001;}
+  .icon-svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 3; stroke-linejoin: round; }
+  .logotype { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.05em; line-height: 1;}
+  
+  .menu-toggle {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 32px; height: 32px; background: transparent; border: none; cursor: pointer;
+    position: relative; z-index: 10001; outline: none;
+  }
+  .menu-toggle span {
+    display: block; width: 100%; height: 1px; background: var(--text-color);
+    transition: transform 0.5s var(--ease-expo), opacity 0.4s;
+  }
+  body.menu-open .menu-toggle span { background: var(--mission-white); }
+  body.menu-open .brand-mark { color: var(--mission-white); }
+  body.menu-open header { border-bottom-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;}
+  
+  body.menu-open .menu-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  body.menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
+  body.menu-open .menu-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .fullscreen-menu {
+    position: fixed; inset: 0; background: var(--midnight-navy); color: var(--mission-white);
+    z-index: 9999; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 4vw; clip-path: inset(0 0 100% 0); transition: clip-path 0.8s var(--ease-expo); pointer-events: none;
+  }
+  body.menu-open .fullscreen-menu { clip-path: inset(0 0 0 0); pointer-events: auto; }
+  
+  .menu-links { display: flex; flex-direction: column; gap: 1rem; }
+  .menu-links a {
+    font-family: 'Fraunces', serif; font-variation-settings: "opsz" 100, "SOFT" 50, "WONK" 0; font-weight: 150;
+    font-size: clamp(2.5rem, 8vw, 6rem); color: var(--mission-white); text-decoration: none;
+    opacity: 0; transform: translateY(30px); 
+    transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo), padding-left 0.4s var(--ease-expo);
+  }
+  body.menu-open .menu-links a { opacity: 1; transform: translateY(0); }
+  body.menu-open .menu-links a:nth-child(1) { transition-delay: 0.1s; }
+  body.menu-open .menu-links a:nth-child(2) { transition-delay: 0.15s; }
+  body.menu-open .menu-links a:nth-child(3) { transition-delay: 0.2s; }
+  body.menu-open .menu-links a:nth-child(4) { transition-delay: 0.25s; }
+  
+  body.menu-open .menu-links a:hover { opacity: 0.5; padding-left: 1rem; }
+
+  /* ==========================================================================
+     06. COMPONENTS (UI, Forms)
+     ========================================================================== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 1rem 2.5rem; border: 1px solid var(--text-color); background: transparent;
+    color: var(--text-color); font-family: monospace; font-size: 0.5rem; letter-spacing: 0.2em;
+    text-transform: uppercase; text-decoration: none; position: relative; overflow: hidden;
+    transition: var(--theme-fade); cursor: pointer;
+  }
+  .btn::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--text-color); transform: scaleX(0); transform-origin: right;
+    transition: transform 0.5s var(--ease-expo); z-index: -1;
+  }
+  .btn:hover::before { transform: scaleX(1); transform-origin: left; }
+  .btn:hover { color: var(--bg-color); }
+
+  .input-group { position: relative; margin-bottom: 3rem; }
+  .input-label { font-family: monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.5; position: absolute; top: -1.5rem; left: 0; }
+  .minimal-input {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--text-color);
+    padding: 1rem 0; font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 300;
+    color: var(--text-color); outline: none; transition: border-bottom-width 0.2s; border-radius: 0;
+  }
+  .minimal-input:focus { border-bottom: 3px solid var(--text-color); }
+  .footer-input { border-bottom: var(--heavy-line); text-transform: uppercase; }
+  .footer-input::placeholder { color: var(--text-color); opacity: 0.3; }
+
+  .dashboard-window { border: 1px solid var(--border-color); padding: 4vw; background: rgba(10, 17, 31, 0.4); backdrop-filter: blur(10px); transition: border-color 0.8s ease-in-out;}
+  .dash-card { border-top: 1px solid var(--border-color); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-end; transition: border-color 0.8s ease-in-out;}
+  
+  .riso-container { position: relative; width: 100%; height: 40vh; border: 1px solid var(--border-color); overflow: hidden; transition: border-color 0.8s ease-in-out;}
+  .riso-mask { position: absolute; inset: 0; pointer-events: none; z-index: 2; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); mix-blend-mode: overlay; opacity: 0.5; }
+  .fluid-ink { position: absolute; top: 50%; left: 50%; width: 100vw; height: 100vw; border-radius: 50%; background: radial-gradient(circle, var(--ink-active) 0%, transparent 60%); filter: blur(80px); transform: translate3d(-50%, -50%, 0); will-change: transform; transition: transform 2s var(--ease-fluid); }
+
+  /* ==========================================================================
+     07. UTILITIES & ANIMATIONS
+     ========================================================================== */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 1.5s var(--ease-expo), transform 1.5s var(--ease-expo); will-change: opacity, transform; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; } .delay-2 { transition-delay: 0.3s; }
+  
+  .code-tag { display: inline-block; padding: 0.25rem 0.5rem; background: var(--border-color); font-family: monospace; font-size: 0.5rem; letter-spacing: 0.1em; color: var(--text-color); margin-bottom: 1rem; transition: var(--theme-fade);}
+  .grid-visualizer > div { border: 1px dashed var(--text-color); opacity: 0.3; height: 100%; min-height: 10vh; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 0.5rem; transition: var(--theme-fade);}
+
+  /* ==========================================================================
+     08. MOBILE OPTIMIZATIONS
+     ========================================================================== */
+  @media (max-width: 900px) {
+    /* Collapse the Grid */
+    .nasa-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .span-col-1, .span-col-2-5, .span-col-2-4, .span-col-2-3, .span-col-4-5 { grid-column: 1 / -1; }
+    
+    /* Adjust Section Pacing */
+    section { padding: 12vh 0; min-height: auto; }
+    
+    /* Flip Vertical Labels to Horizontal for Mobile Reading */
+    .vertical-label { 
+      writing-mode: horizontal-tb; flex-direction: row; 
+      width: 100%; margin-bottom: 1rem; 
+    }
+    .vertical-label::before { width: 3rem; height: 1px; }
+
+    /* Component Adjustments */
+    .dash-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .riso-container { height: 30vh; }
+  }
+</style>
+</head>
+<body data-theme="light">
+
+  <div class="paper-grain grain-light"></div>
+  <div class="paper-grain grain-dark"></div>
+
+  <nav class="fullscreen-menu">
+    <div class="paper-grain grain-dark" style="opacity: 0.05;"></div>
+    <div class="menu-links nasa-grid" style="padding-top: 10vh;">
+      <div class="span-col-1">
+        <div class="vertical-label" style="color: var(--mission-white); opacity: 0.5;">System Protocol</div>
+      </div>
+      <div class="span-col-2-5" style="display: flex; flex-direction: column;">
+        <a href="#instructions" class="menu-item">System Manual</a>
+        <a href="#tokens" class="menu-item">Design Tokens</a>
+        <a href="#typography" class="menu-item">Typography</a>
+        <a href="#layout" class="menu-item">Layout Engine</a>
+        <a href="#components" class="menu-item">UI Components</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="brand-mark">
+      <svg class="icon-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="12,52 32,52 12,28" fill="currentColor" stroke="none" />
+        <rect x="12" y="52" width="40" height="12" rx="2" fill="currentColor" stroke="none" />
+      </svg>
+      <div class="logotype">LEVY</div>
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 2rem; position: relative; z-index: 10001;">
+      <div class="header-meta" style="opacity: 0.5; display: none;">CSS FRAMEWORK // V.11</div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout-wrapper">
+
+    <section id="instructions" data-theme="light" style="padding-top: 20vh;">
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <div class="vertical-label">System Operations</div>
+        </div>
+        
+        <div class="span-col-2-5 reveal delay-1">
+          <div class="dimension">MANUAL // 01. OPERATING PROCEDURES</div>
+          <h1 class="headline-l helvetica-medium">Living Style Guide</h1>
+          <p class="body-text helvetica-light">This document serves as the single source of truth for the LEVY digital ecosystem. It is an operational CSS framework designed for extreme structural rigor, explicitly optimized for multi-device performance and AI development ingestion.</p>
+        </div>
+
+        <div class="span-col-2-3 reveal delay-2" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 4rem;">
+          <h3 class="helvetica-medium" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Edit Globally</h3>
+          <p class="helvetica-light" style="font-size: 0.85rem;">Modify the design tokens (colors, curves, typography) directly in the <code>:root</code> CSS variables. Changes will instantly propagate across all components and devices flawlessly.</p>
+        </div>
+
+        <div class="span-col-4-5 reveal delay-2" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 4rem;">
+          <h3 class="helvetica-medium" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Copy Structurally</h3>
+          <p class="helvetica-light" style="font-size: 0.85rem;">Do not alter the HTML structural classes. To build new interfaces, instruct AI agents to map elements directly to the responsive 5-column grid components shown below.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tokens" data-theme="light">
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <div class="vertical-label">Design Tokens</div>
+        </div>
+        
+        <div class="span-col-2-4 reveal delay-1">
+          <div class="dimension">SECTION 02 // COLOR & MATERIALITY</div>
+          <h2 class="headline-l helvetica-medium">Variable System</h2>
+          <p class="body-text helvetica-light" style="margin-bottom: 2rem;">Core hexadecimal definitions are mapped to CSS custom properties. Dark mode attributes inherit structurally across components with an 0.8s ease-in-out crossfade.</p>
+        </div>
+
+        <div class="span-col-2-3 reveal delay-1">
+          <div class="code-tag">var(--midnight-navy)</div>
+          <div style="width: 100%; height: 6rem; background: #0A111F; border: 1px solid rgba(10,17,31,0.2); margin-bottom: 1rem;"></div>
+          <h3 class="helvetica-medium" style="font-size: 1rem;">Primary Anchor</h3>
+        </div>
+
+        <div class="span-col-4-5 reveal delay-1">
+          <div class="code-tag">var(--mission-white)</div>
+          <div style="width: 100%; height: 6rem; background: #F4F4F4; border: 1px solid rgba(10,17,31,0.2); margin-bottom: 1rem;"></div>
+          <h3 class="helvetica-medium" style="font-size: 1rem;">Substrate</h3>
+        </div>
+
+        <div class="span-col-2-5 reveal delay-1" style="margin-top: 2rem;">
+          <div class="code-tag">.riso-container > .fluid-ink</div>
+          <div class="riso-container" id="risoContainer">
+            <div class="riso-mask"></div>
+            <div class="fluid-ink" id="risoInk"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="typography" data-theme="dark">
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <div class="vertical-label">Typography</div>
+        </div>
+
+        <div class="span-col-2-5 reveal delay-1">
+          <div class="dimension">SECTION 03 // HIERARCHY & CLASSES</div>
+          <h2 class="headline-l helvetica-medium">Type Scale</h2>
+        </div>
+
+        <div class="span-col-2-3 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.helvetica-medium .headline-l</div>
+          <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6; margin-top: 1rem;">Inter 500 / Uppercase / -3% Tracking</p>
+        </div>
+        <div class="span-col-4-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem; margin-bottom: 3rem;">
+          <h1 class="helvetica-medium headline-l" style="margin-bottom: 0;">Structural Framework.</h1>
+        </div>
+
+        <div class="span-col-2-3 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.fraunces-h3</div>
+          <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6; margin-top: 1rem;">Fraunces 150 / Soft 50 / Opsz 100</p>
+        </div>
+        <div class="span-col-4-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem; margin-bottom: 3rem;">
+          <h3 class="fraunces-h3" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">The unwritten rules of power and shifting incentives.</h3>
+        </div>
+
+        <div class="span-col-2-3 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.helvetica-light .body-text</div>
+          <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6; margin-top: 1rem;">Inter 300 / 0% Tracking / 1.6 Line Height</p>
+        </div>
+        <div class="span-col-4-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem; margin-bottom: 3rem;">
+          <p class="helvetica-light body-text">You can’t move a system without somewhere to stand. Every era-defining accomplishment shares the same hidden architecture.</p>
+        </div>
+
+        <div class="span-col-2-3 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.dimension</div>
+        </div>
+        <div class="span-col-4-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="dimension">COORD 01 // METADATA JARGON</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="layout" data-theme="light">
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <div class="vertical-label">Architecture</div>
+        </div>
+
+        <div class="span-col-2-4 reveal delay-1">
+          <div class="dimension">SECTION 04 // NASA 1976 STRUCTURE</div>
+          <h2 class="headline-l helvetica-medium">The 5-Column Grid</h2>
+          <p class="body-text helvetica-light" style="margin-bottom: 3rem;">Column 1 is strictly reserved for technical metadata and vertical labels, creating a permanent structural indent on desktop that elegantly stacks on mobile.</p>
+        </div>
+
+        <div class="span-all nasa-grid grid-visualizer reveal delay-1" style="height: 10vh;">
+          <div>.span-col-1</div>
+          <div>col-2</div>
+          <div>col-3</div>
+          <div>col-4</div>
+          <div>col-5</div>
+        </div>
+        
+        <div class="span-col-1 grid-visualizer reveal delay-1" style="height: 8vh;"><div>Metadata Rail</div></div>
+        <div class="span-col-2-5 grid-visualizer reveal delay-1" style="height: 8vh;"><div>.span-col-2-5</div></div>
+
+        <div class="span-col-1 grid-visualizer reveal delay-1" style="height: 8vh;"><div>Metadata Rail</div></div>
+        <div class="span-col-2-4 grid-visualizer reveal delay-1" style="height: 8vh;"><div>.span-col-2-4</div></div>
+        <div class="grid-visualizer reveal delay-1" style="grid-column: 5 / 6; height: 8vh; display: none;"><div>Void</div></div>
+
+        <div class="span-all" style="margin-top: 4rem; border-top: var(--heavy-line); padding-top: 3rem;">
+          <h3 class="helvetica-medium reveal" style="margin-bottom: 2rem;">Practical Application</h3>
+          
+          <div class="nasa-grid reveal">
+            <div class="span-col-1">
+              <div class="dimension">EXAMPLE 01</div>
+              <div class="vertical-label" style="margin-top: 2rem;">Content Block</div>
+            </div>
+            
+            <div class="span-col-2-4">
+              <h2 class="headline-m helvetica-medium">Headline spanning two columns.</h2>
+              <p class="body-text helvetica-light">This paragraph lives inside <code>.span-col-2-4</code>, ensuring it aligns perfectly with the overarching structural system while leaving the 5th column completely empty as intentional Ma (whitespace) on large displays.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="components" data-theme="dark" style="border-bottom: none;">
+      <div class="nasa-grid">
+        <div class="span-col-1 reveal">
+          <div class="vertical-label">UI Library</div>
+        </div>
+
+        <div class="span-col-2-5 reveal delay-1">
+          <div class="dimension">SECTION 05 // INTERACTIVE ELEMENTS</div>
+          <h2 class="headline-l helvetica-medium">Components</h2>
+        </div>
+
+        <div class="span-col-2-3 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.btn</div>
+          <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6; margin-top: 1rem; margin-bottom: 2rem;">Structural interaction triggers.</p>
+          <a href="#" class="btn">Initialize Command</a>
+        </div>
+
+        <div class="span-col-4-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem;">
+          <div class="code-tag">.input-group > .minimal-input</div>
+          <p class="helvetica-light" style="font-size: 0.85rem; opacity: 0.6; margin-top: 1rem; margin-bottom: 2rem;">Blueprint data entry fields.</p>
+          
+          <div class="input-group" style="margin-top: 2rem;">
+            <label class="input-label">COORDINATE // ENTITY</label>
+            <input type="text" class="minimal-input" placeholder="Organization Name">
+          </div>
+        </div>
+
+        <div class="span-col-2-5 reveal" style="border-top: var(--heavy-line); padding-top: 2rem; margin-top: 2rem;">
+          <div class="code-tag">.dashboard-window > .dash-card</div>
+          
+          <div class="dashboard-window" style="margin-top: 2rem;">
+            <div class="dash-card" style="border-top: none;">
+              <div>
+                <div class="dimension">NODE A // POLICY</div>
+                <h3 class="fraunces-h3" style="font-size: 1.25rem;">Veto Power Isolated</h3>
+              </div>
+              <div style="font-family: monospace; font-size: 0.6rem; letter-spacing: 0.1em; opacity: 0.7;">PROBABILITY: 87%</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer data-theme="light" style="padding: 10vh 4vw 5vh 4vw; border-top: 1px solid var(--border-color); transition: border-color 0.8s ease-in-out;">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <div class="vertical-label">End of Protocol</div>
+      </div>
+      
+      <div class="span-col-2-5 reveal delay-1">
+        <h2 class="headline-l helvetica-medium" style="margin-bottom: 4vh;">Stop looking for an exit.<br>Start building a foundation.</h2>
+      </div>
+      
+      <div class="span-col-2-4 reveal delay-2">
+        <p class="helvetica-light" style="margin-bottom: 3rem; max-width: 35rem;">Field notes on public-private coordination, institutional leverage, and Action Design. From the offices in Washington, D.C. Sent monthly. No noise.</p>
+        <form>
+          <input type="email" placeholder="ENTER SECURE EMAIL ADDRESS" class="minimal-input footer-input" required>
+        </form>
+      </div>
+      
+      <div class="span-all reveal delay-2" style="display: flex; flex-direction: column; gap: 1rem; justify-content: space-between; margin-top: 10vh; font-family: monospace; font-size: 0.5rem; letter-spacing: 0.3em; opacity: 0.4; text-transform: uppercase;">
+        <span>LEVY STRATEGIC DESIGN &copy; 2026</span>
+        <span>COORDINATION: NOMINAL</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // --- Menu Toggle Logic ---
+    const menuToggle = document.getElementById('menuToggle');
+    const menuLinks = document.querySelectorAll('.menu-item');
+    
+    menuToggle.addEventListener('click', () => {
+      document.body.classList.toggle('menu-open');
+    });
+
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+      });
+    });
+
+    // --- Riso Component Logic ---
+    const risoContainer = document.getElementById('risoContainer');
+    const risoInk = document.getElementById('risoInk');
+    if (!prefersReducedMotion && window.innerWidth > 900 && risoContainer) {
+      risoContainer.addEventListener('mousemove', (e) => {
+        const rect = risoContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        risoInk.style.transform = `translate3d(${x - (rect.width * 0.5)}px, ${y - (rect.height * 0.5)}px, 0)`;
+      });
+      risoContainer.addEventListener('mouseleave', () => {
+        risoInk.style.transform = `translate3d(-50%, -50%, 0)`;
+      });
+    }
+
+    // --- High-Performance Scroll Reveal ---
+    if (!prefersReducedMotion) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            obs.unobserve(entry.target); 
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+    }
+
+    // --- SEAMLESS Crossfade Engine ---
+    const themeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.dataset.theme === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.body.setAttribute('data-theme', 'dark');
+          } else {
+            document.body.classList.remove('dark-mode');
+            document.body.setAttribute('data-theme', 'light');
+          }
+        }
+      });
+    }, { rootMargin: "-50% 0px -50% 0px" });
+    
+    document.querySelectorAll('section, footer').forEach(el => themeObserver.observe(el));
+  </script>
+</body>
+</html>

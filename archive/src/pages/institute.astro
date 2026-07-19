@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Levy Institute"
+  description="The ideas, research, and public-thinking layer of the Levy environment. Where serious work earns public legitimacy."
+>
+
+  <!-- =========================================================
+       01 / WHAT THE INSTITUTE IS
+       ========================================================= -->
+  <SectionShell
+    id="institute-anchor"
+    theme="light"
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="01 / Institute" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY INSTITUTE // IDEAS & PUBLIC LEGITIMACY" />
+        <h1 class="headline-l helvetica-medium">
+          Where ideas earn public legitimacy.
+        </h1>
+        <p class="body-text helvetica-light mb-8">
+          The Institute is the research and public-thinking layer of the
+          Levy environment. It exists because the work that serious people
+          do — at the intersection of power, capital, and consequence —
+          often requires a public dimension that goes beyond private
+          coordination.
+        </p>
+        <p class="body-text helvetica-light">
+          Ideas that cannot hold up in public are not yet finished. The
+          Institute is the environment where that work gets done: research
+          that earns credibility, writing that shapes framing, and
+          programming that builds the intellectual scaffolding for
+          consequential action.
+        </p>
+      </div>
+
+      <!-- IMAGERY: Intellectual/institutional visual.
+           Subject: lecture hall, library stacks, academic architecture,
+           or printed publication/journal spread.
+           Recommended: 16:9, muted warm tones, editorial feel. -->
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / WHAT IT PRODUCES
+       ========================================================= -->
+  <SectionShell id="output" theme="dark">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="02 / Output" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="INSTITUTE OUTPUT // FORMATS & SURFACES" />
+        <h2 class="headline-m helvetica-medium">
+          The forms the work takes.
+        </h2>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Signal dispatches.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Field notes on institutional leverage, public-private coordination,
+          and the structural conditions that produce outlier outcomes.
+          Sent when there is something worth saying.
+        </p>
+        <a href="/newsroom" class="dimension mt-6" style="display: inline-flex;">READ THE ARCHIVE →</a>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Research and publications.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Substantive work on the operating conditions that matter for
+          serious people — institutional design, coordination theory,
+          the mechanics of public legitimacy. Not academic. Actionable.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Public programming.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Lectures, convenings, and structured conversations that bring
+          serious thinking into contact with real operating conditions.
+          Open to the public where appropriate. Part of the member
+          layer where depth matters.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Framing work.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          The intellectual positioning that gives consequential action a
+          public foundation. Not messaging. The harder work of building
+          the frameworks that shape how a problem is understood and what
+          counts as a credible answer.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       03 / RELATIONSHIP TO NETWORK AND STUDIO
+       ========================================================= -->
+  <SectionShell id="relationship" theme="light" noBorder={true} noMinHeight={true}
+    style="padding-bottom: var(--space-section-y);">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="03 / The Environment" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY ENVIRONMENT // THREE CONTEXTS" />
+        <h2 class="headline-m helvetica-medium">
+          Part of a coherent whole.
+        </h2>
+        <p class="body-text helvetica-light mb-12">
+          The Institute does not operate in isolation. Its research and
+          publications inform the work of the Studio. Its programming is
+          part of what makes the Network worth being inside. The three
+          contexts exist because serious work at scale requires all three:
+          people, design capacity, and public legitimacy.
+        </p>
+        <div style="display: flex; align-items: center; gap: var(--space-8); flex-wrap: wrap;">
+          <Button href="/network">Explore the Network</Button>
+          <a href="/newsroom" class="dimension" style="display: inline-flex;">READ FIELD NOTES →</a>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>

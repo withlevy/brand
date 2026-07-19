@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Levy — A Strategic Design Studio</title>
+  <meta name="description" content="Levy is a strategic design studio working at the intersection of innovation and public institutions." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201081%201081%22%3E%3Cg%20transform%3D%22translate(0%2C1081)%20scale(0.1%2C-0.1)%22%20fill%3D%22%236B21A8%22%3E%3Cpath%20d%3D%22M7894%209151%20c-21%20-16%20-1390%20-1381%20-3041%20-3032%20-2663%20-2665%20-3002%20-3008%20-3008%20-3041%20-15%20-82%20-23%20-73%20458%20-555%20486%20-485%20481%20-481%20563%20-463%2033%208%20434%20405%203056%203027%201661%201660%203026%203031%203035%203047%2010%2020%2014%2044%2010%2074%20-5%2044%20-14%2054%20-469%20509%20-463%20463%20-463%20463%20-514%20463%20-41%200%20-59%20-6%20-90%20-29z%22%2F%3E%3Cpath%20d%3D%22M5205%203959%20c-21%20-6%20-305%20-282%20-923%20-896%20-893%20-888%20-893%20-888%20-892%20-931%200%20-50%2020%20-94%2052%20-116%2020%20-14%20211%20-16%201856%20-16%201834%200%201834%200%201867%2033%2060%2060%2059%20132%20-3%20193%20-20%2020%20-432%20413%20-915%20873%20-517%20492%20-893%20843%20-915%20853%20-40%2019%20-80%2021%20-127%207z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Levy — A Strategic Design Studio" />
+  <meta property="og:description" content="At the intersection of innovation and public institutions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://withlevy.com/" />
+  <meta property="og:site_name" content="Levy" />
+  <link rel="canonical" href="https://withlevy.com/" />
+
+  <!-- Design-system typefaces: Inter (structural) + Fraunces (editorial) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,100..900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ======================================================================
+       LEVY — minimal one-page site
+       Tokens, type roles and layout mirror the repo design system
+       (docs/LEVY_DESIGN_SYSTEM.md, src/styles/*). Accent: violet.
+       ====================================================================== */
+    :root {
+      /* Color tokens (LEVY_DESIGN_SYSTEM.md) */
+      --mission-white:     #F4F4F4;
+      --midnight-navy:     #0A111F;
+      --violet-atmosphere: #6B21A8;   /* accent */
+
+      --bg-color:     var(--mission-white);
+      --text-color:   var(--midnight-navy);
+      --border-color: rgba(10, 17, 31, 0.15);
+
+      /* Type */
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Fraunces', Georgia, serif;
+      --font-mono:  ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+      /* Spacing / layout */
+      --space-layout-x: clamp(1.5rem, 4vw, 5rem);
+      --space-grid-gap: 1.5rem;
+
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    ::selection { background: var(--violet-atmosphere); color: var(--mission-white); }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Signature paper grain — static materiality layer */
+    .paper-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      mix-blend-mode: multiply;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* --- Stage: vertically centered composition ---------------------------- */
+    .stage {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(3rem, 10vh, 7rem) var(--space-layout-x) 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* --- Swiss 12-column grid + metadata rail (design system) -------------- */
+    .swiss-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-grid-gap);
+      width: 100%;
+      max-width: 1600px;
+      align-items: start;
+    }
+    .rail    { grid-column: 1 / 2; }
+    .content { grid-column: 2 / 12; }
+
+    /* Metadata rail — vertical label */
+    .vertical-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 0.35rem;
+    }
+    .vertical-label::before {
+      content: '';
+      width: 1px;
+      height: 3rem;
+      background: currentColor;
+    }
+
+    /* Dimension label — kicker with diagonal tick */
+    .dimension {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .dimension::before {
+      content: '';
+      width: 1.5rem;
+      height: 1px;
+      background: currentColor;
+      display: block;
+      transform: rotate(45deg);
+      transform-origin: left center;
+      flex-shrink: 0;
+    }
+
+    /* Logo mark (Icon.svg) — sits above the wordmark as a lockup */
+    .mark {
+      display: block;
+      height: clamp(2.5rem, 5vw, 3.75rem);
+      width: auto;
+      color: var(--text-color);
+      margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem);
+    }
+
+    /* Wordmark — Inter, structural voice, tight tracking (see .logotype) */
+    .wordmark {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+    }
+
+    /* Editorial block — Fraunces, styled as plain sentences */
+    .studio,
+    .intersection {
+      font-family: var(--font-serif);
+      font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+      font-weight: 300;
+      font-size: clamp(1.85rem, 4.6vw, 3.1rem);
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      max-width: 20ch;
+    }
+    .studio       { margin-top: clamp(2.25rem, 6vh, 4rem); }
+    .intersection { margin-top: 0.4em; }
+
+    /* Offer line — Inter light body */
+    .offer {
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      line-height: 1.5;
+      margin-top: clamp(1.5rem, 4vh, 2.5rem);
+    }
+
+    /* --- Footer, quiet ----------------------------------------------------- */
+    .site-footer {
+      position: relative;
+      z-index: 10;
+      padding: clamp(3rem, 9vh, 6rem) var(--space-layout-x) clamp(1.75rem, 5vh, 2.5rem);
+    }
+    .footer-inner {
+      max-width: 1600px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-grid-gap);
+      align-items: baseline;
+    }
+    .footer-note {
+      grid-column: 2 / 9;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 0.8125rem;
+      letter-spacing: 0.01em;
+      opacity: 0.5;
+    }
+    .footer-contact {
+      grid-column: 8 / 12;
+      justify-self: end;
+      display: flex;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.8125rem;
+      letter-spacing: 0.02em;
+    }
+    .footer-contact a { white-space: nowrap; }
+
+    /* --- Links ------------------------------------------------------------- */
+    a { color: inherit; text-decoration: none; }
+
+    /* The two verbs: violet underline; shift to violet on hover/focus */
+    .verb {
+      text-decoration: underline;
+      text-decoration-color: var(--violet-atmosphere);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+      transition: color 0.25s var(--ease-expo), text-decoration-color 0.25s var(--ease-expo);
+    }
+    .verb:hover,
+    .verb:focus-visible { color: var(--violet-atmosphere); }
+
+    /* Contact: violet underline; shift to violet on hover/focus */
+    .contact {
+      text-decoration: underline;
+      text-decoration-color: var(--violet-atmosphere);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+      transition: color 0.25s var(--ease-expo), text-decoration-color 0.25s var(--ease-expo);
+    }
+    .contact:hover,
+    .contact:focus-visible { color: var(--violet-atmosphere); }
+
+    /* Visible keyboard focus states */
+    a:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    /* --- Mobile: grid collapses, rail flips horizontal (design system) ----- */
+    @media (max-width: 900px) {
+      .swiss-grid, .footer-inner { grid-template-columns: 1fr; }
+      .rail, .content,
+      .footer-note, .footer-contact { grid-column: 1 / -1; }
+
+      .vertical-label {
+        writing-mode: horizontal-tb;
+        flex-direction: row;
+        margin: 0 0 2rem;
+      }
+      .vertical-label::before { width: 3rem; height: 1px; }
+
+      .footer-contact { justify-self: start; margin-top: 1rem; }
+      .intersection { max-width: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+
+  <main class="stage">
+    <div class="swiss-grid">
+      <!-- Column 1 — metadata rail -->
+      <div class="rail">
+        <div class="vertical-label" aria-hidden="true">Washington, D.C.</div>
+      </div>
+
+      <!-- Columns 2–11 — narrative content -->
+      <div class="content">
+        <svg class="mark" viewBox="0 0 1081 1081" role="img" aria-label="Levy">
+          <g transform="translate(0,1081) scale(0.1,-0.1)" fill="currentColor">
+            <path d="M7894 9151 c-21 -16 -1390 -1381 -3041 -3032 -2663 -2665 -3002 -3008 -3008 -3041 -15 -82 -23 -73 458 -555 486 -485 481 -481 563 -463 33 8 434 405 3056 3027 1661 1660 3026 3031 3035 3047 10 20 14 44 10 74 -5 44 -14 54 -469 509 -463 463 -463 463 -514 463 -41 0 -59 -6 -90 -29z"/>
+            <path d="M5205 3959 c-21 -6 -305 -282 -923 -896 -893 -888 -893 -888 -892 -931 0 -50 20 -94 52 -116 20 -14 211 -16 1856 -16 1834 0 1834 0 1867 33 60 60 59 132 -3 193 -20 20 -432 413 -915 873 -517 492 -893 843 -915 853 -40 19 -80 21 -127 7z"/>
+          </g>
+        </svg>
+        <h1 class="wordmark">Levy</h1>
+        <p class="studio">A Strategic Design Studio</p>
+
+        <p class="intersection">At the intersection of innovation and public institutions.</p>
+
+        <p class="offer">We:
+          <a class="verb" href="https://insights.withlevy.com/">write</a>
+          &amp;
+          <a class="verb" href="https://theupskillinglabs.org">build</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-note">Outlier outcomes require public coordination.</p>
+      <p class="footer-contact">
+        <a class="contact" href="mailto:connect@withlevy.com">Contact us →</a>
+        <a class="contact" href="https://www.linkedin.com/company/withlevy/">Follow us →</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
