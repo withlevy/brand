@@ -1,0 +1,787 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="The Levy Network — Membership for Serious Innovators"
+  description="Outlier outcomes require public coordination. The Levy Network is a membership for founders, operators, and institutional leaders building things that cannot succeed without working with public systems."
+  bodyClass="page-home"
+>
+
+  <!-- =========================================================
+       A / HERO — Attention
+       ========================================================= -->
+  <SectionShell
+    id="hero"
+    theme="light"
+    style="padding-top: calc(4.5rem + var(--space-section-y)); min-height: 100vh;"
+  >
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="01 / Position" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="THE LEVY NETWORK // MEMBERSHIP" />
+        <h1 class="fraunces-display hero-headline">
+          Outlier outcomes require public coordination. We help serious innovators navigate it.
+        </h1>
+        <p class="body-text helvetica-light mb-12">
+          The Levy Network is a membership for founders, operators, and
+          institutional leaders building things that cannot succeed without
+          working with public systems.
+        </p>
+        <div class="btn-row">
+          <Button href="/join" class="btn-accent">Apply for Membership</Button>
+          <Button href="#tiers" class="btn-ghost">Explore Membership</Button>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       B / THE FIT — Quick Audience Check
+       ========================================================= -->
+  <SectionShell id="fit" theme="light" noMinHeight={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="02 / Fit" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="IS THIS FOR YOU" />
+        <h2 class="fraunces-display section-headline">
+          This is for people building things that don't work without public coordination.
+        </h2>
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-2 mt-12">
+        <div class="fit-grid">
+          <div class="fit-item border-top pt-6">
+            <span class="dimension dimension-card">REGULATED FOUNDERS</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              You're building in a sector where policy, procurement, or regulation
+              shapes whether your product can exist at all.
+            </p>
+          </div>
+          <div class="fit-item border-top pt-6">
+            <span class="dimension dimension-card">INSTITUTIONAL BUILDERS</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              You lead or advise organizations that depend on public trust,
+              government partnerships, or legislative context.
+            </p>
+          </div>
+          <div class="fit-item border-top pt-6">
+            <span class="dimension dimension-card">OPERATORS &amp; COALITION LEADERS</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              You coordinate across sectors — private capital, public agencies,
+              and civic infrastructure — to make complex things happen.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       C / DC LEVERAGE — Interest
+       ========================================================= -->
+  <SectionShell id="leverage" theme="light" noMinHeight={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="03 / Leverage" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="WASHINGTON, D.C. // STRATEGIC POSITION" />
+        <h2 class="fraunces-display section-headline">
+          Washington is a leverage environment, not a backdrop.
+        </h2>
+        <p class="body-text helvetica-light mt-8">
+          Policy shapes markets. Regulation creates categories. Procurement
+          opens doors that sales teams cannot. Proximity to public systems is
+          not symbolic — it is a structural advantage for anyone building
+          something durable.
+        </p>
+        <p class="body-text helvetica-light mt-6">
+          The Levy Network is built in Washington, D.C. because this is where
+          public coordination becomes tangible — where relationships with
+          government, institutional capital, and civic infrastructure compound
+          into real leverage.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       D / THE "MA" SECTION — Dark Strategic Logic
+       ONLY dark section on the page.
+       ========================================================= -->
+  <SectionShell id="logic" theme="dark">
+    <div class="ma-noise" aria-hidden="true"></div>
+
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="04 / Logic" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="STRATEGIC FRAMEWORK // THREE PRINCIPLES" />
+        <h2 class="fraunces-display section-headline mb-16">
+          The logic behind the network.
+        </h2>
+      </div>
+
+      <!-- Graphic 1: J-Curve -->
+      <div class="col-start-2 col-span-3 reveal delay-2">
+        <div class="ma-card">
+          <div class="css-graphic jcurve-graphic" aria-hidden="true">
+            <div class="jcurve-line"></div>
+            <div class="jcurve-dot-start"></div>
+            <div class="jcurve-dot-end"></div>
+          </div>
+          <h3 class="fraunces-h3 mt-6" style="font-size: 1.25rem;">
+            Outlier outcomes are rarely linear.
+          </h3>
+          <p class="helvetica-light mt-4" style="font-size: 0.85rem;">
+            Early effort compounds slowly. Then disproportionately.
+            The work that matters most looks like nothing — until it doesn't.
+          </p>
+        </div>
+      </div>
+
+      <!-- Graphic 2: Venn Diagram -->
+      <div class="col-span-3 reveal delay-3">
+        <div class="ma-card">
+          <div class="css-graphic venn-graphic" aria-hidden="true">
+            <div class="venn-circle venn-left"></div>
+            <div class="venn-circle venn-right"></div>
+            <span class="venn-label venn-label-left">Private</span>
+            <span class="venn-label venn-label-right">Public</span>
+          </div>
+          <h3 class="fraunces-h3 mt-6" style="font-size: 1.25rem;">
+            The most interesting work happens in the overlap.
+          </h3>
+          <p class="helvetica-light mt-4" style="font-size: 0.85rem;">
+            Where private ambition meets public infrastructure,
+            new categories emerge. That intersection is where we operate.
+          </p>
+        </div>
+      </div>
+
+      <!-- Graphic 3: Node Map -->
+      <div class="col-span-3 reveal delay-4">
+        <div class="ma-card">
+          <div class="css-graphic node-graphic" aria-hidden="true">
+            <div class="node node-center"></div>
+            <div class="node node-1"></div>
+            <div class="node node-2"></div>
+            <div class="node node-3"></div>
+            <div class="node node-4"></div>
+            <div class="node node-5"></div>
+            <div class="node-line line-1"></div>
+            <div class="node-line line-2"></div>
+            <div class="node-line line-3"></div>
+            <div class="node-line line-4"></div>
+            <div class="node-line line-5"></div>
+          </div>
+          <h3 class="fraunces-h3 mt-6" style="font-size: 1.25rem;">
+            Serious peers change what becomes possible.
+          </h3>
+          <p class="helvetica-light mt-4" style="font-size: 0.85rem;">
+            Access to the right people — people building at the same altitude —
+            reshapes your strategy, your timeline, and your ambition.
+          </p>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       E / MEMBERSHIP VALUE — Desire
+       ========================================================= -->
+  <SectionShell id="value" theme="light" noMinHeight={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="05 / Value" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="MEMBERSHIP // WHAT YOU GET" />
+        <h2 class="fraunces-display section-headline">
+          Concrete advantages, not abstract promises.
+        </h2>
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-2 mt-12">
+        <div class="value-grid">
+          <div class="value-item border-top pt-6">
+            <span class="dimension dimension-card">BETTER RELATIONSHIPS</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              Direct introductions to founders, operators, and institutional leaders
+              who are building at the same level of seriousness and complexity.
+            </p>
+          </div>
+          <div class="value-item border-top pt-6">
+            <span class="dimension dimension-card">SHARPER PERSPECTIVE</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              Monthly field notes, curated briefings, and access to strategic
+              analysis on public-private coordination that you won't find elsewhere.
+            </p>
+          </div>
+          <div class="value-item border-top pt-6">
+            <span class="dimension dimension-card">PRACTICAL MOMENTUM</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              Quarterly workshops, stakeholder mapping sessions, and structured
+              convenings designed to move your work forward — not just discuss it.
+            </p>
+          </div>
+          <div class="value-item border-top pt-6">
+            <span class="dimension dimension-card">STRATEGY SUPPORT</span>
+            <p class="helvetica-light" style="font-size: 0.95rem;">
+              Direct access to strategic consulting — from one-hour sessions
+              to embedded partnership — calibrated to the complexity of what you're building.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       F / THE TIERS — The Offer
+       ========================================================= -->
+  <SectionShell id="tiers" theme="light" noMinHeight={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="06 / Tiers" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="THREE TIERS // ONE NETWORK" />
+        <h2 class="fraunces-display section-headline">
+          Choose the depth of your engagement.
+        </h2>
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-2 mt-12">
+        <div class="tier-grid">
+
+          <div class="tier-card border-top pt-8">
+            <span class="dimension dimension-card">INSIDER</span>
+            <h3 class="fraunces-h3" style="font-size: 1.5rem; margin-bottom: 0.75rem;">
+              Understand the terrain.
+            </h3>
+            <ul class="tier-features helvetica-light">
+              <li>Insider Insights newsletter</li>
+              <li>Access to public events and convenings</li>
+              <li>Levy Network Slack community</li>
+            </ul>
+          </div>
+
+          <div class="tier-card tier-card-featured border-top pt-8">
+            <span class="tier-recommended">Recommended</span>
+            <span class="dimension dimension-card">BUILDER</span>
+            <h3 class="fraunces-h3" style="font-size: 1.5rem; margin-bottom: 0.75rem;">
+              Make it last.
+            </h3>
+            <ul class="tier-features helvetica-light">
+              <li>Everything in Insider</li>
+              <li>Quarterly workshops and stakeholder mapping</li>
+              <li>1 hour of strategy consulting per quarter</li>
+              <li>Peer introductions and small-group convenings</li>
+            </ul>
+          </div>
+
+          <div class="tier-card tier-card-premium border-top pt-8">
+            <span class="dimension dimension-card">ARCHITECT</span>
+            <h3 class="fraunces-h3" style="font-size: 1.5rem; margin-bottom: 0.75rem;">
+              Embedded strategic partnership.
+            </h3>
+            <ul class="tier-features helvetica-light">
+              <li>Everything in Builder</li>
+              <li>Procurement and coalition design support</li>
+              <li>Dedicated strategic advisory</li>
+              <li>Premium, by inquiry only</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-3 mt-12">
+        <Button href="/join" class="btn-accent">Apply for Membership</Button>
+        <a href="/pricing" class="dimension" style="margin-left: 2rem; display: inline-flex; align-items: center;">VIEW PRICING →</a>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       G / FAQ & PROOF
+       ========================================================= -->
+  <SectionShell id="faq" theme="light" noMinHeight={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="07 / FAQ" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="COMMON QUESTIONS" />
+        <h2 class="fraunces-display section-headline">
+          What you need to know.
+        </h2>
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-2 mt-12">
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question helvetica-medium">
+              Is this just for founders?
+            </summary>
+            <p class="faq-answer helvetica-light">
+              No. The Levy Network serves founders, senior operators, institutional
+              leaders, and coalition builders. The common thread is that your work
+              depends on navigating public systems — regulation, procurement,
+              legislative context, or government partnerships.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question helvetica-medium">
+              Do I need to be in Washington, D.C.?
+            </summary>
+            <p class="faq-answer helvetica-light">
+              No. Many members operate nationally or globally. D.C. is our base
+              because of its proximity to federal institutions and public systems,
+              but the network's value extends well beyond geography. Digital access,
+              remote workshops, and traveling convenings are part of the model.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question helvetica-medium">
+              What's the difference between Builder and Architect?
+            </summary>
+            <p class="faq-answer helvetica-light">
+              Builder gives you structured access — workshops, stakeholder mapping,
+              quarterly consulting, and peer convenings. Architect is an embedded
+              strategic partnership: dedicated advisory, coalition design, and
+              procurement support. Architect is by inquiry and designed for
+              organizations with complex, high-stakes coordination needs.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question helvetica-medium">
+              How does the application process work?
+            </summary>
+            <p class="faq-answer helvetica-light">
+              Apply through our membership form. We review applications on a rolling
+              basis with a focus on fit — what you're building, the public coordination
+              challenges you face, and how the network can meaningfully support your work.
+              Expect a response within two weeks.
+            </p>
+          </details>
+        </div>
+      </div>
+
+      <!-- Testimonial placeholder -->
+      <div class="col-start-2 col-span-11 reveal delay-3 mt-16">
+        <div class="testimonial-placeholder border-top pt-8">
+          <DimensionLabel text="MEMBER PERSPECTIVES // COMING SOON" />
+          <p class="helvetica-light" style="font-size: 0.95rem; max-width: 30rem;">
+            We're gathering stories from current members about how the network
+            has shaped their work. Check back soon.
+          </p>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       H / FINAL CTA — Action
+       ========================================================= -->
+  <SectionShell id="apply" theme="light" noBorder={true}>
+    <div class="swiss-grid">
+      <div class="col-span-1 reveal">
+        <VerticalLabel text="08 / Apply" />
+      </div>
+
+      <div class="col-start-2 col-span-11 reveal delay-1">
+        <DimensionLabel text="START HERE" />
+        <h2 class="fraunces-display hero-headline">
+          If you're serious about building something that requires public coordination, start here.
+        </h2>
+        <div class="btn-row mt-12">
+          <Button href="/join" class="btn-accent">Apply for Membership</Button>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  /* ===== HERO ===== */
+  .hero-headline {
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    margin-bottom: var(--space-12);
+  }
+
+  .section-headline {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    margin-bottom: var(--space-8);
+  }
+
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  /* ===== FIT SECTION ===== */
+  .fit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .dimension-card { margin-bottom: 0.5rem; }
+
+  @media (min-width: 769px) and (max-width: 1000px) {
+    .fit-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .fit-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== MA / DARK SECTION ===== */
+  #logic {
+    background: #0A0A0A !important;
+  }
+
+  .ma-noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .ma-card {
+    padding: var(--space-8) 0;
+  }
+
+  /* --- CSS-Only Graphics --- */
+  .css-graphic {
+    position: relative;
+    height: 180px;
+    width: 100%;
+  }
+
+  /* J-Curve */
+  .jcurve-graphic {
+    overflow: hidden;
+  }
+
+  .jcurve-line {
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+    width: 80%;
+    height: 140px;
+    border: 1px solid rgba(247, 247, 246, 0.4);
+    border-top: none;
+    border-right: none;
+    border-radius: 0 0 0 60%;
+    transform: scaleX(-1);
+  }
+
+  .jcurve-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+    height: 80px;
+    background: rgba(247, 247, 246, 0.4);
+  }
+
+  .jcurve-dot-start {
+    position: absolute;
+    top: 20px;
+    right: 10%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--seal-red);
+  }
+
+  .jcurve-dot-end {
+    position: absolute;
+    bottom: 18px;
+    left: 10%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(247, 247, 246, 0.5);
+  }
+
+  /* Venn Diagram */
+  .venn-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .venn-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(247, 247, 246, 0.35);
+    position: absolute;
+  }
+
+  .venn-left {
+    left: calc(50% - 80px);
+  }
+
+  .venn-right {
+    left: calc(50% - 40px);
+  }
+
+  .venn-left::after,
+  .venn-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(217, 59, 43, 0.06);
+  }
+
+  .venn-label {
+    position: absolute;
+    bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247, 247, 246, 0.4);
+  }
+
+  .venn-label-left { left: calc(50% - 100px); }
+  .venn-label-right { right: calc(50% - 100px); }
+
+  /* Node Map */
+  .node-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .node {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(247, 247, 246, 0.6);
+  }
+
+  .node-center {
+    width: 10px;
+    height: 10px;
+    left: calc(50% - 5px);
+    top: calc(50% - 5px);
+    background: var(--seal-red);
+    z-index: 2;
+  }
+
+  .node-1 { width: 5px; height: 5px; top: 20%; left: 25%; }
+  .node-2 { width: 5px; height: 5px; top: 15%; left: 65%; }
+  .node-3 { width: 5px; height: 5px; top: 70%; left: 20%; }
+  .node-4 { width: 5px; height: 5px; top: 75%; left: 70%; }
+  .node-5 { width: 5px; height: 5px; top: 40%; left: 80%; }
+
+  .node-line {
+    position: absolute;
+    background: rgba(247, 247, 246, 0.12);
+    transform-origin: 0 0;
+    height: 1px;
+    z-index: 1;
+  }
+
+  .line-1 {
+    width: 90px;
+    top: calc(50% - 1px);
+    left: calc(25% + 3px);
+    transform: rotate(-25deg);
+  }
+
+  .line-2 {
+    width: 80px;
+    top: calc(50%);
+    left: calc(50%);
+    transform: rotate(-40deg);
+  }
+
+  .line-3 {
+    width: 100px;
+    top: calc(50%);
+    left: calc(50%);
+    transform: rotate(150deg);
+  }
+
+  .line-4 {
+    width: 85px;
+    top: calc(50%);
+    left: calc(50%);
+    transform: rotate(35deg);
+  }
+
+  .line-5 {
+    width: 95px;
+    top: calc(50%);
+    left: calc(50%);
+    transform: rotate(-10deg);
+  }
+
+  /* ===== VALUE SECTION ===== */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 768px) {
+    .value-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== TIER SECTION ===== */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .tier-card {
+    padding-bottom: var(--space-8);
+    transition: transform 0.4s var(--ease-expo);
+  }
+
+  .tier-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .tier-card-premium {
+    border-top-color: var(--seal-red) !important;
+  }
+
+  /* Builder tier — featured/recommended */
+  .tier-card-featured {
+    border-top-width: 2px;
+    border-top-color: var(--sumi);
+    background: var(--ink-base);
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+    margin-left: calc(-1 * var(--space-6));
+    margin-right: calc(-1 * var(--space-6));
+  }
+
+  .tier-recommended {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--seal-red);
+    opacity: 0.9;
+    margin-bottom: var(--space-4);
+  }
+
+  .tier-features {
+    list-style: none;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .tier-features li {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .tier-features li:last-child {
+    border-bottom: none;
+  }
+
+  #logic, #apply { min-height: auto; }
+
+  @media (min-width: 769px) and (max-width: 1000px) {
+    .tier-grid { grid-template-columns: 1fr 1fr; }
+    .tier-card:last-child { grid-column: 1 / -1; max-width: 50%; }
+  }
+  @media (max-width: 768px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier-card:last-child { max-width: 100%; }
+    .tier-card-featured {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  /* ===== FAQ SECTION ===== */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-top: 1px solid var(--border-color);
+    padding: var(--space-6) 0;
+  }
+
+  .faq-question {
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    line-height: 1.4;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-question::-webkit-details-marker { display: none; }
+
+  .faq-question::after {
+    content: '+';
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.4;
+    flex-shrink: 0;
+    margin-left: var(--space-4);
+    transition: transform 0.3s var(--ease-expo);
+  }
+
+  details[open] .faq-question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding-top: var(--space-4);
+    font-size: 0.9rem;
+    max-width: 35rem;
+  }
+
+  /* ===== TESTIMONIAL PLACEHOLDER ===== */
+  .testimonial-placeholder {
+    opacity: 0.6;
+  }
+</style>

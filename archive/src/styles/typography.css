@@ -1,0 +1,129 @@
+/* ==========================================================================
+   TYPOGRAPHY SYSTEM
+   Inter (structural) + Fraunces (editorial) + Monospace (metadata/signal).
+   ========================================================================== */
+
+/* --- Inter Medium: Structural voice --- */
+/* H1s, H2s, navigation, button text, major page anchors */
+
+.helvetica-medium {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.headline-l { font-size: var(--type-headline-l); margin-bottom: var(--space-12); }
+.headline-m { font-size: var(--type-headline-m); margin-bottom: var(--space-8); }
+.mb-0       { margin-bottom: 0 !important; }
+
+/* --- Inter Light: Body copy --- */
+/* Paragraph text, descriptions, article intros */
+
+.helvetica-light {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.body-text {
+  font-size: var(--type-body);
+  max-width: 40rem;
+}
+
+/* --- Fraunces: Editorial counterpoint --- */
+/* H3s, pull quotes, large menu links, high-emphasis narrative moments */
+
+.fraunces-h3 {
+  font-family: var(--font-serif);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  font-weight: 150;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+
+/* Fraunces Display: Large Mincho-style headings */
+.fraunces-display {
+  font-family: var(--font-serif);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* --- Monospace: Metadata and signal --- */
+/* Section coordinates, dimension labels, article metadata, utility labels */
+
+.dimension {
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0.5;
+  margin-bottom: var(--space-6);
+  text-decoration: none;
+}
+
+/* When .dimension is a hyperlink, nudge opacity up for legibility */
+a.dimension {
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+a.dimension:hover {
+  opacity: 1;
+}
+
+.dimension::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  display: block;
+  transform: rotate(45deg);
+  transform-origin: left center;
+  flex-shrink: 0;
+}
+
+/* Column 1 metadata rail label */
+.vertical-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.vertical-label::before {
+  content: '';
+  width: 1px;
+  height: 3rem;
+  background: currentColor;
+}
+
+/* --- Mobile typography overrides --- */
+@media (max-width: 900px) {
+  /* Flip vertical labels to horizontal for readability */
+  .vertical-label {
+    writing-mode: horizontal-tb;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: var(--space-4);
+  }
+
+  .vertical-label::before {
+    width: 3rem;
+    height: 1px;
+  }
+}

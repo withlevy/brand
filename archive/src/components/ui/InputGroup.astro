@@ -1,0 +1,33 @@
+---
+interface Props {
+  label: string;
+  type?: string;
+  name: string;
+  placeholder?: string;
+  required?: boolean;
+  footer?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  type = 'text',
+  name,
+  placeholder = '',
+  required = false,
+  footer = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['input-group', className]}>
+  <label class="input-label" for={name}>{label}</label>
+  <input
+    class:list={['minimal-input', footer && 'footer-input']}
+    type={type}
+    id={name}
+    name={name}
+    placeholder={placeholder}
+    required={required || undefined}
+  />
+</div>

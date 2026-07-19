@@ -1,0 +1,101 @@
+---
+// Footer — the site's final structural block.
+// Must feel like a place you arrive, not fall out of.
+
+const navLinks = [
+  { href: '/network',   label: 'Network' },
+  { href: '/studio',    label: 'Studio' },
+  { href: '/institute', label: 'Institute' },
+  { href: '/newsroom',  label: 'Newsroom' },
+  { href: '/events',    label: 'Events' },
+];
+
+const secondaryLinks = [
+  { href: '/about',   label: 'About' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/login',   label: 'Log In' },
+];
+---
+
+<footer data-theme="dark">
+  <div class="nasa-grid">
+
+    <!-- Col 1: Metadata rail -->
+    <div class="span-col-1 reveal">
+      <div class="vertical-label">End of Protocol</div>
+    </div>
+
+    <!-- Closing statement + CTA -->
+    <div class="span-col-2-4 reveal delay-1">
+      <h2 class="headline-m helvetica-medium">
+        Stop looking for an exit.<br />Start building a foundation.
+      </h2>
+      <p class="body-text helvetica-light mb-12">
+        Levy is the operating environment for serious people who want
+        durable leverage. From the offices in Washington, D.C.
+      </p>
+      <div class="footer-cta-row">
+        <a href="/join" class="btn">Join the Network</a>
+        <a href="/login" class="dimension" style="display: inline-flex; align-items: center;">LOG IN →</a>
+      </div>
+    </div>
+
+    <!-- Newsletter capture -->
+    <div class="span-col-2-4 reveal delay-2 footer-newsletter">
+      <div class="dimension" style="margin-bottom: var(--space-4);">SIGNAL DISPATCH // NEWSLETTER</div>
+      <p class="helvetica-light mb-8" style="max-width: 35rem; font-size: 0.9rem;">
+        Field notes on public-private coordination, institutional leverage,
+        and Action Design. Sent monthly. No noise.
+      </p>
+      <!-- Outseta Email List — Signal Dispatch -->
+      <form class="footer-form" action="https://levy.outseta.com/email/lists/MQvb4oQY/subscribe" method="post">
+        <div class="input-group">
+          <label class="input-label" for="footer-email">Secure Channel</label>
+          <input
+            type="email"
+            id="footer-email"
+            name="Email"
+            placeholder="ENTER SECURE EMAIL ADDRESS"
+            class="minimal-input footer-input"
+            required
+          />
+        </div>
+        <!-- Honeypot — leave empty to allow real signups. -->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="o_q24bClZJMfnImoR5BAUXwhkf_y1uZ3Ifp" tabindex="-1" value="" autocomplete="off" />
+        </div>
+        <button type="submit" class="footer-form-submit dimension" data-wait="Sending...">Subscribe →</button>
+      </form>
+      <script is:inline src="https://cdn.outseta.com/emailsignup.min.js" defer></script>
+    </div>
+
+    <!-- Wayfinding links -->
+    <div class="span-col-2-3 reveal delay-2 footer-nav">
+      <div class="dimension" style="margin-bottom: var(--space-4);">NAVIGATION</div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        {navLinks.map(link => (
+          <a href={link.href} class="footer-link">{link.label}</a>
+        ))}
+      </nav>
+    </div>
+
+    <div class="span-col-4-5 reveal delay-2 footer-nav">
+      <div class="dimension" style="margin-bottom: var(--space-4);">ACCOUNT</div>
+      <nav class="footer-links" aria-label="Secondary footer navigation">
+        {secondaryLinks.map(link => (
+          <a href={link.href} class="footer-link">{link.label}</a>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Legal -->
+    <div class="span-all reveal delay-3 footer-legal">
+      <div class="footer-legal-row">
+        <span>LEVY STRATEGIC DESIGN &copy; {new Date().getFullYear()}</span>
+        <span>WASHINGTON, D.C.</span>
+        <span>COORDINATION: NOMINAL</span>
+      </div>
+    </div>
+
+  </div>
+</footer>

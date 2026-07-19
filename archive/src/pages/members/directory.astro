@@ -1,0 +1,52 @@
+---
+// Auth gate: handled server-side in src/middleware.ts.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionShell from '../../components/layout/SectionShell.astro';
+import VerticalLabel from '../../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../../components/typography/DimensionLabel.astro';
+---
+
+<BaseLayout
+  title="Network Directory — Levy Network"
+  description="Find and connect with other Levy Network members."
+>
+
+  <SectionShell
+    id="directory"
+    theme="light"
+    noBorder={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y)); min-height: 100vh;"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Directory" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="MEMBER ACCESS // NETWORK DIRECTORY" />
+        <h1 class="headline-l helvetica-medium">
+          Network directory.
+        </h1>
+        <p class="body-text helvetica-light mb-12">
+          Search and connect with other members of the Levy Network.
+          The directory is available to Builder and Architect tier members.
+        </p>
+
+        <!-- TODO: Insert Outseta member directory embed.
+             1. Go to levy.outseta.com > People > Directory
+             2. Copy the embed/widget code
+             3. Replace the .directory-placeholder div below
+             Alternative: Build a custom directory using Outseta API. -->
+        <div class="directory-placeholder border-top pt-8">
+          <div class="dimension" style="opacity: 0.35;">DIRECTORY // LOADING</div>
+          <p class="helvetica-light mt-6" style="font-size: 0.9rem; opacity: 0.45; max-width: 28rem;">
+            The member directory is loading. Ensure you are logged in with
+            Builder or Architect tier access.
+          </p>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>

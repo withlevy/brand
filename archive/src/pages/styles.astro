@@ -1,0 +1,314 @@
+---
+// /styles — Living design system and regression surface.
+// Source of truth lives in tokens, shared CSS, and components.
+// This page exposes the full system in one place.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+import InputGroup from '../components/ui/InputGroup.astro';
+import DashboardWindow from '../components/ui/DashboardWindow.astro';
+import DashboardCard from '../components/ui/DashboardCard.astro';
+import RisoContainer from '../components/ui/RisoContainer.astro';
+---
+
+<BaseLayout
+  title="Levy // System UI Kit"
+  description="Living design system for the Levy visual framework."
+>
+
+  <!-- =========================================================
+       01 / SYSTEM MANUAL
+       ========================================================= -->
+  <SectionShell
+    id="instructions"
+    theme="light"
+    style="padding-top: var(--space-section-y);"
+  >
+    <div class="nasa-grid">
+
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="System Operations" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="MANUAL // 01. OPERATING PROCEDURES" />
+        <h1 class="headline-l helvetica-medium">Living Style Guide</h1>
+        <p class="body-text helvetica-light">
+          This document serves as the single source of truth for the LEVY
+          digital ecosystem. An operational CSS framework designed for extreme
+          structural rigor, optimized for multi-device performance and AI
+          development ingestion.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="helvetica-medium" style="font-size: 1rem; margin-bottom: 0.5rem;">
+          1. Edit Globally
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.85rem;">
+          Modify design tokens directly in <code>tokens.css</code>. Changes
+          propagate across all components and devices instantly.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="helvetica-medium" style="font-size: 1rem; margin-bottom: 0.5rem;">
+          2. Copy Structurally
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.85rem;">
+          Do not alter structural HTML classes. To build new interfaces,
+          map elements directly to the 5-column grid components shown below.
+        </p>
+      </div>
+
+    </div>
+  </SectionShell>
+
+
+  <!-- =========================================================
+       02 / DESIGN TOKENS
+       ========================================================= -->
+  <SectionShell id="tokens" theme="light">
+    <div class="nasa-grid">
+
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Design Tokens" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="SECTION 02 // COLOR & MATERIALITY" />
+        <h2 class="headline-l helvetica-medium">Variable System</h2>
+        <p class="body-text helvetica-light mb-8">
+          Core hexadecimal definitions are mapped to CSS custom properties.
+          Dark mode attributes inherit structurally with an 0.8s
+          ease-in-out crossfade.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-1">
+        <div class="code-tag">var(--sumi)</div>
+        <div class="swatch" style="background: #080808;"></div>
+        <h3 class="helvetica-medium" style="font-size: 1rem;">Sumi Ink</h3>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-1">
+        <div class="code-tag">var(--washi)</div>
+        <div class="swatch" style="background: #F7F7F6; border: 1px solid rgba(8,8,8,0.12);"></div>
+        <h3 class="helvetica-medium" style="font-size: 1rem;">Washi Paper</h3>
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1 mt-8">
+        <div class="code-tag">.riso-container > .fluid-ink</div>
+        <RisoContainer interactive={true} class="mt-4" />
+      </div>
+
+    </div>
+  </SectionShell>
+
+
+  <!-- =========================================================
+       03 / TYPOGRAPHY
+       ========================================================= -->
+  <SectionShell id="typography" theme="dark">
+    <div class="nasa-grid">
+
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Typography" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="SECTION 03 // HIERARCHY & CLASSES" />
+        <h2 class="headline-l helvetica-medium">Type Scale</h2>
+      </div>
+
+      <!-- Inter Medium -->
+      <div class="span-col-2-3 reveal border-top-heavy pt-8">
+        <div class="code-tag">.helvetica-medium .headline-l</div>
+        <p class="helvetica-light mt-4" style="font-size: 0.85rem; opacity: 0.6;">
+          Inter 500 / Uppercase / -3% Tracking
+        </p>
+      </div>
+      <div class="span-col-4-5 reveal border-top-heavy pt-8 mb-12">
+        <h1 class="helvetica-medium headline-l mb-0">Structural Framework.</h1>
+      </div>
+
+      <!-- Fraunces -->
+      <div class="span-col-2-3 reveal border-top-heavy pt-8">
+        <div class="code-tag">.fraunces-h3</div>
+        <p class="helvetica-light mt-4" style="font-size: 0.85rem; opacity: 0.6;">
+          Fraunces 150 / Soft 50 / Opsz 100
+        </p>
+      </div>
+      <div class="span-col-4-5 reveal border-top-heavy pt-8 mb-12">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">
+          The unwritten rules of power and shifting incentives.
+        </h3>
+      </div>
+
+      <!-- Inter Light -->
+      <div class="span-col-2-3 reveal border-top-heavy pt-8">
+        <div class="code-tag">.helvetica-light .body-text</div>
+        <p class="helvetica-light mt-4" style="font-size: 0.85rem; opacity: 0.6;">
+          Inter 300 / 0% Tracking / 1.6 Line Height
+        </p>
+      </div>
+      <div class="span-col-4-5 reveal border-top-heavy pt-8 mb-12">
+        <p class="helvetica-light body-text">
+          You can't move a system without somewhere to stand. Every
+          era-defining accomplishment shares the same hidden architecture.
+        </p>
+      </div>
+
+      <!-- Dimension label -->
+      <div class="span-col-2-3 reveal border-top-heavy pt-8">
+        <div class="code-tag">.dimension</div>
+      </div>
+      <div class="span-col-4-5 reveal border-top-heavy pt-8">
+        <DimensionLabel text="COORD 01 // METADATA JARGON" />
+      </div>
+
+    </div>
+  </SectionShell>
+
+
+  <!-- =========================================================
+       04 / LAYOUT ENGINE
+       ========================================================= -->
+  <SectionShell id="layout" theme="light">
+    <div class="nasa-grid">
+
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Architecture" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="SECTION 04 // NASA 1976 STRUCTURE" />
+        <h2 class="headline-l helvetica-medium">The 5-Column Grid</h2>
+        <p class="body-text helvetica-light mb-12">
+          Column 1 is strictly reserved for technical metadata and vertical
+          labels, creating a permanent structural indent on desktop that
+          elegantly stacks on mobile.
+        </p>
+      </div>
+
+      <!-- Grid visualizer: all 5 columns -->
+      <div class="span-all nasa-grid grid-visualizer reveal delay-1" style="height: 10vh;">
+        <div>.span-col-1</div>
+        <div>col-2</div>
+        <div>col-3</div>
+        <div>col-4</div>
+        <div>col-5</div>
+      </div>
+
+      <!-- Span demos -->
+      <div class="span-col-1 grid-visualizer reveal delay-1" style="height: 8vh;">
+        <div>Metadata Rail</div>
+      </div>
+      <div class="span-col-2-5 grid-visualizer reveal delay-1" style="height: 8vh;">
+        <div>.span-col-2-5</div>
+      </div>
+
+      <div class="span-col-1 grid-visualizer reveal delay-1" style="height: 8vh;">
+        <div>Metadata Rail</div>
+      </div>
+      <div class="span-col-2-4 grid-visualizer reveal delay-1" style="height: 8vh;">
+        <div>.span-col-2-4</div>
+      </div>
+
+      <!-- Practical example -->
+      <div class="span-all mt-16 border-top-heavy pt-12">
+        <h3 class="helvetica-medium reveal mb-8">Practical Application</h3>
+
+        <div class="nasa-grid reveal">
+          <div class="span-col-1">
+            <DimensionLabel text="EXAMPLE 01" />
+            <VerticalLabel text="Content Block" class="mt-8" />
+          </div>
+
+          <div class="span-col-2-4">
+            <h2 class="headline-m helvetica-medium">
+              Headline spanning two columns.
+            </h2>
+            <p class="body-text helvetica-light">
+              This paragraph lives inside <code>.span-col-2-4</code>, ensuring
+              it aligns with the structural system while leaving the 5th column
+              intentionally empty as <em>Ma</em> (whitespace) on large displays.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </SectionShell>
+
+
+  <!-- =========================================================
+       05 / UI COMPONENTS
+       ========================================================= -->
+  <SectionShell id="components" theme="dark" noBorder={true}>
+    <div class="nasa-grid">
+
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="UI Library" />
+      </div>
+
+      <div class="span-col-2-5 reveal delay-1">
+        <DimensionLabel text="SECTION 05 // INTERACTIVE ELEMENTS" />
+        <h2 class="headline-l helvetica-medium">Components</h2>
+      </div>
+
+      <!-- Button -->
+      <div class="span-col-2-3 reveal border-top-heavy pt-8">
+        <div class="code-tag">.btn</div>
+        <p class="helvetica-light mt-4 mb-8" style="font-size: 0.85rem; opacity: 0.6;">
+          Structural interaction triggers.
+        </p>
+        <Button href="#">Initialize Command</Button>
+      </div>
+
+      <!-- Input -->
+      <div class="span-col-4-5 reveal border-top-heavy pt-8">
+        <div class="code-tag">.input-group > .minimal-input</div>
+        <p class="helvetica-light mt-4 mb-8" style="font-size: 0.85rem; opacity: 0.6;">
+          Blueprint data entry fields.
+        </p>
+        <InputGroup
+          label="COORDINATE // ENTITY"
+          name="demo-entity"
+          placeholder="Organization Name"
+        />
+      </div>
+
+      <!-- Dashboard -->
+      <div class="span-col-2-5 reveal border-top-heavy pt-8 mt-8">
+        <div class="code-tag">.dashboard-window > .dash-card</div>
+        <DashboardWindow class="mt-8">
+          <DashboardCard
+            label="NODE A // POLICY"
+            title="Veto Power Isolated"
+            meta="PROBABILITY: 87%"
+            noBorder={true}
+          />
+          <DashboardCard
+            label="NODE B // FINANCE"
+            title="Capital Alignment Detected"
+            meta="CONFIDENCE: 94%"
+          />
+        </DashboardWindow>
+      </div>
+
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  /* Swatch: color preview block, /styles only */
+  .swatch {
+    width: 100%;
+    height: 6rem;
+    margin-bottom: var(--space-4);
+  }
+</style>

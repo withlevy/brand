@@ -1,0 +1,73 @@
+/* ==========================================================================
+   LEVY DESIGN TOKENS
+   Single source of truth for all design values.
+   ========================================================================== */
+
+:root {
+
+  /* --- Colors --- */
+  --washi:      #F7F7F6;
+  --sumi:       #080808;
+  --seal-red:   #D93B2B;
+
+  /* --- Ink / Material --- */
+  --ink-base:   rgba(217, 59, 43, 0.12);
+  --ink-active: rgba(217, 59, 43, 0.22);
+
+  /* --- Theme: Light (default) --- */
+  --bg-color:     var(--washi);
+  --text-color:   var(--sumi);
+  --border-color: rgba(8, 8, 8, 0.12);
+  --heavy-line:   1.5px solid var(--sumi);
+
+  /* --- Typography --- */
+  --font-sans:  'Inter', -apple-system, sans-serif;
+  --font-serif: 'Fraunces', serif;
+  --font-mono:  monospace;
+
+  /* --- Type Scale --- */
+  --type-headline-l: clamp(3rem, 7vw, 5.5rem);
+  --type-headline-m: clamp(1.75rem, 3.5vw, 2.75rem);
+  --type-body:       clamp(0.95rem, 2vw, 1.1rem);
+  --type-micro:      0.6875rem;
+
+  /* --- Spacing --- */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  --space-layout-x:         clamp(1.25rem, 4vw, 5rem);
+  --space-grid-gap:         4vw;
+  --space-grid-gap-mobile:  3rem;
+  --space-section-y:        clamp(4rem, 10vh, 8rem);
+  --space-section-y-mobile: clamp(3rem, 8vh, 5rem);
+
+  /* --- Motion --- */
+  --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+  --theme-fade: background-color 0.8s ease-in-out,
+                color 0.8s ease-in-out,
+                border-color 0.8s ease-in-out;
+
+  /* --- Z-Index --- */
+  --z-layout: 10;
+  --z-grain:  9998;
+  --z-menu:   9999;
+  --z-header: 10000;
+  --z-ui:     10001;
+}
+
+/* --- Theme: Dark override --- */
+body.dark-mode {
+  --bg-color:     var(--sumi);
+  --text-color:   var(--washi);
+  --border-color: rgba(247, 247, 246, 0.12);
+  --heavy-line:   1.5px solid var(--washi);
+}

@@ -1,0 +1,53 @@
+---
+// Auth gate: handled server-side in src/middleware.ts.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionShell from '../../components/layout/SectionShell.astro';
+import VerticalLabel from '../../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../../components/typography/DimensionLabel.astro';
+---
+
+<BaseLayout
+  title="Member Resources — Levy Network"
+  description="Exclusive resources, frameworks, and intelligence for Levy Network members."
+>
+
+  <SectionShell
+    id="resources"
+    theme="light"
+    noBorder={true}
+    style="padding-top: calc(4.5rem + var(--space-section-y)); min-height: 100vh;"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="Resources" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="MEMBER ACCESS // RESOURCES" />
+        <h1 class="headline-l helvetica-medium">
+          Member resources.
+        </h1>
+        <p class="body-text helvetica-light mb-12">
+          Exclusive materials, frameworks, and intelligence available to
+          Levy Network members. This library grows as the network does.
+        </p>
+
+        <!-- TODO: Populate with member-only content.
+             Options:
+             1. Outseta nocode content blocks (gated by plan)
+             2. Astro content collection with auth middleware gating
+             3. Manual resource links organized by category -->
+        <div class="resources-placeholder border-top pt-8">
+          <div class="dimension" style="opacity: 0.35;">LIBRARY // IN DEVELOPMENT</div>
+          <p class="helvetica-light mt-6" style="font-size: 0.9rem; opacity: 0.45; max-width: 28rem;">
+            The member resource library is being assembled. Check back soon
+            or visit <a href="/newsroom" style="color: inherit; text-decoration: underline;">the newsroom</a>
+            for public dispatches.
+          </p>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>

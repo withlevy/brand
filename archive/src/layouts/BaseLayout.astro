@@ -1,0 +1,209 @@
+---
+import GlobalGrain from '../components/global/GlobalGrain.astro';
+import Header from '../components/global/Header.astro';
+import FullscreenMenu from '../components/global/FullscreenMenu.astro';
+import Footer from '../components/global/Footer.astro';
+import '../styles/main.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  bodyClass?: string;
+}
+
+const {
+  title = 'Levy',
+  description = 'An operating environment for serious people who want durable leverage.',
+  ogImage,
+  bodyClass = '',
+} = Astro.props;
+
+const canonicalUrl = Astro.url.href;
+const ogImageUrl = ogImage ?? new URL('/og-default.png', Astro.site).href;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:site_name" content="Levy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+
+  <!-- Canonical -->
+  <link rel="canonical" href={canonicalUrl} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,100..900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Outseta — sitewide auth, forms, nocode, profile -->
+  <script is:inline>
+  var o_options = {
+      domain: 'levy.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
+      auth: {
+          authenticationCallbackUrl: window.location.origin + '/members',
+          registrationConfirmationUrl: window.location.origin + '/members',
+          passwordResetUrl: window.location.origin + '/login'
+      }
+  };
+  </script>
+  <script is:inline src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <!-- Outseta lifecycle: sync access token to cookie for SSR JWT gating;
+       redirect on logout; toggle header Join↔Account. -->
+  <script is:inline>
+  (function () {
+    function setTokenCookie(token) {
+      if (!token) return;
+      document.cookie = 'outseta_token=' + token + '; path=/; max-age=86400; SameSite=Lax';
+    }
+    function clearTokenCookie() {
+      document.cookie = 'outseta_token=; path=/; max-age=0; SameSite=Lax';
+    }
+    function applyAuthState(user) {
+      var joinLink = document.querySelector('.header-join');
+      if (!joinLink) return;
+      if (user) {
+        joinLink.textContent = 'Account';
+        joinLink.setAttribute('href', '/account');
+        joinLink.setAttribute('aria-label', 'Your Levy account');
+      } else {
+        joinLink.textContent = 'Join';
+        joinLink.setAttribute('href', '/join');
+        joinLink.setAttribute('aria-label', 'Join the Levy Network');
+      }
+      document.body.classList.toggle('is-authenticated', !!user);
+      document.body.classList.toggle('is-anonymous', !user);
+    }
+
+    function bootstrap() {
+      if (!window.Outseta) return;
+      var token = Outseta.getAccessToken && Outseta.getAccessToken();
+      if (token) setTokenCookie(token);
+      Outseta.getUser ? Outseta.getUser().then(applyAuthState).catch(function () { applyAuthState(null); }) : applyAuthState(null);
+
+      Outseta.on('accessToken.set', function (t) { setTokenCookie(t); });
+      Outseta.on('login', function () {
+        var t = Outseta.getAccessToken && Outseta.getAccessToken();
+        if (t) setTokenCookie(t);
+        Outseta.getUser().then(applyAuthState);
+      });
+      Outseta.on('logout', function () {
+        clearTokenCookie();
+        applyAuthState(null);
+        window.location.href = '/signed-out';
+      });
+      Outseta.on('subscription.update', function () {
+        Outseta.getUser().then(applyAuthState);
+      });
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(bootstrap, 0);
+    } else {
+      document.addEventListener('DOMContentLoaded', bootstrap);
+    }
+  })();
+  </script>
+</head>
+
+<body class={bodyClass}>
+
+  <GlobalGrain />
+  <FullscreenMenu />
+  <Header />
+
+  <main class="layout-wrapper">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <script>
+    // -------------------------------------------------------------------------
+    // MENU TOGGLE
+    // Adds/removes body.menu-open. Manages aria state on toggle and nav links.
+    // -------------------------------------------------------------------------
+    const menuToggle   = document.getElementById('menuToggle') as HTMLButtonElement | null;
+    const fullscreenMenu = document.getElementById('fullscreenMenu');
+    const menuItems    = document.querySelectorAll('.menu-item');
+
+    menuToggle?.addEventListener('click', () => {
+      const isOpen = document.body.classList.toggle('menu-open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      fullscreenMenu?.setAttribute('aria-hidden', String(!isOpen));
+    });
+
+    menuItems.forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        menuToggle?.setAttribute('aria-expanded', 'false');
+        fullscreenMenu?.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // SCROLL REVEAL
+    // IntersectionObserver: adds .active once; unobserves after trigger.
+    // Respects prefers-reduced-motion.
+    // -------------------------------------------------------------------------
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+    }
+
+    // -------------------------------------------------------------------------
+    // SECTION THEME CROSSFADE
+    // Watches sections and footer for data-theme attribute.
+    // Toggles body.dark-mode as sections cross the viewport midpoint.
+    // -------------------------------------------------------------------------
+    const themeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const isDark = (entry.target as HTMLElement).dataset.theme === 'dark';
+          document.body.classList.toggle('dark-mode', isDark);
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+
+    document.querySelectorAll('section[data-theme], footer[data-theme]').forEach(el => {
+      themeObserver.observe(el);
+    });
+  </script>
+
+</body>
+</html>

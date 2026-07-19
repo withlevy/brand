@@ -1,0 +1,18 @@
+{
+  "name": "levy-website",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "jose": "^6.2.3"
+  },
+  "devDependencies": {
+    "@astrojs/cloudflare": "^12.6.13",
+    "wrangler": "^4.73.0"
+  }
+}

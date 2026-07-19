@@ -1,0 +1,308 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="The Levy Network"
+  description="The Levy Network connects founders, public servants, and institutional leaders operating at the intersection of power, capital, and consequence."
+>
+
+  <!-- =========================================================
+       01 / THE CASE
+       What the network is. No hedging.
+       ========================================================= -->
+  <SectionShell
+    id="case"
+    theme="light"
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="01 / The Network" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="THE LEVY NETWORK // MEMBERSHIP" />
+        <h1 class="headline-l helvetica-medium">
+          The operating environment for serious people.
+        </h1>
+        <p class="body-text helvetica-light mb-12">
+          Most networks are transactional, generic, or built for social comfort
+          rather than leverage. The Levy Network is built around a different
+          premise: that outlier outcomes require access to serious peers,
+          institutional fluency, and the kind of coordination that only exists
+          inside a structured environment.
+        </p>
+        <p class="body-text helvetica-light">
+          This is not a membership club. It is an operating environment — one
+          designed to increase the probability that the work you're doing reaches
+          the scale it deserves.
+        </p>
+      <!-- IMAGERY: Full-width or inset photograph here.
+           Subject: convening, boardroom, institutional architecture, or
+           candid group of serious people in a working environment.
+           Recommended: 16:9, desaturated/editorial tone, not stock.
+           Consider: Washington D.C. landmark, conference table, or
+           architectural detail with strong geometry. -->
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / WHO IT'S FOR
+       Three audiences held as one.
+       ========================================================= -->
+  <SectionShell id="who" theme="dark">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="02 / Who" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="MEMBERSHIP // QUALIFICATION" />
+        <h2 class="headline-m helvetica-medium">
+          Built for people operating at consequence.
+        </h2>
+        <p class="body-text helvetica-light">
+          The network is not open to everyone. It is built for people who are
+          already doing serious work — and who understand that the conditions
+          around that work determine as much as the work itself.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-2 border-top pt-8 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Founders
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Building companies, institutions, or initiatives that require
+          navigating the intersection of private ambition and public systems.
+          Not looking for a co-founder. Looking for conditions.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2 border-top pt-8 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Public Servants
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Senior officials and career leaders navigating institutional terrain
+          where the formal levers of power rarely match the actual ones.
+          Operating at the edge of what institutions can do.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-3 border-top pt-8 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Institutional Leaders
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Executives, directors, and principals inside large organizations who
+          are trying to move faster, think differently, and act with more
+          precision than their institutions typically allow.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       03 / WHAT IT ENABLES
+       Access, signal, convening, peer context.
+       ========================================================= -->
+  <SectionShell id="enables" theme="light">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="03 / What It Enables" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="MEMBERSHIP VALUE // OPERATING CONDITIONS" />
+        <h2 class="headline-m helvetica-medium">
+          The conditions that make outlier outcomes more likely.
+        </h2>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 0.5rem;">
+          Peer-level intelligence.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Access to people who are working at the same altitude — not advisors,
+          not vendors. Peers who can read the actual situation.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2 border-top pt-6 mt-16">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 0.5rem;">
+          Institutional fluency.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Understanding how large systems actually work — not the org chart
+          version, but the operating reality. Who has leverage. Where decisions
+          actually happen.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 0.5rem;">
+          Structured convening.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Gatherings designed around real problems — not panels, not
+          networking events. Environments where the conversation is worth
+          the time it takes.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 0.5rem;">
+          Public legitimacy.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.6;">
+          Association with an environment that is known for seriousness and
+          discretion. Not a credential. A signal that travels with the work.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       04 / THE TIERS
+       Insider / Builder / Architect — self-selection.
+       ========================================================= -->
+  <SectionShell id="tiers" theme="dark">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="04 / Tiers" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="ACCESS TIERS // MEMBERSHIP STRUCTURE" />
+        <h2 class="headline-m helvetica-medium">
+          Three levels of access. One environment.
+        </h2>
+        <p class="body-text helvetica-light mb-12">
+          The tier structure is designed for self-selection, not upselling.
+          Each level reflects a different relationship to the network —
+          in depth of access, engagement, and coordination.
+        </p>
+      </div>
+
+      <div class="span-col-2-5 reveal delay-2">
+        <div class="tier-grid">
+
+          <div class="tier-card">
+            <div class="tier-label">
+              <DimensionLabel text="TIER 01 // INSIDER" />
+            </div>
+            <h3 class="fraunces-h3 tier-name">Insider</h3>
+            <p class="helvetica-light tier-desc">
+              Foundational access to the network. Signal dispatches, curated
+              reading, and eligibility for select gatherings. The right entry
+              point for people who want to be inside the environment without
+              full operational engagement.
+            </p>
+          </div>
+
+          <div class="tier-card">
+            <div class="tier-label">
+              <DimensionLabel text="TIER 02 // BUILDER" />
+            </div>
+            <h3 class="fraunces-h3 tier-name">Builder</h3>
+            <p class="helvetica-light tier-desc">
+              Active participation in the network's operating layer. Expanded
+              access to convenings, peer introductions, and structured
+              collaboration surfaces. For people who want to build something
+              inside the environment, not just observe it.
+            </p>
+          </div>
+
+          <div class="tier-card">
+            <div class="tier-label">
+              <DimensionLabel text="TIER 03 // ARCHITECT" />
+            </div>
+            <h3 class="fraunces-h3 tier-name">Architect</h3>
+            <p class="helvetica-light tier-desc">
+              Full access to the Levy environment — network, studio resources,
+              and institute programming. For principals who are serious about
+              operating at the highest level of institutional leverage and
+              want to help shape the conditions for others.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="span-col-2-4 reveal delay-3 mt-12">
+        <a href="/pricing" class="dimension" style="display: inline-flex;">VIEW DETAILED TIER COMPARISON →</a>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       05 / JOIN
+       Closing conversion.
+       ========================================================= -->
+  <SectionShell id="join" theme="light" noBorder={true}>
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="05 / Access" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="MEMBERSHIP // SELF-SERVE ACCESS" />
+        <h2 class="headline-m helvetica-medium">
+          Ready to operate inside the environment?
+        </h2>
+        <p class="body-text helvetica-light mb-12">
+          Membership is self-serve. Choose your tier, create your account,
+          and gain access immediately. If you're not sure which tier is
+          right for you, the comparison page will help.
+        </p>
+        <div style="display: flex; align-items: center; gap: var(--space-8); flex-wrap: wrap;">
+          <Button href="/join">Join the Network</Button>
+          <a href="/pricing" class="dimension" style="display: inline-flex;">Compare Tiers →</a>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 900px) {
+    .tier-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .tier-card {
+    border-top: var(--heavy-line);
+    padding-top: var(--space-8);
+  }
+
+  .tier-label {
+    margin-bottom: var(--space-4);
+  }
+
+  .tier-name {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    margin-bottom: var(--space-6);
+  }
+
+  .tier-desc {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    opacity: 0.8;
+  }
+</style>

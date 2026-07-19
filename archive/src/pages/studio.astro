@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionShell from '../components/layout/SectionShell.astro';
+import VerticalLabel from '../components/typography/VerticalLabel.astro';
+import DimensionLabel from '../components/typography/DimensionLabel.astro';
+import Button from '../components/ui/Button.astro';
+import InputGroup from '../components/ui/InputGroup.astro';
+---
+
+<BaseLayout
+  title="Levy Studio"
+  description="The strategic design and intervention layer of the Levy environment. Work with Levy on the problems that require precision, not process."
+>
+
+  <!-- =========================================================
+       01 / WHAT THE STUDIO IS
+       Not a services page. A definition.
+       ========================================================= -->
+  <SectionShell
+    id="studio-anchor"
+    theme="light"
+    style="padding-top: calc(4.5rem + var(--space-section-y));"
+  >
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="01 / Studio" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="LEVY STUDIO // STRATEGIC DESIGN" />
+        <h1 class="headline-l helvetica-medium">
+          Where strategy becomes architecture.
+        </h1>
+        <p class="body-text helvetica-light mb-8">
+          The Studio is the design and intervention layer of the Levy
+          environment. It works with organizations, institutions, and
+          principals who are navigating the intersection of power, capital,
+          and consequence — and who need a partner that can think at that
+          level without losing precision.
+        </p>
+        <p class="body-text helvetica-light">
+          This is not process consulting. It is not brand strategy or
+          communications packaging. It is structural work: finding where
+          force multiplies, designing the operating frameworks that make
+          serious coordination possible, and translating strategic intent
+          into action that holds.
+        </p>
+      </div>
+
+      <!-- IMAGERY: Studio-appropriate visual between sections.
+           Subject: design process, whiteboard strategy, architectural
+           blueprint, or precision instruments. Editorial, not decorative.
+           Recommended: 3:2 or 16:9, high contrast, dark tones. -->
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       02 / WHAT WE DO
+       Types of work, without being a menu.
+       ========================================================= -->
+  <SectionShell id="work" theme="dark">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="02 / The Work" />
+      </div>
+
+      <div class="span-col-2-4 reveal delay-1">
+        <DimensionLabel text="STUDIO WORK // OPERATING DOMAINS" />
+        <h2 class="headline-m helvetica-medium">
+          The problems we're built for.
+        </h2>
+        <p class="body-text helvetica-light mb-12">
+          Studio engagements are not standardized. They are designed around
+          specific situations where the stakes are real and the standard
+          playbook doesn't fit. These are the domains where we operate.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-2 border-top pt-6 mt-4">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Public-private coordination.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Designing the structures that allow private actors and public
+          institutions to move together — aligning incentives, building
+          trust infrastructure, and creating the conditions for durable
+          coordination across institutional lines.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2 border-top pt-6 mt-4">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Institutional leverage mapping.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Identifying where a small amount of force multiplies — where one
+          decision, one relationship, or one structural change cascades into
+          ten. The fulcrum work that most strategies skip.
+        </p>
+      </div>
+
+      <div class="span-col-2-3 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Action design.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Translating strategic intent into sequences of action that actually
+          move — accounting for institutional reality, stakeholder psychology,
+          and the specific constraints of the environment you're operating in.
+        </p>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-3 border-top pt-6 mt-10">
+        <h3 class="fraunces-h3" style="font-size: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: 0.75rem;">
+          Strategic positioning.
+        </h3>
+        <p class="helvetica-light" style="font-size: 0.9rem; line-height: 1.65;">
+          Defining how an organization, institution, or initiative should
+          be understood — by the people whose understanding matters. Not
+          messaging. Positioning in the structural sense: where you stand
+          in relation to the systems around you.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <!-- =========================================================
+       03 / ENGAGE
+       How to work with the Studio.
+       ========================================================= -->
+  <SectionShell id="engage" theme="light" noBorder={true} noMinHeight={true}
+    style="padding-bottom: var(--space-section-y);">
+    <div class="nasa-grid">
+      <div class="span-col-1 reveal">
+        <VerticalLabel text="03 / Engage" />
+      </div>
+
+      <div class="span-col-2-3 reveal delay-1">
+        <DimensionLabel text="STUDIO // ENGAGEMENT INQUIRY" />
+        <h2 class="headline-m helvetica-medium">
+          Work with the Studio.
+        </h2>
+        <p class="helvetica-light mb-12" style="font-size: var(--type-body);">
+          Studio engagements begin with a conversation. If you're working on
+          something that fits the domains above, reach out. We'll determine
+          together whether and how the Studio can be useful.
+        </p>
+
+        <form class="inquiry-form" method="POST" action="#">
+          <InputGroup
+            label="NAME // ORGANIZATION"
+            name="inquiry-name"
+            placeholder="Your Name and Organization"
+          />
+          <InputGroup
+            label="EMAIL // SECURE CONTACT"
+            type="email"
+            name="inquiry-email"
+            placeholder="Your Email Address"
+          />
+          <div class="input-group mt-6">
+            <label class="input-label" for="inquiry-context">CONTEXT // BRIEF DESCRIPTION</label>
+            <textarea
+              id="inquiry-context"
+              name="context"
+              placeholder="A BRIEF DESCRIPTION OF WHAT YOU ARE WORKING ON"
+              class="minimal-input"
+              rows="4"
+              style="resize: vertical;"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn mt-8">Submit Inquiry</button>
+        </form>
+      </div>
+
+      <div class="span-col-4-5 reveal delay-2">
+        <div class="studio-note border-top pt-6">
+          <p class="helvetica-light" style="font-size: 0.85rem; line-height: 1.7; opacity: 0.55;">
+            The Studio operates at limited capacity. We take on a small
+            number of engagements at any given time, which is how we
+            maintain the quality of the work. If we're not the right fit
+            or not available at the right time, we'll say so directly.
+          </p>
+          <p class="helvetica-light mt-6" style="font-size: 0.85rem; line-height: 1.7; opacity: 0.55;">
+            The Studio exists within the larger Levy environment — if your
+            situation calls more for peer network access than direct
+            engagement, the network may be the better starting point.
+          </p>
+          <a href="/network" class="dimension mt-8" style="display: inline-flex;">EXPLORE THE NETWORK →</a>
+        </div>
+      </div>
+    </div>
+  </SectionShell>
+
+</BaseLayout>
+
+<style>
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 30rem;
+  }
+
+  .studio-note {
+    max-width: 22rem;
+  }
+</style>
