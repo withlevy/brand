@@ -215,10 +215,12 @@
     .studio,
     .intersection {
       font-family: var(--font-serif);
-      font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-      font-weight: 300;
+      /* Thin editorial display — pin wght in variation-settings so the
+         light weight applies reliably alongside SOFT/WONK/opsz. */
+      font-variation-settings: "wght" 100, "SOFT" 100, "WONK" 1, "opsz" 144;
+      font-weight: 100;
       font-size: clamp(1.85rem, 4.6vw, 3.1rem);
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
       line-height: var(--lh-tight);                          /* fallback ratio */
       line-height: round(nearest, 1.2em, var(--baseline));   /* snap leading to the 8px grid */
       max-width: 20ch;
