@@ -16,11 +16,12 @@
   <meta property="og:site_name" content="Levy" />
   <link rel="canonical" href="https://withlevy.com/" />
 
-  <!-- Design-system typefaces: Inter (structural) + Fraunces (editorial) -->
+  <!-- Design-system typefaces: Inter (structural) + Fraunces (editorial).
+       Inter 200 carries the light running body; 300 base; 500 for small UI. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,100..900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;500;700&family=Fraunces:opsz,SOFT,WONK,wght@9..144,0..100,0..1,100..900&display=swap"
     rel="stylesheet"
   />
 
@@ -29,6 +30,12 @@
        LEVY — minimal one-page site
        Tokens, type roles and layout mirror the repo design system
        (docs/LEVY_DESIGN_SYSTEM.md, src/styles/*). Accent: violet.
+
+       TYPOGRAPHY — everything is composed on a single 8px baseline grid:
+       one --baseline unit governs all vertical rhythm, and every block
+       margin / section pad below resolves to an integer multiple of it.
+       Leading is set as clean, named unitless ratios (so it stays optical
+       across sizes) while the *spacing between blocks* is grid-locked.
        ====================================================================== */
     :root {
       /* Color tokens (LEVY_DESIGN_SYSTEM.md) */
@@ -40,21 +47,47 @@
       --text-color:   var(--midnight-navy);
       --border-color: rgba(10, 17, 31, 0.15);
 
-      /* Type */
+      /* Type families */
       --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-serif: 'Fraunces', Georgia, serif;
       --font-mono:  ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-      /* Spacing / layout */
+      /* Type weights — body runs light; small UI a touch heavier */
+      --wt-light:   200;   /* running body copy (the offer line)   */
+      --wt-body:    300;   /* base / small notes                   */
+      --wt-ui:      500;   /* small actionable labels              */
+      --wt-display: 700;   /* wordmark                             */
+
+      /* Leading ratios */
+      --lh-body:  1.5;     /* 24px @16px root = 3 baseline units    */
+      --lh-tight: 1.2;     /* editorial (Fraunces) leading          */
+
+      /* ---- Core baseline grid — 8px unit ------------------------------ */
+      --baseline: 0.5rem;                       /*  8px */
+      --space-1:  var(--baseline);              /*  8 */
+      --space-2:  calc(var(--baseline) *  2);   /* 16 */
+      --space-3:  calc(var(--baseline) *  3);   /* 24 */
+      --space-4:  calc(var(--baseline) *  4);   /* 32 */
+      --space-5:  calc(var(--baseline) *  5);   /* 40 */
+      --space-6:  calc(var(--baseline) *  6);   /* 48 */
+      --space-8:  calc(var(--baseline) *  8);   /* 64 */
+      --space-10: calc(var(--baseline) * 10);   /* 80 */
+      --space-12: calc(var(--baseline) * 12);   /* 96 */
+
+      /* Layout */
       --space-layout-x: clamp(1.5rem, 4vw, 5rem);
-      --space-grid-gap: 1.5rem;
+      --space-grid-gap: var(--space-3);         /* 24px — on grid */
 
       --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    html {
+      font-size: 16px;                 /* baseline-grid anchor */
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+    }
 
     ::selection { background: var(--violet-atmosphere); color: var(--mission-white); }
 
@@ -62,6 +95,14 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       font-family: var(--font-sans);
+      font-weight: var(--wt-body);
+      line-height: var(--lh-body);
+      /* Optical typesetting */
+      font-optical-sizing: auto;
+      font-kerning: normal;
+      font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+      font-variant-ligatures: common-ligatures contextual;
+      hanging-punctuation: first allow-end last;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       min-height: 100vh;
@@ -88,7 +129,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: clamp(3rem, 10vh, 7rem) var(--space-layout-x) 0;
+      padding: clamp(var(--space-8), 10vh, var(--space-12)) var(--space-layout-x) 0;
       position: relative;
       z-index: 10;
     }
@@ -116,13 +157,14 @@
       opacity: 0.4;
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      margin-top: 0.35rem;
+      gap: var(--space-3);
+      /* Optically drop the label to meet the cap-line of the wordmark lockup */
+      margin-top: var(--space-1);
     }
     .vertical-label::before {
       content: '';
       width: 1px;
-      height: 3rem;
+      height: var(--space-6);
       background: currentColor;
     }
 
@@ -135,8 +177,8 @@
       opacity: 0.5;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
     }
     .dimension::before {
       content: '';
@@ -155,46 +197,55 @@
       height: clamp(2.5rem, 5vw, 3.75rem);
       width: auto;
       color: var(--text-color);
-      margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem);
+      margin-bottom: var(--space-5);   /* 40px — on grid */
     }
 
     /* Wordmark — Inter, structural voice, tight tracking (see .logotype) */
     .wordmark {
       font-family: var(--font-sans);
-      font-weight: 700;
+      font-weight: var(--wt-display);
       font-size: clamp(3.5rem, 12vw, 8rem);
-      letter-spacing: -0.05em;
-      line-height: 0.9;
+      letter-spacing: -0.045em;
+      line-height: 0.9;                                       /* fallback ratio */
+      line-height: round(nearest, 0.9em, var(--baseline));    /* snap display box to grid */
+      text-wrap: balance;
     }
 
     /* Editorial block — Fraunces, styled as plain sentences */
     .studio,
     .intersection {
       font-family: var(--font-serif);
-      font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
-      font-weight: 300;
+      /* Thin editorial display — pin wght in variation-settings so the
+         light weight applies reliably alongside SOFT/WONK/opsz. */
+      font-variation-settings: "wght" 100, "SOFT" 100, "WONK" 1, "opsz" 144;
+      font-weight: 100;
       font-size: clamp(1.85rem, 4.6vw, 3.1rem);
-      letter-spacing: -0.015em;
-      line-height: 1.15;
+      letter-spacing: -0.01em;
+      line-height: var(--lh-tight);                          /* fallback ratio */
+      line-height: round(nearest, 1.2em, var(--baseline));   /* snap leading to the 8px grid */
       max-width: 20ch;
+      text-wrap: balance;
     }
-    .studio       { margin-top: clamp(2.25rem, 6vh, 4rem); }
-    .intersection { margin-top: 0.4em; }
+    .studio       { margin-top: var(--space-8); }   /* 64 — fixed, on grid */
+    .intersection { margin-top: var(--space-3); }   /* 24 — coupled pair   */
 
-    /* Offer line — Inter light body */
+    /* Offer line — Inter, light running body */
     .offer {
       font-family: var(--font-sans);
-      font-weight: 300;
+      font-weight: var(--wt-light);    /* lowered: 300 → 200 */
       font-size: clamp(1.1rem, 2vw, 1.5rem);
-      line-height: 1.5;
-      margin-top: clamp(1.5rem, 4vh, 2.5rem);
+      line-height: var(--lh-body);                           /* fallback ratio */
+      line-height: round(nearest, 1.5em, var(--baseline));   /* snap to grid */
+      letter-spacing: 0.005em;         /* steadies the open light weight */
+      margin-top: var(--space-6);      /* 48 — fixed, on grid */
+      text-wrap: pretty;
     }
 
     /* --- Footer, quiet ----------------------------------------------------- */
     .site-footer {
       position: relative;
       z-index: 10;
-      padding: clamp(3rem, 9vh, 6rem) var(--space-layout-x) clamp(1.75rem, 5vh, 2.5rem);
+      padding: clamp(var(--space-8), 9vh, var(--space-12)) var(--space-layout-x) clamp(var(--space-3), 5vh, var(--space-5));
     }
     .footer-inner {
       max-width: 1600px;
@@ -206,8 +257,9 @@
     .footer-note {
       grid-column: 2 / 9;
       font-family: var(--font-sans);
-      font-weight: 300;
+      font-weight: var(--wt-body);
       font-size: 0.8125rem;
+      line-height: var(--space-3);     /* 24px slot — 3 grid units */
       letter-spacing: 0.01em;
       opacity: 0.5;
     }
@@ -215,12 +267,13 @@
       grid-column: 8 / 12;
       justify-self: end;
       display: flex;
-      gap: 1.75rem;
+      gap: var(--space-4);
       flex-wrap: wrap;
       justify-content: flex-end;
       font-family: var(--font-sans);
-      font-weight: 500;
+      font-weight: var(--wt-ui);
       font-size: 0.8125rem;
+      line-height: var(--space-3);     /* 24px slot — 3 grid units */
       letter-spacing: 0.02em;
     }
     .footer-contact a { white-space: nowrap; }
@@ -266,11 +319,11 @@
       .vertical-label {
         writing-mode: horizontal-tb;
         flex-direction: row;
-        margin: 0 0 2rem;
+        margin: 0 0 var(--space-4);
       }
       .vertical-label::before { width: 3rem; height: 1px; }
 
-      .footer-contact { justify-self: start; margin-top: 1rem; }
+      .footer-contact { justify-self: start; margin-top: var(--space-2); }
       .intersection { max-width: none; }
     }
 
